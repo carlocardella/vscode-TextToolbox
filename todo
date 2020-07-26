@@ -1,0 +1,23 @@
+vscode-text:
+    text manipulation:
+        ☐ uppercase
+        ☐ lowercase
+        ☐ pascal case
+        ☐ sentence case
+        ☐ escape (json)
+        ☐ unescape (json)
+        ☐ remove empty lines
+        ☐ remove empty lines (end of file)
+        ☐ trim
+    filtering:
+        ☐ remove duplicate lines
+    sorting:
+        ☐ sort (asc|desc)
+        ☐ align csv
+    others:
+        ☐ insert GUID
+        ☐ insert Date
+        ☐ insert Lorem Ipsum
+
+reference:
+    - dakara.transformer

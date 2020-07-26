@@ -10,14 +10,17 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:vscode-text.helloWorld"
+		"onCommand:vscode-text.Uppercase"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
-		"commands": [
+		"commands": [{
+				"command": "vscode-text.Uppercase",
+				"title": "Text Toolbox: UPPERCASE"
+			},
 			{
-				"command": "vscode-text.helloWorld",
-				"title": "Hello World"
+				"command": "vscode-text.Lowercase",
+				"title": "Text Toolbox: lowercase"
 			}
 		]
 	},
