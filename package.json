@@ -1,7 +1,7 @@
 {
-	"name": "vscode-text",
-	"displayName": "vscode-text",
-	"description": "\"Text manipulation\"",
+	"name": "vscode-texttoolbox",
+	"displayName": "vscode-texttoolbox",
+	"description": "Text manipulation",
 	"version": "0.0.1",
 	"engines": {
 		"vscode": "^1.47.0"
@@ -10,22 +10,66 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:vscode-text.Uppercase"
+		"*"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "vscode-text.Uppercase",
-				"title": "Text Toolbox: UPPERCASE"
+				"command": "vscode-texttoolbox.Uppercase",
+				"title": "TT: UPPERCASE"
 			},
 			{
-				"command": "vscode-text.Lowercase",
-				"title": "Text Toolbox: lowercase"
+				"command": "vscode-texttoolbox.Lowercase",
+				"title": "TT: lowercase"
 			},
 			{
-				"command": "vscode-text.PascalCase",
-				"title": "Text Toolbox: PascalCase"
+				"command": "vscode-texttoolbox.PascalCase",
+				"title": "TT: PascalCase"
+			},
+			{
+				"command": "vscode-texttoolbox.CapitalCase",
+				"title": "TT: Capital Case"
+			},
+			{
+				"command": "vscode-texttoolbox.CamelCase",
+				"title": "TT: camel Case"
+			},
+			{
+				"command": "vscode-texttoolbox.ConstantCase",
+				"title": "TT: CONSTANT_CASE"
+			},
+			{
+				"command": "vscode-texttoolbox.DotCase",
+				"title": "TT: dot.case"
+			},
+			{
+				"command": "vscode-texttoolbox.HarderCase",
+				"title": "TT: Harder-Case"
+			},
+			{
+				"command": "vscode-texttoolbox.NoCase",
+				"title": "TT: no case"
+			},
+			{
+				"command": "vscode-texttoolbox.ParamCase",
+				"title": "TT: param-case"
+			},
+			{
+				"command": "vscode-texttoolbox.SentenceCase",
+				"title": "TT: Sentence case"
+			},
+			{
+				"command": "vscode-texttoolbox.SnakeCase",
+				"title": "TT: snake_case"
+			},
+			{
+				"command": "vscode-texttoolbox.experiment1",
+				"title": "TT: experiment1"
+			},
+			{
+				"command": "vscode-texttoolbox.mySelectAll",
+				"title": "TT: mySelectAll"
 			}
 		]
 	},
@@ -38,20 +82,17 @@
 		"test": "node ./out/test/runTest.js"
 	},
 	"devDependencies": {
-		"@types/vscode": "^1.47.0",
 		"@types/glob": "^7.1.1",
 		"@types/mocha": "^7.0.2",
 		"@types/node": "^13.11.0",
-		"eslint": "^6.8.0",
-		"@typescript-eslint/parser": "^2.30.0",
+		"@types/vscode": "^1.47.0",
 		"@typescript-eslint/eslint-plugin": "^2.30.0",
+		"@typescript-eslint/parser": "^2.30.0",
+		"change-case": "^4.1.1",
+		"eslint": "^6.8.0",
 		"glob": "^7.1.6",
 		"mocha": "^7.1.2",
 		"typescript": "^3.8.3",
 		"vscode-test": "^1.3.0"
-	},
-	"dependencies": {
-		"chalk": "^4.1.0",
-		"change-case": "^4.1.1"
 	}
 }

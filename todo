@@ -1,23 +1,64 @@
-vscode-text:
+vscode-TextToolbox:
     text manipulation:
-        ☐ uppercase
-        ☐ lowercase
-        ☐ pascal case
-        ☐ sentence case
+        ✔ Uppercase @done(20-07-29 07:46)
+        ✔ Lowercase @done(20-07-29 07:46)
+        ✔ PascalCase @done(20-07-29 07:46)
+        ✔ CapitalCase @done(20-07-29 07:46)
+        ✔ CamelCase @done(20-07-29 07:46)
+        ✔ ConstantCase @done(20-07-29 07:46)
+        ✔ DotCase @done(20-07-29 07:46)
+        ✔ HarderCase @done(20-07-29 07:46)
+        ✔ NoCase @done(20-07-29 07:46)
+        ✔ ParamCase @done(20-07-29 07:46)
+        ✔ SentenceCase @done(20-07-29 07:46)
+        ✔ SnakeCase @done(20-07-29 07:46)
         ☐ escape (json)
         ☐ unescape (json)
         ☐ remove empty lines
         ☐ remove empty lines (end of file)
         ☐ trim
+        ☐ duplicate string (ask user how many times)
     filtering:
         ☐ remove duplicate lines
+        ☐ remove all empty lines
+        ☐ remove excess empty lines
     sorting:
         ☐ sort (asc|desc)
+            ☐ open result in new editor
         ☐ align csv
-    others:
+    insert:
         ☐ insert GUID
         ☐ insert Date
         ☐ insert Lorem Ipsum
+        ☐ resetSeed
+        ☐ randomByte
+        ☐ randomShort
+        ☐ randomInt
+        ☐ randomLong
+        ☐ randomIntCustomRange
+        ☐ randomStringCustomLength
+        ☐ randomSampleFromInput
+        ☐ randomName
+        ☐ randomStreetAddress
+        ☐ randomCity
+        ☐ randomCountryCode
+        ☐ randomCountryName
+        ☐ randomPhoneNumber
+        ☐ randomEmail
+        ☐ randomIP
+        ☐ randomIPv6
+        ☐ randomUrl
+        ☐ randomHexColor
+        ☐ randomRgbColor
+        ☐ randomIban
+    other:
+        ☐ if there is no selection update the entire line
+
+    package:
+        ☐ add a better description
+        ☐ find the minimum required vscode version
+        ☐ update extension
 
 reference:
     - dakara.transformer
+    - jrebocho.vscode-random

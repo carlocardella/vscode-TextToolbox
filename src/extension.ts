@@ -2,15 +2,32 @@ import {
 	commands,
 	ExtensionContext,
 } from 'vscode';
-// import { convertToUppercase, convertToLowercase, convertToPascalCase } from "./modules/caseConversion";
 import * as CaseConversion from "./modules/caseConversion";
+// import { registerCommand } from '../.vscode-test/vscode-1.47.3/resources/app/out/vs/vscode';
+import { experiment1, mySelectAll } from "./modules/experiments";
 
 export function activate(context: ExtensionContext) {
-	console.log("vscode-text is active");
+	console.log("vscode-texttoolbox is active");
 
-	context.subscriptions.push(commands.registerCommand('vscode-text.Uppercase', () => { CaseConversion.convertToUppercase(); }));
-	context.subscriptions.push(commands.registerCommand('vscode-text.Lowercase', () => { CaseConversion.convertToLowercase(); }));
-	context.subscriptions.push(commands.registerCommand('vscode-text.PascalCase', () => { CaseConversion.convertToPascalCase(); }));
+	// case conversions
+	context.subscriptions.push(commands.registerCommand('vscode-texttoolbox.Uppercase', () => { CaseConversion.convertToUppercase(); }));
+	context.subscriptions.push(commands.registerCommand('vscode-texttoolbox.Lowercase', () => { CaseConversion.convertToLowercase(); }));
+	context.subscriptions.push(commands.registerCommand('vscode-texttoolbox.PascalCase', () => { CaseConversion.convertToPascalCase(); }));
+	context.subscriptions.push(commands.registerCommand('vscode-texttoolbox.CapitalCase', () => { CaseConversion.convertToCapitalCase(); }));
+	context.subscriptions.push(commands.registerCommand('vscode-texttoolbox.CamelCase', () => { CaseConversion.convertToCamelCase(); }));
+	context.subscriptions.push(commands.registerCommand('vscode-texttoolbox.ConstantCase', () => { CaseConversion.convertToConstantCase(); }));
+	context.subscriptions.push(commands.registerCommand('vscode-texttoolbox.DotCase', () => { CaseConversion.convertToDotCase(); }));
+	context.subscriptions.push(commands.registerCommand('vscode-texttoolbox.HarderCase', () => { CaseConversion.convertToHarderCase(); }));
+	context.subscriptions.push(commands.registerCommand('vscode-texttoolbox.NoCase', () => { CaseConversion.convertToNoCase(); }));
+	context.subscriptions.push(commands.registerCommand('vscode-texttoolbox.ParamCase', () => { CaseConversion.convertToParamCase(); }));
+	context.subscriptions.push(commands.registerCommand('vscode-texttoolbox.SentenceCase', () => { CaseConversion.convertToSentenceCase(); }));
+	context.subscriptions.push(commands.registerCommand('vscode-texttoolbox.SnakeCase', () => { CaseConversion.convertToSnakeCase(); }));
+
+	// context.subscriptions.push(commands.registerCommand('vscode-texttoolbox.experiment1', () => { experiment1(); }));
+	// context.subscriptions.push(commands.registerCommand('vscode-texttoolbox.mySelectAll', () => { mySelectAll(); }));
+
+	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.experiment1', () => { experiment1(); }));
+	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.mySelectAll', () => { mySelectAll(); }));
 };
 
 
