@@ -11,7 +11,7 @@ export function validateSelection() {
     const selections = window.activeTextEditor?.selections;
     if (!selections) { return; }
 
-    if (selections?.length < 0) {
+    if (selections?.length < 1) {
         window.showWarningMessage("You must select some text first");
         return;
     }

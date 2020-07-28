@@ -14,13 +14,18 @@
 	],
 	"main": "./out/extension.js",
 	"contributes": {
-		"commands": [{
+		"commands": [
+			{
 				"command": "vscode-text.Uppercase",
 				"title": "Text Toolbox: UPPERCASE"
 			},
 			{
 				"command": "vscode-text.Lowercase",
 				"title": "Text Toolbox: lowercase"
+			},
+			{
+				"command": "vscode-text.PascalCase",
+				"title": "Text Toolbox: PascalCase"
 			}
 		]
 	},
@@ -44,5 +49,9 @@
 		"mocha": "^7.1.2",
 		"typescript": "^3.8.3",
 		"vscode-test": "^1.3.0"
+	},
+	"dependencies": {
+		"chalk": "^4.1.0",
+		"change-case": "^4.1.1"
 	}
 }

@@ -2,19 +2,15 @@ import {
 	commands,
 	ExtensionContext,
 } from 'vscode';
-import { convertToUppercase, convertToLowercase } from "./modules/caseConversion";
+// import { convertToUppercase, convertToLowercase, convertToPascalCase } from "./modules/caseConversion";
+import * as CaseConversion from "./modules/caseConversion";
 
 export function activate(context: ExtensionContext) {
 	console.log("vscode-text is active");
 
-	// context.subscriptions.push(commands.registerCommand("Text Toolbox: UPPERCASE", () => { convertToUppercase(); }));
-
-	context.subscriptions.push(commands.registerCommand('vscode-text.Uppercase', () => {
-		convertToUppercase();
-	}));
-	context.subscriptions.push(commands.registerCommand('vscode-text.Lowercase', () => {
-		convertToLowercase();
-	}));
+	context.subscriptions.push(commands.registerCommand('vscode-text.Uppercase', () => { CaseConversion.convertToUppercase(); }));
+	context.subscriptions.push(commands.registerCommand('vscode-text.Lowercase', () => { CaseConversion.convertToLowercase(); }));
+	context.subscriptions.push(commands.registerCommand('vscode-text.PascalCase', () => { CaseConversion.convertToPascalCase(); }));
 };
 
 
