@@ -1,9 +1,5 @@
-import {
-    window,
-    Range,
-    Selection,
-} from "vscode";
-import { validateSelection, getSelection } from "./helpers";
+import { window, Range, Selection } from "vscode";
+import { validateSelection } from "./helpers";
 import * as cc from 'change-case';
 
 const enum caseConversions {
@@ -22,14 +18,26 @@ const enum caseConversions {
     snakeCase = 13
 }
 
+export function convertToPascalCase() { window.activeTextEditor?.selections.forEach(element => { convertSelection(element, caseConversions.pascalCase); }); }
+export function convertToCapitalCase() { window.activeTextEditor?.selections.forEach(element => { convertSelection(element, caseConversions.capitalCase); }); }
+export function convertToCamelCase() { window.activeTextEditor?.selections.forEach(element => { convertSelection(element, caseConversions.camelCase); }); }
+export function convertToConstantCase() { window.activeTextEditor?.selections.forEach(element => { convertSelection(element, caseConversions.constantCase); }); }
+export function convertToDotCase() { window.activeTextEditor?.selections.forEach(element => { convertSelection(element, caseConversions.dotCase); }); }
+export function convertToHarderCase() { window.activeTextEditor?.selections.forEach(element => { convertSelection(element, caseConversions.headerCase); }); }
+export function convertToNoCase() { window.activeTextEditor?.selections.forEach(element => { convertSelection(element, caseConversions.noCase); }); }
+export function convertToParamCase() { window.activeTextEditor?.selections.forEach(element => { convertSelection(element, caseConversions.paramCase); }); }
+export function convertToPathCase() { window.activeTextEditor?.selections.forEach(element => { convertSelection(element, caseConversions.pathCase); }); }
+export function convertToSentenceCase() { window.activeTextEditor?.selections.forEach(element => { convertSelection(element, caseConversions.sentenceCase); }); }
+export function convertToSnakeCase() { window.activeTextEditor?.selections.forEach(element => { convertSelection(element, caseConversions.snakeCase); }); }
+
 export function convertToUppercase() {
     validateSelection();
 
     const editor = window.activeTextEditor;
     editor?.selections.forEach((selection) => {
-        let text = editor?.document.getText(new Range(selection.start, selection.end));
+        let text = editor.document.getText(new Range(selection.start, selection.end));
         if (!text) { return; }
-        editor?.edit(editorBulder => {
+        return editor?.edit(editorBulder => {
             editorBulder.replace(selection, text.toUpperCase());
         });
     });
@@ -47,18 +55,6 @@ export function convertToLowercase() {
         });
     });
 };
-
-export function convertToPascalCase() { window.activeTextEditor?.selections.forEach(element => { convertSelection(element, caseConversions.pascalCase); }); }
-export function convertToCapitalCase() { window.activeTextEditor?.selections.forEach(element => { convertSelection(element, caseConversions.capitalCase); }); }
-export function convertToCamelCase() { window.activeTextEditor?.selections.forEach(element => { convertSelection(element, caseConversions.camelCase); }); }
-export function convertToConstantCase() { window.activeTextEditor?.selections.forEach(element => { convertSelection(element, caseConversions.constantCase); }); }
-export function convertToDotCase() { window.activeTextEditor?.selections.forEach(element => { convertSelection(element, caseConversions.dotCase); }); }
-export function convertToHarderCase() { window.activeTextEditor?.selections.forEach(element => { convertSelection(element, caseConversions.headerCase); }); }
-export function convertToNoCase() { window.activeTextEditor?.selections.forEach(element => { convertSelection(element, caseConversions.noCase); }); }
-export function convertToParamCase() { window.activeTextEditor?.selections.forEach(element => { convertSelection(element, caseConversions.paramCase); }); }
-export function convertToPathCase() { window.activeTextEditor?.selections.forEach(element => { convertSelection(element, caseConversions.pathCase); }); }
-export function convertToSentenceCase() { window.activeTextEditor?.selections.forEach(element => { convertSelection(element, caseConversions.sentenceCase); }); }
-export function convertToSnakeCase() { window.activeTextEditor?.selections.forEach(element => { convertSelection(element, caseConversions.snakeCase); }); }
 
 function convertSelection(text: Selection, conversion: caseConversions) {
     validateSelection();

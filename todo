@@ -18,14 +18,17 @@ vscode-TextToolbox:
         ☐ remove empty lines (end of file)
         ☐ trim
         ☐ duplicate string (ask user how many times)
+
     filtering:
         ☐ remove duplicate lines
         ☐ remove all empty lines
         ☐ remove excess empty lines
+
     sorting:
         ☐ sort (asc|desc)
             ☐ open result in new editor
         ☐ align csv
+
     insert:
         ☐ insert GUID
         ☐ insert Date
@@ -51,8 +54,14 @@ vscode-TextToolbox:
         ☐ randomHexColor
         ☐ randomRgbColor
         ☐ randomIban
+
     other:
         ☐ if there is no selection update the entire line
+
+    status bar:
+        ☐ number of lines selected
+        ☐ number of characters selected
+        ☐ cursor position (line and character)
 
     package:
         ☐ add a better description

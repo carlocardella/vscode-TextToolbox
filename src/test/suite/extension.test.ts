@@ -1,160 +1,145 @@
 import * as assert from 'assert';
-
-// You can import and use all API from the 'vscode' module
-// as well as import your extension to test it
+import { after, before } from 'mocha';
 import * as vscode from 'vscode';
-import * as CaseConversion from '../../modules/caseConversion';
-import { before, after, describe } from 'mocha';
-import { createTextEditor, sleep } from "../../modules/helpers";
-import { hasUncaughtExceptionCaptureCallback } from 'process';
-
-const testFolderLocation = '/../../../src/test/suite/testdocument.txt';
-
+import { createTextEditor, sleep, createNewEditor } from '../../modules/helpers';
+import { convertToUppercase, convertToLowercase, convertToCapitalCase, convertToDotCase, convertToPascalCase, convertToCamelCase, convertToParamCase, convertToNoCase, convertToHarderCase, convertToConstantCase, convertToPathCase, convertToSentenceCase, convertToSnakeCase } from '../../modules/caseConversion';
+import { window } from 'vscode';
 
 suite('Extension Test Suite', () => {
-	vscode.window.showInformationMessage('Start all tests.');
-
-	describe('Chance casing', function () {
-
-		test('UPPERCASE', () => {
-			// return createNewEditor().then(() => {
-			// 	vscode.commands.executeCommand('editor.action.selectAll');
-			// }).then(() => {
-			// 	CaseConversion.convertToUppercase();
-			// });
-			vscode.workspace.openTextDocument({ content: "test document", language: "" }).then((doc) => {
-				vscode.window.showTextDocument(doc);
-			}).then(() => {
-				vscode.commands.executeCommand('editor.action.selectAll');
-			}).then(() => {
-				CaseConversion.convertToUppercase();
-			}).then(() => {
-				let newString = vscode.window.activeTextEditor?.document.getText();
-				// assert(newString, "pippo");
-				// assert.strictEqual(newString, "TESTuu DOCUMENT");
-				vscode.commands.executeCommand('workbench.action.closeActiveEditor');
-			});
-		});
-
-		// test('should convert a string to UPPERCASE', function () {
-		// 	return createNewEditor().then(() => {
-		// 		vscode.commands.executeCommand('editor.action.selectAll');
-		// 		CaseConversion.convertToUppercase();
-		// 		let newString = vscode.window.activeTextEditor?.document.getText();
-		// 		return assert.strictEqual(newString, "TESTuu DOCUMENT");
-		// 		vscode.commands.executeCommand('workbench.action.closeActiveEditor');
-		// 	});
-		// });
-
-		// test('should convert a string to lowercase', () => {
-		// 	return createNewEditor().then(() => {
-		// 		vscode.commands.executeCommand('editor.action.selectAll');
-		// 		CaseConversion.convertToLowercase();
-		// 		let newString = vscode.window.activeTextEditor?.document.getText();
-		// 		assert.strictEqual(newString, "test document");
-		// 		vscode.commands.executeCommand('workbench.action.closeActiveEditor');
-		// 	});
-		// });
-
-		// test('should convert a string to PascalCase', () => {
-		// 	return createNewEditor().then(() => {
-		// 		vscode.commands.executeCommand('editor.action.selectAll');
-		// 		CaseConversion.convertToPascalCase();
-		// 		let newString = vscode.window.activeTextEditor?.document.getText();
-		// 		assert.strictEqual(newString, "TestDocument");
-		// 		vscode.commands.executeCommand('workbench.action.closeActiveEditor');
-		// 	});
-		// });
-
-		// test('should convert a string to Capital Case', () => {
-		// 	return createNewEditor().then(() => {
-		// 		vscode.commands.executeCommand('editor.action.selectAll');
-		// 		CaseConversion.convertToCapitalCase();
-		// 		let newString = vscode.window.activeTextEditor?.document.getText();
-		// 		assert.strictEqual(newString, "Test Document");
-		// 		vscode.commands.executeCommand('workbench.action.closeActiveEditor');
-		// 	});
-		// });
-
-		// test('should convert a string to camel Case', () => {
-		// 	return createNewEditor().then(() => {
-		// 		vscode.commands.executeCommand('editor.action.selectAll');
-		// 		CaseConversion.convertToCamelCase();
-		// 		let newString = vscode.window.activeTextEditor?.document.getText();
-		// 		assert.strictEqual(newString, "test Document");
-		// 		vscode.commands.executeCommand('workbench.action.closeActiveEditor');
-		// 	});
-		// });
-
-		// test('should convert a string to CONSTANT_CASE', () => {
-		// 	return createNewEditor().then(() => {
-		// 		vscode.commands.executeCommand('editor.action.selectAll');
-		// 		CaseConversion.convertToConstantCase();
-		// 		let newString = vscode.window.activeTextEditor?.document.getText();
-		// 		assert.strictEqual(newString, "TEST_DOCUMENT");
-		// 		vscode.commands.executeCommand('workbench.action.closeActiveEditor');
-		// 	});
-		// });
-
-		// test('should convert a string to dot.case', () => {
-		// 	return createNewEditor().then(() => {
-		// 		vscode.commands.executeCommand('editor.action.selectAll');
-		// 		CaseConversion.convertToDotCase();
-		// 		let newString = vscode.window.activeTextEditor?.document.getText();
-		// 		assert.strictEqual(newString, "test.document");
-		// 		vscode.commands.executeCommand('workbench.action.closeActiveEditor');
-		// 	});
-		// });
-
-		// test('should convert a string to Harder-Case', () => {
-		// 	return createNewEditor().then(() => {
-		// 		vscode.commands.executeCommand('editor.action.selectAll');
-		// 		CaseConversion.convertToHarderCase();
-		// 		let newString = vscode.window.activeTextEditor?.document.getText();
-		// 		assert.strictEqual(newString, "Test-Document");
-		// 		vscode.commands.executeCommand('workbench.action.closeActiveEditor');
-		// 	});
-		// });
-
-		// test('should convert a string to no case', () => {
-		// 	return createNewEditor().then(() => {
-		// 		vscode.commands.executeCommand('editor.action.selectAll');
-		// 		CaseConversion.convertToNoCase();
-		// 		let newString = vscode.window.activeTextEditor?.document.getText();
-		// 		assert.strictEqual(newString, "test document");
-		// 		vscode.commands.executeCommand('workbench.action.closeActiveEditor');
-		// 	});
-		// });
-
-		// test('should convert a string to param-case', () => {
-		// 	return createNewEditor().then(() => {
-		// 		vscode.commands.executeCommand('editor.action.selectAll');
-		// 		CaseConversion.convertToParamCase();
-		// 		let newString = vscode.window.activeTextEditor?.document.getText();
-		// 		assert.strictEqual(newString, "test-document");
-		// 		vscode.commands.executeCommand('workbench.action.closeActiveEditor');
-		// 	});
-		// });
-
-		// test('should convert a string to Sencente case', () => {
-		// 	return createNewEditor().then(() => {
-		// 		vscode.commands.executeCommand('editor.action.selectAll');
-		// 		CaseConversion.convertToSentenceCase();
-		// 		let newString = vscode.window.activeTextEditor?.document.getText();
-		// 		assert.strictEqual(newString, "Test document");
-		// 		vscode.commands.executeCommand('workbench.action.closeActiveEditor');
-		// 	});
-		// });
-
-		// test('should convert a string to snake_case', () => {
-		// 	return createNewEditor().then(() => {
-		// 		vscode.commands.executeCommand('editor.action.selectAll');
-		// 		CaseConversion.convertToSnakeCase();
-		// 		let newString = vscode.window.activeTextEditor?.document.getText();
-		// 		assert.equal(newString, "test_document");
-		// 		vscode.commands.executeCommand('workbench.action.closeActiveEditor');
-		// 	});
-		// });
-
+	before(() => {
+		console.log('Starting tests');
 	});
+	after(() => {
+		console.log('All tests done');
+	});
+
+
+	test('Convert to UPPERCASE', async () => {
+		await createNewEditor();
+		await vscode.commands.executeCommand('editor.action.selectAll');
+		convertToUppercase();
+		await sleep(200);
+		console.log(getDocumentText());
+		assert.deepStrictEqual(getDocumentText(), 'TEST DOCUMENT');
+	});
+
+	test('Convert to lowercase', async () => {
+		await createNewEditor();
+		selectAllText();
+		convertToUppercase();
+		selectAllText();
+		convertToLowercase();
+		console.log(getDocumentText());
+		assert.deepStrictEqual(getDocumentText(), 'test document');
+	});
+
+	test('Convert to Capital Case', async () => {
+		await createNewEditor();
+		await vscode.commands.executeCommand('editor.action.selectAll');
+		convertToCapitalCase();
+		await sleep(200);
+		console.log(getDocumentText());
+		assert.deepStrictEqual(getDocumentText(), 'Test Document');
+	});
+
+	test('Convert to PascalCase', async () => {
+		await createNewEditor();
+		await vscode.commands.executeCommand('editor.action.selectAll');
+		convertToPascalCase();
+		await sleep(200);
+		console.log(getDocumentText());
+		assert.deepStrictEqual(getDocumentText(), 'TestDocument');
+	});
+
+	test('Convert to camelCase', async () => {
+		await createNewEditor();
+		await vscode.commands.executeCommand('editor.action.selectAll');
+		convertToCamelCase();
+		await sleep(200);
+		console.log(getDocumentText());
+		assert.deepStrictEqual(getDocumentText(), 'testDocument');
+	});
+
+	test('Convert to CONSTANT_CASE', async () => {
+		await createNewEditor();
+		await vscode.commands.executeCommand('editor.action.selectAll');
+		convertToConstantCase();
+		await sleep(200);
+		console.log(getDocumentText());
+		assert.deepStrictEqual(getDocumentText(), 'TEST_DOCUMENT');
+	});
+
+	test('Convert to dot.case', async () => {
+		await createNewEditor();
+		await vscode.commands.executeCommand('editor.action.selectAll');
+		convertToDotCase();
+		await sleep(200);
+		console.log(getDocumentText());
+		assert.deepStrictEqual(getDocumentText(), 'test.document');
+	});
+
+	test('Convert to header_case', async () => {
+		await createNewEditor();
+		await vscode.commands.executeCommand('editor.action.selectAll');
+		convertToHarderCase();
+		await sleep(200);
+		console.log(getDocumentText());
+		assert.deepStrictEqual(getDocumentText(), 'Test-Document');
+	});
+
+	test('Convert to no case', async () => {
+		await createNewEditor();
+		await vscode.commands.executeCommand('editor.action.selectAll');
+		convertToNoCase();
+		await sleep(200);
+		console.log(getDocumentText());
+		assert.deepStrictEqual(getDocumentText(), 'test document');
+	});
+
+	test('Convert to param_case', async () => {
+		await createNewEditor();
+		await vscode.commands.executeCommand('editor.action.selectAll');
+		convertToParamCase();
+		await sleep(200);
+		console.log(getDocumentText());
+		assert.deepStrictEqual(getDocumentText(), 'test-document');
+	});
+
+	test('Convert to path/case', async () => {
+		await createNewEditor();
+		await vscode.commands.executeCommand('editor.action.selectAll');
+		convertToPathCase();
+		await sleep(200);
+		console.log(getDocumentText());
+		assert.deepStrictEqual(getDocumentText(), 'test/document');
+	});
+
+	test('Convert to Sentence case', async () => {
+		await createNewEditor();
+		await vscode.commands.executeCommand('editor.action.selectAll');
+		convertToSentenceCase();
+		await sleep(200);
+		console.log(getDocumentText());
+		assert.deepStrictEqual(getDocumentText(), 'Test document');
+	});
+
+	test('Convert to snake_case', async () => {
+		await createNewEditor();
+		await vscode.commands.executeCommand('editor.action.selectAll');
+		convertToSnakeCase();
+		await sleep(200);
+		console.log(getDocumentText());
+		assert.deepStrictEqual(getDocumentText(), 'test_document');
+	});
+
+
+
+
+	function selectAllText() {
+		window.activeTextEditor?.document.getText();
+	}
+
+	function getDocumentText(): String | undefined {
+		return window.activeTextEditor?.document.getText();
+	}
 });

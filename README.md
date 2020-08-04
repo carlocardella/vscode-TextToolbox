@@ -1,1 +1,1 @@
-# VSCode Text
+# VSCode Text Toolbox
