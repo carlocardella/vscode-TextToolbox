@@ -1,2 +1,4 @@
 node_modules
 vsc-extension-quickstart.md
+out/
+.vscode-test/
