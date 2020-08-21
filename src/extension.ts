@@ -3,6 +3,7 @@ import {
 	ExtensionContext,
 } from 'vscode';
 import * as CaseConversion from "./modules/caseConversion";
+import * as InsertText from "./modules/insertText";
 import { experiment1, mySelectAll } from "./modules/experiments";
 
 export function activate(context: ExtensionContext) {
@@ -21,6 +22,9 @@ export function activate(context: ExtensionContext) {
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.ParamCase', () => { CaseConversion.convertToParamCase(); }));
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.SentenceCase', () => { CaseConversion.convertToSentenceCase(); }));
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.SnakeCase', () => { CaseConversion.convertToSnakeCase(); }));
+
+	// insert text
+	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.InsertGUID', () => { InsertText.insertGUID(); }));
 
 	// context.subscriptions.push(commands.registerCommand('vscode-texttoolbox.experiment1', () => { experiment1(); }));
 	// context.subscriptions.push(commands.registerCommand('vscode-texttoolbox.mySelectAll', () => { mySelectAll(); }));

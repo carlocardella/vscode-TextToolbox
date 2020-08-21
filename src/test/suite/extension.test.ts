@@ -131,15 +131,4 @@ suite('Extension Test Suite', () => {
 		console.log(getDocumentText());
 		assert.deepStrictEqual(getDocumentText(), 'test_document');
 	});
-
-
-
-
-	function selectAllText() {
-		window.activeTextEditor?.document.getText();
-	}
-
-	function getDocumentText(): String | undefined {
-		return window.activeTextEditor?.document.getText();
-	}
 });

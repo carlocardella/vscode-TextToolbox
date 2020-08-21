@@ -2,9 +2,10 @@ import * as vscode from 'vscode';
 import { TextDecoder } from 'util';
 import * as CaseConversion from "./caseConversion";
 import { createNewEditor, createTextEditor } from './helpers';
-import { window, Range } from 'vscode';
+import { window, Range, workspace } from 'vscode';
 import { convertToDotCase, convertToUppercase, convertToLowercase } from './caseConversion';
 import { time } from 'console';
+import { v4 } from 'node-uuid';
 
 function sleep(ms: number): Promise<void> {
     return new Promise(resolve => {
@@ -21,8 +22,13 @@ function sleep(ms: number): Promise<void> {
 //     });
 // }
 
+// export function experiment1() {
+//     console.log(window.activeTextEditor?.document.getText());
+// }
+
 export function experiment1() {
-    console.log(window.activeTextEditor?.document.getText());
+    let guid = v4();
+    window.showInformationMessage(guid);
 }
 
 // THIS WORKS

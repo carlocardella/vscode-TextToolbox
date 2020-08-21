@@ -23,13 +23,22 @@ export function sleep(ms: number): Promise<void> {
     });
 }
 
+export function selectAllText() {
+    vscode.window.activeTextEditor?.document.getText();
+}
+
+export function getDocumentText(): String | undefined {
+    return vscode.window.activeTextEditor?.document.getText();
+}
+
+// used for tests
 export async function createTextEditor(): Promise<vscode.TextEditor> {
     const doc = await vscode.workspace.openTextDocument({ language: "plaintext", content: "test document" });
     const editor = await vscode.window.showTextDocument(doc);
     return Promise.resolve(editor);
-    // return editor;
 }
 
+// used for tests
 export function createNewEditor(): PromiseLike<vscode.TextEditor> {
     return new Promise((resolve, reject) => {
         vscode.workspace.openTextDocument({ content: "test document", language: "plaintext", preview: false } as any).then(
