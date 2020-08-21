@@ -30,7 +30,7 @@ vscode-TextToolbox:
         ☐ align csv
 
     insert:
-        ☐ insert GUID
+        ✔ insert GUID @done(20-08-21 08:36)
         ☐ insert Date
         ☐ insert Lorem Ipsum
         ☐ resetSeed

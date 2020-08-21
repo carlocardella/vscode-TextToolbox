@@ -1,16 +1,18 @@
 import * as assert from 'assert';
-import { after, before } from 'mocha';
+import { after, before, afterEach } from 'mocha';
 import * as vscode from 'vscode';
-import { createTextEditor, sleep, createNewEditor } from '../../modules/helpers';
+import { createTextEditor, sleep, createNewEditor, getDocumentText, selectAllText, closeTextEditor } from '../../modules/helpers';
 import { convertToUppercase, convertToLowercase, convertToCapitalCase, convertToDotCase, convertToPascalCase, convertToCamelCase, convertToParamCase, convertToNoCase, convertToHarderCase, convertToConstantCase, convertToPathCase, convertToSentenceCase, convertToSnakeCase } from '../../modules/caseConversion';
-import { window } from 'vscode';
 
-suite('Extension Test Suite', () => {
+suite('caseConversion', () => {
 	before(() => {
-		console.log('Starting tests');
+		console.log('Starting casaeConversion tests');
 	});
 	after(() => {
-		console.log('All tests done');
+		console.log('All caseConversion tests done');
+	});
+	afterEach(() => {
+		closeTextEditor();
 	});
 
 

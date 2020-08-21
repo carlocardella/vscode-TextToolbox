@@ -49,3 +49,8 @@ export function createNewEditor(): PromiseLike<vscode.TextEditor> {
         );
     });
 }
+
+// close active text editor in tests
+export function closeTextEditor() {
+    vscode.commands.executeCommand('workbench.action.closeActiveEditor');
+}
