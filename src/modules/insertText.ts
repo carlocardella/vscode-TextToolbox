@@ -1,6 +1,6 @@
-import { v4 } from "node-uuid";
 import * as Helpers from './helpers';
 import * as vscode from 'vscode';
+import * as guid from 'guid';
 
 function insertText(text: string): Promise<boolean> {
     const editor = vscode.window.activeTextEditor;
@@ -17,8 +17,8 @@ function insertText(text: string): Promise<boolean> {
 }
 
 export function insertGUID(): Promise<boolean> {
-    let guid = v4();
-    let op = insertText(guid);
+    let newGuid = guid.raw();
+    let op = insertText(newGuid);
 
     if (op) {
         return Promise.resolve(true);

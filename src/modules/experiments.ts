@@ -1,17 +1,18 @@
 import * as vscode from 'vscode';
 import { TextDecoder } from 'util';
 import * as CaseConversion from "./caseConversion";
-import { createNewEditor, createTextEditor } from './helpers';
+import { createNewEditor, getDocumentText, sleep } from './helpers';
 import { window, Range, workspace } from 'vscode';
 import { convertToDotCase, convertToUppercase, convertToLowercase } from './caseConversion';
-import { time } from 'console';
-import { v4 } from 'node-uuid';
+import { assert, time } from 'console';
+import guid = require('guid');
+import { insertGUID } from './insertText';
 
-function sleep(ms: number): Promise<void> {
-    return new Promise(resolve => {
-        setTimeout(resolve, ms);
-    });
-}
+// function sleep(ms: number): Promise<void> {
+//     return new Promise(resolve => {
+//         setTimeout(resolve, ms);
+//     });
+// }
 
 // EUREKA!
 // export function experiment1() {
@@ -26,10 +27,41 @@ function sleep(ms: number): Promise<void> {
 //     console.log(window.activeTextEditor?.document.getText());
 // }
 
+// export async function experiment1() {
+//     await createNewEditor();
+//     insertGUID();
+//     await sleep(200);
+//     console.log(getDocumentText());
+
+//     let text = getDocumentText()!.toString();
+//     let validator = guid.isGuid(text);
+//     window.showInformationMessage(text);
+//     window.showInformationMessage(String(validator));
+// }
+
 export function experiment1() {
-    let guid = v4();
-    window.showInformationMessage(guid);
+    const selections = window.activeTextEditor?.selections;
+    if (!selections) { return; }
+    let lineCount = selections.reduce((previous, current) => countLines(current), 0);
+    window.showInformationMessage(String(lineCount));
 }
+
+function countLines(selection: vscode.Selection): number {
+    let n = 0;
+    if (selection.start.line === selection.end.line) {
+        if (selection.start.character !== selection.end.character) {
+            // only one line
+            n += 1;
+        }
+    }
+    else {
+        n = selection.end.line - selection.start.line + 1;
+    }
+
+    return n;
+}
+
+
 
 // THIS WORKS
 // export function mySelectAll() {

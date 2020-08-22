@@ -23,8 +23,8 @@ export function sleep(ms: number): Promise<void> {
     });
 }
 
-export function selectAllText() {
-    vscode.window.activeTextEditor?.document.getText();
+export function selectAllText(): Thenable<unknown> {
+    return vscode.commands.executeCommand('editor.action.selectAll');
 }
 
 export function getDocumentText(): String | undefined {
@@ -32,16 +32,21 @@ export function getDocumentText(): String | undefined {
 }
 
 // used for tests
-export async function createTextEditor(): Promise<vscode.TextEditor> {
-    const doc = await vscode.workspace.openTextDocument({ language: "plaintext", content: "test document" });
-    const editor = await vscode.window.showTextDocument(doc);
-    return Promise.resolve(editor);
-}
-
-// used for tests
 export function createNewEditor(): PromiseLike<vscode.TextEditor> {
     return new Promise((resolve, reject) => {
         vscode.workspace.openTextDocument({ content: "test document", language: "plaintext", preview: false } as any).then(
+            (doc) => {
+                resolve(vscode.window.showTextDocument(doc));
+            },
+            (err) => reject(err)
+        );
+    });
+}
+
+// used for tests
+export function createNewEmptyEditor(): PromiseLike<vscode.TextEditor> {
+    return new Promise((resolve, reject) => {
+        vscode.workspace.openTextDocument({ language: "plaintext", preview: false } as any).then(
             (doc) => {
                 resolve(vscode.window.showTextDocument(doc));
             },

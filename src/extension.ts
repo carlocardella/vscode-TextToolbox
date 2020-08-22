@@ -1,10 +1,12 @@
 import {
 	commands,
 	ExtensionContext,
+	window
 } from 'vscode';
 import * as CaseConversion from "./modules/caseConversion";
 import * as InsertText from "./modules/insertText";
 import { experiment1, mySelectAll } from "./modules/experiments";
+import * as StatusBarSelection from './modules/statusBarSelection';
 
 export function activate(context: ExtensionContext) {
 	console.log("vscode-texttoolbox is active");
@@ -25,6 +27,10 @@ export function activate(context: ExtensionContext) {
 
 	// insert text
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.InsertGUID', () => { InsertText.insertGUID(); }));
+
+	// status bar selection
+	// context.subscriptions.push(commands.registerTextEditorCommand('vscode.texttoolbox.CreateStatusBarItem', () => { StatusBarSelection.createStatusBarItem(context); }));
+	StatusBarSelection.createStatusBarItem(context);
 
 	// context.subscriptions.push(commands.registerCommand('vscode-texttoolbox.experiment1', () => { experiment1(); }));
 	// context.subscriptions.push(commands.registerCommand('vscode-texttoolbox.mySelectAll', () => { mySelectAll(); }));
