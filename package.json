@@ -13,6 +13,7 @@
 		"*"
 	],
 	"main": "./out/extension.js",
+	"icon": "./icons8-toolbox-96.png",
 	"contributes": {
 		"commands": [{
 				"command": "vscode-texttoolbox.Uppercase",
