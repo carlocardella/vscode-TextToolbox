@@ -10,7 +10,11 @@ export function createStatusBarItem(context: ExtensionContext) {
     context.subscriptions.push(window.onDidChangeTextEditorSelection(updateStatusBar));
     context.subscriptions.push(vscode.window.onDidChangeActiveTextEditor(updateStatusBar));
     context.subscriptions.push(vscode.window.onDidChangeActiveTextEditor(countWords));
-    context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(updateStatusBarConfiguration));
+    context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(showUpdateMessage));
+}
+
+function showUpdateMessage() {
+    window.showInformationMessage("Please reload the window for the change to take effect");
 }
 
 function updateStatusBarConfiguration() {
