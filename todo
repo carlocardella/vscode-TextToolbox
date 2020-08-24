@@ -59,9 +59,11 @@ vscode-TextToolbox:
         ☐ if there is no selection update the entire line
 
     status bar:
-        ☐ number of lines selected
-        ☐ number of characters selected
-        ☐ cursor position (line and character)
+        ✔ number of lines selected @done(20-08-23 08:58)
+        ✔ number of characters selected @done(20-08-23 08:58)
+        ✔ word count @done(20-08-23 08:59)
+        ☐ disable click
+        ☐ allow to update position without reloading the entire window
 
     package:
         ☐ add a better description

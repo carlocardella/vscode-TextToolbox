@@ -1,7 +1,8 @@
 import {
 	commands,
 	ExtensionContext,
-	window
+	window,
+	workspace
 } from 'vscode';
 import * as CaseConversion from "./modules/caseConversion";
 import * as InsertText from "./modules/insertText";
@@ -29,16 +30,17 @@ export function activate(context: ExtensionContext) {
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.InsertGUID', () => { InsertText.insertGUID(); }));
 
 	// status bar selection
-	// context.subscriptions.push(commands.registerTextEditorCommand('vscode.texttoolbox.CreateStatusBarItem', () => { StatusBarSelection.createStatusBarItem(context); }));
-	StatusBarSelection.createStatusBarItem(context);
+	if (workspace.getConfiguration().get('tt.enableStatusBarWordLineCount')) {
+		StatusBarSelection.createStatusBarItem(context);
+	}
 
-	// context.subscriptions.push(commands.registerCommand('vscode-texttoolbox.experiment1', () => { experiment1(); }));
-	// context.subscriptions.push(commands.registerCommand('vscode-texttoolbox.mySelectAll', () => { mySelectAll(); }));
-
+	// experiments
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.experiment1', () => { experiment1(); }));
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.mySelectAll', () => { mySelectAll(); }));
 };
 
 
 // this method is called when your extension is deactivated
-export function deactivate() { }
+export function deactivate() {
+	StatusBarSelection.disposeStatusBarItem();
+}
