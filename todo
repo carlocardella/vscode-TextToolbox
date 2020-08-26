@@ -36,24 +36,22 @@ vscode-TextToolbox:
         ☐ insert Lorem Ipsum
         ☐ resetSeed
         ☐ randomByte
-        ☐ randomShort
-        ☐ randomInt
-        ☐ randomLong
+        ✔ randomNumber @done(20-08-26 10:24)
         ☐ randomIntCustomRange
         ☐ randomStringCustomLength
         ☐ randomSampleFromInput
-        ☐ randomName
-        ☐ randomStreetAddress
-        ☐ randomCity
-        ☐ randomCountryCode
-        ☐ randomCountryName
-        ☐ randomPhoneNumber
-        ☐ randomEmail
-        ☐ randomIP
-        ☐ randomIPv6
-        ☐ randomUrl
-        ☐ randomHexColor
-        ☐ randomRgbColor
+        ✔ randomName @done(20-08-26 10:23)
+        ✔ randomStreetAddress @done(20-08-26 10:23)
+        ✔ randomCity @done(20-08-26 10:23)
+        ✔ randomCountryCode @done(20-08-26 10:23)
+        ✔ randomCountryName @done(20-08-26 10:24)
+        ✔ randomPhoneNumber @done(20-08-26 10:24)
+        ✔ randomEmail @done(20-08-26 10:24)
+        ✔ randomIP @done(20-08-26 10:24)
+        ✔ randomIPv6 @done(20-08-26 10:24)
+        ✔ randomUrl @done(20-08-26 10:24)
+        ✔ randomHexColor @done(20-08-26 10:24)
+        ✔ randomRgbColor @done(20-08-26 10:24)
         ☐ randomIban
 
     other:

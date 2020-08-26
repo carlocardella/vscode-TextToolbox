@@ -15,8 +15,7 @@
 	"main": "./out/extension.js",
 	"icon": "./icons8-toolbox-96.png",
 	"contributes": {
-		"commands": [
-			{
+		"commands": [{
 				"command": "vscode-texttoolbox.Uppercase",
 				"title": "TT: UPPERCASE"
 			},
@@ -79,37 +78,39 @@
 			{
 				"command": "vscode-texttoolbox.InsertDate",
 				"title": "TT: Insert Date"
+			},
+			{
+				"command": "vscode-texttoolbox.PickRandom",
+				"title": "TT: Insert Random"
 			}
 		],
-		"configuration": [
-			{
-				"title": "Text Toolbox",
-				"properties": {
-					"tt.statusBarAlignment": {
-						"type": "string",
-						"enum": [
-							"Left",
-							"Right"
-						],
-						"default": "Right",
-						"scope": "window",
-						"description": "Text Toolbox word and selected lines count alignment in the StatusBar"
-					},
-					"tt.statusBarPriority": {
-						"type": "number",
-						"default": 100,
-						"scope": "window",
-						"description": "Text Toolbox word and selected lines count StatusBar priority"
-					},
-					"tt.enableStatusBarWordLineCount": {
-						"type": "boolean",
-						"default": true,
-						"scope": "window",
-						"description": "Enable or disable the StatusBar Text Toolbox word and selected lines count"
-					}
+		"configuration": [{
+			"title": "Text Toolbox",
+			"properties": {
+				"tt.statusBarAlignment": {
+					"type": "string",
+					"enum": [
+						"Left",
+						"Right"
+					],
+					"default": "Right",
+					"scope": "window",
+					"description": "Text Toolbox word and selected lines count alignment in the StatusBar"
+				},
+				"tt.statusBarPriority": {
+					"type": "number",
+					"default": 100,
+					"scope": "window",
+					"description": "Text Toolbox word and selected lines count StatusBar priority"
+				},
+				"tt.enableStatusBarWordLineCount": {
+					"type": "boolean",
+					"default": true,
+					"scope": "window",
+					"description": "Enable or disable the StatusBar Text Toolbox word and selected lines count"
 				}
 			}
-		]
+		}]
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
@@ -120,12 +121,15 @@
 		"test": "node ./out/test/runTest.js"
 	},
 	"devDependencies": {
+		"@types/chance": "^1.1.0",
 		"@types/glob": "^7.1.1",
 		"@types/mocha": "^7.0.2",
 		"@types/node": "^13.11.0",
 		"@types/vscode": "^1.47.0",
 		"@typescript-eslint/eslint-plugin": "^2.30.0",
 		"@typescript-eslint/parser": "^2.30.0",
+		"chance": "^1.1.7",
+		"change": "0.0.0",
 		"change-case": "^4.1.1",
 		"date-and-time": "^0.14.1",
 		"date-format": "^3.0.0",

@@ -1,7 +1,8 @@
 import * as vscode from 'vscode';
-import * as guid from 'guid';
 import { window } from 'vscode';
 import { DateTime } from 'luxon';
+import { Chance } from 'chance';
+
 
 function insertText(text: string): Promise<boolean> {
     const editor = vscode.window.activeTextEditor;
@@ -18,7 +19,8 @@ function insertText(text: string): Promise<boolean> {
 }
 
 export function insertGUID(): Promise<boolean> {
-    let newGuid = guid.raw();
+    const chance = new Chance();
+    const newGuid = chance.guid();
     let op = insertText(newGuid);
 
     if (op) {
@@ -103,4 +105,132 @@ export async function insertDateTime(selectedFormat: string | undefined, testDat
     }
 
     insertText(text!);
+}
+
+export async function pickRandom() {
+    const randomTypeToInsert = [
+        'IPV4',
+        'IPV6',
+        'NUMBER',
+        'PERSON_NAME',
+        'SSN',
+        'PROFESSION',
+        'ANIMAL',
+        'COMPANY',
+        'DOMAIN',
+        'EMAIL',
+        'COLOR',
+        'TWITTER',
+        'URL',
+        'CITY',
+        'ADDRESS',
+        'COUNTRY',
+        'PHONE',
+        'ZIP_CODE',
+        'STATE',
+        'STREET',
+        'TIMEZONE',
+        'PARAGRAPH',
+        'HASH'
+    ];
+    const selectedRandomType: string | undefined = await window.showQuickPick(randomTypeToInsert, { ignoreFocusOut: true });
+    insertRandom(selectedRandomType);
+}
+
+export async function insertRandom(selectedRandomType: string | undefined) {
+    const chance = new Chance();
+    let text;
+
+    switch (selectedRandomType) {
+        case 'IPV4':
+            text = chance.ip();
+            break;
+        case 'IPV6':
+            text = chance.ipv6();
+            break;
+        case 'NUMBER':
+            text = chance.natural();
+            break;
+        case 'PERSON_NAME':
+            const gender: string | undefined = await window.showQuickPick(['random', 'male', 'female'], { ignoreFocusOut: true });
+            // TODO: add optional nationality
+            // TODO: add optional middle name
+            // TODO: add optional title
+            if (gender === 'male') {
+                text = chance.name({ gender: 'male' });
+            }
+            else if (gender === 'female') {
+                text = chance.name({ gender: 'female' });
+            }
+            else {
+                text = chance.name();
+            }
+            break;
+        case 'SSN':
+            text = chance.ssn();
+            break;
+        case 'PROFESSION':
+            text = chance.profession({ rank: true });
+            break;
+        case 'ANIMAL':
+            // Allowed types are: ocean, desert, grassland, forest, farm, pet, and zoo
+            text = chance.animal();
+            break;
+        case 'COMPANY':
+            text = chance.company();
+            break;
+        case 'DOMAIN':
+            text = chance.domain();
+            break;
+        case 'EMAIL':
+            text = chance.email();
+            break;
+        case 'COLOR':
+            const colorType: string | undefined = await window.showQuickPick(['hex', 'rgb'], { ignoreFocusOut: true });
+            text = chance.color({ format: colorType });
+            break;
+        case 'TWITTER':
+            text = chance.twitter();
+            break;
+        case 'URL':
+            text = chance.url();
+            break;
+        case 'CITY':
+            text = chance.city();
+            break;
+        case 'ADDRESS':
+            text = chance.address();
+            break;
+        case 'COUNTRY':
+            text = chance.country();
+            break;
+        case 'PHONE':
+            text = chance.phone();
+            break;
+        case 'ZIP_CODE':
+            text = chance.zip();
+            break;
+        case 'STATE':
+            text = chance.state();
+            break;
+        case 'STREET':
+            // INVESTIGATE: return the whole object?
+            text = chance.street();
+            break;
+        case 'TIMEZONE':
+            text = chance.timezone().name;
+            break;
+        case 'PARAGRAPH':
+            const n: string | undefined = await window.showInputBox({ prompt: 'How many sentences?', value: '5', ignoreFocusOut: true });
+            text = chance.paragraph({ sentences: n });
+            break;
+        case 'HASH':
+            const length: string | undefined = await window.showInputBox({ prompt: 'Enter length', value: '25', ignoreFocusOut: true });
+            text = chance.hash({ length: length });
+            break;
+        default:
+            break;
+    }
+
+    insertText(String(text));
 }
