@@ -19,7 +19,7 @@ suite('caseConversion', () => {
 		await createNewEditor();
 		await selectAllText();
 		convertToUppercase();
-		await sleep(200);
+		await sleep(500);
 		console.log(getDocumentText());
 		assert.deepStrictEqual(getDocumentText(), 'TEST DOCUMENT');
 	});

@@ -1,103 +1,38 @@
 import * as vscode from 'vscode';
-import { TextDecoder } from 'util';
-import * as CaseConversion from "./caseConversion";
 import { createNewEditor, getDocumentText, sleep } from './helpers';
-import { window, Range, workspace } from 'vscode';
 import { convertToDotCase, convertToUppercase, convertToLowercase } from './caseConversion';
-import { assert, time } from 'console';
 import guid = require('guid');
-import { insertGUID } from './insertText';
-
-// function sleep(ms: number): Promise<void> {
-//     return new Promise(resolve => {
-//         setTimeout(resolve, ms);
-//     });
-// }
-
-// EUREKA!
-// export function experiment1() {
-//     createTextEditor().then(() => {
-//         vscode.commands.executeCommand('editor.action.selectAll').then(() => {
-//             convertToUppercase();
-//         });
-//     });
-// }
-
-// export function experiment1() {
-//     console.log(window.activeTextEditor?.document.getText());
-// }
-
-// export async function experiment1() {
-//     await createNewEditor();
-//     insertGUID();
-//     await sleep(200);
-//     console.log(getDocumentText());
-
-//     let text = getDocumentText()!.toString();
-//     let validator = guid.isGuid(text);
-//     window.showInformationMessage(text);
-//     window.showInformationMessage(String(validator));
-// }
+import * as moment from 'moment';
+import { DateTime } from 'luxon';
+import { insertDateTime } from './insertText';
 
 export function experiment1() {
-    const selections = window.activeTextEditor?.selections;
-    if (!selections) { return; }
-    let lineCount = selections.reduce((previous, current) => countLines(current), 0);
-    window.showInformationMessage(String(lineCount));
+    let dt = DateTime.local(2020, 8, 25, 15, 34, 41);
+
+    let dateTimeFormats = [
+        'DATE_SHORT', // 8/25/2020
+        'TIME_SIMPLE', // 3:34 PM
+        'TIME_WITH_SECONDS', // 3:34:45 PM
+        'DATETIME_SHORT', // 8/25/2020, 3:34 PM
+        'DATE_HUGE', // Tuesday, August 25, 2020
+        'SORTABLE', // 2020-08-25T15:34:58
+        'UNIVERSAL_SORTABLE', // 2020-08-25T22:34:41Z
+        'ISO8601', // 2020-08-25T15:34:41.000-07:00
+        'RFC2822', // Tue, 25 Aug 2020 15:34:41 -0700
+        'HTTP', // Tue, 25 Aug 2020 22:34:41 GMT
+        'DATETIME_SHORT_WITH_SECONDS', // 8/25/2020, 3:34:41 PM
+        'DATETIME_FULL_WITH_SECONDS', // August 25, 2020, 3:34 PM PDT
+        'UNIX_SECONDS', // 1598394881
+        'UNIX_MILLISECONDS' // 1598394881000
+    ];
+
+    dateTimeFormats.forEach(function (d) {
+        console.log(d);
+        insertDateTime(d, dt);
+    });
 }
 
-function countLines(selection: vscode.Selection): number {
-    let n = 0;
-    if (selection.start.line === selection.end.line) {
-        if (selection.start.character !== selection.end.character) {
-            // only one line
-            n += 1;
-        }
-    }
-    else {
-        n = selection.end.line - selection.start.line + 1;
-    }
 
-    return n;
-}
-
-
-
-// THIS WORKS
-// export function mySelectAll() {
-//     console.log("entered mySelectAll");
-//     createTextEditor().then(() => {
-//         vscode.commands.executeCommand('editor.action.selectAll');
-//     });
-//     sleep(200).then(() => {
-//         CaseConversion.convertToUppercase(); // this works too!
-//     });
-// }
-
-// export function mySelectAll() {
-//     createTextEditor().then(editor => {
-//         vscode.commands.executeCommand('editor.action.selectAll').then(() => {
-//             convertToUppercase();
-//             vscode.window.showInformationMessage(editor.document.getText());
-//         });
-//     });
-// }
-
-// works
-// export function mySelectAll() {
-//     vscode.workspace.openTextDocument({ language: "plaintext", content: "test document" }).then(doc => {
-//         vscode.window.showTextDocument(doc).then(() => {
-//             vscode.commands.executeCommand('editor.action.selectAll').then(() => {
-//                 let text = vscode.window.activeTextEditor?.document.getText();
-//                 window.activeTextEditor?.edit(eb => {
-//                     eb.replace(new vscode.Selection(new vscode.Position(0, 0), new vscode.Position(0, 24)), text?.toUpperCase());
-//                 }).then(() => {
-//                     console.log(vscode.window.activeTextEditor?.document.getText());
-//                 });
-//             });
-//         });
-//     });
-// }
 
 export async function mySelectAll() {
     await createNewEditor();

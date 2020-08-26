@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 
+
 function validateEditor() {
     const editor = vscode.window.activeTextEditor;
     if (!editor) { return; }
@@ -58,4 +59,9 @@ export function createNewEmptyEditor(): PromiseLike<vscode.TextEditor> {
 // close active text editor in tests
 export function closeTextEditor() {
     vscode.commands.executeCommand('workbench.action.closeActiveEditor');
+}
+
+export function prependZeroes(n: number) {
+    if (n <= 9) { return '0' + n; }
+    return n;
 }

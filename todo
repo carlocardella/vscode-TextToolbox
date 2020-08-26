@@ -31,7 +31,8 @@ vscode-TextToolbox:
 
     insert:
         ✔ insert GUID @done(20-08-21 08:36)
-        ☐ insert Date
+        ✔ insert Date @done(20-08-25 22:33)
+            ☐ improve command picker, show date format preview
         ☐ insert Lorem Ipsum
         ☐ resetSeed
         ☐ randomByte
