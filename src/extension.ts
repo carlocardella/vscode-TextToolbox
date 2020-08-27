@@ -1,14 +1,9 @@
-import {
-	commands,
-	ExtensionContext,
-	window,
-	workspace
-} from 'vscode';
+import { commands, ExtensionContext, workspace } from 'vscode';
 import * as CaseConversion from "./modules/caseConversion";
 import * as InsertText from "./modules/insertText";
-import { experiment1, mySelectAll } from "./modules/experiments";
 import * as StatusBarSelection from './modules/statusBarSelection';
 import * as FilterText from './modules/filterText';
+
 
 export function activate(context: ExtensionContext) {
 	console.log("vscode-texttoolbox is active");
@@ -41,10 +36,6 @@ export function activate(context: ExtensionContext) {
 	if (workspace.getConfiguration().get('tt.enableStatusBarWordLineCount')) {
 		StatusBarSelection.createStatusBarItem(context);
 	}
-
-	// experiments
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.experiment1', () => { experiment1(); }));
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.mySelectAll', () => { mySelectAll(); }));
 };
 
 

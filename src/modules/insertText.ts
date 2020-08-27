@@ -5,10 +5,10 @@ import { Chance } from 'chance';
 import * as pad from 'pad';
 
 function insertText(text: string): Promise<boolean> {
-    const editor = vscode.window.activeTextEditor;
+    const editor = window.activeTextEditor;
     if (!editor) { return Promise.reject(false); }
 
-    const position = vscode.window.activeTextEditor?.selection.active;
+    const position = window.activeTextEditor?.selection.active;
     if (!position) { return Promise.reject(false); }
 
     editor.edit(editBuilder => {

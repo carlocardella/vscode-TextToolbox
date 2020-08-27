@@ -18,9 +18,6 @@ function showUpdateMessage() {
 }
 
 function updateStatusBarConfiguration() {
-    // if (statusBarItem) { disposeStatusBarItem(); }
-    // statusBarItem.hide();
-
     if (!workspace.getConfiguration().get('tt.enableStatusBarWordLineCount')) {
         disposeStatusBarItem();
         return;

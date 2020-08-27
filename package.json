@@ -64,14 +64,6 @@
 				"title": "TT: snake_case"
 			},
 			{
-				"command": "vscode-texttoolbox.experiment1",
-				"title": "TT: experiment1"
-			},
-			{
-				"command": "vscode-texttoolbox.mySelectAll",
-				"title": "TT: mySelectAll"
-			},
-			{
 				"command": "vscode-texttoolbox.InsertGUID",
 				"title": "TT: Insert GUID"
 			},
