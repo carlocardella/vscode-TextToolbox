@@ -21,8 +21,8 @@ vscode-TextToolbox:
 
     filtering:
         ☐ remove duplicate lines
-        ☐ remove all empty lines
-        ☐ remove excess empty lines
+        ✔ remove all empty lines @done(20-08-26 22:31)
+        ✔ remove excess empty lines @done(20-08-26 22:31)
 
     sorting:
         ☐ sort (asc|desc)

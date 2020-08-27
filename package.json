@@ -86,6 +86,14 @@
 			{
 				"command": "vscode-texttoolbox.Pad",
 				"title": "TT: Pad"
+			},
+			{
+				"command": "vscode-texttoolbox.RemoveAllEmptyLines",
+				"title": "TT: Remove all empty lines"
+			},
+			{
+				"command": "vscode-texttoolbox.RemoveRedundantEmptyLines",
+				"title": "TT: Remove redundant empty lines"
 			}
 		],
 		"configuration": [{

@@ -1,6 +1,6 @@
 import * as assert from 'assert';
 import * as guid from 'guid';
-import { closeTextEditor, sleep, getDocumentText, createNewEmptyEditor } from '../../modules/helpers';
+import { closeTextEditor, sleep, getDocumentText, createNewEditor } from '../../modules/helpers';
 import { insertGUID, insertDateTime, padText } from '../../modules/insertText';
 import { before, after, afterEach, describe } from 'mocha';
 import { DateTime } from 'luxon';
@@ -18,7 +18,7 @@ suite('insertText', () => {
 
     describe('Test insert text', () => {
         test('Insert GUID', async () => {
-            await createNewEmptyEditor();
+            await createNewEditor();
             insertGUID();
             await sleep(200);
 
@@ -34,7 +34,7 @@ suite('insertText', () => {
 
         tests.forEach(function (t) {
             test('Padding ' + t.padString, async () => {
-                await createNewEmptyEditor();
+                await createNewEditor();
                 await padText(t.padString, t.lenght);
                 await sleep(500);
 
@@ -66,7 +66,7 @@ suite('insertText', () => {
 
         tests.forEach(function (t) {
             test('Insert Date ' + t.args, async () => {
-                await createNewEmptyEditor();
+                await createNewEditor();
                 await insertDateTime(t.args, testDate);
                 await sleep(500);
 

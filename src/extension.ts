@@ -8,6 +8,7 @@ import * as CaseConversion from "./modules/caseConversion";
 import * as InsertText from "./modules/insertText";
 import { experiment1, mySelectAll } from "./modules/experiments";
 import * as StatusBarSelection from './modules/statusBarSelection';
+import * as FilterText from './modules/filterText';
 
 export function activate(context: ExtensionContext) {
 	console.log("vscode-texttoolbox is active");
@@ -30,9 +31,11 @@ export function activate(context: ExtensionContext) {
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.InsertGUID', () => { InsertText.insertGUID(); }));
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.InsertDate', () => { InsertText.pickDateTime(); }));
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.PickRandom', () => { InsertText.pickRandom(); }));
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.Pad', () => { InsertText.askForPadDetails('Right'); }));
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.PadRight', () => { InsertText.askForPadDetails('Right'); }));
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.PadLeft', () => { InsertText.askForPadDetails('Left'); }));
+	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.Pad', () => { InsertText.askForPadDetails(); }));
+
+	// filter text
+	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.RemoveAllEmptyLines', () => { FilterText.removeEmptyLines(false); }));
+	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.RemoveRedundantEmptyLines', () => { FilterText.removeEmptyLines(true); }));
 
 	// status bar selection
 	if (workspace.getConfiguration().get('tt.enableStatusBarWordLineCount')) {

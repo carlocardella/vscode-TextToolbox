@@ -32,22 +32,14 @@ export function getDocumentText(): String | undefined {
     return vscode.window.activeTextEditor?.document.getText();
 }
 
-// used for tests
-export function createNewEditor(): PromiseLike<vscode.TextEditor> {
-    return new Promise((resolve, reject) => {
-        vscode.workspace.openTextDocument({ content: "test document", language: "plaintext", preview: false } as any).then(
-            (doc) => {
-                resolve(vscode.window.showTextDocument(doc));
-            },
-            (err) => reject(err)
-        );
-    });
+export function getActiveEditor(): vscode.TextEditor | undefined {
+    return vscode.window.activeTextEditor;
 }
 
 // used for tests
-export function createNewEmptyEditor(): PromiseLike<vscode.TextEditor> {
+export function createNewEditor(text?: string): PromiseLike<vscode.TextEditor> {
     return new Promise((resolve, reject) => {
-        vscode.workspace.openTextDocument({ language: "plaintext", preview: false } as any).then(
+        vscode.workspace.openTextDocument({ content: text, language: "plaintext", preview: false } as any).then(
             (doc) => {
                 resolve(vscode.window.showTextDocument(doc));
             },
