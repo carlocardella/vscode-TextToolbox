@@ -30,6 +30,9 @@ export function activate(context: ExtensionContext) {
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.InsertGUID', () => { InsertText.insertGUID(); }));
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.InsertDate', () => { InsertText.pickDateTime(); }));
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.PickRandom', () => { InsertText.pickRandom(); }));
+	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.Pad', () => { InsertText.askForPadDetails('Right'); }));
+	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.PadRight', () => { InsertText.askForPadDetails('Right'); }));
+	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.PadLeft', () => { InsertText.askForPadDetails('Left'); }));
 
 	// status bar selection
 	if (workspace.getConfiguration().get('tt.enableStatusBarWordLineCount')) {

@@ -53,6 +53,7 @@ vscode-TextToolbox:
         ✔ randomHexColor @done(20-08-26 10:24)
         ✔ randomRgbColor @done(20-08-26 10:24)
         ☐ randomIban
+        ✔ pad @done(20-08-26 17:14)
 
     other:
         ☐ if there is no selection update the entire line

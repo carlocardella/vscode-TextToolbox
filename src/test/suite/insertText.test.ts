@@ -1,7 +1,7 @@
 import * as assert from 'assert';
 import * as guid from 'guid';
 import { closeTextEditor, sleep, getDocumentText, createNewEmptyEditor } from '../../modules/helpers';
-import { insertGUID, insertDateTime } from '../../modules/insertText';
+import { insertGUID, insertDateTime, padText } from '../../modules/insertText';
 import { before, after, afterEach, describe } from 'mocha';
 import { DateTime } from 'luxon';
 
@@ -16,13 +16,32 @@ suite('insertText', () => {
         closeTextEditor();
     });
 
-    test('Insert GUID', async () => {
-        await createNewEmptyEditor();
-        insertGUID();
-        await sleep(200);
+    describe('Test insert text', () => {
+        test('Insert GUID', async () => {
+            await createNewEmptyEditor();
+            insertGUID();
+            await sleep(200);
 
-        let text = String(getDocumentText());
-        assert.ok(guid.isGuid(text), `Value "${text}" is not a valid GUID`);
+            let text = String(getDocumentText());
+            assert.ok(guid.isGuid(text), `Value "${text}" is not a valid GUID`);
+        });
+
+        let tests = [
+            { padString: "@", lenght: 10, expected: "@@@@@@@@@@" },
+            { padString: "3", lenght: 10, expected: "3333333333" },
+            { padString: "ab", lenght: 10, expected: "abababababababababab" }
+        ];
+
+        tests.forEach(function (t) {
+            test('Padding ' + t.padString, async () => {
+                await createNewEmptyEditor();
+                await padText(t.padString, t.lenght);
+                await sleep(500);
+
+                let text = String(getDocumentText());
+                assert.deepStrictEqual(text, t.expected);
+            });
+        });
     });
 
     describe('Test insert DateTime', () => {
@@ -53,7 +72,6 @@ suite('insertText', () => {
 
                 let text = String(getDocumentText());
                 assert.deepStrictEqual(text, t.expected);
-                closeTextEditor();
             });
         });
     });

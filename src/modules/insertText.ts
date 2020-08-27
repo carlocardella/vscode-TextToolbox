@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import { window } from 'vscode';
 import { DateTime } from 'luxon';
 import { Chance } from 'chance';
-
+import * as pad from 'pad';
 
 function insertText(text: string): Promise<boolean> {
     const editor = vscode.window.activeTextEditor;
@@ -232,5 +232,19 @@ export async function insertRandom(selectedRandomType: string | undefined) {
             break;
     }
 
+    insertText(String(text));
+}
+
+export async function askForPadDetails() {
+    const s: string | undefined = await window.showInputBox({ prompt: 'Filler string', ignoreFocusOut: true });
+    if (!s) { return; }
+    const n: string | undefined = await window.showInputBox({ prompt: 'How many repetitions?', ignoreFocusOut: true });
+    if (!n) { return; }
+
+    padText(s, Number(n));
+}
+
+export async function padText(padString: string, length: number) {
+    let text = pad('', length, padString);
     insertText(String(text));
 }

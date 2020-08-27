@@ -82,6 +82,10 @@
 			{
 				"command": "vscode-texttoolbox.PickRandom",
 				"title": "TT: Insert Random"
+			},
+			{
+				"command": "vscode-texttoolbox.Pad",
+				"title": "TT: Pad"
 			}
 		],
 		"configuration": [{
@@ -125,6 +129,7 @@
 		"@types/glob": "^7.1.1",
 		"@types/mocha": "^7.0.2",
 		"@types/node": "^13.11.0",
+		"@types/pad": "^2.1.0",
 		"@types/vscode": "^1.47.0",
 		"@typescript-eslint/eslint-plugin": "^2.30.0",
 		"@typescript-eslint/parser": "^2.30.0",
@@ -141,6 +146,7 @@
 		"mocha": "^7.1.2",
 		"moment": "^2.27.0",
 		"node-uuid": "^1.4.8",
+		"pad": "^3.2.0",
 		"typescript": "^3.8.3",
 		"uuid-lib": "0.0.6",
 		"vscode-test": "^1.3.0"
