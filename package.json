@@ -50,7 +50,7 @@
 	"main": "./out/extension.js",
 	"preview": true,
 	"badges": [],
-	"icon": "./text_icon_regular.png",
+	"icon": "text_icon_regular.png",
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/carlocardella/vscode-TextToolbox.git"
