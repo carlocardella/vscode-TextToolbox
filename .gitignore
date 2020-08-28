@@ -1,4 +1,6 @@
-node_modules
-vsc-extension-quickstart.md
 out/
+node_modules/
+vsc-extension-quickstart.md
 .vscode-test/
+*.vsix
+dist/

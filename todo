@@ -1,0 +1,71 @@
+vscode-TextToolbox:
+    text manipulation:
+        ✔ Uppercase @done(20-07-29 07:46)
+        ✔ Lowercase @done(20-07-29 07:46)
+        ✔ PascalCase @done(20-07-29 07:46)
+        ✔ CapitalCase @done(20-07-29 07:46)
+        ✔ CamelCase @done(20-07-29 07:46)
+        ✔ ConstantCase @done(20-07-29 07:46)
+        ✔ DotCase @done(20-07-29 07:46)
+        ✔ HarderCase @done(20-07-29 07:46)
+        ✔ NoCase @done(20-07-29 07:46)
+        ✔ ParamCase @done(20-07-29 07:46)
+        ✔ SentenceCase @done(20-07-29 07:46)
+        ✔ SnakeCase @done(20-07-29 07:46)
+        ☐ escape (json)
+        ☐ unescape (json)
+        ☐ remove empty lines
+        ☐ remove empty lines (end of file)
+        ☐ trim
+        ☐ duplicate string (ask user how many times)
+
+    filtering:
+        ☐ remove duplicate lines
+        ✔ remove all empty lines @done(20-08-26 22:31)
+        ✔ remove excess empty lines @done(20-08-26 22:31)
+
+    sorting:
+        ☐ sort (asc|desc)
+            ☐ open result in new editor
+        ☐ align csv
+
+    insert:
+        ✔ insert GUID @done(20-08-21 08:36)
+        ✔ insert Date @done(20-08-25 22:33)
+            ☐ improve command picker, show date format preview
+        ☐ insert Lorem Ipsum
+        ☐ resetSeed
+        ☐ randomByte
+        ✔ randomNumber @done(20-08-26 10:24)
+        ☐ randomIntCustomRange
+        ☐ randomStringCustomLength
+        ☐ randomSampleFromInput
+        ✔ randomName @done(20-08-26 10:23)
+        ✔ randomStreetAddress @done(20-08-26 10:23)
+        ✔ randomCity @done(20-08-26 10:23)
+        ✔ randomCountryCode @done(20-08-26 10:23)
+        ✔ randomCountryName @done(20-08-26 10:24)
+        ✔ randomPhoneNumber @done(20-08-26 10:24)
+        ✔ randomEmail @done(20-08-26 10:24)
+        ✔ randomIP @done(20-08-26 10:24)
+        ✔ randomIPv6 @done(20-08-26 10:24)
+        ✔ randomUrl @done(20-08-26 10:24)
+        ✔ randomHexColor @done(20-08-26 10:24)
+        ✔ randomRgbColor @done(20-08-26 10:24)
+        ☐ randomIban
+        ✔ pad @done(20-08-26 17:14)
+
+    other:
+        ☐ if there is no selection update the entire line
+
+    status bar:
+        ✔ number of lines selected @done(20-08-23 08:58)
+        ✔ number of characters selected @done(20-08-23 08:58)
+        ✔ word count @done(20-08-23 08:59)
+        ☐ disable click
+        ☐ allow to update position without reloading the entire window
+
+    package:
+        ✔ add a better description @done(20-08-27 16:45)
+        ☐ find the minimum required vscode version
+        ☐ update extension
