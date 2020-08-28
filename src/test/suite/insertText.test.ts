@@ -54,14 +54,14 @@ suite('insertText', () => {
             { args: 'DATETIME_SHORT', expected: '8/25/2020, 3:34 PM' },
             { args: 'DATE_HUGE', expected: 'Tuesday, August 25, 2020' },
             { args: 'SORTABLE', expected: '2020-08-25T15:34:41' },
-            { args: 'UNIVERSAL_SORTABLE', expected: '2020-08-25T22:34:41Z' },
-            { args: 'ISO8601', expected: '2020-08-25T15:34:41.000-07:00' },
-            { args: 'RFC2822', expected: 'Tue, 25 Aug 2020 15:34:41 -0700' },
-            { args: 'HTTP', expected: 'Tue, 25 Aug 2020 22:34:41 GMT' },
+            { args: 'UNIVERSAL_SORTABLE', expected: '2020-08-25T15:34:41Z' },
+            { args: 'ISO8601', expected: '2020-08-25T15:34:41.000+00:00' },
+            { args: 'RFC2822', expected: 'Tue, 25 Aug 2020 15:34:41 +0000' },
+            { args: 'HTTP', expected: 'Tue, 25 Aug 2020 15:34:41 GMT' },
             { args: 'DATETIME_SHORT_WITH_SECONDS', expected: '8/25/2020, 3:34:41 PM' },
-            { args: 'DATETIME_FULL_WITH_SECONDS', expected: 'August 25, 2020, 3:34 PM PDT' },
-            { args: 'UNIX_SECONDS', expected: '1598394881' },
-            { args: 'UNIX_MILLISECONDS', expected: '1598394881000' }
+            { args: 'DATETIME_FULL_WITH_SECONDS', expected: 'August 25, 2020, 3:34 PM UTC' },
+            { args: 'UNIX_SECONDS', expected: '1598369681' },
+            { args: 'UNIX_MILLISECONDS', expected: '1598369681000' }
         ];
 
         tests.forEach(function (t) {
