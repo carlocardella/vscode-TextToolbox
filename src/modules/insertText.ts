@@ -48,7 +48,7 @@ export async function pickDateTime() {
         'UNIX_MILLISECONDS' // 1598402132390
     ];
     const selectedFormat: string | undefined = await window.showQuickPick(dateTimeFormats, { ignoreFocusOut: true });
-    insertDateTime(selectedFormat);
+    if (selectedFormat) { insertDateTime(selectedFormat); }
 }
 
 export async function insertDateTime(selectedFormat: string | undefined, testDate?: DateTime) {
@@ -134,7 +134,7 @@ export async function pickRandom() {
         'HASH'
     ];
     const selectedRandomType: string | undefined = await window.showQuickPick(randomTypeToInsert, { ignoreFocusOut: true });
-    insertRandom(selectedRandomType);
+    if (selectedRandomType) { insertRandom(selectedRandomType); }
 }
 
 export async function insertRandom(selectedRandomType: string | undefined) {
