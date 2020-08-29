@@ -28,24 +28,7 @@
 		"ipsum"
 	],
 	"activationEvents": [
-		"onCommand:vscode-texttoolbox.Uppercase",
-		"onCommand:vscode-texttoolbox.Lowercase",
-		"onCommand:vscode-texttoolbox.PascalCase",
-		"onCommand:vscode-texttoolbox.CapitalCase",
-		"onCommand:vscode-texttoolbox.CamelCase",
-		"onCommand:vscode-texttoolbox.ConstantCase",
-		"onCommand:vscode-texttoolbox.DotCase",
-		"onCommand:vscode-texttoolbox.HarderCase",
-		"onCommand:vscode-texttoolbox.NoCase",
-		"onCommand:vscode-texttoolbox.ParamCase",
-		"onCommand:vscode-texttoolbox.SentenceCase",
-		"onCommand:vscode-texttoolbox.SnakeCase",
-		"onCommand:vscode-texttoolbox.InsertGUID",
-		"onCommand:vscode-texttoolbox.InsertDate",
-		"onCommand:vscode-texttoolbox.PickRandom",
-		"onCommand:vscode-texttoolbox.Pad",
-		"onCommand:vscode-texttoolbox.RemoveAllEmptyLines",
-		"onCommand:vscode-texttoolbox.RemoveRedundantEmptyLines"
+		"*"
 	],
 	"main": "./out/extension.js",
 	"preview": true,
@@ -60,8 +43,7 @@
 	},
 	"license": "MIT",
 	"contributes": {
-		"commands": [
-			{
+		"commands": [{
 				"command": "vscode-texttoolbox.Uppercase",
 				"title": "TT: UPPERCASE"
 			},
@@ -134,35 +116,33 @@
 				"title": "TT: Remove redundant empty lines"
 			}
 		],
-		"configuration": [
-			{
-				"title": "Text Toolbox",
-				"properties": {
-					"tt.statusBarAlignment": {
-						"type": "string",
-						"enum": [
-							"Left",
-							"Right"
-						],
-						"default": "Right",
-						"scope": "window",
-						"description": "Text Toolbox word and selected lines count alignment in the StatusBar"
-					},
-					"tt.statusBarPriority": {
-						"type": "number",
-						"default": 100,
-						"scope": "window",
-						"description": "Text Toolbox word and selected lines count StatusBar priority"
-					},
-					"tt.enableStatusBarWordLineCount": {
-						"type": "boolean",
-						"default": true,
-						"scope": "window",
-						"description": "Enable or disable the StatusBar Text Toolbox word and selected lines count"
-					}
+		"configuration": [{
+			"title": "Text Toolbox",
+			"properties": {
+				"tt.statusBarAlignment": {
+					"type": "string",
+					"enum": [
+						"Left",
+						"Right"
+					],
+					"default": "Right",
+					"scope": "window",
+					"description": "Text Toolbox word and selected lines count alignment in the StatusBar"
+				},
+				"tt.statusBarPriority": {
+					"type": "number",
+					"default": 100,
+					"scope": "window",
+					"description": "Text Toolbox word and selected lines count StatusBar priority"
+				},
+				"tt.enableStatusBarWordLineCount": {
+					"type": "boolean",
+					"default": true,
+					"scope": "window",
+					"description": "Enable or disable the StatusBar Text Toolbox word and selected lines count"
 				}
 			}
-		]
+		}]
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
