@@ -1,6 +1,7 @@
 out/
 node_modules/
 vsc-extension-quickstart.md
-.vscode-test/
 *.vsix
 dist/
+*.zip
+*.tgz

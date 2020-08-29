@@ -1,8 +1,8 @@
-import * as vscode from 'vscode';
 import { window } from 'vscode';
 import { DateTime } from 'luxon';
 import { Chance } from 'chance';
 import * as pad from 'pad';
+
 
 function insertText(text: string): Promise<boolean> {
     const editor = window.activeTextEditor;
