@@ -14,7 +14,7 @@ vscode-TextToolbox:
         ✔ SnakeCase @done(20-07-29 07:46)
         ☐ escape (json)
         ☐ unescape (json)
-        ☐ remove empty lines
+        ✔ remove empty lines @done(20-08-30 09:23)
         ☐ remove empty lines (end of file)
         ☐ trim
         ☐ duplicate string (ask user how many times)
@@ -33,6 +33,7 @@ vscode-TextToolbox:
         ✔ insert GUID @done(20-08-21 08:36)
         ✔ insert Date @done(20-08-25 22:33)
             ☐ improve command picker, show date format preview
+            ☐ add option to use times 12/24 formats
         ☐ insert Lorem Ipsum
         ☐ resetSeed
         ☐ randomByte

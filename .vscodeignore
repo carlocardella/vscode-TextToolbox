@@ -1,2 +1,8 @@
 **/tsconfig.json
 !file.ts
+todo
+out/
+src/
+# **/*.map
+webpack.config.js
+node_modules/

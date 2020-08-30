@@ -18,36 +18,36 @@ function insertText(text: string): Promise<boolean> {
     return Promise.resolve(true);
 }
 
-export function insertGUID(): Promise<boolean> {
+export function insertGUID() {
     const chance = new Chance();
     const newGuid = chance.guid();
-    let op = insertText(newGuid);
-
-    if (op) {
-        return Promise.resolve(true);
-    } else {
-        return Promise.resolve(false);
-    }
+    insertText(newGuid);
 }
 
 export async function pickDateTime() {
+    let date = DateTime.local();
+
     const dateTimeFormats = [
-        'DATE_SHORT', // 8/25/2020
-        'TIME_SIMPLE', // 5:34 PM
-        'TIME_WITH_SECONDS', // 5:34:45 PM
-        'DATETIME_SHORT', // 8/25/2020, 5:34 PM
-        'DATE_HUGE', // Tuesday, August 25, 2020
-        'SORTABLE', // 2020-08-25T17:34:58
-        'UNIVERSAL_SORTABLE', // 2020-08-26T00:35:01Z
-        'ISO8601', // 2020-08-25T17:35:05.818-07:00
-        'RFC2822', // Tue, 25 Aug 2020 17:35:10 -0700
-        'HTTP', // Wed, 26 Aug 2020 00:35:13 GMT
-        'DATETIME_SHORT_WITH_SECONDS', // 8/25/2020, 5:35:17 PM
-        'DATETIME_FULL_WITH_SECONDS', // August 25, 2020, 5:35 PM PDT
-        'UNIX_SECONDS', // 1598402124
-        'UNIX_MILLISECONDS' // 1598402132390
+        "DATE_SHORT", // 8/25/2020
+        "TIME_SIMPLE", // 5:34 PM
+        "TIME_WITH_SECONDS", // 5:34:45 PM
+        "DATETIME_SHORT", // 8/25/2020, 5:34 PM
+        "DATE_HUGE", // Tuesday, August 25, 2020
+        "SORTABLE", // 2020-08-25T17:34:58
+        "UNIVERSAL_SORTABLE", // 2020-08-26T00:35:01Z
+        "ISO8601", // 2020-08-25T17:35:05.818-07:00
+        "RFC2822", // Tue, 25 Aug 2020 17:35:10 -0700
+        "HTTP", // Wed, 26 Aug 2020 00:35:13 GMT
+        "DATETIME_SHORT_WITH_SECONDS", // 8/25/2020, 5:35:17 PM
+        "DATETIME_FULL_WITH_SECONDS", // August 25, 2020, 5:35 PM PDT
+        "UNIX_SECONDS", // 1598402124
+        "UNIX_MILLISECONDS" // 1598402132390
     ];
-    const selectedFormat: string | undefined = await window.showQuickPick(dateTimeFormats, { ignoreFocusOut: true });
+    const selectedFormat: string | undefined = await window.showQuickPick(dateTimeFormats, {
+        ignoreFocusOut: true,
+
+    });
+
     if (selectedFormat) { insertDateTime(selectedFormat); }
 }
 
@@ -57,7 +57,9 @@ export async function insertDateTime(selectedFormat: string | undefined, testDat
     let text: string;
 
     switch (selectedFormat) {
+        // selectedFormat?.substr(0, selectedFormat.indexOf(" "));
         case 'DATETIME_SHORT':
+            // case selectedFormat?.substr(0, selectedFormat.indexOf(" ")):
             text = date!.toLocaleString(DateTime.DATETIME_SHORT)!;
             break;
         case 'DATE_SHORT':
