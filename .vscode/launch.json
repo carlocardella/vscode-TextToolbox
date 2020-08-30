@@ -32,11 +32,6 @@
 				"${workspaceFolder}/out/test/**/*.js"
 			],
 			"preLaunchTask": "${defaultBuildTask}"
-		},
-		{
-			"name": "Local Process with Kubernetes",
-			"type": "local-process-with-kubernetes.configuration",
-			"request": "launch"
 		}
 	]
 }
