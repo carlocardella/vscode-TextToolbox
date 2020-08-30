@@ -34,6 +34,7 @@ vscode-TextToolbox:
         ✔ insert Date @done(20-08-25 22:33)
             ☐ improve command picker, show date format preview
             ☐ add option to use times 12/24 formats
+            ☐ 2020-08-29
         ☐ insert Lorem Ipsum
         ☐ resetSeed
         ☐ randomByte
