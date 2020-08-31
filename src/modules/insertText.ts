@@ -1,7 +1,7 @@
-import { window } from 'vscode';
+import { Range, window } from 'vscode';
 import { DateTime } from 'luxon';
 import { Chance } from 'chance';
-import * as pad from 'pad';
+import { getActiveEditor } from './helpers';
 
 
 function insertText(text: string): Promise<boolean> {
@@ -36,6 +36,8 @@ export async function pickDateTime() {
         "SORTABLE", // 2020-08-25T17:34:58
         "UNIVERSAL_SORTABLE", // 2020-08-26T00:35:01Z
         "ISO8601", // 2020-08-25T17:35:05.818-07:00
+        "ISO8601_DATE", // 2020-08-25
+        "ISO8601_TIME", // 17:35:05.818-07:00
         "RFC2822", // Tue, 25 Aug 2020 17:35:10 -0700
         "HTTP", // Wed, 26 Aug 2020 00:35:13 GMT
         "DATETIME_SHORT_WITH_SECONDS", // 8/25/2020, 5:35:17 PM
@@ -82,6 +84,12 @@ export async function insertDateTime(selectedFormat: string | undefined, testDat
             break;
         case 'ISO8601':
             text = date!.toString();
+            break;
+        case 'ISO8601_DATE':
+            text = date!.toFormat("y-MM-dd");
+            break;
+        case 'ISO8601_TIME':
+            text = date!.toFormat("HH:mm:ss.SSSZZ"); // 17:35:05.818-07:00
             break;
         case 'RFC2822':
             text = date!.toRFC2822()!;
@@ -237,16 +245,46 @@ export async function insertRandom(selectedRandomType: string | undefined) {
     insertText(String(text));
 }
 
-export async function askForPadDetails() {
+export enum padDirection {
+    right = 'right',
+    left = 'left'
+}
+
+export async function askForPadDetails(padDirection: string) {
     const s: string | undefined = await window.showInputBox({ prompt: 'Filler string', ignoreFocusOut: true });
     if (!s) { return; }
     const n: string | undefined = await window.showInputBox({ prompt: 'How many repetitions?', ignoreFocusOut: true });
     if (!n) { return; }
 
-    padText(s, Number(n));
+    padText(padDirection, s, Number(n));
 }
 
-export async function padText(padString: string, length: number) {
-    let text = pad('', length, padString);
-    insertText(String(text));
+export async function padText(padDirection: string, padString: string, length: number) {
+    const editor = getActiveEditor();
+    const selections = editor?.selections;
+
+    if (selections?.entries.length === 0) {
+        editor?.edit(editorBuilder => {
+            editorBuilder.insert(editor.selection.active, padString.repeat(length));
+        });
+        return;
+    }
+
+    selections?.forEach(function (selection) {
+        let text = editor?.document.getText(new Range(selection.start, selection.end));
+        if (!text) { return; }
+
+        const padAmount = length - text.length;
+        let newText: string;
+        if (padDirection === 'right') {
+            newText = text + padString.repeat(padAmount);
+        }
+        if (padDirection === 'left') {
+            newText = padString.repeat(padAmount) + text;
+        }
+
+        editor?.edit(editorBulder => {
+            editorBulder.replace(selection, newText);
+        });
+    });
 }

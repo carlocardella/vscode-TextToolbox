@@ -13,6 +13,8 @@ Collection of tools for text manipulation, filtering, sorting etc...
 
 The marketplace has a number of great extensions for text manipulation, I installed a few of them to cover the entire range of actions I normally use, unfortunately that means there is some overlapping between them, basically the same action is contributed by multiple extensions (case conversion, for example). That is what motivated me to build this extension: I like the idea to have a single extension for all those operations and without duplicates; plus, it is a good pastime 😊.
 
+Please open an issue to leave a comment, report a bug, request a feature etc... (you know the drill).
+
 ## Current list of commands
 
 * Uppercase
@@ -50,6 +52,8 @@ The marketplace has a number of great extensions for text manipulation, I instal
   * SORTABLE => 2020-08-25T17:34:58
   * UNIVERSAL_SORTABLE => 2020-08-26T00:35:01Z
   * ISO8601 => 2020-08-25T17:35:05.818-07:00
+  * ISO8601_DATE => 2020-08-25
+  * ISO8601_TIME => 17:35:05.818-07:00
   * RFC2822 => Tue, 25 Aug 2020 17:35:10 -0700
   * HTTP => Wed, 26 Aug 2020 00:35:13 GMT
   * DATETIME_SHORT_WITH_SECONDS => 8/25/2020, 5:35:17 PM
@@ -85,13 +89,14 @@ The marketplace has a number of great extensions for text manipulation, I instal
   * TIMEZONE => Kamchatka Standard Time
   * PARAGRAPH => Cij wam lijoso fa molah il nasiskil ho andot akbuh uku zikahek. Ji balsiffe puzmaano nuug bofevu ra tehar heuwa zorjul hej na heci aka webo lorresu uwage uhe nirsiam.
   * HASH => 61960319307b5f8d298141627
-* Pad
+* PadRight
+* PadLeft
 * RemoveAllEmptyLines
   * remove all empty lines from the current document
 * RemoveRedundantEmptyLine
   * remove all redundant empty lines from the current document: reduces multiple empty lines to one
 
-### Thanks to...
+### Thanks to:
 
 Text Toolbox is freely inspired fromby these fine extensions:
 
@@ -101,3 +106,4 @@ Text Toolbox is freely inspired fromby these fine extensions:
 * [adamwalzer string-converter](https://github.com/adamwalzer/string-converter)
 * [Tyriar vscode-sort-lines](https://github.com/Tyriar/vscode-sort-lines)
 * [rpeshkov vscode-text-tables](https://github.com/rpeshkov/vscode-text-tables)
+* [wmaurer vscode-change-case](https://github.com/wmaurer/vscode-change-case)

@@ -3,6 +3,6 @@
 todo
 out/
 src/
-# **/*.map
+**/*.map
 webpack.config.js
 node_modules/

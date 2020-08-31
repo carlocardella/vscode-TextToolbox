@@ -15,6 +15,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## Log
 
+### [0.2.0] - 2020-08-30
+
+#### Updated
+
+* Updated padding, split the previous command in `PadRight` and `PadLeft`.
+  * If there is a selection, the string is padded up to the length specified
+  * If there is no selection, the command inserts a string compreised of the selected character(s) and of the specified length
+
+* Updated CHANGELOG and README
+
+#### Added
+
+* ISO8601_DATE
+* ISO8601_TIME
+
 ### [0.1.2] - 2020-08-30
 
 * Updated README, CHANGELOG

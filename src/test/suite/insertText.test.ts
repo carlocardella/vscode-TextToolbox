@@ -1,7 +1,7 @@
 import * as assert from 'assert';
 import * as guid from 'guid';
-import { closeTextEditor, sleep, getDocumentText, createNewEditor } from '../../modules/helpers';
-import { insertGUID, insertDateTime, padText } from '../../modules/insertText';
+import { closeTextEditor, sleep, getDocumentText, createNewEditor, selectAllText } from '../../modules/helpers';
+import { insertGUID, insertDateTime, padText, padDirection } from '../../modules/insertText';
 import { before, after, afterEach, describe } from 'mocha';
 import { DateTime } from 'luxon';
 
@@ -27,15 +27,37 @@ suite('insertText', () => {
         });
 
         let tests = [
-            { padString: "@", lenght: 10, expected: "@@@@@@@@@@" },
-            { padString: "3", lenght: 10, expected: "3333333333" },
-            { padString: "ab", lenght: 10, expected: "abababababababababab" }
+            { padDirection: padDirection.right, padString: "@", lenght: 10, expected: "test@@@@@@" },
+            { padDirection: padDirection.right, padString: "3", lenght: 10, expected: "test333333" },
+            { padDirection: padDirection.right, padString: "ab", lenght: 10, expected: "testababab" },
+            { padDirection: padDirection.left, padString: "@", lenght: 10, expected: "@@@@@@test" },
+            { padDirection: padDirection.left, padString: "3", lenght: 10, expected: "333333test" },
+            { padDirection: padDirection.left, padString: "ab", lenght: 10, expected: "abababtest" }
         ];
-
         tests.forEach(function (t) {
-            test('Padding ' + t.padString, async () => {
+            test('Padding ' + t.padDirection, async () => {
+                await createNewEditor("test");
+                await selectAllText();
+                await padText(t.padDirection, t.padString, t.lenght);
+                await sleep(500);
+
+                let text = String(getDocumentText());
+                assert.deepStrictEqual(text, t.expected);
+            });
+        });
+
+        tests = [
+            { padDirection: padDirection.right, padString: "@", lenght: 10, expected: "@@@@@@@@@@" },
+            { padDirection: padDirection.right, padString: "3", lenght: 10, expected: "3333333333" },
+            { padDirection: padDirection.right, padString: "ab", lenght: 10, expected: "ababababab" },
+            { padDirection: padDirection.left, padString: "@", lenght: 10, expected: "@@@@@@@@@@" },
+            { padDirection: padDirection.left, padString: "3", lenght: 10, expected: "3333333333" },
+            { padDirection: padDirection.left, padString: "ab", lenght: 10, expected: "ababababab" }
+        ];
+        tests.forEach(function (t) {
+            test('Padding on empty selection ' + t.padDirection, async () => {
                 await createNewEditor();
-                await padText(t.padString, t.lenght);
+                await padText(t.padDirection, t.padString, t.lenght);
                 await sleep(500);
 
                 let text = String(getDocumentText());
