@@ -25,7 +25,10 @@
 		"converter",
 		"converting",
 		"lorem",
-		"ipsum"
+		"ipsum",
+		"random",
+		"word count",
+		"lines count"
 	],
 	"activationEvents": [
 		"*"
@@ -43,8 +46,7 @@
 	},
 	"license": "MIT",
 	"contributes": {
-		"commands": [
-			{
+		"commands": [{
 				"command": "vscode-texttoolbox.Uppercase",
 				"title": "TT: UPPERCASE"
 			},
@@ -121,41 +123,42 @@
 				"title": "TT: Remove redundant empty lines"
 			}
 		],
-		"configuration": [
-			{
-				"title": "Text Toolbox",
-				"properties": {
-					"tt.statusBarAlignment": {
-						"type": "string",
-						"enum": [
-							"Left",
-							"Right"
-						],
-						"default": "Right",
-						"scope": "window",
-						"description": "Text Toolbox word and selected lines count alignment in the StatusBar"
-					},
-					"tt.statusBarPriority": {
-						"type": "number",
-						"default": 100,
-						"scope": "window",
-						"description": "Text Toolbox word and selected lines count StatusBar priority"
-					},
-					"tt.enableStatusBarWordLineCount": {
-						"type": "boolean",
-						"default": true,
-						"scope": "window",
-						"description": "Enable or disable the StatusBar Text Toolbox word and selected lines count"
-					}
+		"configuration": [{
+			"title": "Text Toolbox",
+			"properties": {
+				"tt.statusBarAlignment": {
+					"type": "string",
+					"enum": [
+						"Left",
+						"Right"
+					],
+					"default": "Right",
+					"scope": "window",
+					"description": "Text Toolbox word and selected lines count alignment in the StatusBar"
+				},
+				"tt.statusBarPriority": {
+					"type": "number",
+					"default": 100,
+					"scope": "window",
+					"description": "Text Toolbox word and selected lines count StatusBar priority"
+				},
+				"tt.enableStatusBarWordLineCount": {
+					"type": "boolean",
+					"default": true,
+					"scope": "window",
+					"description": "Enable or disable the StatusBar Text Toolbox word and selected lines count"
 				}
 			}
-		]
+		}]
 	},
 	"scripts": {
 		"vscode:prepublish": "webpack --mode production",
 		"webpack": "webpack --mode development",
 		"webpack-dev": "webpack --mode development --watch",
-		"test-compile": "tsc -p ./"
+		"test-compile": "tsc -p ./",
+		"lint": "eslint src --ext ts",
+		"pretest": "npm run compile && npm run lint",
+		"test": "node ./out/test/runTest.js"
 	},
 	"devDependencies": {
 		"@types/chance": "^1.1.0",

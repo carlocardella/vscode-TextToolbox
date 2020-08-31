@@ -29,6 +29,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 * ISO8601_DATE
 * ISO8601_TIME
+* STATE_FULL_NAME
+* COUNTRY_FULL_NAME
 
 ### [0.1.2] - 2020-08-30
 

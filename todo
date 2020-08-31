@@ -35,13 +35,26 @@ vscode-TextToolbox:
             ☐ improve command picker, show date format preview
             ☐ add option to use times 12/24 formats
             ☐ 2020-08-29
-        ☐ insert Lorem Ipsum
+        ☐ Lorem Ipsum
+            ☐ other famous exterpts, e.g. The Devine Comedy, Hamlet etc...
+            ☐ excerpts in languages other than English
         ☐ resetSeed
         ☐ randomByte
         ✔ randomNumber @done(20-08-26 10:24)
+            ☐ min
+            ☐ max
+            ☐ negative
+            ☐ prime
+        ☐ currency
+            ☐ dollars
+            ☐ euros
+            ☐ british pound
+            ☐ yen
+            ☐ yuan
         ☐ randomIntCustomRange
         ☐ randomStringCustomLength
         ☐ randomSampleFromInput
+        ✔ randomText @done(20-08-26 10:23)
         ✔ randomName @done(20-08-26 10:23)
         ✔ randomStreetAddress @done(20-08-26 10:23)
         ✔ randomCity @done(20-08-26 10:23)
@@ -56,6 +69,12 @@ vscode-TextToolbox:
         ✔ randomRgbColor @done(20-08-26 10:24)
         ☐ randomIban
         ✔ pad @done(20-08-26 17:14)
+        ✔ country @done(20-08-31 10:19)
+            ✔ full name @done(20-08-31 10:19)
+            ✔ international code @done(20-08-31 09:35)
+        ✔ state @done(20-08-31 10:19)
+            ✔ full name @done(20-08-31 10:19)
+            ✔ code @done(20-08-31 09:35)
 
     other:
         ☐ if there is no selection update the entire line

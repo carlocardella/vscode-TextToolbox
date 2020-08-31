@@ -81,10 +81,12 @@ Please open an issue to leave a comment, report a bug, request a feature etc... 
   * URL => http://fuk.si/ek
   * CITY => Ecicezjev
   * ADDRESS => 1784 Kaolo Grove
-  * COUNTRY => SV
+  * COUNTRY => IT
+  * COUNTRY_FULL_NAME => Italy
   * PHONE => (923) 447-6974
   * ZIP_CODE => 35691
-  * STATE => WI
+  * STATE => WA
+  * STATE_FULL_NAME => Washington
   * STREET => Pase Manor
   * TIMEZONE => Kamchatka Standard Time
   * PARAGRAPH => Cij wam lijoso fa molah il nasiskil ho andot akbuh uku zikahek. Ji balsiffe puzmaano nuug bofevu ra tehar heuwa zorjul hej na heci aka webo lorresu uwage uhe nirsiam.
@@ -107,3 +109,4 @@ Text Toolbox is freely inspired fromby these fine extensions:
 * [Tyriar vscode-sort-lines](https://github.com/Tyriar/vscode-sort-lines)
 * [rpeshkov vscode-text-tables](https://github.com/rpeshkov/vscode-text-tables)
 * [wmaurer vscode-change-case](https://github.com/wmaurer/vscode-change-case)
+* [volkerdobler insertnums](https://github.com/volkerdobler/insertnums)

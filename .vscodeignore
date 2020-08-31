@@ -6,3 +6,4 @@ src/
 **/*.map
 webpack.config.js
 node_modules/
+.vscode/

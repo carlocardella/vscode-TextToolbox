@@ -25,8 +25,6 @@ export function insertGUID() {
 }
 
 export async function pickDateTime() {
-    let date = DateTime.local();
-
     const dateTimeFormats = [
         "DATE_SHORT", // 8/25/2020
         "TIME_SIMPLE", // 5:34 PM
@@ -59,9 +57,7 @@ export async function insertDateTime(selectedFormat: string | undefined, testDat
     let text: string;
 
     switch (selectedFormat) {
-        // selectedFormat?.substr(0, selectedFormat.indexOf(" "));
         case 'DATETIME_SHORT':
-            // case selectedFormat?.substr(0, selectedFormat.indexOf(" ")):
             text = date!.toLocaleString(DateTime.DATETIME_SHORT)!;
             break;
         case 'DATE_SHORT':
@@ -89,7 +85,7 @@ export async function insertDateTime(selectedFormat: string | undefined, testDat
             text = date!.toFormat("y-MM-dd");
             break;
         case 'ISO8601_TIME':
-            text = date!.toFormat("HH:mm:ss.SSSZZ"); // 17:35:05.818-07:00
+            text = date!.toFormat("HH:mm:ss.SSSZZ");
             break;
         case 'RFC2822':
             text = date!.toRFC2822()!;
@@ -135,9 +131,11 @@ export async function pickRandom() {
         'CITY',
         'ADDRESS',
         'COUNTRY',
+        'COUNTRY_FULL_NAME',
         'PHONE',
         'ZIP_CODE',
         'STATE',
+        'STATE_FULL_NAME',
         'STREET',
         'TIMEZONE',
         'PARAGRAPH',
@@ -214,6 +212,9 @@ export async function insertRandom(selectedRandomType: string | undefined) {
         case 'COUNTRY':
             text = chance.country();
             break;
+        case 'COUNTRY_FULL_NAME':
+            text = chance.country({ full: true });
+            break;
         case 'PHONE':
             text = chance.phone();
             break;
@@ -222,6 +223,9 @@ export async function insertRandom(selectedRandomType: string | undefined) {
             break;
         case 'STATE':
             text = chance.state();
+            break;
+        case 'STATE_FULL_NAME':
+            text = chance.state({ full: true });
             break;
         case 'STREET':
             // INVESTIGATE: return the whole object?
@@ -235,7 +239,7 @@ export async function insertRandom(selectedRandomType: string | undefined) {
             text = chance.paragraph({ sentences: n });
             break;
         case 'HASH':
-            const length: string | undefined = await window.showInputBox({ prompt: 'Enter length', value: '25', ignoreFocusOut: true });
+            const length: string | undefined = await window.showInputBox({ prompt: 'Enter length', value: '32', ignoreFocusOut: true });
             text = chance.hash({ length: length });
             break;
         default:
@@ -263,18 +267,12 @@ export async function padText(padDirection: string, padString: string, length: n
     const editor = getActiveEditor();
     const selections = editor?.selections;
 
-    if (selections?.entries.length === 0) {
-        editor?.edit(editorBuilder => {
-            editorBuilder.insert(editor.selection.active, padString.repeat(length));
-        });
-        return;
-    }
-
     selections?.forEach(function (selection) {
         let text = editor?.document.getText(new Range(selection.start, selection.end));
-        if (!text) { return; }
+        if (!text) { text = ''; }
 
         const padAmount = length - text.length;
+
         let newText: string;
         if (padDirection === 'right') {
             newText = text + padString.repeat(padAmount);
@@ -283,8 +281,8 @@ export async function padText(padDirection: string, padString: string, length: n
             newText = padString.repeat(padAmount) + text;
         }
 
-        editor?.edit(editorBulder => {
-            editorBulder.replace(selection, newText);
+        editor?.edit(editBulder => {
+            editBulder.replace(selection, newText);
         });
     });
 }

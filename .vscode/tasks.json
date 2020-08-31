@@ -1,0 +1,23 @@
+{
+	"version": "2.0.0",
+	"tasks": [{
+			"type": "npm",
+			"script": "webpack-dev",
+			"problemMatcher": [],
+			"label": "npm: webpack-dev",
+			"detail": "webpack --mode development --watch",
+			"group": "test"
+		},
+		{
+			"type": "npm",
+			"script": "test",
+			"group": {
+				"kind": "test",
+				"isDefault": true
+			},
+			"problemMatcher": [],
+			"label": "npm: test",
+			"detail": "node ./out/test/runTest.js"
+		}
+	]
+}
