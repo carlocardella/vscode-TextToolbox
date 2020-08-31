@@ -17,33 +17,33 @@ Please open an issue to leave a comment, report a bug, request a feature etc... 
 
 ## Current list of commands
 
-* Uppercase
+* UPPERCASE
   * Lorem ipsum dolor sit amet => LOREM IPSUM DOLOR SIT AMET
-* Lowercase
+* lowercase
   * Lorem ipsum dolor sit amet => lorem ipsum dolor sit amet
 * PascalCase
   * Lorem ipsum dolor sit amet => LoremIpsumDolorSitAmet
-* CapitalCase
+* Capital Case
   * Lorem ipsum dolor sit amet => Lorem Ipsum Dolor Sit Amet
-* CamelCase
+* camelCase
   * Lorem ipsum dolor sit amet => loremIpsumDolorSitAmet
-* ConstantCase
+* CONSTANT_CASE
   * Lorem ipsum dolor sit amet => LOREM_IPSUM_DOLOR_SIT_AMET
-* DotCase
+* dot.case
   * Lorem ipsum dolor sit amet => lorem.ipsum.dolor.sit.amet
-* HarderCase
+* Harder-Case
   * Lorem ipsum dolor sit amet => Lorem-Ipsum-Dolor-Sit-Amet
-* NoCase
+* no case
   * Lorem ipsum dolor sit amet => lorem ipsum dolor sit amet
-* ParamCase
+* param-case
   * Lorem ipsum dolor sit amet => lorem-ipsum-dolor-sit-amet
-* SentenceCase
+* Sentence case
   * Lorem ipsum dolor sit amet => Lorem ipsum dolor sit amet
-* SnakeCase
+* snake_case
   * Lorem ipsum dolor sit amet => lorem_ipsum_dolor_sit_amet
-* InsertGUID
+* Insert GUID
   * 14854fc2-f782-5136-aebb-a121b9ba6af1
-* InsertDate
+* Insert Date
   * DATE_SHORT => 8/25/2020
   * TIME_SIMPLE => 5:34 PM
   * TIME_WITH_SECONDS => 5:34:45 PM
@@ -60,7 +60,7 @@ Please open an issue to leave a comment, report a bug, request a feature etc... 
   * DATETIME_FULL_WITH_SECONDS => August 25, 2020, 5:35 PM PDT
   * UNIX_SECONDS => 1598402124
   * UNIX_MILLISECONDS =>/598402132390
-* PickRandom
+* Insert Random
   * IPV4 => 123.75.174.203
   * IPV6 => 7c50:a61a:5ee0:4562:0dda:b41d:114b:71e0
   * NUMBER => 6739440105947136
@@ -91,11 +91,11 @@ Please open an issue to leave a comment, report a bug, request a feature etc... 
   * TIMEZONE => Kamchatka Standard Time
   * PARAGRAPH => Cij wam lijoso fa molah il nasiskil ho andot akbuh uku zikahek. Ji balsiffe puzmaano nuug bofevu ra tehar heuwa zorjul hej na heci aka webo lorresu uwage uhe nirsiam.
   * HASH => 61960319307b5f8d298141627
-* PadRight
-* PadLeft
-* RemoveAllEmptyLines
+* Pad Right
+* Pad Left
+* Remove all empty lines
   * remove all empty lines from the current document
-* RemoveRedundantEmptyLine
+* Remove redundant empty line
   * remove all redundant empty lines from the current document: reduces multiple empty lines to one
 
 ### Thanks to:

@@ -4,7 +4,8 @@
 // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
 {
 	"version": "0.2.0",
-	"configurations": [{
+	"configurations": [
+		{
 			"name": "Run Extension",
 			"type": "extensionHost",
 			"request": "launch",
@@ -28,8 +29,15 @@
 				"--extensionTestsPath=${workspaceFolder}/out/test/suite/index",
 				"--disable-extensions"
 			],
-			"outFiles": ["${workspaceFolder}/out/test/**/*.js"],
+			"outFiles": [
+				"${workspaceFolder}/out/test/**/*.js"
+			],
 			"preLaunchTask": "npm: test-compile"
+		},
+		{
+			"name": "Local Process with Kubernetes",
+			"type": "local-process-with-kubernetes.configuration",
+			"request": "launch"
 		}
 	]
 }

@@ -14,15 +14,25 @@ vscode-TextToolbox:
         ✔ SnakeCase @done(20-07-29 07:46)
         ☐ escape (json)
         ☐ unescape (json)
-        ✔ remove empty lines @done(20-08-30 09:23)
         ☐ remove empty lines (end of file)
         ☐ trim
         ☐ duplicate string (ask user how many times)
+        ☐ convert number, dec to hex and vice versa
+
+    highlight:
+        ☐ highlight word (and all occurrences)
+        ☐ highlight based on regex
+        ☐ ask the user for the highlight color
+        ☐ toggle/clear command in context menu
 
     filtering:
-        ☐ remove duplicate lines
+        ☐ remove duplicate lines @inprogress 
         ✔ remove all empty lines @done(20-08-26 22:31)
         ✔ remove excess empty lines @done(20-08-26 22:31)
+        ☐ copy selection to new editor
+        ☐ count line occurrences
+        ☐ filter text using regex
+            ☐ optionally open result in new editor
 
     sorting:
         ☐ sort (asc|desc)
@@ -30,11 +40,14 @@ vscode-TextToolbox:
         ☐ align csv
 
     insert:
+        ☐ insert line numbers
+        ☐ insert number sequence
+        ☐ insert date sequence
         ✔ insert GUID @done(20-08-21 08:36)
         ✔ insert Date @done(20-08-25 22:33)
             ☐ improve command picker, show date format preview
             ☐ add option to use times 12/24 formats
-            ☐ 2020-08-29
+            ✔ 2020-08-29 @done(20-08-31 12:14)
         ☐ Lorem Ipsum
             ☐ other famous exterpts, e.g. The Devine Comedy, Hamlet etc...
             ☐ excerpts in languages other than English
