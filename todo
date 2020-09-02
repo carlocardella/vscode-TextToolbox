@@ -34,7 +34,7 @@ vscode-TextToolbox:
         ✔ insert Date @done(20-08-25 22:33)
             ☐ improve command picker, show date format preview
             ☐ add option to use times 12/24 formats
-            ☐ 2020-08-29
+            ✔ 2020-08-29 @done(20-08-31 12:14)
         ☐ Lorem Ipsum
             ☐ other famous exterpts, e.g. The Devine Comedy, Hamlet etc...
             ☐ excerpts in languages other than English
