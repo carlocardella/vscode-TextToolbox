@@ -1,4 +1,6 @@
+import { TextDecoder } from 'util';
 import * as vscode from 'vscode';
+import { Range } from 'vscode';
 
 
 function validateEditor() {
@@ -18,6 +20,10 @@ export function validateSelection() {
     }
 }
 
+export function getActiveSelection(editor: vscode.TextEditor): vscode.Selection {
+    return editor.selection;
+}
+
 export function sleep(ms: number): Promise<void> {
     return new Promise(resolve => {
         setTimeout(resolve, ms);
@@ -28,8 +34,36 @@ export function selectAllText(): Thenable<unknown> {
     return vscode.commands.executeCommand('editor.action.selectAll');
 }
 
-export function getDocumentText(): String | undefined {
+export function getDocumentText(): string | undefined {
     return vscode.window.activeTextEditor?.document.getText();
+}
+
+export function getDocumentTextOrSelection(): string | undefined {
+    const editor = getActiveEditor()!;
+    const selection = editor!.selection;
+
+    if (selection.isEmpty) {
+        return getDocumentText();
+    }
+    else {
+        return getTextFromSelection(editor, selection);
+    }
+}
+
+export function getSelectionOrFullDocument(editor: vscode.TextEditor): vscode.Selection {
+    if (editor.selection.isEmpty) {
+        let selection: vscode.Selection;
+
+        const lineCount = editor.document.lineCount;
+        selection = new vscode.Selection(0, 0, lineCount, editor.document.lineAt(lineCount - 1).text.length);
+        return selection;
+    }
+
+    return editor.selection;
+}
+
+export function getTextFromSelection(editor: vscode.TextEditor, selection: vscode.Selection): string | undefined {
+    return editor.document.getText(new Range(selection.start, selection.end));
 }
 
 export function getActiveEditor(): vscode.TextEditor | undefined {

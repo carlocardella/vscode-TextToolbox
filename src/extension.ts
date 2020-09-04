@@ -32,6 +32,8 @@ export function activate(context: ExtensionContext) {
 	// filter text
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.RemoveAllEmptyLines', () => { FilterText.removeEmptyLines(false); }));
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.RemoveRedundantEmptyLines', () => { FilterText.removeEmptyLines(true); }));
+	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.RemoveDuplicateLines', () => { FilterText.removeDuplicateLines(false); }));
+	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.RemoveDuplicateLinesResultInNewEditor', () => { FilterText.removeDuplicateLines(true); }));
 
 	// status bar selection
 	if (workspace.getConfiguration().get('tt.enableStatusBarWordLineCount')) {

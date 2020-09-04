@@ -15,6 +15,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## Log
 
+### [0.3.0]
+
+#### Added
+
+* Remove duplicate lines
+* Remove duplicate lines, open result in new editor
+
 ### [0.2.0] - 2020-08-30
 
 #### Updated
@@ -27,10 +34,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 #### Added
 
-* ISO8601_DATE
-* ISO8601_TIME
-* STATE_FULL_NAME
-* COUNTRY_FULL_NAME
+* `ISO8601_DATE`
+* `ISO8601_TIME`
+* `STATE_FULL_NAME`
+* `COUNTRY_FULL_NAME`
 
 ### [0.1.2] - 2020-08-30
 

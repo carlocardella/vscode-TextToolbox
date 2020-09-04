@@ -37,7 +37,7 @@ suite('caseConversion', () => {
 		await createNewEditor("test document");
 		await selectAllText();
 		convertToCapitalCase();
-		await sleep(200);
+		await sleep(500);
 		console.log(getDocumentText());
 		assert.deepStrictEqual(getDocumentText(), 'Test Document');
 	});
@@ -46,7 +46,7 @@ suite('caseConversion', () => {
 		await createNewEditor("test document");
 		await selectAllText();
 		convertToPascalCase();
-		await sleep(200);
+		await sleep(500);
 		console.log(getDocumentText());
 		assert.deepStrictEqual(getDocumentText(), 'TestDocument');
 	});
@@ -55,7 +55,7 @@ suite('caseConversion', () => {
 		await createNewEditor("test document");
 		await selectAllText();
 		convertToCamelCase();
-		await sleep(200);
+		await sleep(500);
 		console.log(getDocumentText());
 		assert.deepStrictEqual(getDocumentText(), 'testDocument');
 	});
@@ -64,7 +64,7 @@ suite('caseConversion', () => {
 		await createNewEditor("test document");
 		await selectAllText();
 		convertToConstantCase();
-		await sleep(200);
+		await sleep(500);
 		console.log(getDocumentText());
 		assert.deepStrictEqual(getDocumentText(), 'TEST_DOCUMENT');
 	});
@@ -73,7 +73,7 @@ suite('caseConversion', () => {
 		await createNewEditor("test document");
 		await selectAllText();
 		convertToDotCase();
-		await sleep(200);
+		await sleep(500);
 		console.log(getDocumentText());
 		assert.deepStrictEqual(getDocumentText(), 'test.document');
 	});
@@ -82,7 +82,7 @@ suite('caseConversion', () => {
 		await createNewEditor("test document");
 		await selectAllText();
 		convertToHarderCase();
-		await sleep(200);
+		await sleep(500);
 		console.log(getDocumentText());
 		assert.deepStrictEqual(getDocumentText(), 'Test-Document');
 	});
@@ -91,7 +91,7 @@ suite('caseConversion', () => {
 		await createNewEditor("test document");
 		await selectAllText();
 		convertToNoCase();
-		await sleep(200);
+		await sleep(500);
 		console.log(getDocumentText());
 		assert.deepStrictEqual(getDocumentText(), 'test document');
 	});
@@ -100,7 +100,7 @@ suite('caseConversion', () => {
 		await createNewEditor("test document");
 		await selectAllText();
 		convertToParamCase();
-		await sleep(200);
+		await sleep(500);
 		console.log(getDocumentText());
 		assert.deepStrictEqual(getDocumentText(), 'test-document');
 	});
@@ -109,7 +109,7 @@ suite('caseConversion', () => {
 		await createNewEditor("test document");
 		await selectAllText();
 		convertToPathCase();
-		await sleep(200);
+		await sleep(500);
 		console.log(getDocumentText());
 		assert.deepStrictEqual(getDocumentText(), 'test/document');
 	});
@@ -118,7 +118,7 @@ suite('caseConversion', () => {
 		await createNewEditor("test document");
 		await selectAllText();
 		convertToSentenceCase();
-		await sleep(200);
+		await sleep(500);
 		console.log(getDocumentText());
 		assert.deepStrictEqual(getDocumentText(), 'Test document');
 	});
@@ -127,7 +127,7 @@ suite('caseConversion', () => {
 		await createNewEditor("test document");
 		await selectAllText();
 		convertToSnakeCase();
-		await sleep(200);
+		await sleep(500);
 		console.log(getDocumentText());
 		assert.deepStrictEqual(getDocumentText(), 'test_document');
 	});
