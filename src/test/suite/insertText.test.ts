@@ -1,6 +1,6 @@
 import * as assert from 'assert';
 import * as guid from 'guid';
-import { closeTextEditor, sleep, getDocumentText, createNewEditor, selectAllText } from '../../modules/helpers';
+import { closeTextEditor, sleep, getDocumentText, createNewEditor, selectAllText, closeAllEditors } from '../../modules/helpers';
 import { insertGUID, insertDateTime, padText, padDirection } from '../../modules/insertText';
 import { before, after, afterEach, describe } from 'mocha';
 import { DateTime } from 'luxon';
@@ -12,9 +12,14 @@ suite('insertText', () => {
     after(() => {
         console.log('All insertText tests done');
     });
-    afterEach(() => {
-        closeTextEditor();
+    // afterEach(() => {
+    //     closeTextEditor();
+    // });
+    after(async () => {
+        await sleep(1000);
+        await closeAllEditors();
     });
+
 
     describe('Test insert text', () => {
         test('Insert GUID', async () => {

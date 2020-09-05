@@ -255,9 +255,9 @@ export enum padDirection {
 }
 
 export async function askForPadDetails(padDirection: string) {
-    const s: string | undefined = await window.showInputBox({ prompt: 'Filler string', ignoreFocusOut: true });
+    const s: string | undefined = await window.showInputBox({ placeHolder: 'Filler string', ignoreFocusOut: true });
     if (!s) { return; }
-    const n: string | undefined = await window.showInputBox({ prompt: 'How many repetitions?', ignoreFocusOut: true });
+    const n: string | undefined = await window.showInputBox({ placeHolder: 'Padding length?', ignoreFocusOut: true });
     if (!n) { return; }
 
     padText(padDirection, s, Number(n));
@@ -271,14 +271,12 @@ export async function padText(padDirection: string, padString: string, length: n
         let text = editor?.document.getText(new Range(selection.start, selection.end));
         if (!text) { text = ''; }
 
-        const padAmount = length - text.length;
-
         let newText: string;
         if (padDirection === 'right') {
-            newText = text + padString.repeat(padAmount);
+            newText = text.padEnd(length, padString);
         }
         if (padDirection === 'left') {
-            newText = padString.repeat(padAmount) + text;
+            newText = text.padStart(length, padString);
         }
 
         editor?.edit(editBulder => {

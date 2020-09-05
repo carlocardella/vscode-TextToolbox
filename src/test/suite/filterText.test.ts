@@ -1,6 +1,6 @@
 import * as assert from 'assert';
 import { before, after, afterEach, describe } from 'mocha';
-import { closeTextEditor, sleep, getDocumentText, createNewEditor, selectAllText } from '../../modules/helpers';
+import { closeTextEditor, sleep, getDocumentText, createNewEditor, selectAllText, closeAllEditors } from '../../modules/helpers';
 import { removeDuplicateLines, removeEmptyLines } from '../../modules/filterText';
 import * as os from 'os';
 import { truncateSync } from 'fs';
@@ -13,8 +13,12 @@ suite("filterText", () => {
     after(() => {
         console.log('All insertText tests done');
     });
-    afterEach(() => {
-        closeTextEditor();
+    // afterEach(() => {
+    //     closeTextEditor();
+    // });
+    after(async () => {
+        await sleep(1000);
+        await closeAllEditors();
     });
 
     describe("Remove all empty lines", async () => {

@@ -1,6 +1,6 @@
 import * as assert from 'assert';
 import { after, before, afterEach } from 'mocha';
-import { sleep, createNewEditor, getDocumentText, selectAllText, closeTextEditor } from '../../modules/helpers';
+import { sleep, createNewEditor, getDocumentText, selectAllText, closeTextEditor, closeAllEditors } from '../../modules/helpers';
 import { convertToUppercase, convertToLowercase, convertToCapitalCase, convertToDotCase, convertToPascalCase, convertToCamelCase, convertToParamCase, convertToNoCase, convertToHarderCase, convertToConstantCase, convertToPathCase, convertToSentenceCase, convertToSnakeCase } from '../../modules/caseConversion';
 
 suite('caseConversion', () => {
@@ -10,8 +10,12 @@ suite('caseConversion', () => {
 	after(() => {
 		console.log('All caseConversion tests done');
 	});
-	afterEach(() => {
-		closeTextEditor();
+	// afterEach(() => {
+	// 	closeTextEditor();
+	// });
+	after(async () => {
+		await sleep(1000);
+		await closeAllEditors();
 	});
 
 
