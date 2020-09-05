@@ -30,6 +30,14 @@ export function sleep(ms: number): Promise<void> {
     });
 }
 
+export function closeAllEditors(): Promise<void> {
+    return new Promise(resolve => {
+        vscode.commands.executeCommand("workbench.action.closeAllEditors").then(() => {
+            resolve();
+        });
+    });
+}
+
 export function selectAllText(): Thenable<unknown> {
     return vscode.commands.executeCommand('editor.action.selectAll');
 }

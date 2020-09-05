@@ -22,6 +22,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 * Remove duplicate lines
 * Remove duplicate lines, open result in new editor
 
+#### Fixed
+
+* Fixed a bug with padding where the padded string length was incorrect
+
+#### Updated
+
+* Updated tests, close the editors after every `Describe` rather than after every test
+
 ### [0.2.0] - 2020-08-30
 
 #### Updated
