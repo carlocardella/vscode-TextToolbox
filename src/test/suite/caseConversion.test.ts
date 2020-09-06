@@ -10,9 +10,6 @@ suite('caseConversion', () => {
 	after(() => {
 		console.log('All caseConversion tests done');
 	});
-	// afterEach(() => {
-	// 	closeTextEditor();
-	// });
 	after(async () => {
 		await sleep(1000);
 		await closeAllEditors();

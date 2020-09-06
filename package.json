@@ -46,8 +46,7 @@
 	},
 	"license": "MIT",
 	"contributes": {
-		"commands": [
-			{
+		"commands": [{
 				"command": "vscode-texttoolbox.Uppercase",
 				"title": "TT: UPPERCASE"
 			},
@@ -132,35 +131,39 @@
 				"title": "TT: Remove duplicate lines, result in new Editor"
 			}
 		],
-		"configuration": [
-			{
-				"title": "Text Toolbox",
-				"properties": {
-					"tt.statusBarAlignment": {
-						"type": "string",
-						"enum": [
-							"Left",
-							"Right"
-						],
-						"default": "Right",
-						"scope": "window",
-						"description": "Text Toolbox word and selected lines count alignment in the StatusBar"
-					},
-					"tt.statusBarPriority": {
-						"type": "number",
-						"default": 100,
-						"scope": "window",
-						"description": "Text Toolbox word and selected lines count StatusBar priority"
-					},
-					"tt.enableStatusBarWordLineCount": {
-						"type": "boolean",
-						"default": true,
-						"scope": "window",
-						"description": "Enable or disable the StatusBar Text Toolbox word and selected lines count"
-					}
+		"configuration": [{
+			"title": "Text Toolbox",
+			"properties": {
+				"tt.statusBarAlignment": {
+					"type": "string",
+					"enum": [
+						"Left",
+						"Right"
+					],
+					"default": "Right",
+					"scope": "window",
+					"description": "Text Toolbox word and selected lines count alignment in the StatusBar"
+				},
+				"tt.statusBarPriority": {
+					"type": "number",
+					"default": 100,
+					"scope": "window",
+					"description": "Text Toolbox word and selected lines count StatusBar priority"
+				},
+				"tt.enableStatusBarWordLineCount": {
+					"type": "boolean",
+					"default": true,
+					"scope": "window",
+					"description": "Enable or disable the StatusBar Text Toolbox word and selected lines count"
+				},
+				"tt.ignoreWhitespaceInLineFilters": {
+					"type": "boolean",
+					"default": true,
+					"scope": "window",
+					"description": "Ignore leading and trailing whitespaces when filtering lines: this can impact how duplicate lines are removed"
 				}
 			}
-		]
+		}]
 	},
 	"scripts": {
 		"vscode:prepublish": "webpack --mode production",
@@ -192,9 +195,11 @@
 		"glob": "^7.1.6",
 		"guid": "0.0.12",
 		"mocha": "^7.2.0",
+		"mocha-explorer-launcher-scripts": "^0.3.0",
 		"node-uuid": "^1.4.8",
 		"pad": "^3.2.0",
 		"ts-loader": "^8.0.3",
+		"ts-node": "^9.0.0",
 		"typescript": "^3.8.3",
 		"uuid-lib": "0.0.6",
 		"vsce": "^1.79.3",

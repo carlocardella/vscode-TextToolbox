@@ -12,9 +12,6 @@ suite('insertText', () => {
     after(() => {
         console.log('All insertText tests done');
     });
-    // afterEach(() => {
-    //     closeTextEditor();
-    // });
     after(async () => {
         await sleep(1000);
         await closeAllEditors();
