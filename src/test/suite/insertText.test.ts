@@ -1,8 +1,8 @@
 import * as assert from 'assert';
 import * as guid from 'guid';
-import { closeTextEditor, sleep, getDocumentText, createNewEditor, selectAllText, closeAllEditors } from '../../modules/helpers';
+import { sleep, getDocumentText, createNewEditor, selectAllText, closeAllEditors } from '../../modules/helpers';
 import { insertGUID, insertDateTime, padText, padDirection } from '../../modules/insertText';
-import { before, after, afterEach, describe } from 'mocha';
+import { before, after, describe } from 'mocha';
 import { DateTime } from 'luxon';
 import * as os from 'os';
 import { findLinesAndOpenInNewTextEditor } from '../../modules/filterText';

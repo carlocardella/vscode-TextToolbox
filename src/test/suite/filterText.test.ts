@@ -1,7 +1,7 @@
 import * as assert from 'assert';
-import { before, after, afterEach, describe } from 'mocha';
-import { closeTextEditor, sleep, getDocumentText, createNewEditor, selectAllText, closeAllEditors, findLinesMatchingRegEx } from '../../modules/helpers';
-import { findLinesAndOpenInNewTextEditor, removeDuplicateLines, removeEmptyLines } from '../../modules/filterText';
+import { before, after, describe } from 'mocha';
+import { sleep, getDocumentText, createNewEditor, selectAllText, closeAllEditors, findLinesMatchingRegEx } from '../../modules/helpers';
+import { removeDuplicateLines, removeEmptyLines } from '../../modules/filterText';
 import * as os from 'os';
 import { ConfigurationTarget, window, workspace } from 'vscode';
 
