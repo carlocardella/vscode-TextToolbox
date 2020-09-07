@@ -2,7 +2,7 @@
 	"name": "vscode-texttoolbox",
 	"displayName": "Text Toolbox",
 	"description": "Collection of tools for text manipulation, filtering, sorting etc...",
-	"version": "0.3.0",
+	"version": "0.4.0",
 	"publisher": "carlocardella",
 	"author": {
 		"name": "Carlo Cardella",
@@ -46,7 +46,8 @@
 	},
 	"license": "MIT",
 	"contributes": {
-		"commands": [{
+		"commands": [
+			{
 				"command": "vscode-texttoolbox.Uppercase",
 				"title": "TT: UPPERCASE"
 			},
@@ -135,45 +136,47 @@
 				"title": "TT: Filter lines, result in new Editor"
 			}
 		],
-		"configuration": [{
-			"title": "Text Toolbox",
-			"properties": {
-				"tt.statusBarAlignment": {
-					"type": "string",
-					"enum": [
-						"Left",
-						"Right"
-					],
-					"default": "Right",
-					"scope": "window",
-					"description": "Text Toolbox word and selected lines count alignment in the StatusBar"
-				},
-				"tt.statusBarPriority": {
-					"type": "number",
-					"default": 100,
-					"scope": "window",
-					"description": "Text Toolbox word and selected lines count StatusBar priority"
-				},
-				"tt.enableStatusBarWordLineCount": {
-					"type": "boolean",
-					"default": true,
-					"scope": "window",
-					"description": "Enable or disable the StatusBar Text Toolbox word and selected lines count"
-				},
-				"tt.ignoreWhitespaceInLineFilters": {
-					"type": "boolean",
-					"default": true,
-					"scope": "window",
-					"description": "Ignore leading and trailing whitespaces when filtering lines: this can impact how duplicate lines are removed"
-				},
-				"tt.filtersUseRegularExpressions": {
-					"type": "boolean",
-					"default": true,
-					"scope": "window",
-					"description": "Filter use Regular Expression rather than simple text match"
+		"configuration": [
+			{
+				"title": "Text Toolbox",
+				"properties": {
+					"tt.statusBarAlignment": {
+						"type": "string",
+						"enum": [
+							"Left",
+							"Right"
+						],
+						"default": "Right",
+						"scope": "window",
+						"description": "Text Toolbox word and selected lines count alignment in the StatusBar"
+					},
+					"tt.statusBarPriority": {
+						"type": "number",
+						"default": 100,
+						"scope": "window",
+						"description": "Text Toolbox word and selected lines count StatusBar priority"
+					},
+					"tt.enableStatusBarWordLineCount": {
+						"type": "boolean",
+						"default": true,
+						"scope": "window",
+						"description": "Enable or disable the StatusBar Text Toolbox word and selected lines count"
+					},
+					"tt.ignoreWhitespaceInLineFilters": {
+						"type": "boolean",
+						"default": true,
+						"scope": "window",
+						"description": "Ignore leading and trailing whitespaces when filtering lines: this can impact how duplicate lines are removed"
+					},
+					"tt.filtersUseRegularExpressions": {
+						"type": "boolean",
+						"default": true,
+						"scope": "window",
+						"description": "Filter use Regular Expression rather than simple text match"
+					}
 				}
 			}
-		}]
+		]
 	},
 	"scripts": {
 		"vscode:prepublish": "webpack --mode production",
