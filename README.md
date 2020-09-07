@@ -97,6 +97,13 @@ Please open an issue to leave a comment, report a bug, request a feature etc... 
   * remove all empty lines from the current document
 * Remove redundant empty line
   * remove all redundant empty lines from the current document: reduces multiple empty lines to one
+* Remove duplicate lines
+* Remove duplicate lines, result in new Editor
+* Filter lines, result in new Editor
+  * use RegExp (default) or set `tt.filtersUseRegularExpressions` to `false` to use simple string match instead
+  * RegExp allow for a more targeted search; use global flags to fine tune your search. RegExp must use forward slashes (`/`) to delimit the expression and the global flags (optional): `/<expression>/flags`
+    * `/\d.*/gm`
+  * string match allows to find all lines containing the string you are looking for, the string must match exactly
 
 ### Thanks to:
 

@@ -1,6 +1,7 @@
 import { TextDecoder } from 'util';
 import * as vscode from 'vscode';
-import { Range } from 'vscode';
+import { Range, workspace } from 'vscode';
+import * as os from 'os';
 
 
 function validateEditor() {
@@ -98,4 +99,38 @@ export function closeTextEditor() {
 export function prependZeroes(n: number) {
     if (n <= 9) { return '0' + n; }
     return n;
+}
+
+export function findLinesMatchingRegEx(searchString: string | undefined): string[] | undefined {
+    if (!searchString) { return; }
+
+    let text: string | any = [];
+
+    const regExpFlags = searchString.match("(?!.*\/).*")![0] || undefined;
+    const regExpString = searchString.match("(?<=\/)(.*?)(?=\/)")![0];
+    const regExp = new RegExp(regExpString, regExpFlags);
+
+    let match;
+    if (!regExpFlags || regExpFlags?.indexOf("g") < 0) {
+        match = regExp.exec(getDocumentTextOrSelection()!);
+        if (match) { text.push(match[0]); }
+    }
+    else if (regExpFlags || regExpFlags.indexOf("g") >= 0) {
+        while (match = regExp.exec(getDocumentTextOrSelection()!)) {
+            text.push(match[0]);
+        }
+    }
+
+    return text;
+}
+
+export function findLinesMatchingString(searchString: string): string[] | undefined {
+    if (!searchString) { return; }
+    let text: string[] | undefined = [];
+
+    text = getDocumentTextOrSelection()?.split(os.EOL); // TODO: getLines
+    if (!text) { return; }
+    text = text.filter(line => line.indexOf(searchString) >= 0);
+
+    return text;
 }

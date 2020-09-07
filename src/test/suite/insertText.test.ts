@@ -4,6 +4,9 @@ import { closeTextEditor, sleep, getDocumentText, createNewEditor, selectAllText
 import { insertGUID, insertDateTime, padText, padDirection } from '../../modules/insertText';
 import { before, after, afterEach, describe } from 'mocha';
 import { DateTime } from 'luxon';
+import * as os from 'os';
+import { findLinesAndOpenInNewTextEditor } from '../../modules/filterText';
+import * as vscode from 'vscode';
 
 suite('insertText', () => {
     before(() => {
@@ -72,26 +75,26 @@ suite('insertText', () => {
         let testDate = DateTime.local(2020, 8, 25, 15, 34, 41).setZone("America/New_York");
 
         let tests = [
-            { args: 'DATE_SHORT', expected: '8/25/2020' },
-            { args: 'TIME_SIMPLE', expected: '6:34 PM' },
-            { args: 'TIME_WITH_SECONDS', expected: '6:34:41 PM' },
-            { args: 'DATETIME_SHORT', expected: '8/25/2020, 6:34 PM' },
-            { args: 'DATE_HUGE', expected: 'Tuesday, August 25, 2020' },
-            { args: 'SORTABLE', expected: '2020-08-25T18:34:41' },
-            { args: 'UNIVERSAL_SORTABLE', expected: '2020-08-25T22:34:41Z' },
-            { args: 'ISO8601', expected: '2020-08-25T18:34:41.000-04:00' },
-            { args: 'RFC2822', expected: 'Tue, 25 Aug 2020 18:34:41 -0400' },
-            { args: 'HTTP', expected: 'Tue, 25 Aug 2020 22:34:41 GMT' },
-            { args: 'DATETIME_SHORT_WITH_SECONDS', expected: '8/25/2020, 6:34:41 PM' },
-            { args: 'DATETIME_FULL_WITH_SECONDS', expected: 'August 25, 2020, 6:34 PM EDT' },
-            { args: 'UNIX_SECONDS', expected: '1598394881' },
-            { args: 'UNIX_MILLISECONDS', expected: '1598394881000' }
+            { dateFormat: 'DATE_SHORT', expected: '8/25/2020' },
+            { dateFormat: 'TIME_SIMPLE', expected: '6:34 PM' },
+            { dateFormat: 'TIME_WITH_SECONDS', expected: '6:34:41 PM' },
+            { dateFormat: 'DATETIME_SHORT', expected: '8/25/2020, 6:34 PM' },
+            { dateFormat: 'DATE_HUGE', expected: 'Tuesday, August 25, 2020' },
+            { dateFormat: 'SORTABLE', expected: '2020-08-25T18:34:41' },
+            { dateFormat: 'UNIVERSAL_SORTABLE', expected: '2020-08-25T22:34:41Z' },
+            { dateFormat: 'ISO8601', expected: '2020-08-25T18:34:41.000-04:00' },
+            { dateFormat: 'RFC2822', expected: 'Tue, 25 Aug 2020 18:34:41 -0400' },
+            { dateFormat: 'HTTP', expected: 'Tue, 25 Aug 2020 22:34:41 GMT' },
+            { dateFormat: 'DATETIME_SHORT_WITH_SECONDS', expected: '8/25/2020, 6:34:41 PM' },
+            { dateFormat: 'DATETIME_FULL_WITH_SECONDS', expected: 'August 25, 2020, 6:34 PM EDT' },
+            { dateFormat: 'UNIX_SECONDS', expected: '1598394881' },
+            { dateFormat: 'UNIX_MILLISECONDS', expected: '1598394881000' }
         ];
 
         tests.forEach(function (t) {
-            test('Insert Date ' + t.args, async () => {
+            test('Insert Date ' + t.dateFormat, async () => {
                 await createNewEditor();
-                await insertDateTime(t.args, testDate);
+                await insertDateTime(t.dateFormat, testDate);
                 await sleep(500);
 
                 let text = String(getDocumentText());
