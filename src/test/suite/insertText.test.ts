@@ -4,6 +4,9 @@ import { sleep, getDocumentText, createNewEditor, selectAllText, closeAllEditors
 import { insertGUID, insertDateTime, padText, padDirection } from '../../modules/insertText';
 import { before, after, describe } from 'mocha';
 import { DateTime } from 'luxon';
+import * as os from 'os';
+import { findLinesAndOpenInNewTextEditor } from '../../modules/filterText';
+import * as vscode from 'vscode';
 
 suite('insertText', () => {
     before(() => {
