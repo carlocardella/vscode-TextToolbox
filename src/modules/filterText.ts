@@ -1,4 +1,4 @@
-import { getDocumentText, getActiveEditor, selectAllText, getDocumentTextOrSelection, createNewEditor, sleep, getActiveSelection, getSelectionOrFullDocument } from './helpers';
+import { getDocumentText, getActiveEditor, selectAllText, getDocumentTextOrSelection, createNewEditor, sleep, getActiveSelection, getSelectionOrFullDocument, findLinesMatchingRegEx, findLinesMatchingString } from './helpers';
 import * as os from "os";
 import { window, workspace } from "vscode";
 
@@ -8,7 +8,7 @@ export async function removeEmptyLines(redundandOnly: boolean) {
         return;
     }
 
-    const newText = removeEmptyLinesInternal(text, redundandOnly);
+    const newText = await removeEmptyLinesInternal(text, redundandOnly);
 
     let editor = getActiveEditor();
     if (!editor) {
@@ -26,7 +26,7 @@ export async function removeEmptyLines(redundandOnly: boolean) {
     });
 }
 
-function removeEmptyLinesInternal(text: string, redundandOnly: boolean): string {
+async function removeEmptyLinesInternal(text: string, redundandOnly: boolean): Promise<string> {
     const eol = os.EOL;
     let r;
     let rr: string;
@@ -36,10 +36,10 @@ function removeEmptyLinesInternal(text: string, redundandOnly: boolean): string 
     // replace multiple empty lines with a single one, or with nothing
     redundandOnly ? (rr = eol) : (rr = "");
 
-    return text.replace(r, rr!);
+    return Promise.resolve(text.replace(r, rr!));
 }
 
-export async function removeDuplicateLines(resultInNewEditor: boolean) {
+export async function removeDuplicateLines(openInNewTextEditor: boolean) {
     let text = getDocumentTextOrSelection();
     const o = os;
     let lines = text?.split(os.EOL);
@@ -57,10 +57,10 @@ export async function removeDuplicateLines(resultInNewEditor: boolean) {
             lines.splice(lines.lastIndexOf(line), 1);
         }
     }
-    let newText = lines.join(o.EOL).trim();
-    newText = removeEmptyLinesInternal(newText, false);
+    let newText = lines.join(o.EOL).trim(); // TODO: convertArrayToText
+    newText = await removeEmptyLinesInternal(newText, false);
 
-    if (resultInNewEditor) {
+    if (openInNewTextEditor) {
         createNewEditor(newText);
         return;
     }
@@ -71,4 +71,20 @@ export async function removeDuplicateLines(resultInNewEditor: boolean) {
     editor!.edit(editBuilder => {
         editBuilder.replace(selection!, newText);
     });
+}
+
+export async function filterLinesUsingRegExpOrString(openInNewTextEditor?: boolean) {
+    let searchString = await window.showInputBox({ ignoreFocusOut: true, placeHolder: "Regular Expression or String to match" });
+    if (!searchString) { return; }
+
+    let text;
+    if (workspace.getConfiguration().get("tt.filtersUseRegularExpressions")) {
+        text = findLinesMatchingRegEx(searchString)!;
+    }
+    else {
+        text = findLinesMatchingString(searchString);
+    }
+
+    // TODO: convertArrayToText
+    text!.length > 0 ? createNewEditor(text!.join(os.EOL).toString()) : window.showInformationMessage("No match found");
 }

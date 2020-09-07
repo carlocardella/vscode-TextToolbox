@@ -15,7 +15,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## Log
 
-### [0.3.0]
+### [0.4.0] - 2020-09-06
+
+#### Added
+
+* Find text using RegEx or simple text match and open the result in a new Editor
+  * By default the search uses RegEx: can be changed using `tt.filtersUseRegularExpressions`
+
+#### Updated
+
+* Better handle configuration changes, react to the event only if `Text Toolbox` configuration is undated, ignore all other changes
+
+### [0.3.0] - 2020-09-05
 
 #### Added
 
