@@ -10,12 +10,10 @@ suite("filterText", () => {
     before(() => {
         console.log('Starting insertText tests');
     });
-    after(() => {
-        console.log('All insertText tests done');
-    });
     after(async () => {
-        await sleep(1000);
+        await sleep(500);
         await closeAllEditors();
+        console.log('All insertText tests done');
     });
 
     describe("Remove all empty lines", async () => {

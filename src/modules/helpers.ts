@@ -1,27 +1,25 @@
-import { TextDecoder } from 'util';
-import * as vscode from 'vscode';
-import { Range, workspace } from 'vscode';
+import { commands, Range, Selection, TextEditor, window, workspace } from 'vscode';
 import * as os from 'os';
 
 
 function validateEditor() {
-    const editor = vscode.window.activeTextEditor;
+    const editor = window.activeTextEditor;
     if (!editor) { return; }
 }
 
 export function validateSelection() {
     validateEditor();
 
-    const selections = vscode.window.activeTextEditor?.selections;
+    const selections = window.activeTextEditor?.selections;
     if (!selections) { return; }
 
     if (selections?.length < 1) {
-        vscode.window.showWarningMessage("You must select some text first");
+        window.showWarningMessage("You must select some text first");
         return;
     }
 }
 
-export function getActiveSelection(editor: vscode.TextEditor): vscode.Selection {
+export function getActiveSelection(editor: TextEditor): Selection {
     return editor.selection;
 }
 
@@ -33,18 +31,18 @@ export function sleep(ms: number): Promise<void> {
 
 export function closeAllEditors(): Promise<void> {
     return new Promise(resolve => {
-        vscode.commands.executeCommand("workbench.action.closeAllEditors").then(() => {
+        commands.executeCommand("workbench.action.closeAllEditors").then(() => {
             resolve();
         });
     });
 }
 
 export function selectAllText(): Thenable<unknown> {
-    return vscode.commands.executeCommand('editor.action.selectAll');
+    return commands.executeCommand('editor.action.selectAll');
 }
 
 export function getDocumentText(): string | undefined {
-    return vscode.window.activeTextEditor?.document.getText();
+    return window.activeTextEditor?.document.getText();
 }
 
 export function getDocumentTextOrSelection(): string | undefined {
@@ -59,32 +57,32 @@ export function getDocumentTextOrSelection(): string | undefined {
     }
 }
 
-export function getSelectionOrFullDocument(editor: vscode.TextEditor): vscode.Selection {
+export function getSelectionOrFullDocument(editor: TextEditor): Selection {
     if (editor.selection.isEmpty) {
-        let selection: vscode.Selection;
+        let selection: Selection;
 
         const lineCount = editor.document.lineCount;
-        selection = new vscode.Selection(0, 0, lineCount, editor.document.lineAt(lineCount - 1).text.length);
+        selection = new Selection(0, 0, lineCount, editor.document.lineAt(lineCount - 1).text.length);
         return selection;
     }
 
     return editor.selection;
 }
 
-export function getTextFromSelection(editor: vscode.TextEditor, selection: vscode.Selection): string | undefined {
+export function getTextFromSelection(editor: TextEditor, selection: Selection): string | undefined {
     return editor.document.getText(new Range(selection.start, selection.end));
 }
 
-export function getActiveEditor(): vscode.TextEditor | undefined {
-    return vscode.window.activeTextEditor;
+export function getActiveEditor(): TextEditor | undefined {
+    return window.activeTextEditor;
 }
 
 // used for tests
-export function createNewEditor(text?: string): PromiseLike<vscode.TextEditor> {
+export function createNewEditor(text?: string): PromiseLike<TextEditor> {
     return new Promise((resolve, reject) => {
-        vscode.workspace.openTextDocument({ content: text, language: "plaintext", preview: false } as any).then(
+        workspace.openTextDocument({ content: text, language: "plaintext", preview: false } as any).then(
             (doc) => {
-                resolve(vscode.window.showTextDocument(doc));
+                resolve(window.showTextDocument(doc));
             },
             (err) => reject(err)
         );
@@ -93,7 +91,7 @@ export function createNewEditor(text?: string): PromiseLike<vscode.TextEditor> {
 
 // close active text editor in tests
 export function closeTextEditor() {
-    vscode.commands.executeCommand('workbench.action.closeActiveEditor');
+    commands.executeCommand('workbench.action.closeActiveEditor');
 }
 
 export function prependZeroes(n: number) {
@@ -133,4 +131,15 @@ export function findLinesMatchingString(searchString: string): string[] | undefi
     text = text.filter(line => line.indexOf(searchString) >= 0);
 
     return text;
+}
+
+export async function getLines(text: string | Selection): Promise<string[] | undefined> {
+    if (!text) { return; }
+    let lines;
+
+    if (typeof text === "string") {
+        lines = text.split(os.EOL);
+    }
+
+    return Promise.resolve(lines);
 }
