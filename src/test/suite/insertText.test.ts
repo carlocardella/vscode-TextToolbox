@@ -4,24 +4,19 @@ import { sleep, getDocumentText, createNewEditor, selectAllText, closeAllEditors
 import { insertGUID, insertDateTime, padText, padDirection } from '../../modules/insertText';
 import { before, after, describe } from 'mocha';
 import { DateTime } from 'luxon';
-import * as os from 'os';
-import { findLinesAndOpenInNewTextEditor } from '../../modules/filterText';
-import * as vscode from 'vscode';
 
 suite('insertText', () => {
     before(() => {
         console.log('Starting insertText tests');
     });
-    after(() => {
+    after(async () => {
+        await sleep(500);
+        await closeAllEditors();
         console.log('All insertText tests done');
     });
-    after(async () => {
-        await sleep(1000);
-        await closeAllEditors();
-    });
 
 
-    describe('Test insert text', () => {
+    describe('Insert Text', () => {
         test('Insert GUID', async () => {
             await createNewEditor();
             insertGUID();

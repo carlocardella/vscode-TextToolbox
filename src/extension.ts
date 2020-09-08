@@ -3,6 +3,7 @@ import * as CaseConversion from "./modules/caseConversion";
 import * as InsertText from "./modules/insertText";
 import * as StatusBarSelection from './modules/statusBarSelection';
 import * as FilterText from './modules/filterText';
+import * as SortLines from './modules/sortText';
 
 
 export function activate(context: ExtensionContext) {
@@ -35,6 +36,10 @@ export function activate(context: ExtensionContext) {
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.RemoveDuplicateLines', () => { FilterText.removeDuplicateLines(false); }));
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.RemoveDuplicateLinesResultInNewEditor', () => { FilterText.removeDuplicateLines(true); }));
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.FilterLinesUsingRegExpOrString', () => { FilterText.filterLinesUsingRegExpOrString(true); }));
+
+	// sort text
+	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texteditor.SortLinesResultInNewEditor', () => { SortLines.sortLines(true); }));
+	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texteditor.SortLines', () => { SortLines.sortLines(); }));
 
 	// status bar selection
 	if (workspace.getConfiguration().get('tt.enableStatusBarWordLineCount')) {

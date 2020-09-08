@@ -1,4 +1,4 @@
-import { getDocumentText, getActiveEditor, selectAllText, getDocumentTextOrSelection, createNewEditor, sleep, getActiveSelection, getSelectionOrFullDocument, findLinesMatchingRegEx, findLinesMatchingString } from './helpers';
+import { getDocumentText, getActiveEditor, selectAllText, getDocumentTextOrSelection, createNewEditor, getSelectionOrFullDocument, findLinesMatchingRegEx, findLinesMatchingString } from './helpers';
 import * as os from "os";
 import { window, workspace } from "vscode";
 
@@ -26,7 +26,7 @@ export async function removeEmptyLines(redundandOnly: boolean) {
     });
 }
 
-async function removeEmptyLinesInternal(text: string, redundandOnly: boolean): Promise<string> {
+export async function removeEmptyLinesInternal(text: string, redundandOnly: boolean): Promise<string> {
     const eol = os.EOL;
     let r;
     let rr: string;

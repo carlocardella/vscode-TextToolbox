@@ -55,7 +55,6 @@ vscode-TextToolbox:
         ☐ Lorem Ipsum
             ☐ other famous exterpts, e.g. The Devine Comedy, Hamlet etc...
             ☐ excerpts in languages other than English
-        ☐ resetSeed
         ☐ randomByte
         ✔ randomNumber @done(20-08-26 10:24)
             ☐ min
@@ -95,6 +94,9 @@ vscode-TextToolbox:
 
     other:
         ☐ if there is no selection update the entire line
+        ☐ remove control characters/bad characters
+            ☐ on paste (with config toggle)
+        ☐ show progress bar for long operations (e.g. large files)
 
     status bar:
         ✔ number of lines selected @done(20-08-23 08:58)
