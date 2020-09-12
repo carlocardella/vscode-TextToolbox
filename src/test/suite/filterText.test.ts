@@ -1,6 +1,6 @@
 import * as assert from 'assert';
 import { before, after, describe } from 'mocha';
-import { sleep, getDocumentText, createNewEditor, selectAllText, closeAllEditors, findLinesMatchingRegEx } from '../../modules/helpers';
+import { sleep, createNewEditor, selectAllText, findLinesMatchingRegEx, getDocumentTextOrSelection, closeTextEditor } from '../../modules/helpers';
 import { removeDuplicateLines, removeEmptyLines } from '../../modules/filterText';
 import * as os from 'os';
 import { ConfigurationTarget, window, workspace } from 'vscode';
@@ -12,7 +12,7 @@ suite("filterText", () => {
     });
     after(async () => {
         await sleep(500);
-        await closeAllEditors();
+        await closeTextEditor(true);
         console.log('All insertText tests done');
     });
 
@@ -35,7 +35,7 @@ suite("filterText", () => {
                 await removeEmptyLines(t.redundantOnly);
                 await sleep(500);
 
-                let text = getDocumentText();
+                let text = getDocumentTextOrSelection();
                 assert.deepStrictEqual(text, t.expected);
             });
         });
@@ -66,7 +66,7 @@ suite("filterText", () => {
                 await removeDuplicateLines(t.openInNewEditor);
                 await sleep(500);
 
-                let text = getDocumentText();
+                let text = getDocumentTextOrSelection();
                 assert.deepStrictEqual(text, t.expected);
             });
         });
@@ -89,7 +89,7 @@ suite("filterText", () => {
                 await createNewEditor(result?.join(eol).toString()); // TODO: convertArrayToText
                 await sleep(500);
 
-                let text = String(getDocumentText());
+                let text = String(getDocumentTextOrSelection());
                 assert.deepStrictEqual(text, t.expected);
             });
 
@@ -107,7 +107,7 @@ suite("filterText", () => {
                 await createNewEditor(result?.join(eol).toString()); // TODO: convertArrayToText
                 await sleep(500);
 
-                let text = String(getDocumentText());
+                let text = String(getDocumentTextOrSelection());
                 assert.deepStrictEqual(text, t.expected);
 
                 await config.update("filtersUseRegularExpressions", undefined, ConfigurationTarget.Global);

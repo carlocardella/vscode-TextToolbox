@@ -1,22 +1,32 @@
-import * as vscode from 'vscode';
-import { window, ExtensionContext, workspace } from 'vscode';
+import { window, ExtensionContext, workspace, StatusBarAlignment, Selection, StatusBarItem } from 'vscode';
 
-let statusBarItem: vscode.StatusBarItem;
 
+let statusBarItem: StatusBarItem;
+
+/**
+ * Registers relevant StatusBar events to the ExtensionContext
+ * @param {ExtensionContext} context An ExtensionContext used to subscribe to relevant StatusBar events
+ */
 export function createStatusBarItem(context: ExtensionContext) {
     updateStatusBarConfiguration();
     context.subscriptions.push(statusBarItem);
 
     context.subscriptions.push(window.onDidChangeTextEditorSelection(updateStatusBar));
-    context.subscriptions.push(vscode.window.onDidChangeActiveTextEditor(updateStatusBar));
-    context.subscriptions.push(vscode.window.onDidChangeActiveTextEditor(countWords));
-    context.subscriptions.push(vscode.workspace.onDidChangeConfiguration(showUpdateMessage));
+    context.subscriptions.push(window.onDidChangeActiveTextEditor(updateStatusBar));
+    context.subscriptions.push(window.onDidChangeActiveTextEditor(countWords));
+    context.subscriptions.push(workspace.onDidChangeConfiguration(showUpdateMessage));
 }
 
+/**
+ * Shows an informational message to the user
+ */
 function showUpdateMessage() {
     window.showInformationMessage("Please reload the window for the change to take effect");
 }
 
+/**
+ * Updates the StatusBar configuration for this extension
+ */
 function updateStatusBarConfiguration() {
     if (!workspace.getConfiguration().get('tt.enableStatusBarWordLineCount')) {
         disposeStatusBarItem();
@@ -26,10 +36,10 @@ function updateStatusBarConfiguration() {
     let statusBarAlignment;
     switch (workspace.getConfiguration().get('tt.statusBarAlignment')) {
         case 'Right':
-            statusBarAlignment = vscode.StatusBarAlignment.Right;
+            statusBarAlignment = StatusBarAlignment.Right;
             break;
         case 'Left':
-            statusBarAlignment = vscode.StatusBarAlignment.Left;
+            statusBarAlignment = StatusBarAlignment.Left;
             break;
         default:
             break;
@@ -42,7 +52,12 @@ function updateStatusBarConfiguration() {
     }
 }
 
-function countSelectedLines(selection: vscode.Selection): number {
+/**
+ * Returns the number of lines in a selection
+ * @param {Selection} selection The selection containing the lines to be counted
+ * @returns {number}
+ */
+function countSelectedLines(selection: Selection): number {
     let n = 0;
     if (selection.start.line === selection.end.line) {
         if (selection.start.character !== selection.end.character) {
@@ -57,6 +72,10 @@ function countSelectedLines(selection: vscode.Selection): number {
     return n;
 }
 
+/**
+ * Returns the number of works in the active document
+ * @returns {number}
+ */
 function countWords(): number {
     let text = window.activeTextEditor?.document.getText();
     if (!text) { return 0; }
@@ -72,6 +91,9 @@ function countWords(): number {
     return n;
 }
 
+/**
+ * Updates the StatusBar item with the number of lines and workds in the active editor
+ */
 function updateStatusBar() {
     const selections = window.activeTextEditor?.selections;
     if (!selections) { return; }
@@ -88,6 +110,9 @@ function updateStatusBar() {
     }
 }
 
+/**
+ * Cleanup the StatusBar item
+ */
 export function disposeStatusBarItem() {
     statusBarItem.dispose();
 }

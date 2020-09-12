@@ -4,6 +4,10 @@ import { Chance } from 'chance';
 import { getActiveEditor } from './helpers';
 
 
+/**
+ * Insert text into the active editor
+ * @param text The test to insert in the active editor
+ */
 function insertText(text: string): Promise<boolean> {
     const editor = window.activeTextEditor;
     if (!editor) { return Promise.reject(false); }
@@ -18,12 +22,19 @@ function insertText(text: string): Promise<boolean> {
     return Promise.resolve(true);
 }
 
+/**
+ * Insert a random GUID
+ */
 export function insertGUID() {
     const chance = new Chance();
     const newGuid = chance.guid();
     insertText(newGuid);
 }
 
+/**
+ * Asks the user which DateTime format to insert
+ * @async
+ */
 export async function pickDateTime() {
     const dateTimeFormats = [
         "DATE_SHORT", // 8/25/2020
@@ -51,6 +62,12 @@ export async function pickDateTime() {
     if (selectedFormat) { insertDateTime(selectedFormat); }
 }
 
+/**
+ * Insert a DAteTime format based on user's selection
+ * @param {string | undefined} selectedFormat Format of DateTime to insert
+ * @param {DateTime} testDate Optional DateTime to render based on the selected format. Used primarily for Mocha unit tests
+ * @async
+ */
 export async function insertDateTime(selectedFormat: string | undefined, testDate?: DateTime) {
     let date;
     testDate ? date = testDate : date = DateTime.local();
@@ -113,6 +130,10 @@ export async function insertDateTime(selectedFormat: string | undefined, testDat
     insertText(text!);
 }
 
+/**
+ * Aks the user which random string type to insert
+ * @async
+ */
 export async function pickRandom() {
     const randomTypeToInsert = [
         'IPV4',
@@ -145,6 +166,11 @@ export async function pickRandom() {
     if (selectedRandomType) { insertRandom(selectedRandomType); }
 }
 
+/**
+ * Inserts a random string, based on the type passed as `selectRandomType`
+ * @param {string | undefined} selectedRandomType User selected choise of random string to insers
+ * @async
+ */
 export async function insertRandom(selectedRandomType: string | undefined) {
     const chance = new Chance();
     let text;
@@ -249,11 +275,21 @@ export async function insertRandom(selectedRandomType: string | undefined) {
     insertText(String(text));
 }
 
+/**
+ * Direction to pad the selection, used by `padText`
+ */
 export enum padDirection {
     right = 'right',
     left = 'left'
 }
 
+/**
+ * Ask the user info about the paddind:
+ *   - string to use for padding
+ *   - length of the resulting string after padding
+ * @param {padDirection} padDirection 
+ * @async
+ */
 export async function askForPadDetails(padDirection: string) {
     const s: string | undefined = await window.showInputBox({ placeHolder: 'Filler string', ignoreFocusOut: true });
     if (!s) { return; }
@@ -263,6 +299,12 @@ export async function askForPadDetails(padDirection: string) {
     padText(padDirection, s, Number(n));
 }
 
+/**
+ * Pads the selection with the user's selected string and direction, to the user's selected length
+ * @param {string} padDirection Direction to pad with the user's selected string: left or right
+ * @param {string} padString String to use as padding
+ * @param {number} length Length of the new string, after padding
+ */
 export async function padText(padDirection: string, padString: string, length: number) {
     const editor = getActiveEditor();
     const selections = editor?.selections;

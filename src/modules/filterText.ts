@@ -1,9 +1,16 @@
-import { getDocumentText, getActiveEditor, selectAllText, getDocumentTextOrSelection, createNewEditor, getSelectionOrFullDocument, findLinesMatchingRegEx, findLinesMatchingString } from './helpers';
+import { getActiveEditor, selectAllText, getDocumentTextOrSelection, createNewEditor, getSelection, findLinesMatchingRegEx, findLinesMatchingString } from './helpers';
 import * as os from "os";
 import { window, workspace } from "vscode";
 
+
+/**
+ * Removes empty lines from the active document or selection; optionally removes only duplicate empty lines.
+ * This function is called by the TextEditorCommands `RemoveAllEmptyLines` and `RemoveRedundantEmptyLines` and is a wrapper for `removeEmptyLinesInternal`
+ * @param {boolean} redundandOnly Remove only duplicate empty lines
+ * @async
+ */
 export async function removeEmptyLines(redundandOnly: boolean) {
-    let text = getDocumentText();
+    let text = getDocumentTextOrSelection();
     if (!text) {
         return;
     }
@@ -26,6 +33,14 @@ export async function removeEmptyLines(redundandOnly: boolean) {
     });
 }
 
+/**
+ * Removes empty lines from the active document or selection; optionally removes only duplicate empty lines.
+ * This function is called by `removeEmptyLines` by Mocha tests
+ * @param {string} text 
+ * @param {boolean} redundandOnly 
+ * @async
+ * @returns {Promise<string>}
+ */
 export async function removeEmptyLinesInternal(text: string, redundandOnly: boolean): Promise<string> {
     const eol = os.EOL;
     let r;
@@ -39,6 +54,11 @@ export async function removeEmptyLinesInternal(text: string, redundandOnly: bool
     return Promise.resolve(text.replace(r, rr!));
 }
 
+/**
+ * Removes duplicate lines from the active selection or document and optionally open the resul in a new editor
+ * @param {boolean} openInNewTextEditor Open the resulting text in a new editor
+ * @async
+ */
 export async function removeDuplicateLines(openInNewTextEditor: boolean) {
     let text = getDocumentTextOrSelection();
     const o = os;
@@ -66,13 +86,22 @@ export async function removeDuplicateLines(openInNewTextEditor: boolean) {
     }
 
     const editor = getActiveEditor();
-    let selection = getSelectionOrFullDocument(editor!);
+    let selection = getSelection(editor!);
 
     editor!.edit(editBuilder => {
         editBuilder.replace(selection!, newText);
     });
 }
 
+/**
+ * Filter the active Selection or Document based on user's input, either regexp (default) or simple string.
+ *   - `regexp` behaves like a normal regual expression, returns the result of the RegExp match.
+ *   - `string` returns all lines containing the search string, exactly how is typed.
+ * The default search string type (regexp or string) can be configured using `tt.filtersUseRegularExpressions`
+ * Default: regexp
+ * @param {boolean} openInNewTextEditor 
+ * @async
+ */
 export async function filterLinesUsingRegExpOrString(openInNewTextEditor?: boolean) {
     let searchString = await window.showInputBox({ ignoreFocusOut: true, placeHolder: "Regular Expression or String to match" });
     if (!searchString) { return; }

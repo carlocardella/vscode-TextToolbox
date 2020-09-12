@@ -1,6 +1,6 @@
 import * as assert from 'assert';
 import { before, after, describe } from 'mocha';
-import { closeAllEditors, sleep, createNewEditor, getSelectionOrFullDocument, getLines } from '../../modules/helpers';
+import { sleep, getLines, closeTextEditor } from '../../modules/helpers';
 import * as os from 'os';
 import { sortLinesInternal } from '../../modules/sortText';
 
@@ -11,15 +11,15 @@ suite('sortText', () => {
     });
     after(async () => {
         await sleep(500);
-        await closeAllEditors();
+        await closeTextEditor(true);
         console.log('All sortText tests done');
     });
 
     describe("Sort Text", () => {
         const eol = os.EOL;
-        const textUnsorted = `Connecticut${eol}Pennsylvania${eol}Rhode Island${eol}${eol}${eol}Delaware${eol}Alabama${eol}Arkansas${eol}${eol}New Jersey${eol}Washington${eol}New York${eol}Texas${eol}${eol}`
+        const textUnsorted = `Connecticut${eol}Pennsylvania${eol}Rhode Island${eol}${eol}${eol}Delaware${eol}Alabama${eol}Arkansas${eol}${eol}New Jersey${eol}Washington${eol}New York${eol}Texas${eol}${eol}`;
         // const textFilteredExpected = `Alabama${eol}Arkansas${eol}Connecticut${eol}Delaware${eol}New Jersey${eol}New York${eol}Pennsylvania${eol}Rhode Island${eol}Texas${eol}Washington${eol}`
-        const textFilteredExpected = `${eol}${eol}${eol}${eol}${eol}Alabama${eol}Arkansas${eol}Connecticut${eol}Delaware${eol}New Jersey${eol}New York${eol}Pennsylvania${eol}Rhode Island${eol}Texas${eol}Washington`
+        const textFilteredExpected = `${eol}${eol}${eol}${eol}${eol}Alabama${eol}Arkansas${eol}Connecticut${eol}Delaware${eol}New Jersey${eol}New York${eol}Pennsylvania${eol}Rhode Island${eol}Texas${eol}Washington`;
 
         test("Sort lines", async () => {
             // await createNewEditor(textUnsorted);
