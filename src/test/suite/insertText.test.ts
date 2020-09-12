@@ -1,6 +1,6 @@
 import * as assert from 'assert';
 import * as guid from 'guid';
-import { sleep, getDocumentText, createNewEditor, selectAllText, closeAllEditors } from '../../modules/helpers';
+import { sleep, createNewEditor, selectAllText, closeTextEditor, getDocumentTextOrSelection } from '../../modules/helpers';
 import { insertGUID, insertDateTime, padText, padDirection } from '../../modules/insertText';
 import { before, after, describe } from 'mocha';
 import { DateTime } from 'luxon';
@@ -11,7 +11,7 @@ suite('insertText', () => {
     });
     after(async () => {
         await sleep(500);
-        await closeAllEditors();
+        await closeTextEditor(true);
         console.log('All insertText tests done');
     });
 
@@ -22,7 +22,7 @@ suite('insertText', () => {
             insertGUID();
             await sleep(200);
 
-            let text = String(getDocumentText());
+            let text = String(getDocumentTextOrSelection());
             assert.ok(guid.isGuid(text), `Value "${text}" is not a valid GUID`);
         });
 
@@ -41,7 +41,7 @@ suite('insertText', () => {
                 await padText(t.padDirection, t.padString, t.lenght);
                 await sleep(500);
 
-                let text = String(getDocumentText());
+                let text = String(getDocumentTextOrSelection());
                 assert.deepStrictEqual(text, t.expected);
             });
         });
@@ -60,7 +60,7 @@ suite('insertText', () => {
                 await padText(t.padDirection, t.padString, t.lenght);
                 await sleep(500);
 
-                let text = String(getDocumentText());
+                let text = String(getDocumentTextOrSelection());
                 assert.deepStrictEqual(text, t.expected);
             });
         });
@@ -92,7 +92,7 @@ suite('insertText', () => {
                 await insertDateTime(t.dateFormat, testDate);
                 await sleep(500);
 
-                let text = String(getDocumentText());
+                let text = String(getDocumentTextOrSelection());
                 assert.deepStrictEqual(text, t.expected);
             });
         });

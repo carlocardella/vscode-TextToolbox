@@ -1,6 +1,6 @@
 import * as assert from 'assert';
 import { after, before, describe } from 'mocha';
-import { sleep, createNewEditor, getDocumentText, selectAllText, closeAllEditors } from '../../modules/helpers';
+import { sleep, createNewEditor, selectAllText, closeTextEditor, getDocumentTextOrSelection } from '../../modules/helpers';
 import { convertToUppercase, convertToLowercase, convertToCapitalCase, convertToDotCase, convertToPascalCase, convertToCamelCase, convertToParamCase, convertToNoCase, convertToHarderCase, convertToConstantCase, convertToPathCase, convertToSentenceCase, convertToSnakeCase } from '../../modules/caseConversion';
 
 suite('caseConversion', () => {
@@ -9,7 +9,7 @@ suite('caseConversion', () => {
 	});
 	after(async () => {
 		await sleep(500);
-		await closeAllEditors();
+		await closeTextEditor(true);
 		console.log('All insertText tests done');
 	});
 
@@ -19,8 +19,8 @@ suite('caseConversion', () => {
 			await selectAllText();
 			convertToUppercase();
 			await sleep(500);
-			console.log(getDocumentText());
-			assert.deepStrictEqual(getDocumentText(), 'TEST DOCUMENT');
+			console.log(getDocumentTextOrSelection());
+			assert.deepStrictEqual(getDocumentTextOrSelection(), 'TEST DOCUMENT');
 		});
 
 		test('Convert to lowercase', async () => {
@@ -28,8 +28,8 @@ suite('caseConversion', () => {
 			await selectAllText();
 			convertToUppercase();
 			convertToLowercase();
-			console.log(getDocumentText());
-			assert.deepStrictEqual(getDocumentText(), 'test document');
+			console.log(getDocumentTextOrSelection());
+			assert.deepStrictEqual(getDocumentTextOrSelection(), 'test document');
 		});
 
 		test('Convert to Capital Case', async () => {
@@ -37,8 +37,8 @@ suite('caseConversion', () => {
 			await selectAllText();
 			convertToCapitalCase();
 			await sleep(500);
-			console.log(getDocumentText());
-			assert.deepStrictEqual(getDocumentText(), 'Test Document');
+			console.log(getDocumentTextOrSelection());
+			assert.deepStrictEqual(getDocumentTextOrSelection(), 'Test Document');
 		});
 
 		test('Convert to PascalCase', async () => {
@@ -46,8 +46,8 @@ suite('caseConversion', () => {
 			await selectAllText();
 			convertToPascalCase();
 			await sleep(500);
-			console.log(getDocumentText());
-			assert.deepStrictEqual(getDocumentText(), 'TestDocument');
+			console.log(getDocumentTextOrSelection());
+			assert.deepStrictEqual(getDocumentTextOrSelection(), 'TestDocument');
 		});
 
 		test('Convert to camelCase', async () => {
@@ -55,8 +55,8 @@ suite('caseConversion', () => {
 			await selectAllText();
 			convertToCamelCase();
 			await sleep(500);
-			console.log(getDocumentText());
-			assert.deepStrictEqual(getDocumentText(), 'testDocument');
+			console.log(getDocumentTextOrSelection());
+			assert.deepStrictEqual(getDocumentTextOrSelection(), 'testDocument');
 		});
 
 		test('Convert to CONSTANT_CASE', async () => {
@@ -64,8 +64,8 @@ suite('caseConversion', () => {
 			await selectAllText();
 			convertToConstantCase();
 			await sleep(500);
-			console.log(getDocumentText());
-			assert.deepStrictEqual(getDocumentText(), 'TEST_DOCUMENT');
+			console.log(getDocumentTextOrSelection());
+			assert.deepStrictEqual(getDocumentTextOrSelection(), 'TEST_DOCUMENT');
 		});
 
 		test('Convert to dot.case', async () => {
@@ -73,8 +73,8 @@ suite('caseConversion', () => {
 			await selectAllText();
 			convertToDotCase();
 			await sleep(500);
-			console.log(getDocumentText());
-			assert.deepStrictEqual(getDocumentText(), 'test.document');
+			console.log(getDocumentTextOrSelection());
+			assert.deepStrictEqual(getDocumentTextOrSelection(), 'test.document');
 		});
 
 		test('Convert to header_case', async () => {
@@ -82,8 +82,8 @@ suite('caseConversion', () => {
 			await selectAllText();
 			convertToHarderCase();
 			await sleep(500);
-			console.log(getDocumentText());
-			assert.deepStrictEqual(getDocumentText(), 'Test-Document');
+			console.log(getDocumentTextOrSelection());
+			assert.deepStrictEqual(getDocumentTextOrSelection(), 'Test-Document');
 		});
 
 		test('Convert to no case', async () => {
@@ -91,8 +91,8 @@ suite('caseConversion', () => {
 			await selectAllText();
 			convertToNoCase();
 			await sleep(500);
-			console.log(getDocumentText());
-			assert.deepStrictEqual(getDocumentText(), 'test document');
+			console.log(getDocumentTextOrSelection());
+			assert.deepStrictEqual(getDocumentTextOrSelection(), 'test document');
 		});
 
 		test('Convert to param_case', async () => {
@@ -100,8 +100,8 @@ suite('caseConversion', () => {
 			await selectAllText();
 			convertToParamCase();
 			await sleep(500);
-			console.log(getDocumentText());
-			assert.deepStrictEqual(getDocumentText(), 'test-document');
+			console.log(getDocumentTextOrSelection());
+			assert.deepStrictEqual(getDocumentTextOrSelection(), 'test-document');
 		});
 
 		test('Convert to path/case', async () => {
@@ -109,8 +109,8 @@ suite('caseConversion', () => {
 			await selectAllText();
 			convertToPathCase();
 			await sleep(500);
-			console.log(getDocumentText());
-			assert.deepStrictEqual(getDocumentText(), 'test/document');
+			console.log(getDocumentTextOrSelection());
+			assert.deepStrictEqual(getDocumentTextOrSelection(), 'test/document');
 		});
 
 		test('Convert to Sentence case', async () => {
@@ -118,8 +118,8 @@ suite('caseConversion', () => {
 			await selectAllText();
 			convertToSentenceCase();
 			await sleep(500);
-			console.log(getDocumentText());
-			assert.deepStrictEqual(getDocumentText(), 'Test document');
+			console.log(getDocumentTextOrSelection());
+			assert.deepStrictEqual(getDocumentTextOrSelection(), 'Test document');
 		});
 
 		test('Convert to snake_case', async () => {
@@ -127,8 +127,8 @@ suite('caseConversion', () => {
 			await selectAllText();
 			convertToSnakeCase();
 			await sleep(500);
-			console.log(getDocumentText());
-			assert.deepStrictEqual(getDocumentText(), 'test_document');
+			console.log(getDocumentTextOrSelection());
+			assert.deepStrictEqual(getDocumentTextOrSelection(), 'test_document');
 		});
 	});
 });
