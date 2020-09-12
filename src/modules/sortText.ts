@@ -1,6 +1,7 @@
-import { createNewEditor, getDocumentTextOrSelection, getLines, getSelection } from './helpers';
+import { createNewEditor, getDocumentTextOrSelection, getLines, getSelection, linesArrayToLine, lineToLinesArray } from './helpers';
 import * as os from 'os';
 import { window } from 'vscode';
+import { removeEmptyLinesInternal } from './filterText';
 
 
 /**
@@ -43,6 +44,9 @@ export async function sortLines(openInNewTextEditor?: boolean): Promise<boolean>
 export async function sortLinesInternal(linesToSort: string[]): Promise<string[] | undefined> {
     if (!linesToSort) { return; }
 
-    // await removeEmptyLines(false);
+    // remove empty lines, need to convert to a string and the result back to an array
+    let line = await linesArrayToLine(linesToSort);
+    linesToSort = await lineToLinesArray(await removeEmptyLinesInternal(line, false));
+
     return Promise.resolve(linesToSort.sort());
 }

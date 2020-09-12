@@ -1,4 +1,4 @@
-import { getActiveEditor, selectAllText, getDocumentTextOrSelection, createNewEditor, getSelection, findLinesMatchingRegEx, findLinesMatchingString } from './helpers';
+import { getActiveEditor, getDocumentTextOrSelection, createNewEditor, getSelection, findLinesMatchingRegEx, findLinesMatchingString, linesArrayToLine } from './helpers';
 import * as os from "os";
 import { window, workspace } from "vscode";
 
@@ -22,22 +22,18 @@ export async function removeEmptyLines(redundandOnly: boolean) {
         return;
     }
 
-    selectAllText().then(() => {
-        let selection = editor?.selection;
-        if (!selection) {
-            return;
-        }
-        editor?.edit((editBuilder) => {
-            editBuilder.replace(selection!, newText);
-        });
+    let selection = getSelection(editor);
+    if (!selection) { return; }
+    editor.edit((editBuilder) => {
+        editBuilder.replace(selection, newText);
     });
 }
 
 /**
  * Removes empty lines from the active document or selection; optionally removes only duplicate empty lines.
  * This function is called by `removeEmptyLines` by Mocha tests
- * @param {string} text 
- * @param {boolean} redundandOnly 
+ * @param {string} text
+ * @param {boolean} redundandOnly
  * @async
  * @returns {Promise<string>}
  */
@@ -77,7 +73,7 @@ export async function removeDuplicateLines(openInNewTextEditor: boolean) {
             lines.splice(lines.lastIndexOf(line), 1);
         }
     }
-    let newText = lines.join(o.EOL).trim(); // TODO: convertArrayToText
+    let newText = (await linesArrayToLine(lines)).trim();
     newText = await removeEmptyLinesInternal(newText, false);
 
     if (openInNewTextEditor) {
@@ -99,7 +95,7 @@ export async function removeDuplicateLines(openInNewTextEditor: boolean) {
  *   - `string` returns all lines containing the search string, exactly how is typed.
  * The default search string type (regexp or string) can be configured using `tt.filtersUseRegularExpressions`
  * Default: regexp
- * @param {boolean} openInNewTextEditor 
+ * @param {boolean} openInNewTextEditor
  * @async
  */
 export async function filterLinesUsingRegExpOrString(openInNewTextEditor?: boolean) {
@@ -114,6 +110,5 @@ export async function filterLinesUsingRegExpOrString(openInNewTextEditor?: boole
         text = findLinesMatchingString(searchString);
     }
 
-    // TODO: convertArrayToText
-    text!.length > 0 ? createNewEditor(text!.join(os.EOL).toString()) : window.showInformationMessage("No match found");
+    text!.length > 0 ? createNewEditor(await linesArrayToLine(text!)) : window.showInformationMessage("No match found");
 }
