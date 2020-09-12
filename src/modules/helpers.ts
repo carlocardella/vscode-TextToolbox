@@ -190,3 +190,23 @@ export async function getLines(text: string | Selection): Promise<string[] | und
 
     return Promise.resolve(lines);
 }
+
+/**
+ * Join an array of lines using the OS EOL and returns the resulting string
+ * @param {string[]} lines The array of lines (text) to convert into a single line
+ * @returns {Promise<string>}
+ * @async
+ */
+export async function linesArrayToLine(lines: string[]): Promise<string> {
+    return Promise.resolve(lines.join(os.EOL));
+}
+
+/**
+ * Split a string based on the OS EOL and returns the resulting array of strings (lines)
+ * @param {string} line The line to convert into an array of strings
+ * @async
+ * @returns {Promise<string[]>}
+ */
+export async function lineToLinesArray(line: string): Promise<string[]> {
+    return Promise.resolve(line.split(os.EOL));
+}

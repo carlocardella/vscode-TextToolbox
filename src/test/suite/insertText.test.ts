@@ -30,9 +30,11 @@ suite('insertText', () => {
             { padDirection: padDirection.right, padString: "@", lenght: 10, expected: "test@@@@@@" },
             { padDirection: padDirection.right, padString: "3", lenght: 10, expected: "test333333" },
             { padDirection: padDirection.right, padString: "ab", lenght: 10, expected: "testababab" },
+            { padDirection: padDirection.right, padString: " ", lenght: 10, expected: "test      " },
             { padDirection: padDirection.left, padString: "@", lenght: 10, expected: "@@@@@@test" },
             { padDirection: padDirection.left, padString: "3", lenght: 10, expected: "333333test" },
-            { padDirection: padDirection.left, padString: "ab", lenght: 10, expected: "abababtest" }
+            { padDirection: padDirection.left, padString: "ab", lenght: 10, expected: "abababtest" },
+            { padDirection: padDirection.left, padString: " ", lenght: 10, expected: "      test" }
         ];
         tests.forEach(function (t) {
             test('Padding ' + t.padDirection, async () => {
@@ -50,9 +52,11 @@ suite('insertText', () => {
             { padDirection: padDirection.right, padString: "@", lenght: 10, expected: "@@@@@@@@@@" },
             { padDirection: padDirection.right, padString: "3", lenght: 10, expected: "3333333333" },
             { padDirection: padDirection.right, padString: "ab", lenght: 10, expected: "ababababab" },
+            { padDirection: padDirection.right, padString: " ", lenght: 10, expected: "          " },
             { padDirection: padDirection.left, padString: "@", lenght: 10, expected: "@@@@@@@@@@" },
             { padDirection: padDirection.left, padString: "3", lenght: 10, expected: "3333333333" },
-            { padDirection: padDirection.left, padString: "ab", lenght: 10, expected: "ababababab" }
+            { padDirection: padDirection.left, padString: "ab", lenght: 10, expected: "ababababab" },
+            { padDirection: padDirection.left, padString: " ", lenght: 10, expected: "          " }
         ];
         tests.forEach(function (t) {
             test('Padding on empty selection ' + t.padDirection, async () => {
