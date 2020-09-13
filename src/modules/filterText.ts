@@ -1,4 +1,4 @@
-import { getActiveEditor, getDocumentTextOrSelection, createNewEditor, getSelection, findLinesMatchingRegEx, findLinesMatchingString, linesToLine } from './helpers';
+import { getActiveEditor, getDocumentTextOrSelection, createNewEditor, getSelection, linesToLine, getLines } from './helpers';
 import * as os from "os";
 import { window, workspace } from "vscode";
 
@@ -111,4 +111,49 @@ export async function filterLinesUsingRegExpOrString(openInNewTextEditor?: boole
     }
 
     text!.length > 0 ? createNewEditor(await linesToLine(text!)) : window.showInformationMessage("No match found");
+}
+
+/**
+ * Searches the current Selection and returns all RegExp matches
+ * @param {string | undefined} searchString 
+ * @returns {string[] | undefined}
+ */
+export function findLinesMatchingRegEx(searchString: string | undefined): string[] | undefined {
+    if (!searchString) { return; }
+
+    let text: string | any = [];
+
+    const regExpFlags = searchString.match("(?!.*\/).*")![0] || undefined;
+    const regExpString = searchString.match("(?<=\/)(.*?)(?=\/)")![0];
+    const regExp = new RegExp(regExpString, regExpFlags);
+
+    let match;
+    if (!regExpFlags || regExpFlags?.indexOf("g") < 0) {
+        match = regExp.exec(getDocumentTextOrSelection()!);
+        if (match) { text.push(match[0]); }
+    }
+    else if (regExpFlags || regExpFlags.indexOf("g") >= 0) {
+        while (match = regExp.exec(getDocumentTextOrSelection()!)) {
+            text.push(match[0]);
+        }
+    }
+
+    return text;
+}
+
+/**
+ * Searches the current Selection and returns all lines containing [searchString]
+ * @param {string} searchString The string to search for and match
+ * @returns {Promise<string[] | undefined>}
+ * @async
+ */
+export async function findLinesMatchingString(searchString: string): Promise<string[] | undefined> {
+    if (!searchString) { return; }
+    let text: string[] | undefined = [];
+
+    text = await getLines(getDocumentTextOrSelection()!);
+    if (!text) { return; }
+    text = text.filter(line => line.indexOf(searchString) >= 0);
+
+    return Promise.resolve(text);
 }

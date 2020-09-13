@@ -2,7 +2,7 @@ import * as assert from 'assert';
 import { before, after, describe } from 'mocha';
 import { sleep, closeTextEditor, createNewEditor, getDocumentTextOrSelection, getLines, linesToLine } from '../../modules/helpers';
 import * as os from 'os';
-import { sortLines, sortLinesInternal } from '../../modules/sortText';
+import { sortLines } from '../../modules/sortText';
 
 
 suite('sortText', () => {

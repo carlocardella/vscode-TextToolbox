@@ -14,7 +14,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## Log
 
-### [0.5.0]
+### [0.5.0] - 2020-09-13
 
 #### Added
 

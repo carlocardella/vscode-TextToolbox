@@ -1,7 +1,7 @@
 import * as assert from 'assert';
 import { before, after, describe } from 'mocha';
-import { sleep, createNewEditor, selectAllText, findLinesMatchingRegEx, getDocumentTextOrSelection, closeTextEditor } from '../../modules/helpers';
-import { removeDuplicateLines, removeEmptyLines } from '../../modules/filterText';
+import { sleep, createNewEditor, selectAllText, getDocumentTextOrSelection, closeTextEditor, linesToLine } from '../../modules/helpers';
+import { findLinesMatchingRegEx, removeDuplicateLines, removeEmptyLines } from '../../modules/filterText';
 import * as os from 'os';
 import { ConfigurationTarget, window, workspace } from 'vscode';
 
@@ -86,7 +86,7 @@ suite("filterText", () => {
             test("Filter text with " + t.regExpString, async () => {
                 await createNewEditor(t.textToFilter);
                 let result = findLinesMatchingRegEx(t.regExpString);
-                await createNewEditor(result?.join(eol).toString()); // TODO: convertArrayToText
+                await createNewEditor(await linesToLine(result!));
                 await sleep(500);
 
                 let text = String(getDocumentTextOrSelection());
@@ -104,7 +104,7 @@ suite("filterText", () => {
 
                 await createNewEditor(t.textToFilter);
                 let result = findLinesMatchingRegEx(t.regExpString);
-                await createNewEditor(result?.join(eol).toString()); // TODO: convertArrayToText
+                await createNewEditor(await linesToLine(result!));
                 await sleep(500);
 
                 let text = String(getDocumentTextOrSelection());

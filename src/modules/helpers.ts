@@ -128,51 +128,6 @@ export function closeTextEditor(closeAll?: boolean): Promise<void> {
 }
 
 /**
- * Searches the current Selection and returns all RegExp matches
- * @param {string | undefined} searchString 
- * @returns {string[] | undefined}
- */
-export function findLinesMatchingRegEx(searchString: string | undefined): string[] | undefined {
-    if (!searchString) { return; }
-
-    let text: string | any = [];
-
-    const regExpFlags = searchString.match("(?!.*\/).*")![0] || undefined;
-    const regExpString = searchString.match("(?<=\/)(.*?)(?=\/)")![0];
-    const regExp = new RegExp(regExpString, regExpFlags);
-
-    let match;
-    if (!regExpFlags || regExpFlags?.indexOf("g") < 0) {
-        match = regExp.exec(getDocumentTextOrSelection()!);
-        if (match) { text.push(match[0]); }
-    }
-    else if (regExpFlags || regExpFlags.indexOf("g") >= 0) {
-        while (match = regExp.exec(getDocumentTextOrSelection()!)) {
-            text.push(match[0]);
-        }
-    }
-
-    return text;
-}
-
-/**
- * Searches the current Selection and returns all lines containing [searchString]
- * @param {string} searchString The string to search for and match
- * @returns {Promise<string[] | undefined>}
- * @async
- */
-export async function findLinesMatchingString(searchString: string): Promise<string[] | undefined> {
-    if (!searchString) { return; }
-    let text: string[] | undefined = [];
-
-    text = await getLines(getDocumentTextOrSelection()!);
-    if (!text) { return; }
-    text = text.filter(line => line.indexOf(searchString) >= 0);
-
-    return Promise.resolve(text);
-}
-
-/**
  * Join an array of lines using the OS EOL and returns the resulting string
  * @param {string[]} lines The array of lines (text) to convert into a single line
  * @returns {Promise<string>}

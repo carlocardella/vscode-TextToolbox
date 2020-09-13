@@ -1,4 +1,4 @@
-import { window, ExtensionContext, workspace, StatusBarAlignment, Selection, StatusBarItem, ConfigurationChangeEvent } from 'vscode';
+import { window, ExtensionContext, workspace, StatusBarAlignment, Selection, StatusBarItem } from 'vscode';
 
 
 let statusBarItem: StatusBarItem;
