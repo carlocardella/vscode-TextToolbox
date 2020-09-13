@@ -6,14 +6,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## Unreleased
 
-* Filter lines
-* Sort lines
 * Align
   * to cursor
   * to text delimiter (csv)
   * as table
+* Insert line numbers
 
 ## Log
+
+### [0.5.0]
+
+#### Added
+
+* Sort lines, ascending, descending or reverse the lines order
+  * Update the current selection or entire document, or open the sorted lines in a new editor
+
+#### Updated
+
+* Better handle configuration changes, react to the event only if `Text Toolbox` configuration is undated, ignore all other changes
 
 ### [0.4.0] - 2020-09-06
 
@@ -21,10 +31,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 * Find text using RegEx or simple text match and open the result in a new Editor
   * By default the search uses RegEx: can be changed using `tt.filtersUseRegularExpressions`
-
-#### Updated
-
-* Better handle configuration changes, react to the event only if `Text Toolbox` configuration is undated, ignore all other changes
 
 ### [0.3.0] - 2020-09-05
 

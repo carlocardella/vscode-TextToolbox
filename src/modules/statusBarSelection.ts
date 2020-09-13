@@ -1,4 +1,4 @@
-import { window, ExtensionContext, workspace, StatusBarAlignment, Selection, StatusBarItem } from 'vscode';
+import { window, ExtensionContext, workspace, StatusBarAlignment, Selection, StatusBarItem, ConfigurationChangeEvent } from 'vscode';
 
 
 let statusBarItem: StatusBarItem;
@@ -14,14 +14,11 @@ export function createStatusBarItem(context: ExtensionContext) {
     context.subscriptions.push(window.onDidChangeTextEditorSelection(updateStatusBar));
     context.subscriptions.push(window.onDidChangeActiveTextEditor(updateStatusBar));
     context.subscriptions.push(window.onDidChangeActiveTextEditor(countWords));
-    context.subscriptions.push(workspace.onDidChangeConfiguration(showUpdateMessage));
-}
-
-/**
- * Shows an informational message to the user
- */
-function showUpdateMessage() {
-    window.showInformationMessage("Please reload the window for the change to take effect");
+    context.subscriptions.push(workspace.onDidChangeConfiguration(e => {
+        if (e.affectsConfiguration("tt.enableStatusBarWordLineCount") || e.affectsConfiguration("tt.statusBarPriority")) {
+            window.showInformationMessage("Please reload the window for the change to take effect");
+        }
+    }));
 }
 
 /**

@@ -104,6 +104,10 @@ Please open an issue to leave a comment, report a bug, request a feature etc... 
   * RegExp allow for a more targeted search; use global flags to fine tune your search. RegExp must use forward slashes (`/`) to delimit the expression and the global flags (optional): `/<expression>/flags`
     * `/\d.*/gm`
   * string match allows to find all lines containing the string you are looking for, the string must match exactly
+* Sort lines
+  * Ascending
+  * Descending
+  * Reverse
 
 ### Thanks to:
 
