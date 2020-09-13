@@ -158,37 +158,18 @@ export function findLinesMatchingRegEx(searchString: string | undefined): string
 /**
  * Searches the current Selection and returns all lines containing [searchString]
  * @param {string} searchString The string to search for and match
- * @returns {string[] | undefined}
+ * @returns {Promise<string[] | undefined>}
+ * @async
  */
-export function findLinesMatchingString(searchString: string): string[] | undefined {
+export async function findLinesMatchingString(searchString: string): Promise<string[] | undefined> {
     if (!searchString) { return; }
     let text: string[] | undefined = [];
 
-    text = getDocumentTextOrSelection()?.split(os.EOL); // TODO: getLines
-    // text = await getLines(getDocumentTextOrSelection()!);
+    text = await getLines(getDocumentTextOrSelection()!);
     if (!text) { return; }
     text = text.filter(line => line.indexOf(searchString) >= 0);
 
-    return text;
-}
-
-/**
- * Splits and returns the passed in text or Selection into lines, using the current OS EOL
- * @param {string | undefined} text The text or selection to split into lines using
- * @returns {string[] | undefined} Promise
- */
-export async function getLines(text: string | Selection): Promise<string[] | undefined> {
-    if (!text) { return; }
-    let lines;
-
-    if (typeof text === "string") {
-        lines = text.split(os.EOL);
-    }
-    else {
-        // Selection
-    }
-
-    return Promise.resolve(lines);
+    return Promise.resolve(text);
 }
 
 /**
@@ -197,7 +178,7 @@ export async function getLines(text: string | Selection): Promise<string[] | und
  * @returns {Promise<string>}
  * @async
  */
-export async function linesArrayToLine(lines: string[]): Promise<string> {
+export async function linesToLine(lines: string[]): Promise<string> {
     return Promise.resolve(lines.join(os.EOL));
 }
 
@@ -207,6 +188,6 @@ export async function linesArrayToLine(lines: string[]): Promise<string> {
  * @async
  * @returns {Promise<string[]>}
  */
-export async function lineToLinesArray(line: string): Promise<string[]> {
+export async function getLines(line: string): Promise<string[]> {
     return Promise.resolve(line.split(os.EOL));
 }

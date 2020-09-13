@@ -1,17 +1,39 @@
-import { createNewEditor, getDocumentTextOrSelection, getLines, getSelection, linesArrayToLine, lineToLinesArray } from './helpers';
+import { createNewEditor, getDocumentTextOrSelection, getSelection, linesToLine, getLines } from './helpers';
 import * as os from 'os';
 import { window } from 'vscode';
 import { removeEmptyLinesInternal } from './filterText';
 
 
 /**
+ * Sorting direction: ascending | descending | reverse
+ */
+export const sortDirection = ["ascending", "descending", "reverse"];
+
+/**
+ * Ask the user the sort direction: ascending (default), descending and reverse
+ * @param openInNewTextEditor Optionally open the sorted lines in a new editor
+ * @async
+ */
+export async function askForSortDirection(openInNewTextEditor?: boolean) {
+    // const direction = await window.showQuickPick(Object.keys(sortDirection), {
+    const direction = await window.showQuickPick(sortDirection, {
+        ignoreFocusOut: true,
+        canPickMany: false,
+    });
+    if (!direction) { return; }
+
+    sortLines(direction, openInNewTextEditor);
+}
+
+/**
  * Sort lines in the active selection or active editor.
  * Optionally open the sorted lines in a new editor.
+ * @param {string} direction The direction to sort the selection: ascending | descending | reverse
  * @param {boolean} openInNewTextEditor Optionally open the sorted lines in a new editor
  * @returns {Promise<boolean>}
  * @async
  */
-export async function sortLines(openInNewTextEditor?: boolean): Promise<boolean> {
+export async function sortLines(direction: string, openInNewTextEditor?: boolean): Promise<boolean> {
     let linesToSort = getDocumentTextOrSelection();
     if (!linesToSort) { return Promise.reject(false); }
 
@@ -19,7 +41,7 @@ export async function sortLines(openInNewTextEditor?: boolean): Promise<boolean>
     if (!linesArray) { return Promise.reject(false); }
 
 
-    let newLines = await sortLinesInternal(linesArray);
+    let newLines = await sortLinesInternal(linesArray, direction);
     if (openInNewTextEditor) {
         createNewEditor(newLines?.join(os.EOL));
         return Promise.resolve(true);
@@ -32,7 +54,7 @@ export async function sortLines(openInNewTextEditor?: boolean): Promise<boolean>
         });
     }
 
-    return Promise.reject(false);
+    return Promise.resolve(true);
 }
 
 /**
@@ -41,12 +63,27 @@ export async function sortLines(openInNewTextEditor?: boolean): Promise<boolean>
  * @returns {string[] | undefined}
  * @async
  */
-export async function sortLinesInternal(linesToSort: string[]): Promise<string[] | undefined> {
+export async function sortLinesInternal(linesToSort: string[], direction: string): Promise<string[] | undefined> {
     if (!linesToSort) { return; }
 
     // remove empty lines, need to convert to a string and the result back to an array
-    let line = await linesArrayToLine(linesToSort);
-    linesToSort = await lineToLinesArray(await removeEmptyLinesInternal(line, false));
+    let line = await linesToLine(linesToSort);
+    linesToSort = await getLines(await removeEmptyLinesInternal(line, false));
 
-    return Promise.resolve(linesToSort.sort());
+    let sortedLines;
+    switch (direction) {
+        case "ascending":
+            sortedLines = linesToSort.sort((a, b) => 0 - (a > b ? -1 : 1));
+            break;
+        case "descending":
+            sortedLines = linesToSort.sort((a, b) => 0 - (a > b ? 1 : -1));
+            break;
+        case "reverse":
+            sortedLines = linesToSort.reverse();
+            break;
+        default:
+            return;
+    }
+
+    return Promise.resolve(sortedLines);
 }

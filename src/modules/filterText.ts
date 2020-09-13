@@ -1,4 +1,4 @@
-import { getActiveEditor, getDocumentTextOrSelection, createNewEditor, getSelection, findLinesMatchingRegEx, findLinesMatchingString, linesArrayToLine } from './helpers';
+import { getActiveEditor, getDocumentTextOrSelection, createNewEditor, getSelection, findLinesMatchingRegEx, findLinesMatchingString, linesToLine } from './helpers';
 import * as os from "os";
 import { window, workspace } from "vscode";
 
@@ -73,7 +73,7 @@ export async function removeDuplicateLines(openInNewTextEditor: boolean) {
             lines.splice(lines.lastIndexOf(line), 1);
         }
     }
-    let newText = (await linesArrayToLine(lines)).trim();
+    let newText = (await linesToLine(lines)).trim();
     newText = await removeEmptyLinesInternal(newText, false);
 
     if (openInNewTextEditor) {
@@ -107,8 +107,8 @@ export async function filterLinesUsingRegExpOrString(openInNewTextEditor?: boole
         text = findLinesMatchingRegEx(searchString)!;
     }
     else {
-        text = findLinesMatchingString(searchString);
+        text = await findLinesMatchingString(searchString);
     }
 
-    text!.length > 0 ? createNewEditor(await linesArrayToLine(text!)) : window.showInformationMessage("No match found");
+    text!.length > 0 ? createNewEditor(await linesToLine(text!)) : window.showInformationMessage("No match found");
 }
