@@ -31,16 +31,16 @@ vscode-TextToolbox:
         ✔ remove excess empty lines @done(20-08-26 22:31)
         ☐ copy selection to new editor
         ☐ count line occurrences
-        ☐ filter text using regex
-            ☐ optionally open result in new editor
-        ☐ extract substring
-            ☐ by string
-            ☐ by regex
-            ☐ to new editor
+        ✔ filter text using regex @done(20-09-13 16:12)
+            ✔ optionally open result in new editor @done(20-09-13 16:12)
+        ✔ extract substring @done(20-09-13 16:12)
+            ✔ by string @done(20-09-13 16:12)
+            ✔ by regex @done(20-09-13 16:12)
+            ✔ to new editor @done(20-09-13 16:12)
 
     sorting:
-        ☐ sort (asc|desc)
-            ☐ open result in new editor
+        ✔ sort (asc|desc) @done(20-09-13 16:14)
+            ✔ open result in new editor @done(20-09-13 16:14)
         ☐ align csv
 
     insert:
