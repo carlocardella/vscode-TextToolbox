@@ -2,6 +2,10 @@ import { window, Range, Selection } from "vscode";
 import { validateSelection } from "./helpers";
 import * as cc from 'change-case';
 
+
+/**
+ * Case conversion types
+ */
 const enum caseConversions {
     upperCase = 1,
     lowerCase = 2,
@@ -30,32 +34,41 @@ export function convertToPathCase() { window.activeTextEditor?.selections.forEac
 export function convertToSentenceCase() { window.activeTextEditor?.selections.forEach(element => { convertSelection(element, caseConversions.sentenceCase); }); }
 export function convertToSnakeCase() { window.activeTextEditor?.selections.forEach(element => { convertSelection(element, caseConversions.snakeCase); }); }
 
+/**
+ * Convert the current selection to uppercase
+ */
 export function convertToUppercase() {
     validateSelection();
 
     const editor = window.activeTextEditor;
-    editor?.selections.forEach((selection) => {
-        let text = editor.document.getText(new Range(selection.start, selection.end));
-        if (!text) { return; }
-        return editor?.edit(editorBulder => {
-            editorBulder.replace(selection, text.toUpperCase());
+    editor?.edit(editBuilder => {
+        editor.selections.forEach(selection => {
+            let text = editor.document.getText(new Range(selection.start, selection.end));
+            editBuilder.replace(selection, text.toUpperCase());
         });
     });
 };
 
+/**
+ * Convert the current selection to lowercase
+ */
 export function convertToLowercase() {
     validateSelection();
 
     const editor = window.activeTextEditor;
-    editor?.selections.forEach(function (selection) {
-        let text = editor.document.getText(new Range(selection.start, selection.end));
-        if (!text) { return; }
-        editor.edit(editorBuilder => {
-            editorBuilder.replace(selection, text.toLowerCase());
+    editor?.edit(editBuilder => {
+        editor.selections.forEach(selection => {
+            let text = editor.document.getText(new Range(selection.start, selection.end));
+            editBuilder.replace(selection, text.toLowerCase());
         });
     });
 };
 
+/**
+ * Converts the active selection according to the selected type
+ * @param {Selection} text The text selection to convert
+ * @param {caseConversions} conversion The type of case conversion to perform on the active selection
+ */
 function convertSelection(text: Selection, conversion: caseConversions) {
     validateSelection();
 

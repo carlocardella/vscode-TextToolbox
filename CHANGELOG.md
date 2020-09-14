@@ -14,6 +14,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## Log
 
+### [0.6.0]
+
+#### Updated
+
+* Updated case conversions, now works on multiple selections
+
 ### [0.5.0] - 2020-09-13
 
 #### Added
