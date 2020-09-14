@@ -12,11 +12,10 @@ function insertText(text: string): Promise<boolean> {
     const editor = window.activeTextEditor;
     if (!editor) { return Promise.reject(false); }
 
-    const position = window.activeTextEditor?.selection.active;
-    if (!position) { return Promise.reject(false); }
-
     editor.edit(editBuilder => {
-        editBuilder.insert(position, text);
+        window.activeTextEditor?.selections.forEach(s => {
+            editBuilder.insert(s.active, text);
+        });
     });
 
     return Promise.resolve(true);
