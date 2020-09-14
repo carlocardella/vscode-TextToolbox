@@ -18,7 +18,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 #### Updated
 
-* Updated case conversions, now works on multiple selections
+* Case conversions now works on multiple selections
+* Insert commands are now multicursor aware
 
 ### [0.5.0] - 2020-09-13
 
