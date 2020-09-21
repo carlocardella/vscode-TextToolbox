@@ -16,6 +16,7 @@ vscode-TextToolbox:
     filtering:
         ☐ copy selection to new editor
         ☐ count line occurrences
+        ☐ add config values for regex global switches, default /gi
 
     sorting:
         ☐ align csv
