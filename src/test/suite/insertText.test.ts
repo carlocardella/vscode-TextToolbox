@@ -1,9 +1,11 @@
 import * as assert from 'assert';
 import * as guid from 'guid';
-import { sleep, createNewEditor, selectAllText, closeTextEditor, getDocumentTextOrSelection } from '../../modules/helpers';
-import { insertGUID, insertDateTime, padText, padDirection } from '../../modules/insertText';
+import { sleep, createNewEditor, selectAllText, closeTextEditor, getDocumentTextOrSelection, getActiveEditor, getLinesFromSelection } from '../../modules/helpers';
+import { insertGUID, insertDateTimeInternal, padDirection, padSelectionInternal } from '../../modules/insertText';
 import { before, after, describe } from 'mocha';
 import { DateTime } from 'luxon';
+import { EOL } from 'os';
+import { Selection } from 'vscode';
 
 suite('insertText', () => {
     before(() => {
@@ -17,87 +19,145 @@ suite('insertText', () => {
 
 
     describe('Insert Text', () => {
-        test('Insert GUID', async () => {
-            await createNewEditor();
-            insertGUID();
-            await sleep(200);
+        describe("GUID", () => {
+            test('Insert GUID', async () => {
+                await createNewEditor();
+                insertGUID();
+                await sleep(500);
 
-            let text = String(getDocumentTextOrSelection());
-            assert.ok(guid.isGuid(text), `Value "${text}" is not a valid GUID`);
+                let text = String(getDocumentTextOrSelection());
+                assert.ok(guid.isGuid(text), `Value "${text}" is not a valid GUID`);
+            });
+
+            test("Insert GUID multicursor", async () => {
+                await createNewEditor(`asd${EOL}${EOL}asd`);
+                const editor = getActiveEditor();
+                let selections: Selection[] = [];
+                selections.push(new Selection(0, 0, 0, 3));
+                selections.push(new Selection(2, 0, 2, 3));
+                editor!.selections = selections;
+                insertGUID();
+                await sleep(500);
+
+                let lines = getLinesFromSelection(editor!);
+                let g: string;
+                lines?.forEach(line => {
+                    g = line.text.substr(3, 36);
+                    assert.ok(guid.isGuid(g), `Value "${g}" is not a valid GUID`);
+                });
+            });
         });
 
-        let tests = [
-            { padDirection: padDirection.right, padString: "@", lenght: 10, expected: "test@@@@@@" },
-            { padDirection: padDirection.right, padString: "3", lenght: 10, expected: "test333333" },
-            { padDirection: padDirection.right, padString: "ab", lenght: 10, expected: "testababab" },
-            { padDirection: padDirection.right, padString: " ", lenght: 10, expected: "test      " },
-            { padDirection: padDirection.left, padString: "@", lenght: 10, expected: "@@@@@@test" },
-            { padDirection: padDirection.left, padString: "3", lenght: 10, expected: "333333test" },
-            { padDirection: padDirection.left, padString: "ab", lenght: 10, expected: "abababtest" },
-            { padDirection: padDirection.left, padString: " ", lenght: 10, expected: "      test" }
-        ];
-        tests.forEach(function (t) {
-            test('Padding ' + t.padDirection, async () => {
-                await createNewEditor("test");
+        describe("Padding", () => {
+            let tests = [
+                { padDirection: padDirection.right, padString: "@", lenght: 10, expected: "test@@@@@@" },
+                { padDirection: padDirection.right, padString: "3", lenght: 10, expected: "test333333" },
+                { padDirection: padDirection.right, padString: "ab", lenght: 10, expected: "testababab" },
+                { padDirection: padDirection.right, padString: " ", lenght: 10, expected: "test      " },
+                { padDirection: padDirection.left, padString: "@", lenght: 10, expected: "@@@@@@test" },
+                { padDirection: padDirection.left, padString: "3", lenght: 10, expected: "333333test" },
+                { padDirection: padDirection.left, padString: "ab", lenght: 10, expected: "abababtest" },
+                { padDirection: padDirection.left, padString: " ", lenght: 10, expected: "      test" }
+            ];
+            tests.forEach(function (t) {
+                test('Padding ' + t.padDirection, async () => {
+                    await createNewEditor("test");
+                    await selectAllText();
+                    await padSelectionInternal(t.padDirection, t.padString, t.lenght);
+                    await sleep(500);
+
+                    let text = String(getDocumentTextOrSelection());
+                    assert.deepStrictEqual(text, t.expected);
+                });
+            });
+
+            tests = [
+                { padDirection: padDirection.right, padString: "@", lenght: 10, expected: "@@@@@@@@@@" },
+                { padDirection: padDirection.right, padString: "3", lenght: 10, expected: "3333333333" },
+                { padDirection: padDirection.right, padString: "ab", lenght: 10, expected: "ababababab" },
+                { padDirection: padDirection.right, padString: " ", lenght: 10, expected: "          " },
+                { padDirection: padDirection.left, padString: "@", lenght: 10, expected: "@@@@@@@@@@" },
+                { padDirection: padDirection.left, padString: "3", lenght: 10, expected: "3333333333" },
+                { padDirection: padDirection.left, padString: "ab", lenght: 10, expected: "ababababab" },
+                { padDirection: padDirection.left, padString: " ", lenght: 10, expected: "          " }
+            ];
+            tests.forEach(function (t) {
+                test('Padding on empty selection ' + t.padDirection, async () => {
+                    await createNewEditor();
+                    await padSelectionInternal(t.padDirection, t.padString, t.lenght);
+                    await sleep(500);
+
+                    let text = String(getDocumentTextOrSelection());
+                    assert.deepStrictEqual(text, t.expected);
+                });
+            });
+
+            tests = [
+                { padDirection: padDirection.right, padString: "x", lenght: 10, expected: `asdxxxxxxx${EOL}${EOL}asxxxxxxxx` },
+                { padDirection: padDirection.left, padString: "x", lenght: 10, expected: `xxxxxxxasd${EOL}${EOL}xxxxxxxxas` }
+            ];
+            tests.forEach(function (t) {
+                test("Padding multiline " + t.padDirection, async () => {
+                    await createNewEditor(`asd${EOL}${EOL}as`);
+                    const editor = getActiveEditor();
+                    let selections: Selection[] = [];
+                    selections.push(new Selection(0, 0, 0, 2));
+                    selections.push(new Selection(2, 0, 2, 2));
+                    editor!.selections = selections;
+                    await padSelectionInternal(t.padDirection, t.padString, t.lenght);
+                    await sleep(500);
+
+                    await selectAllText();
+                    let text = String(getDocumentTextOrSelection());
+                    assert.deepStrictEqual(text, t.expected);
+                });
+            });
+        });
+
+        describe('Test insert DateTime', () => {
+            let testDate = DateTime.local(2020, 8, 25, 15, 34, 41).setZone("America/New_York");
+
+            let tests = [
+                { dateFormat: 'DATE_SHORT', expected: '8/25/2020' },
+                { dateFormat: 'TIME_SIMPLE', expected: '6:34 PM' },
+                { dateFormat: 'TIME_WITH_SECONDS', expected: '6:34:41 PM' },
+                { dateFormat: 'DATETIME_SHORT', expected: '8/25/2020, 6:34 PM' },
+                { dateFormat: 'DATE_HUGE', expected: 'Tuesday, August 25, 2020' },
+                { dateFormat: 'SORTABLE', expected: '2020-08-25T18:34:41' },
+                { dateFormat: 'UNIVERSAL_SORTABLE', expected: '2020-08-25T22:34:41Z' },
+                { dateFormat: 'ISO8601', expected: '2020-08-25T18:34:41.000-04:00' },
+                { dateFormat: 'RFC2822', expected: 'Tue, 25 Aug 2020 18:34:41 -0400' },
+                { dateFormat: 'HTTP', expected: 'Tue, 25 Aug 2020 22:34:41 GMT' },
+                { dateFormat: 'DATETIME_SHORT_WITH_SECONDS', expected: '8/25/2020, 6:34:41 PM' },
+                { dateFormat: 'DATETIME_FULL_WITH_SECONDS', expected: 'August 25, 2020, 6:34 PM EDT' },
+                { dateFormat: 'UNIX_SECONDS', expected: '1598394881' },
+                { dateFormat: 'UNIX_MILLISECONDS', expected: '1598394881000' }
+            ];
+
+            tests.forEach(function (t) {
+                test('Insert Date ' + t.dateFormat, async () => {
+                    await createNewEditor();
+                    await insertDateTimeInternal(t.dateFormat, testDate);
+                    await sleep(500);
+
+                    let text = String(getDocumentTextOrSelection());
+                    assert.deepStrictEqual(text, t.expected);
+                });
+            });
+
+            test("Insert Date multicursor", async () => {
+                await createNewEditor(`asd${EOL}${EOL}asd`);
+                const editor = getActiveEditor();
+                let selections: Selection[] = [];
+                selections.push(new Selection(0, 0, 0, 3));
+                selections.push(new Selection(2, 0, 2, 3));
+                editor!.selections = selections;
+                await insertDateTimeInternal("DATE_SHORT", testDate);
+                await sleep(500);
+
                 await selectAllText();
-                await padText(t.padDirection, t.padString, t.lenght);
-                await sleep(500);
-
                 let text = String(getDocumentTextOrSelection());
-                assert.deepStrictEqual(text, t.expected);
-            });
-        });
-
-        tests = [
-            { padDirection: padDirection.right, padString: "@", lenght: 10, expected: "@@@@@@@@@@" },
-            { padDirection: padDirection.right, padString: "3", lenght: 10, expected: "3333333333" },
-            { padDirection: padDirection.right, padString: "ab", lenght: 10, expected: "ababababab" },
-            { padDirection: padDirection.right, padString: " ", lenght: 10, expected: "          " },
-            { padDirection: padDirection.left, padString: "@", lenght: 10, expected: "@@@@@@@@@@" },
-            { padDirection: padDirection.left, padString: "3", lenght: 10, expected: "3333333333" },
-            { padDirection: padDirection.left, padString: "ab", lenght: 10, expected: "ababababab" },
-            { padDirection: padDirection.left, padString: " ", lenght: 10, expected: "          " }
-        ];
-        tests.forEach(function (t) {
-            test('Padding on empty selection ' + t.padDirection, async () => {
-                await createNewEditor();
-                await padText(t.padDirection, t.padString, t.lenght);
-                await sleep(500);
-
-                let text = String(getDocumentTextOrSelection());
-                assert.deepStrictEqual(text, t.expected);
-            });
-        });
-    });
-
-    describe('Test insert DateTime', () => {
-        let testDate = DateTime.local(2020, 8, 25, 15, 34, 41).setZone("America/New_York");
-
-        let tests = [
-            { dateFormat: 'DATE_SHORT', expected: '8/25/2020' },
-            { dateFormat: 'TIME_SIMPLE', expected: '6:34 PM' },
-            { dateFormat: 'TIME_WITH_SECONDS', expected: '6:34:41 PM' },
-            { dateFormat: 'DATETIME_SHORT', expected: '8/25/2020, 6:34 PM' },
-            { dateFormat: 'DATE_HUGE', expected: 'Tuesday, August 25, 2020' },
-            { dateFormat: 'SORTABLE', expected: '2020-08-25T18:34:41' },
-            { dateFormat: 'UNIVERSAL_SORTABLE', expected: '2020-08-25T22:34:41Z' },
-            { dateFormat: 'ISO8601', expected: '2020-08-25T18:34:41.000-04:00' },
-            { dateFormat: 'RFC2822', expected: 'Tue, 25 Aug 2020 18:34:41 -0400' },
-            { dateFormat: 'HTTP', expected: 'Tue, 25 Aug 2020 22:34:41 GMT' },
-            { dateFormat: 'DATETIME_SHORT_WITH_SECONDS', expected: '8/25/2020, 6:34:41 PM' },
-            { dateFormat: 'DATETIME_FULL_WITH_SECONDS', expected: 'August 25, 2020, 6:34 PM EDT' },
-            { dateFormat: 'UNIX_SECONDS', expected: '1598394881' },
-            { dateFormat: 'UNIX_MILLISECONDS', expected: '1598394881000' }
-        ];
-
-        tests.forEach(function (t) {
-            test('Insert Date ' + t.dateFormat, async () => {
-                await createNewEditor();
-                await insertDateTime(t.dateFormat, testDate);
-                await sleep(500);
-
-                let text = String(getDocumentTextOrSelection());
-                assert.deepStrictEqual(text, t.expected);
+                assert.deepStrictEqual(text, `asd8/25/2020${EOL}${EOL}asd8/25/2020`);
             });
         });
     });

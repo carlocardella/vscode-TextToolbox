@@ -1,4 +1,4 @@
-import { commands, Range, Selection, TextEditor, window, workspace } from 'vscode';
+import { commands, Range, Selection, TextEditor, window, workspace, TextLine } from 'vscode';
 import * as os from 'os';
 
 /**
@@ -96,8 +96,29 @@ export function getTextFromSelection(editor: TextEditor, selection: Selection): 
 }
 
 /**
+ * Returns an object with line information for each line in the selection
+ * @return {(TextLine[] | undefined)}
+ */
+export function getLinesFromSelection(editor: TextEditor): TextLine[] | undefined {
+    let lines: TextLine[] = [];
+    let selections = editor?.selections;
+    if (!selections) { return; }
+
+    selections.forEach(s => {
+        let selectionStartLine = s.start.line;
+        let selectionEndLine = s.end.line;
+
+        for (let i = selectionStartLine; i <= selectionEndLine; i++) {
+            lines.push(editor?.document.lineAt(i));
+        }
+    });
+
+    return lines!;
+}
+
+/**
  * Creates a new TextEditor containing the passed in text
- * @param {string} text 
+ * @param {string} text
  * @returns {TextEditor}
  */
 export function createNewEditor(text?: string): PromiseLike<TextEditor> {

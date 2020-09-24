@@ -11,6 +11,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
   * to text delimiter (csv)
   * as table
 * Insert line numbers
+* Copy selection to new editor
+* Highlight
+  * highlight word (and all occurrences)
+  * highlight based on regex
+* Text manipulation
+  * escape
+  * unescape
+  * trim
+* Other
+  * remove control characters/bad characters
+  * show progress bar for long operations (e.g. large files)
 
 ## Log
 
@@ -18,8 +29,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 #### Updated
 
-* Case conversions now works on multiple selections
-* Insert commands are now multicursor aware
+* Case conversion and Insert commands now work on multiple selections
+* Renamed "Pad Right" and "Pad Left" to "Pad Selection Right" and "Pad Selection Left" respectively
 
 ### [0.5.0] - 2020-09-13
 

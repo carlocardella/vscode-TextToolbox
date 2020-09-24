@@ -91,8 +91,8 @@ Please open an issue to leave a comment, report a bug, request a feature etc... 
   * TIMEZONE => Kamchatka Standard Time
   * PARAGRAPH => Cij wam lijoso fa molah il nasiskil ho andot akbuh uku zikahek. Ji balsiffe puzmaano nuug bofevu ra tehar heuwa zorjul hej na heci aka webo lorresu uwage uhe nirsiam.
   * HASH => 61960319307b5f8d298141627
-* Pad Right
-* Pad Left
+* Pad Selection Right
+* Pad Selection Left
 * Remove all empty lines
   * remove all empty lines from the current document
 * Remove redundant empty line
@@ -111,7 +111,7 @@ Please open an issue to leave a comment, report a bug, request a feature etc... 
 
 ### Thanks to:
 
-Text Toolbox is freely inspired fromby these fine extensions:
+Text Toolbox is freely inspired by these fine extensions:
 
 * [gurayyarar DummyTextGenerator](https://github.com/gurayyarar/DummyTextGenerator)
 * [qcz vscode-text-power-tools](https://github.com/qcz/vscode-text-power-tools)
