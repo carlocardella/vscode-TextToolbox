@@ -19,6 +19,7 @@
 		"tools",
 		"grep",
 		"utilities",
+		"filter",
 		"filter text",
 		"filter lines",
 		"case",
@@ -28,7 +29,10 @@
 		"ipsum",
 		"random",
 		"word count",
-		"lines count"
+		"lines count",
+		"sort text",
+		"sort lines",
+		"sort"
 	],
 	"activationEvents": [
 		"*"
@@ -108,12 +112,12 @@
 				"title": "TT: Insert Random"
 			},
 			{
-				"command": "vscode-texttoolbox.PadRight",
-				"title": "TT: Pad Right"
+				"command": "vscode-texttoolbox.PadSelectionRight",
+				"title": "TT: Pad Selection Right"
 			},
 			{
-				"command": "vscode-texttoolbox.PadLeft",
-				"title": "TT: Pad Left"
+				"command": "vscode-texttoolbox.PadSelectionLeft",
+				"title": "TT: Pad Selection Left"
 			},
 			{
 				"command": "vscode-texttoolbox.RemoveAllEmptyLines",
@@ -208,7 +212,7 @@
 		"@types/node": "^13.11.0",
 		"@types/node-uuid": "0.0.28",
 		"@types/pad": "^2.1.0",
-		"@types/vscode": "^1.45.0",
+		"@types/vscode": "^1.49.0",
 		"@typescript-eslint/eslint-plugin": "^2.30.0",
 		"@typescript-eslint/parser": "^2.30.0",
 		"assert": "^2.0.0",
