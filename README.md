@@ -108,6 +108,7 @@ Please open an issue to leave a comment, report a bug, request a feature etc... 
   * Ascending
   * Descending
   * Reverse
+* Open selection(s) in new editor
 
 ### Thanks to:
 
