@@ -337,3 +337,38 @@ export async function padSelectionInternal(padDirection: string, padString: stri
         });
     });
 }
+
+/**
+ * Insert line numbers in the active selection, the user can change the starting index (defaut: 1)
+ * @return {*}  {Promise<boolean>}
+ * @async
+ */
+export async function insertLineNumbers(): Promise<boolean> {
+    let startFrom = await window.showInputBox({ prompt: "start from", value: "1", ignoreFocusOut: true });
+    if (!startFrom) { return false; }
+
+    return Promise.resolve(await insertLineNumbersInternal(startFrom));
+}
+
+/**
+ * Insert line numbers in the active selection, the user can change the starting index (defaut: 1)
+ * @return {*}  {Promise<boolean>}
+ * @async
+ */
+export async function insertLineNumbersInternal(startFrom: string): Promise<boolean> {
+    let i = Number(startFrom);
+    
+    const editor = getActiveEditor();
+    if (!editor) { return false; }
+    
+    let lines = getLinesFromSelection(editor);
+    
+    editor.edit(editBuilder => {
+        lines?.forEach(line => {
+            editBuilder.replace(line.range, `${i} ${line.text}`);
+            i++;
+        });
+    });
+    
+    return Promise.resolve(true);
+}

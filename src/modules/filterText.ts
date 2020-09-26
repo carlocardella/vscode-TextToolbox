@@ -1,4 +1,4 @@
-import { getActiveEditor, getDocumentTextOrSelection, createNewEditor, getSelection, linesToLine, getLines, getTextFromSelection } from './helpers';
+import { getActiveEditor, getDocumentTextOrSelection, createNewEditor, getSelection, linesToLine, getLinesFromString, getTextFromSelection } from './helpers';
 import * as os from "os";
 import { window, workspace } from "vscode";
 
@@ -151,7 +151,7 @@ export async function findLinesMatchingString(searchString: string): Promise<str
     if (!searchString) { return; }
     let text: string[] | undefined = [];
 
-    text = await getLines(getDocumentTextOrSelection()!);
+    text = await getLinesFromString(getDocumentTextOrSelection()!);
     if (!text) { return; }
     text = text.filter(line => line.indexOf(searchString) >= 0);
 

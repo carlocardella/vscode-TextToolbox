@@ -150,6 +150,10 @@
 			{
 				"command": "vscode-texteditor.OpenSelectionInNewEditor",
 				"title": "TT: Open selection in new editor"
+			},
+			{
+				"command": "vscode-texttoolbox.InsertLineNumbers",
+				"title": "TT: Insert line numbers"
 			}
 		],
 		"configuration": [

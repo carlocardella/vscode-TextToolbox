@@ -109,6 +109,7 @@ Please open an issue to leave a comment, report a bug, request a feature etc... 
   * Descending
   * Reverse
 * Open selection(s) in new editor
+* Insert line numbers
 
 ### Thanks to:
 
