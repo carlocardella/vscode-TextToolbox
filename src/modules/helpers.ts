@@ -115,6 +115,17 @@ export function getLinesFromSelection(editor: TextEditor): TextLine[] | undefine
 
     return lines!;
 }
+// export async function getLinesFromSelection(editor: TextEditor, selection: Selection): Promise<TextLine[]> {
+//     let textLines: TextLine[] = [];
+
+//     const selectionStartLine = selection.start.line;
+//     const selectionEndLine = selection.end.line;
+//     for (let i = selectionStartLine; i <= selectionEndLine; i++) {
+//         textLines.push(editor.document.lineAt(i));
+//     }
+
+//     return Promise.resolve(textLines);
+// }
 
 /**
  * Creates a new TextEditor containing the passed in text
@@ -161,9 +172,28 @@ export async function linesToLine(lines: string[]): Promise<string> {
 /**
  * Split a string based on the OS EOL and returns the resulting array of strings (lines)
  * @param {string} line The line to convert into an array of strings
+ * @returns {*} {Promise<string[]>}
  * @async
- * @returns {Promise<string[]>}
  */
-export async function getLines(line: string): Promise<string[]> {
+export async function getLinesFromString(line: string): Promise<string[]> {
     return Promise.resolve(line.split(os.EOL));
+}
+
+/**
+ * Returns an array of selections if any is available in the active document, otherwise returns the entire document as a single selection
+ * @param {TextEditor} editor The active text editor to get the selections from
+ * @return {*}  {Promise<Selection[]>}
+ * @async
+ */
+export async function getSelections(editor: TextEditor): Promise<Selection[]> {
+    if (editor.selections.length > 1) {
+        return Promise.resolve(editor.selections);
+    }
+    else {
+        const lastLine = editor.document.lineAt(editor.document.lineCount - 1);
+        let selection = new Selection(0, 0, lastLine.lineNumber, lastLine.text.length);
+        let selections: Selection[] = [];
+        selections.push(selection);
+        return Promise.resolve(selections);
+    }
 }

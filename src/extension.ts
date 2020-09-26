@@ -29,6 +29,7 @@ export function activate(context: ExtensionContext) {
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.PickRandom', () => { InsertText.pickRandom(); }));
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.PadSelectionRight', () => { InsertText.padSelection(InsertText.padDirection.right); }));
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.PadSelectionLeft', () => { InsertText.padSelection(InsertText.padDirection.left); }));
+	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.InsertLineNumbers', () => { InsertText.insertLineNumbers(); }));
 
 	// filter text
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.RemoveAllEmptyLines', () => { FilterText.removeEmptyLines(false); }));

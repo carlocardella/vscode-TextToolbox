@@ -1,7 +1,7 @@
 import * as assert from 'assert';
 import * as guid from 'guid';
 import { sleep, createNewEditor, selectAllText, closeTextEditor, getDocumentTextOrSelection, getActiveEditor, getLinesFromSelection } from '../../modules/helpers';
-import { insertGUID, insertDateTimeInternal, padDirection, padSelectionInternal } from '../../modules/insertText';
+import { insertGUID, insertDateTimeInternal, padDirection, padSelectionInternal, insertLineNumbersInternal } from '../../modules/insertText';
 import { before, after, describe } from 'mocha';
 import { DateTime } from 'luxon';
 import { EOL } from 'os';
@@ -158,6 +158,25 @@ suite('insertText', () => {
                 await selectAllText();
                 let text = String(getDocumentTextOrSelection());
                 assert.deepStrictEqual(text, `asd8/25/2020${EOL}${EOL}asd8/25/2020`);
+            });
+        });
+
+        describe("Insert line numbers", async () => {
+            let tests = [
+                { startFrom: "1", text: `asd${EOL}asd${EOL}asd`, expected: `1 asd${EOL}2 asd${EOL}3 asd` },
+                { startFrom: "4", text: `asd${EOL}asd${EOL}asd`, expected: `4 asd${EOL}5 asd${EOL}6 asd` }
+            ];
+
+            tests.forEach(t => {
+                test(`Insert line numbers, startFrom ${t.startFrom}`, async () => {
+                    await createNewEditor(t.text);
+                    await selectAllText();
+                    await insertLineNumbersInternal(t.startFrom);
+                    await sleep(500);
+
+                    let text = String(getDocumentTextOrSelection());
+                    assert.deepStrictEqual(text, t.expected);
+                });
             });
         });
     });

@@ -14,7 +14,6 @@ vscode-TextToolbox:
         ☐ toggle/clear command in context menu
 
     filtering:
-        ☐ copy selection to new editor
         ☐ count line occurrences
         ☐ add config values for regex global switches, default /gi
 
@@ -22,7 +21,6 @@ vscode-TextToolbox:
         ☐ align csv
 
     insert:
-        ☐ insert line numbers
         ☐ insert number sequence
         ☐ insert date sequence
             ☐ improve command picker, show date format preview
@@ -62,6 +60,8 @@ vscode-TextToolbox:
         ☐ update extension
 
 Archive:
+  ✔ copy selection to new editor @done(20-09-26 14:39) @project(vscode-TextToolbox.filtering)
+  ✔ insert line numbers @done(20-09-26 14:39) @project(vscode-TextToolbox.insert)
   ✔ Uppercase @done(20-07-29 07:46) @project(vscode-TextToolbox.text manipulation)
   ✔ Lowercase @done(20-07-29 07:46) @project(vscode-TextToolbox.text manipulation)
   ✔ PascalCase @done(20-07-29 07:46) @project(vscode-TextToolbox.text manipulation)
