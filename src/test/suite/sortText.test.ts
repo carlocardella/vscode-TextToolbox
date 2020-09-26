@@ -1,6 +1,6 @@
 import * as assert from 'assert';
 import { before, after, describe } from 'mocha';
-import { sleep, closeTextEditor, createNewEditor, getDocumentTextOrSelection, getLines, linesToLine } from '../../modules/helpers';
+import { sleep, closeTextEditor, createNewEditor, getDocumentTextOrSelection, getLinesFromString, linesToLine } from '../../modules/helpers';
 import * as os from 'os';
 import { sortLines } from '../../modules/sortText';
 
@@ -37,7 +37,7 @@ suite('sortText', () => {
                 await sortLines(t.sortDirection, t.openInNewTextEditor);
                 await sleep(500);
 
-                let lines = await getLines(String(getDocumentTextOrSelection()));
+                let lines = await getLinesFromString(String(getDocumentTextOrSelection()));
                 assert.deepStrictEqual(await linesToLine(lines!), t.expected);
             });
         });
