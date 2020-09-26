@@ -214,7 +214,7 @@
 		"@types/node": "^13.11.0",
 		"@types/node-uuid": "0.0.28",
 		"@types/pad": "^2.1.0",
-		"@types/vscode": "^1.49.0",
+		"@types/vscode": "^1.45.0",
 		"@typescript-eslint/eslint-plugin": "^2.30.0",
 		"@typescript-eslint/parser": "^2.30.0",
 		"assert": "^2.0.0",
