@@ -1,9 +1,10 @@
 import * as assert from 'assert';
 import { before, after, describe } from 'mocha';
-import { sleep, createNewEditor, selectAllText, getDocumentTextOrSelection, closeTextEditor, linesToLine } from '../../modules/helpers';
-import { findLinesMatchingRegEx, removeDuplicateLines, removeEmptyLines } from '../../modules/filterText';
+import { sleep, createNewEditor, selectAllText, getDocumentTextOrSelection, closeTextEditor, linesToLine, getActiveEditor } from '../../modules/helpers';
+import { findLinesMatchingRegEx, openSelectionInNewEditor, removeDuplicateLines, removeEmptyLines } from '../../modules/filterText';
 import * as os from 'os';
-import { ConfigurationTarget, window, workspace } from 'vscode';
+import { ConfigurationTarget, window, workspace, Selection } from 'vscode';
+import { createInterface } from 'readline';
 
 
 suite("filterText", () => {
@@ -79,7 +80,6 @@ suite("filterText", () => {
 
         let tests = [
             { textToFilter: textToFilter, regExpString: "/.*paperino.*/gm", expected: regExpExpectedResult },
-            // { textToFilter: textToFilter, regExpString: "paperino", expected: undefined }
         ];
 
         tests.forEach(function (t) {
@@ -94,7 +94,6 @@ suite("filterText", () => {
             });
 
             tests = [
-                // { textToFilter: textToFilter, regExpString: "/.*paperino.*/gm", expected: regExpExpectedResult },
                 { textToFilter: textToFilter, regExpString: "paperino", expected: regExpExpectedResult }
             ];
 
@@ -112,6 +111,30 @@ suite("filterText", () => {
 
                 await config.update("filtersUseRegularExpressions", undefined, ConfigurationTarget.Global);
             });
+        });
+    });
+
+    describe("Open selection in new editor", () => {
+        const eol = os.EOL;
+        const text = `pippo${eol}pippo${eol}${eol}paperino${eol}paperino pippo${eol}${eol}${eol}pippo${eol}paperino${eol}pippo paperino${eol}${eol}paperino${eol}paperino${eol}${eol}paperino${eol}`;
+        const expected = `pippo${eol}${eol}paperino${eol}${eol}paperino pippo${eol}${eol}paperino${eol}`;
+
+        test("Open selection in new editor", async () => {
+            await createNewEditor(text);
+            const editor = getActiveEditor();
+            let selections: Selection[] = [];
+            selections.push(new Selection(0, 0, 0, 6));
+            selections.push(new Selection(3, 0, 3, 8));
+            selections.push(new Selection(4, 0, 4, 14));
+            selections.push(new Selection(11, 0, 11, 8));
+            editor!.selections = selections;
+            await openSelectionInNewEditor();
+            await sleep(500);
+
+            const newEditor = getActiveEditor();
+            const newText = newEditor?.document.getText();
+
+            assert.deepStrictEqual(newText, expected);
         });
     });
 });

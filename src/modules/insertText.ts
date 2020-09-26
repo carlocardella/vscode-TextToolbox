@@ -2,6 +2,7 @@ import { window } from 'vscode';
 import { DateTime } from 'luxon';
 import { Chance } from 'chance';
 import { getActiveEditor, getLinesFromSelection } from './helpers';
+import { generateKeyPair } from 'crypto';
 
 
 /**
@@ -162,10 +163,29 @@ export async function pickRandom() {
  * @param {string | undefined} selectedRandomType User selected choise of random string to insers
  * @async
  */
-export async function insertRandomInternal(selectedRandomType: string | undefined, testRandomType?: string) {
+export async function insertRandomInternal(selectedRandomType: string | undefined) {
     const chance = new Chance();
     const editor = getActiveEditor();
     let text: string | number;
+
+    // calls to showQuickPick or showInputBox cannot happen inside editor.selections.forEach. 
+    // I get a "Promised not resolved within 1 second" error on editBuilder.insert()
+    let gender: string | undefined;
+    let numberOfSentences: string | undefined;
+    let hashLength: string | undefined;
+    let colorType: string | undefined;
+    if (selectedRandomType === "PERSON_NAME") {
+        gender = await window.showQuickPick(['random', 'male', 'female'], { ignoreFocusOut: true });
+    }
+    if (selectedRandomType === "COLOR") {
+        colorType = await window.showQuickPick(['hex', 'rgb'], { ignoreFocusOut: true });
+    }
+    if (selectedRandomType === "PARAGRAPH") {
+        numberOfSentences = await window.showInputBox({ prompt: 'How many sentences?', value: '5', ignoreFocusOut: true });
+    }
+    if (selectedRandomType === "HASH") {
+        hashLength = await window.showInputBox({ prompt: 'Enter length', value: '32', ignoreFocusOut: true });
+    }
 
     editor?.edit(editBuilder => {
         editor?.selections.forEach(async s => {
@@ -180,7 +200,6 @@ export async function insertRandomInternal(selectedRandomType: string | undefine
                     text = chance.natural();
                     break;
                 case 'PERSON_NAME':
-                    const gender: string | undefined = await window.showQuickPick(['random', 'male', 'female'], { ignoreFocusOut: true });
                     // TODO: add optional nationality
                     // TODO: add optional middle name
                     // TODO: add optional title
@@ -190,7 +209,7 @@ export async function insertRandomInternal(selectedRandomType: string | undefine
                     else if (gender === 'female') {
                         text = chance.name({ gender: 'female' });
                     }
-                    else {
+                    else if (gender === 'random') {
                         text = chance.name();
                     }
                     break;
@@ -214,7 +233,6 @@ export async function insertRandomInternal(selectedRandomType: string | undefine
                     text = chance.email();
                     break;
                 case 'COLOR':
-                    const colorType: string | undefined = await window.showQuickPick(['hex', 'rgb'], { ignoreFocusOut: true });
                     text = chance.color({ format: colorType });
                     break;
                 case 'TWITTER':
@@ -255,12 +273,10 @@ export async function insertRandomInternal(selectedRandomType: string | undefine
                     text = chance.timezone().name;
                     break;
                 case 'PARAGRAPH':
-                    const n: string | undefined = await window.showInputBox({ prompt: 'How many sentences?', value: '5', ignoreFocusOut: true });
-                    text = chance.paragraph({ sentences: n });
+                    text = chance.paragraph({ sentences: numberOfSentences });
                     break;
                 case 'HASH':
-                    const length: string | undefined = await window.showInputBox({ prompt: 'Enter length', value: '32', ignoreFocusOut: true });
-                    text = chance.hash({ length: length });
+                    text = chance.hash({ length: hashLength });
                     break;
                 default:
                     break;
