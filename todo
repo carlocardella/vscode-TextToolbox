@@ -21,7 +21,6 @@ vscode-TextToolbox:
         ☐ align csv
 
     insert:
-        ☐ insert number sequence
         ☐ insert date sequence
             ☐ improve command picker, show date format preview
             ☐ add option to use times 12/24 formats
@@ -52,7 +51,6 @@ vscode-TextToolbox:
         ☐ show progress bar for long operations (e.g. large files)
 
     status bar:
-        ✔ disable click @done(20-09-27 19:57)
         ☐ allow to update position without reloading the entire window
 
     package:
@@ -60,6 +58,8 @@ vscode-TextToolbox:
         ☐ update extension
 
 Archive:
+  ✔ insert number sequence @done(20-09-27 20:41) @project(vscode-TextToolbox.insert)
+  ✔ disable click @done(20-09-27 19:57) @project(vscode-TextToolbox.status bar)
   ✔ copy selection to new editor @done(20-09-26 14:39) @project(vscode-TextToolbox.filtering)
   ✔ insert line numbers @done(20-09-26 14:39) @project(vscode-TextToolbox.insert)
   ✔ Uppercase @done(20-07-29 07:46) @project(vscode-TextToolbox.text manipulation)

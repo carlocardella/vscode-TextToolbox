@@ -110,6 +110,7 @@ Please open an issue to leave a comment, report a bug, request a feature etc... 
   * Reverse
 * Open selection(s) in new editor
 * Insert line numbers
+* Insert numbers sequence
 
 ### Thanks to:
 

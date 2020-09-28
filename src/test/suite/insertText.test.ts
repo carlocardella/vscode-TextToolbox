@@ -1,7 +1,7 @@
 import * as assert from 'assert';
 import * as guid from 'guid';
 import { sleep, createNewEditor, selectAllText, closeTextEditor, getDocumentTextOrSelection, getActiveEditor, getLinesFromSelection } from '../../modules/helpers';
-import { insertGUID, insertDateTimeInternal, padDirection, padSelectionInternal, insertLineNumbersInternal } from '../../modules/insertText';
+import { insertGUID, insertDateTimeInternal, padDirection, padSelectionInternal, insertLineNumbersInternal, sequenceType, insertSequanceInternal } from '../../modules/insertText';
 import { before, after, describe } from 'mocha';
 import { DateTime } from 'luxon';
 import { EOL } from 'os';
@@ -162,7 +162,7 @@ suite('insertText', () => {
         });
 
         describe("Insert line numbers", async () => {
-            let tests = [
+            const tests = [
                 { startFrom: "1", text: `asd${EOL}asd${EOL}asd`, expected: `1 asd${EOL}2 asd${EOL}3 asd` },
                 { startFrom: "4", text: `asd${EOL}asd${EOL}asd`, expected: `4 asd${EOL}5 asd${EOL}6 asd` }
             ];
@@ -176,6 +176,26 @@ suite('insertText', () => {
 
                     let text = String(getDocumentTextOrSelection());
                     assert.deepStrictEqual(text, t.expected);
+                });
+            });
+        });
+
+        describe("Insert sequence", () => {
+            describe("Insert numbers sequence", async () => {
+                const tests = [
+                    { type: sequenceType.Numbers, startFrom: "1", length: 8, direction: undefined, expected: `1${EOL}2${EOL}3${EOL}4${EOL}5${EOL}6${EOL}7${EOL}8${EOL}` },
+                    { type: sequenceType.Numbers, startFrom: "14", length: 5, direction: undefined, expected: `14${EOL}15${EOL}16${EOL}17${EOL}18${EOL}` }
+                ];
+
+                tests.forEach(t => {
+                    test(`Insert a number sequence starting from ${t.startFrom} for ${t.length} lines`, async () => {
+                        await createNewEditor();
+                        await insertSequanceInternal(t.type, t.startFrom, t.length, t.direction);
+                        await sleep(500);
+
+                        let text = String(getDocumentTextOrSelection());
+                        assert.deepStrictEqual(text, t.expected);
+                    });
                 });
             });
         });

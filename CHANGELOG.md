@@ -28,6 +28,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 #### Fixed
 
 * The StatusBar item with lines and words count is readonly, disabled the click event
+* Insert numbers sequence: the user can choose the starting index and length, this inserts the needed amount of lines
 
 ### [0.8.0] - 2020-09-26
 

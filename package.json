@@ -154,6 +154,9 @@
 			{
 				"command": "vscode-texttoolbox.InsertLineNumbers",
 				"title": "TT: Insert line numbers"
+			}, {
+				"command": "vscode-texttoolbox.InsertSequenceNumbers",
+				"title": "TT: Insert numbers sequence"
 			}
 		],
 		"configuration": [

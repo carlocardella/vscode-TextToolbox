@@ -2,7 +2,7 @@ import { window } from 'vscode';
 import { DateTime } from 'luxon';
 import { Chance } from 'chance';
 import { getActiveEditor, getLinesFromSelection } from './helpers';
-import { generateKeyPair } from 'crypto';
+import { EOL } from 'os';
 
 
 /**
@@ -357,18 +357,95 @@ export async function insertLineNumbers(): Promise<boolean> {
  */
 export async function insertLineNumbersInternal(startFrom: string): Promise<boolean> {
     let i = Number(startFrom);
-    
+
     const editor = getActiveEditor();
     if (!editor) { return false; }
-    
+
     let lines = getLinesFromSelection(editor);
-    
+
     editor.edit(editBuilder => {
         lines?.forEach(line => {
             editBuilder.replace(line.range, `${i} ${line.text}`);
             i++;
         });
     });
-    
+
+    return Promise.resolve(true);
+}
+
+/**
+ * Type of sequence to insert
+ * @enum {number}
+ */
+export enum sequenceType {
+    Numbers = "Numbers",
+    Letters = "Letters"
+}
+
+/**
+ * Ask the user information about the sequence of numbers or letters to insert
+ * @param {sequenceType} type The type of characters to use for the sequence to insert
+ * @return {*} {Promise<boolean>}
+ * @async
+ */
+export async function insertSequence(type: sequenceType): Promise<boolean> {
+    let startFrom: string | undefined;
+    switch (type) {
+        case "Letters":
+            startFrom = await window.showInputBox({ prompt: "start from", value: "a", ignoreFocusOut: true });
+            if (!startFrom) { return false; }
+            break;
+        case "Numbers":
+            startFrom = await window.showInputBox({ prompt: "start from", value: "1", ignoreFocusOut: true });
+            if (!startFrom) { return false; }
+            break;
+        default:
+            break;
+    }
+
+    const length = await window.showInputBox({ prompt: "length", value: "10", ignoreFocusOut: true });
+    if (!length) { return false; }
+
+    return Promise.resolve(
+        await insertSequanceInternal(type, startFrom!, Number(length))
+    );
+}
+
+/**
+ * Internal functkon to inserts the sequence of numbers or letters as selected by the user
+ * @param {sequenceType} type The type of characters to use for the sequence to insert
+ * @param {string} startFrom Starting index (for numbers sequence) or letter (for letters sequence) 
+ * @param {number} length The length of the sequence to insert
+ * @param {string} [direction] The direction of the sequence to insert
+ * @return {*} {Promise<boolean>}
+ * @async
+ */
+export async function insertSequanceInternal(type: sequenceType, startFrom: string, length: number, direction?: string): Promise<boolean> {
+    const editor = getActiveEditor();
+    if (!editor) { return false; }
+
+    const alphabetLowercase = "abcdefghijklmnopqrstuvwxyz";
+    const alphabetUppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    let i: number;
+    type === "Letters" ? i = alphabetLowercase.indexOf(startFrom) : i = Number(startFrom);
+
+    editor.edit(editBuilder => {
+        let position = editor.selection.active;
+        length = i + length;
+        let newText: string = "";
+
+        for (i; i < length; i++) {
+            if (type === "Letters") {
+                newText = alphabetLowercase.charAt(i);
+            }
+            if (type === "Numbers") {
+                newText = String(i);
+            }
+            editBuilder.insert(position, newText);
+            editBuilder.insert(position.translate({ characterDelta: 1 }), EOL);
+            position = position.translate(1, 0);
+        }
+    });
+
     return Promise.resolve(true);
 }

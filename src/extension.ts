@@ -4,6 +4,7 @@ import * as InsertText from "./modules/insertText";
 import * as StatusBarSelection from './modules/statusBarSelection';
 import * as FilterText from './modules/filterText';
 import * as SortLines from './modules/sortText';
+import { sequenceType } from './modules/insertText';
 
 
 export function activate(context: ExtensionContext) {
@@ -30,6 +31,7 @@ export function activate(context: ExtensionContext) {
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.PadSelectionRight', () => { InsertText.padSelection(InsertText.padDirection.right); }));
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.PadSelectionLeft', () => { InsertText.padSelection(InsertText.padDirection.left); }));
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.InsertLineNumbers', () => { InsertText.insertLineNumbers(); }));
+	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.InsertSequenceNumbers', () => { InsertText.insertSequence(sequenceType.Numbers); }));
 
 	// filter text
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.RemoveAllEmptyLines', () => { FilterText.removeEmptyLines(false); }));
