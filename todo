@@ -14,6 +14,7 @@ vscode-TextToolbox:
         ☐ toggle/clear command in context menu
 
     filtering:
+        ☐ add original line numbers when opening a selection/filter in a new editor
         ☐ count line occurrences
         ☐ add config values for regex global switches, default /gi
 
