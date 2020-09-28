@@ -23,7 +23,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## Log
 
-#### [0.8.0] - 2020-09-26
+### [0.9.0]
+
+#### Fixed
+
+* The StatusBar item with lines and words count is readonly, disabled the click event
+
+### [0.8.0] - 2020-09-26
 
 #### Added
 

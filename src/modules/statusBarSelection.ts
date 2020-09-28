@@ -9,6 +9,7 @@ let statusBarItem: StatusBarItem;
  */
 export function createStatusBarItem(context: ExtensionContext) {
     updateStatusBarConfiguration();
+    statusBarItem.command = undefined;
     context.subscriptions.push(statusBarItem);
 
     context.subscriptions.push(window.onDidChangeTextEditorSelection(updateStatusBar));

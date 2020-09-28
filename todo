@@ -52,7 +52,7 @@ vscode-TextToolbox:
         ☐ show progress bar for long operations (e.g. large files)
 
     status bar:
-        ☐ disable click
+        ✔ disable click @done(20-09-27 19:57)
         ☐ allow to update position without reloading the entire window
 
     package:
