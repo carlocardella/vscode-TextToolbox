@@ -158,6 +158,10 @@
 			{
 				"command": "vscode-texttoolbox.InsertSequenceNumbers",
 				"title": "TT: Insert numbers sequence"
+			},
+			{
+				"command": "vscode-texteditor.RemoveControlCharacters",
+				"title": "TT: Remove control characters"
 			}
 		],
 		"configuration": [
@@ -197,6 +201,15 @@
 						"default": true,
 						"scope": "window",
 						"description": "Filter use Regular Expression rather than simple text match"
+					},
+					"tt.decorateControlCharacters": {
+						"type": "object",
+						"default": {
+							"borderWidth": "1px",
+							"borderStyle": "solid",
+							"overviewRulerColor": "red",
+							"borderColor": "red"
+						}
 					}
 				}
 			}

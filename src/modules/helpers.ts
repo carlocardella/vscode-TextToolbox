@@ -1,6 +1,7 @@
 import { commands, Range, Selection, TextEditor, window, workspace, TextLine } from 'vscode';
 import * as os from 'os';
 
+
 /**
  * Returns the active text editor
  * @returns {TextEditor | undefined}
@@ -37,11 +38,11 @@ export function validateSelection(): boolean {
 
 /**
  * Pauses execution of the given number of millisaeconds
- * @param ms the number of milliseconds to wait
+ * @param milliseconds the number of milliseconds to wait
  */
-export function sleep(ms: number): Promise<void> {
+export function sleep(milliseconds: number): Promise<void> {
     return new Promise(resolve => {
-        setTimeout(resolve, ms);
+        setTimeout(resolve, milliseconds);
     });
 }
 
@@ -115,17 +116,6 @@ export function getLinesFromSelection(editor: TextEditor): TextLine[] | undefine
 
     return lines!;
 }
-// export async function getLinesFromSelection(editor: TextEditor, selection: Selection): Promise<TextLine[]> {
-//     let textLines: TextLine[] = [];
-
-//     const selectionStartLine = selection.start.line;
-//     const selectionEndLine = selection.end.line;
-//     for (let i = selectionStartLine; i <= selectionEndLine; i++) {
-//         textLines.push(editor.document.lineAt(i));
-//     }
-
-//     return Promise.resolve(textLines);
-// }
 
 /**
  * Creates a new TextEditor containing the passed in text
@@ -180,13 +170,13 @@ export async function getLinesFromString(line: string): Promise<string[]> {
 }
 
 /**
- * Returns an array of selections if any is available in the active document, otherwise returns the entire document as a single selection
+ * Returns an array of selections if any is available in the active document, otherwise returns the entire document as a single selection 
  * @param {TextEditor} editor The active text editor to get the selections from
  * @return {*}  {Promise<Selection[]>}
  * @async
  */
 export async function getSelections(editor: TextEditor): Promise<Selection[]> {
-    if (editor.selections.length > 1) {
+    if (editor.selections.length >= 1 && !editor.selection.isEmpty) {
         return Promise.resolve(editor.selections);
     }
     else {

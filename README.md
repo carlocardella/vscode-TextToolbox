@@ -111,6 +111,8 @@ Please open an issue to leave a comment, report a bug, request a feature etc... 
 * Open selection(s) in new editor
 * Insert line numbers
 * Insert numbers sequence
+* Remoce control characters
+* 
 
 ### Thanks to:
 
@@ -124,3 +126,5 @@ Text Toolbox is freely inspired by these fine extensions:
 * [rpeshkov vscode-text-tables](https://github.com/rpeshkov/vscode-text-tables)
 * [wmaurer vscode-change-case](https://github.com/wmaurer/vscode-change-case)
 * [volkerdobler insertnums](https://github.com/volkerdobler/insertnums)
+* [WengerK vscode-highlight-bad-chars](https://github.com/WengerK/vscode-highlight-bad-chars)
+* [nhoizey vscode-gremlins](https://github.com/nhoizey/vscode-gremlins)

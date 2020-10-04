@@ -1,10 +1,12 @@
-import { commands, ExtensionContext, workspace } from 'vscode';
+import { commands, ExtensionContext, window, workspace } from 'vscode';
 import * as CaseConversion from "./modules/caseConversion";
 import * as InsertText from "./modules/insertText";
 import * as StatusBarSelection from './modules/statusBarSelection';
 import * as FilterText from './modules/filterText';
 import * as SortLines from './modules/sortText';
 import { sequenceType } from './modules/insertText';
+import * as ControlCharacters from './modules/controlCharacters';
+import { getActiveEditor } from './modules/helpers';
 
 
 export function activate(context: ExtensionContext) {
@@ -44,6 +46,23 @@ export function activate(context: ExtensionContext) {
 	// sort text
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texteditor.SortLinesResultInNewEditor', () => { SortLines.askForSortDirection(true); }));
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texteditor.SortLines', () => { SortLines.askForSortDirection(); }));
+	
+	// control characters
+	window.onDidChangeActiveTextEditor(editor => {
+		if (editor) { ControlCharacters.decorateControlCharacters(editor); }
+	}, null, context.subscriptions);
+	workspace.onDidChangeTextDocument(event => {
+		let activeEditor = getActiveEditor();
+		if (activeEditor) { ControlCharacters.decorateControlCharacters(activeEditor); }
+	}, null, context.subscriptions);
+	context.subscriptions.push(workspace.onDidChangeConfiguration(e => {
+		if (e.affectsConfiguration("tt.decorateControlCharacters")) {
+			const editor = getActiveEditor();
+			if (editor) { ControlCharacters.decorateControlCharacters(editor, true); }
+		}
+	}));
+	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texteditor.RemoveControlCharacters', () => { ControlCharacters.removeControlCharacters(); }));
+
 
 	// status bar selection
 	if (workspace.getConfiguration().get('tt.enableStatusBarWordLineCount')) {
