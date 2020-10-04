@@ -50,8 +50,7 @@
 	},
 	"license": "MIT",
 	"contributes": {
-		"commands": [
-			{
+		"commands": [{
 				"command": "vscode-texttoolbox.Uppercase",
 				"title": "TT: UPPERCASE"
 			},
@@ -164,56 +163,61 @@
 				"title": "TT: Remove control characters"
 			}
 		],
-		"configuration": [
-			{
-				"title": "Text Toolbox",
-				"properties": {
-					"tt.statusBarAlignment": {
-						"type": "string",
-						"enum": [
-							"Left",
-							"Right"
-						],
-						"default": "Right",
-						"scope": "window",
-						"description": "Text Toolbox word and selected lines count alignment in the StatusBar"
-					},
-					"tt.statusBarPriority": {
-						"type": "number",
-						"default": 100,
-						"scope": "window",
-						"description": "Text Toolbox word and selected lines count StatusBar priority"
-					},
-					"tt.enableStatusBarWordLineCount": {
-						"type": "boolean",
-						"default": true,
-						"scope": "window",
-						"description": "Enable or disable the StatusBar Text Toolbox word and selected lines count"
-					},
-					"tt.ignoreWhitespaceInLineFilters": {
-						"type": "boolean",
-						"default": true,
-						"scope": "window",
-						"description": "Ignore leading and trailing whitespaces when filtering lines: this can impact how duplicate lines are removed"
-					},
-					"tt.filtersUseRegularExpressions": {
-						"type": "boolean",
-						"default": true,
-						"scope": "window",
-						"description": "Filter use Regular Expression rather than simple text match"
-					},
-					"tt.decorateControlCharacters": {
-						"type": "object",
-						"default": {
-							"borderWidth": "1px",
-							"borderStyle": "solid",
-							"overviewRulerColor": "red",
-							"borderColor": "red"
-						}
+		"configuration": [{
+			"title": "Text Toolbox",
+			"properties": {
+				"tt.statusBarAlignment": {
+					"type": "string",
+					"enum": [
+						"Left",
+						"Right"
+					],
+					"default": "Right",
+					"scope": "window",
+					"description": "Text Toolbox word and selected lines count alignment in the StatusBar"
+				},
+				"tt.statusBarPriority": {
+					"type": "number",
+					"default": 100,
+					"scope": "window",
+					"description": "Text Toolbox word and selected lines count StatusBar priority"
+				},
+				"tt.enableStatusBarWordLineCount": {
+					"type": "boolean",
+					"default": true,
+					"scope": "window",
+					"description": "Enable or disable the StatusBar Text Toolbox word and selected lines count"
+				},
+				"tt.ignoreWhitespaceInLineFilters": {
+					"type": "boolean",
+					"default": true,
+					"scope": "window",
+					"description": "Ignore leading and trailing whitespaces when filtering lines: this can impact how duplicate lines are removed"
+				},
+				"tt.filtersUseRegularExpressions": {
+					"type": "boolean",
+					"default": true,
+					"scope": "window",
+					"description": "Filter use Regular Expression rather than simple text match"
+				},
+				"tt.decorateControlCharacters": {
+					"type": "object",
+					"description": "Control characters decoration appearance",
+					"default": {
+						"borderWidth": "1px",
+						"borderStyle": "solid",
+						"overviewRulerColor": "red",
+						"borderColor": "red"
 					}
+				},
+				"tt.replaceControlCharactersWith": {
+					"type": "string",
+					"default": "",
+					"scope": "window",
+					"description": "Replace control characters (TT: Remove Control Characters) in the active document with this string"
 				}
 			}
-		]
+		}]
 	},
 	"scripts": {
 		"vscode:prepublish": "webpack --mode production",

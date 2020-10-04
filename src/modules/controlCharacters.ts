@@ -7,7 +7,7 @@ import { getSelections, getTextFromSelection, getActiveEditor } from './helpers'
  * Array of control (bad) chars
  * @type {*}
 */
-const chars = [
+export const chars = [
     // https://github.com/possan/sublime_unicode_nbsp/blob/master/sublime_unicode_nbsp.py
     '\x82', // High code comma
     '\x84', // High code double comma
@@ -33,7 +33,7 @@ const chars = [
     '\xB1', // modifier - under line
 
     // https://www.cs.tut.fi/~jkorpela/chars/spaces.html
-    // '\u00A0', // no-break space
+    '\u00A0', // no-break space
     '\u1680', // ogham space mark
     '\u180E', // mongolian vowel separator
     '\u2000', // en quad
@@ -73,11 +73,24 @@ const chars = [
     '\u01C0', // latin letter dental click
     '\u2223', // divides
     '\u0008',
-    '\u000b',
     '\u000c',
     '\u000e',
     '\u001f',
-    '\u007f'
+    '\u007f',
+    "\u2018", // "left single quotation mark",
+    "\u2019", // "right single quotation mark",
+    "\u2029", // "paragraph separator",
+    "\u0003", // "end of text",
+    "\u000b", // "line tabulation",
+    "\u00ad", // "soft hyphen",
+    "\u200c", // "zero width non-joiner",
+    "\u200e", // "left-to-right mark",
+    "\u201c", // "left double quotation mark",
+    "\u201d", // "right double quotation mark",
+    "\u202c", // "pop directional formatting",
+    "\u202d", // "left-to-right override",
+    "\u202e", // "right-to-left override",
+    "\ufffc", // "object replacement character",
 ];
 
 const regExpText = "[" + chars.join("") + "]";
@@ -109,6 +122,7 @@ export async function decorateControlCharacters(editor: TextEditor, configuratio
 export async function removeControlCharacters(editor?: TextEditor) {
     if (!editor) { editor = getActiveEditor(); }
     if (!editor) { return; }
+    const replaceControlCharactersWith = workspace.getConfiguration("tt").replaceControlCharactersWith;
 
     let selections = await getSelections(editor);
     let text: string | undefined;
@@ -117,7 +131,7 @@ export async function removeControlCharacters(editor?: TextEditor) {
     editor.edit(editBuilder => {
         selections.forEach(async selection => {
             text = getTextFromSelection(editor!, selection);
-            newText = text?.replace(regexp, "")!;
+            newText = text?.replace(regexp, replaceControlCharactersWith)!;
             editBuilder.replace(selection, newText);
         });
     });
