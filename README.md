@@ -112,7 +112,6 @@ Please open an issue to leave a comment, report a bug, request a feature etc... 
 * Insert line numbers
 * Insert numbers sequence
 * Remoce control characters
-* 
 
 ### Thanks to:
 

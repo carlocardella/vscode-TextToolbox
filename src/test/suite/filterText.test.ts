@@ -4,7 +4,6 @@ import { sleep, createNewEditor, selectAllText, getDocumentTextOrSelection, clos
 import { findLinesMatchingRegEx, openSelectionInNewEditor, removeDuplicateLines, removeEmptyLines } from '../../modules/filterText';
 import * as os from 'os';
 import { ConfigurationTarget, window, workspace, Selection } from 'vscode';
-import { createInterface } from 'readline';
 
 
 suite("filterText", () => {
