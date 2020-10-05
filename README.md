@@ -111,7 +111,11 @@ Please open an issue to leave a comment, report a bug, request a feature etc... 
 * Open selection(s) in new editor
 * Insert line numbers
 * Insert numbers sequence
-* Remoce control characters
+* Highlight control characters
+  * By default control characters are highlighted with a red box but color and border shape can be customised through `tt.decorateControlCharacters`
+* Remove control characters
+  * By default control characters are replaced with an empty string but this can be changed through `tt.replaceControlCharactersWith`.
+  * Removes control characters from the current selection(s) or from the entire document if no text is selected
 
 ### Thanks to:
 
