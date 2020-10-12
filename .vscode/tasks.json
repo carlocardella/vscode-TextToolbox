@@ -1,23 +1,25 @@
+// See https://go.microsoft.com/fwlink/?LinkId=733558
+// for the documentation about the tasks.json format
 {
 	"version": "2.0.0",
 	"tasks": [{
-			"type": "npm",
-			"script": "webpack-dev",
-			"problemMatcher": [],
-			"label": "npm: webpack-dev",
-			"detail": "webpack --mode development --watch",
-			"group": "test"
+		"type": "npm",
+		"script": "webpack-dev",
+		"runOptions": {
+			"runOn": "folderOpen"
 		},
-		{
-			"type": "npm",
-			"script": "test",
-			"group": {
-				"kind": "test",
-				"isDefault": true
-			},
-			"problemMatcher": [],
-			"label": "npm: test",
-			"detail": "node ./out/test/runTest.js"
+		"isBackground": true,
+		"presentation": {
+			"echo": true,
+			"reveal": "always",
+			"focus": false,
+			"panel": "shared",
+			"showReuseMessage": true,
+			"clear": false
+		},
+		"group": {
+			"kind": "build",
+			"isDefault": true
 		}
-	]
+	}]
 }

@@ -7,7 +7,7 @@ import { Selection } from 'vscode';
 
 suite('caseConversion', () => {
 	before(() => {
-		console.log('Starting insertText tests');
+		console.log('Starting caseConversion tests');
 	});
 	after(async () => {
 		await sleep(500);
