@@ -8,11 +8,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 * Align
   * to cursor
-  * to text delimiter (csv)
   * as table
+  * improve csv alignment, reduce empty space where possible
 * Highlight
   * highlight word (and all occurrences)
   * highlight based on regex
+  * highlight search filters match (e.g. filter on regexp and open in new editor)
 * Text manipulation
   * escape
   * unescape
