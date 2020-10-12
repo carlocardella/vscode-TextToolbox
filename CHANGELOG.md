@@ -22,6 +22,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## Log
 
+### [0.11.0] - 2020-10-11
+
+#### Added
+
+* Align text to separator (can be used to align CSV elements):
+  * Align left (default): inserts padding spaces after the separator
+    ```
+    London,    Paris,     Rome      
+    Tokyo,     Singapore, Syndey     
+    ```
+  * Align right: inserts padding spaces between text and separator
+    ```
+    London    ,Paris     ,Rome      
+    Tokyo     ,Singapore ,Syndey    
+    ```
+
 ### [0.10.1] - 2020-10-04
 
 #### Update
