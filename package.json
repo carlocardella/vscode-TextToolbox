@@ -2,7 +2,7 @@
 	"name": "vscode-texttoolbox",
 	"displayName": "Text Toolbox",
 	"description": "Collection of tools for text manipulation, filtering, sorting etc...",
-	"version": "0.10.1",
+	"version": "0.11.0",
 	"publisher": "carlocardella",
 	"author": {
 		"name": "Carlo Cardella",
