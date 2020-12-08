@@ -26,7 +26,7 @@
     },
     "peacock.color": "#57455d",
     "favorites.sortDirection": "ASC",
-    "python.pythonPath": "/usr/local/bin/python3",
+    "python.pythonPath": "C:\\Users\\carlo\\AppData\\Local\\Programs\\Python\\Python39\\python.exe",
 
     // MOCHA EXPLORER
     // "mochaExplorer.exit": true,
