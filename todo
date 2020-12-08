@@ -20,6 +20,15 @@ vscode-TextToolbox:
 
     sorting:
         ☐ align csv
+    
+    split:
+        ☐ split based on delimiter
+        ☐ split selection
+            ☐ replace selection
+            ☐ open in new editor
+        ☐ split clipboard
+            ☐ paste in place
+            ☐ paste in new editor
 
     insert:
         ☐ insert date sequence
