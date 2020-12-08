@@ -8,18 +8,82 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 * Align
   * to cursor
-  * to text delimiter (csv)
   * as table
-* Insert line numbers
+  * improve csv alignment, reduce empty space where possible
+* Highlight
+  * highlight word (and all occurrences)
+  * highlight based on regex
+  * highlight search filters match (e.g. filter on regexp and open in new editor)
+* Text manipulation
+  * escape
+  * unescape
+  * trim
+* Other
+  * show progress bar for long operations (e.g. large files)
 
 ## Log
 
-### [0.6.0]
+### [0.11.0] - 2020-10-11
+
+#### Added
+
+* Align text to separator (can be used to align CSV elements):
+  * Align left (default): inserts padding spaces after the separator
+    ```
+    London,    Paris,     Rome      
+    Tokyo,     Singapore, Syndey     
+    ```
+  * Align right: inserts padding spaces between text and separator
+    ```
+    London    ,Paris     ,Rome      
+    Tokyo     ,Singapore ,Syndey    
+    ```
+
+### [0.10.1] - 2020-10-04
+
+#### Update
+
+* Update readme and changelog
+
+### [0.10.0] - 2020-10-04
+
+#### Added
+
+* Highlight control characters
+  * By default control characters are highlighted with a red box but color and border shape can be customised through `tt.decorateControlCharacters`
+* Remove control characters
+  * By default control characters are replaced with an empty string but this can be changed through `tt.replaceControlCharactersWith`.
+  * Removes control characters from the current selection(s) or from the entire document if no text is selected
+
+### [0.9.0] - 2020-09-28
+
+#### Fixed
+
+* The StatusBar item with lines and words count is readonly, disabled the click event
+* Insert numbers sequence: the user can choose the starting index and length, this inserts the needed amount of lines
+
+### [0.8.0] - 2020-09-26
+
+#### Added
+
+* Insert line numbers
+
+### [0.7.0] - 2020-09-25
+
+#### Added
+
+* Open selection(s) in new editor
+
+#### Fixed
+
+* Fixed a bug where multiline random inserts were failing if the command needed to prompt the user for a choise. The affected commands were PERSON_NAME, COLOR, PARAGRAPH and HASH
+
+### [0.6.0] - 2020-09-24
 
 #### Updated
 
-* Case conversions now works on multiple selections
-* Insert commands are now multicursor aware
+* Case conversion and Insert commands now work on multiple selections
+* Renamed "Pad Right" and "Pad Left" to "Pad Selection Right" and "Pad Selection Left" respectively
 
 ### [0.5.0] - 2020-09-13
 

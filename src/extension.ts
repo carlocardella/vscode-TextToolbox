@@ -1,9 +1,12 @@
-import { commands, ExtensionContext, workspace } from 'vscode';
+import { commands, ExtensionContext, window, workspace } from 'vscode';
 import * as CaseConversion from "./modules/caseConversion";
 import * as InsertText from "./modules/insertText";
 import * as StatusBarSelection from './modules/statusBarSelection';
 import * as FilterText from './modules/filterText';
 import * as SortLines from './modules/sortText';
+import * as ControlCharacters from './modules/controlCharacters';
+import * as Helpers from './modules/helpers';
+import * as AlignText from './modules/alignText';
 
 
 export function activate(context: ExtensionContext) {
@@ -27,8 +30,10 @@ export function activate(context: ExtensionContext) {
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.InsertGUID', () => { InsertText.insertGUID(); }));
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.InsertDate', () => { InsertText.pickDateTime(); }));
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.PickRandom', () => { InsertText.pickRandom(); }));
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.PadRight', () => { InsertText.askForPadDetails(InsertText.padDirection.right); }));
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.PadLeft', () => { InsertText.askForPadDetails(InsertText.padDirection.left); }));
+	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.PadSelectionRight', () => { InsertText.padSelection(InsertText.padDirection.right); }));
+	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.PadSelectionLeft', () => { InsertText.padSelection(InsertText.padDirection.left); }));
+	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.InsertLineNumbers', () => { InsertText.insertLineNumbers(); }));
+	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.InsertSequenceNumbers', () => { InsertText.insertSequence(InsertText.sequenceType.Numbers); }));
 
 	// filter text
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.RemoveAllEmptyLines', () => { FilterText.removeEmptyLines(false); }));
@@ -36,10 +41,31 @@ export function activate(context: ExtensionContext) {
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.RemoveDuplicateLines', () => { FilterText.removeDuplicateLines(false); }));
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.RemoveDuplicateLinesResultInNewEditor', () => { FilterText.removeDuplicateLines(true); }));
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.FilterLinesUsingRegExpOrString', () => { FilterText.filterLinesUsingRegExpOrString(true); }));
+	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texteditor.OpenSelectionInNewEditor', () => { FilterText.openSelectionInNewEditor(); }));
 
 	// sort text
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texteditor.SortLinesResultInNewEditor', () => { SortLines.askForSortDirection(true); }));
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texteditor.SortLines', () => { SortLines.askForSortDirection(); }));
+
+	// align
+	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.AlignToSeparator', () => { AlignText.alignToSeparator(); }));
+	
+	// control characters
+	window.onDidChangeActiveTextEditor(editor => {
+		if (editor) { ControlCharacters.decorateControlCharacters(editor); }
+	}, null, context.subscriptions);
+	workspace.onDidChangeTextDocument(event => {
+		let activeEditor = Helpers.getActiveEditor();
+		if (activeEditor) { ControlCharacters.decorateControlCharacters(activeEditor); }
+	}, null, context.subscriptions);
+	context.subscriptions.push(workspace.onDidChangeConfiguration(e => {
+		if (e.affectsConfiguration("tt.decorateControlCharacters")) {
+			const editor = Helpers.getActiveEditor();
+			if (editor) { ControlCharacters.decorateControlCharacters(editor, true); }
+		}
+	}));
+	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texteditor.RemoveControlCharacters', () => { ControlCharacters.removeControlCharacters(); }));
+
 
 	// status bar selection
 	if (workspace.getConfiguration().get('tt.enableStatusBarWordLineCount')) {

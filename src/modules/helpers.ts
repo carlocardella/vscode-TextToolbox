@@ -1,5 +1,6 @@
-import { commands, Range, Selection, TextEditor, window, workspace } from 'vscode';
+import { commands, Range, Selection, TextEditor, window, workspace, TextLine } from 'vscode';
 import * as os from 'os';
+
 
 /**
  * Returns the active text editor
@@ -37,11 +38,11 @@ export function validateSelection(): boolean {
 
 /**
  * Pauses execution of the given number of millisaeconds
- * @param ms the number of milliseconds to wait
+ * @param milliseconds the number of milliseconds to wait
  */
-export function sleep(ms: number): Promise<void> {
+export function sleep(milliseconds: number): Promise<void> {
     return new Promise(resolve => {
-        setTimeout(resolve, ms);
+        setTimeout(resolve, milliseconds);
     });
 }
 
@@ -96,8 +97,29 @@ export function getTextFromSelection(editor: TextEditor, selection: Selection): 
 }
 
 /**
+ * Returns an object with line information for each line in the selection
+ * @return {(TextLine[] | undefined)}
+ */
+export function getLinesFromSelection(editor: TextEditor): TextLine[] | undefined {
+    let lines: TextLine[] = [];
+    let selections = editor?.selections;
+    if (!selections) { return; }
+
+    selections.forEach(s => {
+        let selectionStartLine = s.start.line;
+        let selectionEndLine = s.end.line;
+
+        for (let i = selectionStartLine; i <= selectionEndLine; i++) {
+            lines.push(editor?.document.lineAt(i));
+        }
+    });
+
+    return lines!;
+}
+
+/**
  * Creates a new TextEditor containing the passed in text
- * @param {string} text 
+ * @param {string} text
  * @returns {TextEditor}
  */
 export function createNewEditor(text?: string): PromiseLike<TextEditor> {
@@ -140,9 +162,28 @@ export async function linesToLine(lines: string[]): Promise<string> {
 /**
  * Split a string based on the OS EOL and returns the resulting array of strings (lines)
  * @param {string} line The line to convert into an array of strings
+ * @returns {*} {Promise<string[]>}
  * @async
- * @returns {Promise<string[]>}
  */
-export async function getLines(line: string): Promise<string[]> {
+export async function getLinesFromString(line: string): Promise<string[]> {
     return Promise.resolve(line.split(os.EOL));
+}
+
+/**
+ * Returns an array of selections if any is available in the active document, otherwise returns the entire document as a single selection 
+ * @param {TextEditor} editor The active text editor to get the selections from
+ * @return {*}  {Promise<Selection[]>}
+ * @async
+ */
+export async function getSelections(editor: TextEditor): Promise<Selection[]> {
+    if (editor.selections.length >= 1 && !editor.selection.isEmpty) {
+        return Promise.resolve(editor.selections);
+    }
+    else {
+        const lastLine = editor.document.lineAt(editor.document.lineCount - 1);
+        let selection = new Selection(0, 0, lastLine.lineNumber, lastLine.text.length);
+        let selections: Selection[] = [];
+        selections.push(selection);
+        return Promise.resolve(selections);
+    }
 }

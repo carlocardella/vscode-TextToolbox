@@ -2,7 +2,7 @@
 	"name": "vscode-texttoolbox",
 	"displayName": "Text Toolbox",
 	"description": "Collection of tools for text manipulation, filtering, sorting etc...",
-	"version": "0.5.0",
+	"version": "0.11.0",
 	"publisher": "carlocardella",
 	"author": {
 		"name": "Carlo Cardella",
@@ -19,6 +19,7 @@
 		"tools",
 		"grep",
 		"utilities",
+		"filter",
 		"filter text",
 		"filter lines",
 		"case",
@@ -28,12 +29,15 @@
 		"ipsum",
 		"random",
 		"word count",
-		"lines count"
+		"lines count",
+		"sort text",
+		"sort lines",
+		"sort"
 	],
 	"activationEvents": [
 		"*"
 	],
-	"main": "./dist/extension.js",
+	"main": "./dist/extension",
 	"preview": true,
 	"badges": [],
 	"icon": "text_icon_regular.png",
@@ -108,12 +112,12 @@
 				"title": "TT: Insert Random"
 			},
 			{
-				"command": "vscode-texttoolbox.PadRight",
-				"title": "TT: Pad Right"
+				"command": "vscode-texttoolbox.PadSelectionRight",
+				"title": "TT: Pad Selection Right"
 			},
 			{
-				"command": "vscode-texttoolbox.PadLeft",
-				"title": "TT: Pad Left"
+				"command": "vscode-texttoolbox.PadSelectionLeft",
+				"title": "TT: Pad Selection Left"
 			},
 			{
 				"command": "vscode-texttoolbox.RemoveAllEmptyLines",
@@ -142,6 +146,26 @@
 			{
 				"command": "vscode-texteditor.SortLines",
 				"title": "TT: Sort lines"
+			},
+			{
+				"command": "vscode-texteditor.OpenSelectionInNewEditor",
+				"title": "TT: Open selection in new editor"
+			},
+			{
+				"command": "vscode-texttoolbox.InsertLineNumbers",
+				"title": "TT: Insert line numbers"
+			},
+			{
+				"command": "vscode-texttoolbox.InsertSequenceNumbers",
+				"title": "TT: Insert numbers sequence"
+			},
+			{
+				"command": "vscode-texteditor.RemoveControlCharacters",
+				"title": "TT: Remove control characters"
+			},
+			{
+				"command": "vscode-texttoolbox.AlignToSeparator",
+				"title": "TT: Align to separator"
 			}
 		],
 		"configuration": [
@@ -181,19 +205,47 @@
 						"default": true,
 						"scope": "window",
 						"description": "Filter use Regular Expression rather than simple text match"
+					},
+					"tt.decorateControlCharacters": {
+						"type": "object",
+						"description": "Control characters decoration appearance",
+						"default": {
+							"borderWidth": "1px",
+							"borderStyle": "solid",
+							"overviewRulerColor": "red",
+							"borderColor": "red"
+						}
+					},
+					"tt.replaceControlCharactersWith": {
+						"type": "string",
+						"default": "",
+						"scope": "window",
+						"description": "Replace control characters (TT: Remove Control Characters) in the active document with this string"
+					},
+					"tt.textElementAlignment": {
+						"type": "string",
+						"enum": [
+							"left",
+							"right"
+						],
+						"default": "left",
+						"scope": "window",
+						"description": "Controls where to place the separator when aligning text: Left inserts padding spaces after the separator, Right inserts padding spaces between text and separator."
 					}
 				}
 			}
 		]
 	},
 	"scripts": {
-		"vscode:prepublish": "webpack --mode production",
-		"webpack": "webpack --mode development",
-		"webpack-dev": "webpack --mode development --watch",
-		"test-compile": "tsc -p ./",
+		"compile": "tsc -p ./",
 		"lint": "eslint src --ext ts",
+		"watch": "tsc -watch -p ./",
 		"pretest": "npm run compile && npm run lint",
-		"test": "node ./out/test/runTest.js"
+		"test": "node ./out/test/runTest.js",
+		"vscode:prepublish": "webpack --mode production",
+		"development": "webpack --mode development",
+		"webpack-dev": "webpack --mode development --watch",
+		"test-compile": "tsc -p ./"
 	},
 	"devDependencies": {
 		"@types/assert": "^1.5.2",
@@ -219,19 +271,20 @@
 		"mocha-explorer-launcher-scripts": "^0.3.0",
 		"node-uuid": "^1.4.8",
 		"pad": "^3.2.0",
-		"ts-loader": "^8.0.3",
+		"ts-loader": "^8.0.4",
 		"ts-node": "^9.0.0",
 		"typescript": "^3.8.3",
 		"uuid-lib": "0.0.6",
 		"vsce": "^1.79.3",
 		"vscode-test": "^1.3.0",
-		"webpack": "^4.44.1",
-		"webpack-cli": "^3.3.12"
+		"webpack": "^4.44.2",
+		"webpack-cli": "^3.3.12",
+		"yarn": "^1.22.10"
 	},
 	"dependencies": {
 		"chance": "^1.1.7",
-		"luxon": "^1.25.0",
 		"change-case": "^4.1.1",
+		"luxon": "^1.25.0",
 		"os": "^0.1.1"
 	}
 }

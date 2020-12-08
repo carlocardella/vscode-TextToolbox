@@ -1,5 +1,5 @@
 import { window, Range, Selection } from "vscode";
-import { validateSelection } from "./helpers";
+import { validateSelection, getActiveEditor } from './helpers';
 import * as cc from 'change-case';
 
 
@@ -40,7 +40,7 @@ export function convertToSnakeCase() { window.activeTextEditor?.selections.forEa
 export function convertToUppercase() {
     validateSelection();
 
-    const editor = window.activeTextEditor;
+    const editor = getActiveEditor();
     editor?.edit(editBuilder => {
         editor.selections.forEach(selection => {
             let text = editor.document.getText(new Range(selection.start, selection.end));
@@ -55,7 +55,7 @@ export function convertToUppercase() {
 export function convertToLowercase() {
     validateSelection();
 
-    const editor = window.activeTextEditor;
+    const editor = getActiveEditor();
     editor?.edit(editBuilder => {
         editor.selections.forEach(selection => {
             let text = editor.document.getText(new Range(selection.start, selection.end));
@@ -72,7 +72,7 @@ export function convertToLowercase() {
 function convertSelection(text: Selection, conversion: caseConversions) {
     validateSelection();
 
-    const editor = window.activeTextEditor;
+    const editor = getActiveEditor();
     editor?.edit(editBuilder => {
         let range = new Range(text?.start, text?.end);
         switch (conversion) {

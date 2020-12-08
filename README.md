@@ -91,8 +91,8 @@ Please open an issue to leave a comment, report a bug, request a feature etc... 
   * TIMEZONE => Kamchatka Standard Time
   * PARAGRAPH => Cij wam lijoso fa molah il nasiskil ho andot akbuh uku zikahek. Ji balsiffe puzmaano nuug bofevu ra tehar heuwa zorjul hej na heci aka webo lorresu uwage uhe nirsiam.
   * HASH => 61960319307b5f8d298141627
-* Pad Right
-* Pad Left
+* Pad Selection Right
+* Pad Selection Left
 * Remove all empty lines
   * remove all empty lines from the current document
 * Remove redundant empty line
@@ -108,10 +108,29 @@ Please open an issue to leave a comment, report a bug, request a feature etc... 
   * Ascending
   * Descending
   * Reverse
+* Open selection(s) in new editor
+* Insert line numbers
+* Insert numbers sequence
+* Highlight control characters
+  * By default control characters are highlighted with a red box but color and border shape can be customised through `tt.decorateControlCharacters`
+* Remove control characters
+  * By default control characters are replaced with an empty string but this can be changed through `tt.replaceControlCharactersWith`.
+  * Removes control characters from the current selection(s) or from the entire document if no text is selected
+* Align text to a delimiter (can be used to align CSV elements)
+  * Align left (default): inserts padding spaces after the separator
+    ```
+    London,    Paris,     Rome      
+    Tokyo,     Singapore, Syndey     
+    ```
+  * Align right: inserts padding spaces between text and separator
+    ```
+    London    ,Paris     ,Rome      
+    Tokyo     ,Singapore ,Syndey    
+    ```
 
 ### Thanks to:
 
-Text Toolbox is freely inspired fromby these fine extensions:
+Text Toolbox is freely inspired by these fine extensions:
 
 * [gurayyarar DummyTextGenerator](https://github.com/gurayyarar/DummyTextGenerator)
 * [qcz vscode-text-power-tools](https://github.com/qcz/vscode-text-power-tools)
@@ -121,3 +140,5 @@ Text Toolbox is freely inspired fromby these fine extensions:
 * [rpeshkov vscode-text-tables](https://github.com/rpeshkov/vscode-text-tables)
 * [wmaurer vscode-change-case](https://github.com/wmaurer/vscode-change-case)
 * [volkerdobler insertnums](https://github.com/volkerdobler/insertnums)
+* [WengerK vscode-highlight-bad-chars](https://github.com/WengerK/vscode-highlight-bad-chars)
+* [nhoizey vscode-gremlins](https://github.com/nhoizey/vscode-gremlins)

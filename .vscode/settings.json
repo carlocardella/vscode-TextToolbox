@@ -26,18 +26,16 @@
     },
     "peacock.color": "#57455d",
     "favorites.sortDirection": "ASC",
-    "python.pythonPath": "C:\\Users\\carlo\\AppData\\Local\\Programs\\Python\\Python39\\python.exe",
+    "python.pythonPath": "C:\\Users\\carlo\\AppData\\Local\\Programs\\Python\\Python38\\python.exe",
 
     // MOCHA EXPLORER
-    // "mochaExplorer.exit": true,
-    "mochaExplorer.autoload": false,
-    "mochaExplorer.require": "ts-node/register",
     "mochaExplorer.launcherScript": "node_modules/mocha-explorer-launcher-scripts/vscode-test",
+    "mochaExplorer.autoload": false,
+    "mochaExplorer.ipcRole": "server",
     "mochaExplorer.env": {
-        "VSCODE_VERSION": "stable",
+        "VSCODE_VERSION": "insiders",
         "ELECTRON_RUN_AS_NODE": null
     },
-    "mochaExplorer.files": "src/test/**/*.ts",
-    // "mochaExplorer.ui": "tdd",
-    "mochaExplorer.logpanel": true
+    "mochaExplorer.files": "test/**/*.ts",
+    "mochaExplorer.require": "ts-node/register",
 }

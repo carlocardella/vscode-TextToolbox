@@ -1,4 +1,4 @@
-import { getActiveEditor, getDocumentTextOrSelection, createNewEditor, getSelection, linesToLine, getLines } from './helpers';
+import { getActiveEditor, getDocumentTextOrSelection, createNewEditor, getSelection, linesToLine, getLinesFromString, getTextFromSelection } from './helpers';
 import * as os from "os";
 import { window, workspace } from "vscode";
 
@@ -151,9 +151,28 @@ export async function findLinesMatchingString(searchString: string): Promise<str
     if (!searchString) { return; }
     let text: string[] | undefined = [];
 
-    text = await getLines(getDocumentTextOrSelection()!);
+    text = await getLinesFromString(getDocumentTextOrSelection()!);
     if (!text) { return; }
     text = text.filter(line => line.indexOf(searchString) >= 0);
 
     return Promise.resolve(text);
+}
+
+/**
+ * Opens the current selection(s) in a new Editor
+ * @return {Promise<boolean>}
+ * @async
+ */
+export async function openSelectionInNewEditor(): Promise<boolean> {
+    const editor = getActiveEditor();
+    if (!editor) { return Promise.reject("No active editor found"); }
+
+    let selections = editor.selections;
+    let text: string[] = [];
+    selections.forEach(s => {
+        text.push(getTextFromSelection(editor, s)! + os.EOL);
+    });
+
+    await createNewEditor(text!.join(os.EOL));
+    return Promise.resolve(true);
 }
