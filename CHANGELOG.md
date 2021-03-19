@@ -23,6 +23,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
   * Lorem Ipsum
     * Lines
     * Paragraphs
+* Copy
+  * Copy selection with line numbers
+    * Support for multiple selections
+    * Optionally add the path of the file containing the copied selection
 * Other
   * show progress bar for long operations (e.g. large files)
 
