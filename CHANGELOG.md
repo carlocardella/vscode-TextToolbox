@@ -19,6 +19,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
   * trim
   * split selection
   * split clipboard and paste output
+* Insert
+  * Lorem Ipsum
+    * Lines
+    * Paragraphs
 * Other
   * show progress bar for long operations (e.g. large files)
 
