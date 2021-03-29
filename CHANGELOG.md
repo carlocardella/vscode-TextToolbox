@@ -22,6 +22,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
   * split clipboard and paste output
 * Insert
   * DateTime `round-trip` format: https://docs.microsoft.com/en-us/dotnet/standard/base-types/standard-date-and-time-format-strings#Roundtrip
+  * GUID maks (all zeros)
+* Convert
+  * Convert selected DateTime to a different format
 * Other
   * show progress bar for long operations (e.g. large files)
 
