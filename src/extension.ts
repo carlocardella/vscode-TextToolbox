@@ -7,6 +7,7 @@ import * as SortLines from './modules/sortText';
 import * as ControlCharacters from './modules/controlCharacters';
 import * as Helpers from './modules/helpers';
 import * as AlignText from './modules/alignText';
+import * as SplitText from './modules/splitText';
 
 
 export function activate(context: ExtensionContext) {
@@ -49,6 +50,10 @@ export function activate(context: ExtensionContext) {
 
 	// align
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.AlignToSeparator', () => { AlignText.alignToSeparator(); }));
+
+	// split text
+	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.SplitText', () => { SplitText.splitText(false); }));
+	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.SplitTextOpenInNewEditor', () => { SplitText.splitText(true); }));
 	
 	// control characters
 	window.onDidChangeActiveTextEditor(editor => {

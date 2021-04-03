@@ -166,6 +166,14 @@
 			{
 				"command": "vscode-texttoolbox.AlignToSeparator",
 				"title": "TT: Align to separator"
+			},
+			{
+				"command": "vscode-texttoolbox.SplitText",
+				"title": "TT: Split Selection"
+			},
+			{
+				"command": "vscode-texttoolbox.SplitTextOpenInNewEditor",
+				"title": "TT: Split Selection, open in new editor"
 			}
 		],
 		"configuration": [
