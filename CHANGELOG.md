@@ -22,13 +22,23 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
   * split clipboard and paste output
 * Insert
   * DateTime `round-trip` format: https://docs.microsoft.com/en-us/dotnet/standard/base-types/standard-date-and-time-format-strings#Roundtrip
-  * GUID maks (all zeros)
 * Convert
   * Convert selected DateTime to a different format
 * Other
   * show progress bar for long operations (e.g. large files)
 
 ## Log
+
+## [0.12.0] - 2021-04-04
+
+### Removed
+
+* Temporarily removed the `Align` command, it was not behaving as intended and I am working on a new implementation. I will add `Align` back when ready.
+
+### Added
+
+* Insert GUID all zeros
+  * Supports multicursor
 
 ### [0.11.0] - 2020-10-11
 
@@ -57,7 +67,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 #### Added
 
 * Highlight control characters
-  * By default control characters are highlighted with a red box but color and border shape can be customised through `tt.decorateControlCharacters`
+  * By default control characters are highlighted with a red box but color and border shape can be customized through `tt.decorateControlCharacters`
 * Remove control characters
   * By default control characters are replaced with an empty string but this can be changed through `tt.replaceControlCharactersWith`.
   * Removes control characters from the current selection(s) or from the entire document if no text is selected
@@ -131,7 +141,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 * Updated padding, split the previous command in `PadRight` and `PadLeft`.
   * If there is a selection, the string is padded up to the length specified
-  * If there is no selection, the command inserts a string compreised of the selected character(s) and of the specified length
+  * If there is no selection, the command inserts a string comprised of the selected character(s) and of the specified length
 
 * Updated CHANGELOG and README
 

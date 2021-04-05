@@ -6,7 +6,7 @@ import * as FilterText from './modules/filterText';
 import * as SortLines from './modules/sortText';
 import * as ControlCharacters from './modules/controlCharacters';
 import * as Helpers from './modules/helpers';
-import * as AlignText from './modules/alignText';
+// import * as AlignText from './modules/alignText';
 
 
 export function activate(context: ExtensionContext) {
@@ -28,6 +28,7 @@ export function activate(context: ExtensionContext) {
 
 	// insert text
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.InsertGUID', () => { InsertText.insertGUID(); }));
+	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.InsertGuidAllZeros', () => { InsertText.insertGUID(true); }));
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.InsertDate', () => { InsertText.pickDateTime(); }));
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.PickRandom', () => { InsertText.pickRandom(); }));
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.PadSelectionRight', () => { InsertText.padSelection(InsertText.padDirection.right); }));
@@ -48,7 +49,7 @@ export function activate(context: ExtensionContext) {
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texteditor.SortLines', () => { SortLines.askForSortDirection(); }));
 
 	// align
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.AlignToSeparator', () => { AlignText.alignToSeparator(); }));
+	// context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.AlignToSeparator', () => { AlignText.alignToSeparator(); }));
 	
 	// control characters
 	window.onDidChangeActiveTextEditor(editor => {
