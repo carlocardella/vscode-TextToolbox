@@ -24,6 +24,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
   * DateTime `round-trip` format: https://docs.microsoft.com/en-us/dotnet/standard/base-types/standard-date-and-time-format-strings#Roundtrip
 * Convert
   * Convert selected DateTime to a different format
+* Transform
+  * Transform selection to json (including escapes and multiline strings)
+  * Transform selection to xml (including escapes and multiline strings)
 * Other
   * show progress bar for long operations (e.g. large files)
 
