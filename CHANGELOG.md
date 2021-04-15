@@ -6,29 +6,71 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## Unreleased
 
-* Align
-  * to cursor
-  * as table
-  * improve csv alignment, reduce empty space where possible
+* Text manipulation
+  * escape (json)
+  * unescape (json)
+  * remove empty lines (end of file)
+  * trim
+  * duplicate string (ask user how many times)
+  * convert number, dec to hex and vice versa
 * Highlight
   * highlight word (and all occurrences)
   * highlight based on regex
-  * highlight search filters match (e.g. filter on regexp and open in new editor)
-* Text manipulation
-  * escape
-  * unescape
-  * trim
+  * ask the user for the highlight color
+  * toggle/clear command in context menu
+* Align:
+  * to cursor
+  * as table
+  * improve csv alignment, reduce empty space where possible
+* Filtering
+  * improve `Filter lines, result in new editor`: regex search only of the search string begins with `/`, otherwise default to text search (return the entire line containing the match)
+  * add original line numbers when opening a selection/filter in a new editor
+  * count line occurrences
+  * add config values for regex global switches, default /gi
+* Sorting
+  * align csv
+* Split
+  * split based on delimiter
   * split selection
-  * split clipboard and paste output
+    * replace selection
+    * open in new editor
+  * split clipboard
+    * paste in place
+    * paste in new editor
 * Insert
-  * DateTime `round-trip` format: https://docs.microsoft.com/en-us/dotnet/standard/base-types/standard-date-and-time-format-strings#Roundtrip
-* Convert
-  * Convert selected DateTime to a different format
-* Transform
-  * Transform selection to json (including escapes and multiline strings)
-  * Transform selection to xml (including escapes and multiline strings)
+  * insert date sequence
+    * DateTime `round-trip` format: https://docs.microsoft.com/en-us/dotnet/standard/base-types/standard-date-and-time-format-strings#Roundtrip
+    * improve command picker, show date format preview
+    * add option to use times 12/24 formats
+  * Lorem Ipsum
+    * other famous excerpts, e.g. The Divine Comedy, Hamlet etc...
+    * excerpts in languages other than English
+  * randomByte
+    * min
+    * max
+    * negative
+    * prime
+  * currency
+    * dollars
+    * euros
+    * british pound
+    * yen
+    * yuan
+  * randomIntCustomRange
+  * randomStringCustomLength
+  * randomSampleFromInput
+  * randomIban
+  * insert multicursor should insert different strings, not the same repeated one
 * Other
-  * show progress bar for long operations (e.g. large files)
+  * if there is no selection update the entire line
+  * remove control characters/bad characters
+    * on paste (with config toggle)
+    * show progress bar for long operations (e.g. large files)
+* Status bar
+  * allow to update position without reloading the entire window
+* Package
+  * find the minimum required vscode version
+  * update extension
 
 ## Log
 
@@ -50,13 +92,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 * Align text to separator (can be used to align CSV elements):
   * Align left (default): inserts padding spaces after the separator
     ```
-    London,    Paris,     Rome      
-    Tokyo,     Singapore, Syndey     
+    London,    Paris,     Rome
+    Tokyo,     Singapore, Syndey
     ```
   * Align right: inserts padding spaces between text and separator
     ```
-    London    ,Paris     ,Rome      
-    Tokyo     ,Singapore ,Syndey    
+    London    ,Paris     ,Rome
+    Tokyo     ,Singapore ,Syndey
     ```
 
 ### [0.10.1] - 2020-10-04
