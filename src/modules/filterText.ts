@@ -167,7 +167,7 @@ export async function openSelectionInNewEditor(): Promise<boolean> {
     const editor = getActiveEditor();
     if (!editor) { return Promise.reject("No active editor found"); }
 
-    if (editor.selection.isEmpty) { return; }
+    if (editor.selection.isEmpty) { return false; }
     
     let selections = editor.selections;
     let text: string[] = [];
