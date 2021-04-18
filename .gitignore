@@ -6,3 +6,4 @@ vsc-extension-quickstart.md
 dist/
 *.zip
 *.tgz
+# .vscode

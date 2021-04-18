@@ -6,152 +6,207 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## Unreleased
 
-* Align
-  * to cursor
-  * to text delimiter (csv)
-  * as table
+* Text manipulation
+  * escape (json)
+  * unescape (json)
+  * remove empty lines (end of file)
+  * duplicate string (ask user how many times)
+  * convert number, dec to hex and vice versa
 * Highlight
   * highlight word (and all occurrences)
   * highlight based on regex
-* Text manipulation
-  * escape
-  * unescape
-  * trim
+  * ask the user for the highlight color
+  * toggle/clear command in context menu
+* Align:
+  * to cursor
+  * as table
+  * improve csv alignment, reduce empty space where possible
+* Filtering
+  * improve `Filter lines, result in new editor`: regex search only of the search string begins with `/`, otherwise default to text search (return the entire line containing the match)
+  * add original line numbers when opening a selection/filter in a new editor
+  * count line occurrences
+  * add config values for regex global switches, default /gi
+* Sorting
+  * align csv
+* Split
+  * split based on delimiter
   * split selection
-  * split clipboard and paste output
+    * replace selection
+    * open in new editor
+  * split clipboard
+    * paste in place
+    * paste in new editor
 * Insert
+  * insert date sequence
+    * DateTime `round-trip` format: https://docs.microsoft.com/en-us/dotnet/standard/base-types/standard-date-and-time-format-strings#Roundtrip
+    * improve command picker, show date format preview
+    * add option to use times 12/24 formats
   * Lorem Ipsum
-    * Lines
-    * Paragraphs
-* Copy
-  * Copy selection with line numbers
-    * Support for multiple selections
-    * Optionally add the path of the file containing the copied selection
+    * other famous excerpts, e.g. The Divine Comedy, Hamlet etc...
+    * excerpts in languages other than English
+  * randomByte
+    * min
+    * max
+    * negative
+    * prime
+  * currency
+    * dollars
+    * euros
+    * british pound
+    * yen
+    * yuan
+  * randomIntCustomRange
+  * randomStringCustomLength
+  * randomSampleFromInput
+  * randomIban
+  * insert multicursor should insert different strings, not the same repeated one
 * Other
-  * show progress bar for long operations (e.g. large files)
+  * if there is no selection update the entire line
+  * remove control characters/bad characters
+    * on paste (with config toggle)
+    * show progress bar for long operations (e.g. large files)
+* Status bar
+  * allow to update position without reloading the entire window
 
 ## Log
 
-### [0.11.0] - 2020-10-11
+## [0.12.0] - 2021-04-18
 
-#### Added
+### Removed
+
+* Temporarily removed the `Align` command, it was not behaving as intended and I am working on a new implementation. I will add `Align` back when ready.
+
+### Added
+
+* Insert GUID all zeros
+  * Supports multicursor
+* Trim lines or selections
+
+### Fixed
+
+* `Open Selection in New Editor`: no longer opens an empty editor if there is no selection
+* Fixed sort commands
+
+## [0.11.0] - 2020-10-11
+
+### Added
 
 * Align text to separator (can be used to align CSV elements):
   * Align left (default): inserts padding spaces after the separator
     ```
-    London,    Paris,     Rome      
-    Tokyo,     Singapore, Syndey     
+    London,    Paris,     Rome
+    Tokyo,     Singapore, Sydney
     ```
   * Align right: inserts padding spaces between text and separator
     ```
-    London    ,Paris     ,Rome      
-    Tokyo     ,Singapore ,Syndey    
+    London    ,Paris     ,Rome
+    Tokyo     ,Singapore ,Sydney
     ```
 
-### [0.10.1] - 2020-10-04
+## [0.10.1] - 2020-10-04
 
-#### Update
+### Update
 
 * Update readme and changelog
 
-### [0.10.0] - 2020-10-04
+## [0.10.0] - 2020-10-04
 
-#### Added
+### Added
 
 * Highlight control characters
-  * By default control characters are highlighted with a red box but color and border shape can be customised through `tt.decorateControlCharacters`
+  * By default control characters are highlighted with a red box but color and border shape can be customized through `tt.decorateControlCharacters`
 * Remove control characters
   * By default control characters are replaced with an empty string but this can be changed through `tt.replaceControlCharactersWith`.
   * Removes control characters from the current selection(s) or from the entire document if no text is selected
 
-### [0.9.0] - 2020-09-28
+## [0.9.0] - 2020-09-28
 
-#### Fixed
+### Fixed
 
 * The StatusBar item with lines and words count is readonly, disabled the click event
 * Insert numbers sequence: the user can choose the starting index and length, this inserts the needed amount of lines
 
-### [0.8.0] - 2020-09-26
+## [0.8.0] - 2020-09-26
 
-#### Added
+### Added
 
 * Insert line numbers
 
-### [0.7.0] - 2020-09-25
+## [0.7.0] - 2020-09-25
 
-#### Added
+### Added
 
 * Open selection(s) in new editor
 
-#### Fixed
+### Fixed
 
 * Fixed a bug where multiline random inserts were failing if the command needed to prompt the user for a choise. The affected commands were PERSON_NAME, COLOR, PARAGRAPH and HASH
 
-### [0.6.0] - 2020-09-24
+## [0.6.0] - 2020-09-24
 
-#### Updated
+### Updated
 
 * Case conversion and Insert commands now work on multiple selections
 * Renamed "Pad Right" and "Pad Left" to "Pad Selection Right" and "Pad Selection Left" respectively
 
-### [0.5.0] - 2020-09-13
+## [0.5.0] - 2020-09-13
 
-#### Added
+### Added
 
 * Sort lines, ascending, descending or reverse the lines order
   * Update the current selection or entire document, or open the sorted lines in a new editor
 
-#### Updated
+### Updated
 
 * Better handle configuration changes, react to the event only if `Text Toolbox` configuration is undated, ignore all other changes
 
-### [0.4.0] - 2020-09-06
+## [0.4.0] - 2020-09-06
 
-#### Added
+### Added
 
 * Find text using RegEx or simple text match and open the result in a new Editor
   * By default the search uses RegEx: can be changed using `tt.filtersUseRegularExpressions`
 
-### [0.3.0] - 2020-09-05
+## [0.3.0] - 2020-09-05
 
-#### Added
+### Added
 
 * Remove duplicate lines
 * Remove duplicate lines, open result in new editor
 
-#### Fixed
+### Fixed
 
 * Fixed a bug with padding where the padded string length was incorrect
 
-#### Updated
+### Updated
 
 * Updated tests, close the editors after every `Describe` rather than after every test
 
-### [0.2.0] - 2020-08-30
+## [0.2.0] - 2020-08-30
 
-#### Updated
+### Updated
 
 * Updated padding, split the previous command in `PadRight` and `PadLeft`.
   * If there is a selection, the string is padded up to the length specified
-  * If there is no selection, the command inserts a string compreised of the selected character(s) and of the specified length
+  * If there is no selection, the command inserts a string comprised of the selected character(s) and of the specified length
 
 * Updated CHANGELOG and README
 
-#### Added
+### Added
 
 * `ISO8601_DATE`
 * `ISO8601_TIME`
 * `STATE_FULL_NAME`
 * `COUNTRY_FULL_NAME`
 
-### [0.1.2] - 2020-08-30
+## [0.1.2] - 2020-08-30
 
 * Updated README, CHANGELOG
 
-### [0.1.1] - 2020-08-30
+## [0.1.1] - 2020-08-30
 
 * Package with Webpack
 
-### [0.1.0] - 2020-08-29
+## [0.1.0] - 2020-08-29
 
 * First preview release published

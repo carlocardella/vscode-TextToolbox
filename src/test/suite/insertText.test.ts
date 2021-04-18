@@ -46,6 +46,33 @@ suite('insertText', () => {
                     assert.ok(guid.isGuid(g), `Value "${g}" is not a valid GUID`);
                 });
             });
+            
+            test('Insert GUID all zeros', async () => {
+                await createNewEditor();
+                insertGUID(true);
+                await sleep(500);
+
+                let text = String(getDocumentTextOrSelection());
+                assert.ok(guid.isGuid(text), `Value "${text}" is not a valid GUID`);
+            });
+
+            test("Insert GUID all zeros multicursor", async () => {
+                await createNewEditor(`asd${EOL}${EOL}asd`);
+                const editor = getActiveEditor();
+                let selections: Selection[] = [];
+                selections.push(new Selection(0, 0, 0, 3));
+                selections.push(new Selection(2, 0, 2, 3));
+                editor!.selections = selections;
+                insertGUID(true);
+                await sleep(500);
+
+                let lines = getLinesFromSelection(editor!);
+                let g: string;
+                lines?.forEach(line => {
+                    g = line.text.substr(3, 36);
+                    assert.ok(guid.isGuid(g), `Value "${g}" is not a valid GUID`);
+                });
+            });
         });
 
         describe("Padding", () => {

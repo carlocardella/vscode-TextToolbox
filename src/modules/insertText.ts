@@ -6,15 +6,20 @@ import { EOL } from 'os';
 
 
 /**
- * Insert a random GUID
+ * Insert a random GUID, or a neutral GUID made of all zeros
  */
-export function insertGUID() {
+export function insertGUID(allZeros?: boolean) {
     const chance = new Chance();
     const editor = getActiveEditor();
 
     editor?.edit(editBuilder => {
         editor.selections.forEach(async s => {
-            editBuilder.insert(s.active, chance.guid());
+            if (allZeros) {
+                editBuilder.insert(s.active, "00000000-0000-0000-0000-000000000000");
+            }
+            else {
+                editBuilder.insert(s.active, chance.guid());
+            }
         });
     });
 }
