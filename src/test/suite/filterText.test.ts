@@ -135,5 +135,7 @@ suite("filterText", () => {
 
             assert.deepStrictEqual(newText, expected);
         });
+
+        // TODO: add test for empty selection
     });
 });

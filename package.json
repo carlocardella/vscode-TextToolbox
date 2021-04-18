@@ -2,7 +2,7 @@
 	"name": "vscode-texttoolbox",
 	"displayName": "Text Toolbox",
 	"description": "Collection of tools for text manipulation, filtering, sorting etc...",
-	"version": "0.11.0",
+	"version": "0.12.0",
 	"publisher": "carlocardella",
 	"author": {
 		"name": "Carlo Cardella",
@@ -144,15 +144,15 @@
 				"title": "TT: Filter lines, result in new Editor"
 			},
 			{
-				"command": "vscode-texteditor.SortLinesResultInNewEditor",
+				"command": "vscode-texttoolbox.SortLinesResultInNewEditor",
 				"title": "TT: Sort lines, result in new editor"
 			},
 			{
-				"command": "vscode-texteditor.SortLines",
+				"command": "vscode-texttoolbox.SortLines",
 				"title": "TT: Sort lines"
 			},
 			{
-				"command": "vscode-texteditor.OpenSelectionInNewEditor",
+				"command": "vscode-texttoolbox.OpenSelectionInNewEditor",
 				"title": "TT: Open selection in new editor"
 			},
 			{
@@ -164,8 +164,12 @@
 				"title": "TT: Insert numbers sequence"
 			},
 			{
-				"command": "vscode-texteditor.RemoveControlCharacters",
+				"command": "vscode-texttoolbox.RemoveControlCharacters",
 				"title": "TT: Remove control characters"
+			},
+			{
+				"command": "vscode-texttoolbox.TrimLineOrSelection",
+				"title": "TT: Trim"
 			}
 		],
 		"configuration": [

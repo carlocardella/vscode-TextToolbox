@@ -37,4 +37,9 @@
     },
     "mochaExplorer.files": "test/**/*.ts",
     "mochaExplorer.require": "ts-node/register",
+    "cSpell.words": [
+        "carlocardella",
+        "luxon",
+        "texttoolbox"
+    ],
 }

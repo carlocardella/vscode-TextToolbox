@@ -6,16 +6,16 @@ import { window, workspace } from "vscode";
 /**
  * Removes empty lines from the active document or selection; optionally removes only duplicate empty lines.
  * This function is called by the TextEditorCommands `RemoveAllEmptyLines` and `RemoveRedundantEmptyLines` and is a wrapper for `removeEmptyLinesInternal`
- * @param {boolean} redundandOnly Remove only duplicate empty lines
+ * @param {boolean} redundantOnly Remove only duplicate empty lines
  * @async
  */
-export async function removeEmptyLines(redundandOnly: boolean) {
+export async function removeEmptyLines(redundantOnly: boolean) {
     let text = getDocumentTextOrSelection();
     if (!text) {
         return;
     }
 
-    const newText = await removeEmptyLinesInternal(text, redundandOnly);
+    const newText = await removeEmptyLinesInternal(text, redundantOnly);
 
     let editor = getActiveEditor();
     if (!editor) {
@@ -33,19 +33,19 @@ export async function removeEmptyLines(redundandOnly: boolean) {
  * Removes empty lines from the active document or selection; optionally removes only duplicate empty lines.
  * This function is called by `removeEmptyLines` by Mocha tests
  * @param {string} text
- * @param {boolean} redundandOnly
+ * @param {boolean} redundantOnly
  * @async
  * @returns {Promise<string>}
  */
-export async function removeEmptyLinesInternal(text: string, redundandOnly: boolean): Promise<string> {
+export async function removeEmptyLinesInternal(text: string, redundantOnly: boolean): Promise<string> {
     const eol = os.EOL;
     let r;
     let rr: string;
     // /^\n{2,}/gm ==> two or more empty lines
     // /^\n+/gm    ==> any empty line
-    redundandOnly ? (r = /^(\n{2,}|^(\r\n){2,})/gm) : (r = /^(\n+|\r\n+)/gm);
+    redundantOnly ? (r = /^(\n{2,}|^(\r\n){2,})/gm) : (r = /^(\n+|\r\n+)/gm);
     // replace multiple empty lines with a single one, or with nothing
-    redundandOnly ? (rr = eol) : (rr = "");
+    redundantOnly ? (rr = eol) : (rr = "");
 
     return Promise.resolve(text.replace(r, rr!));
 }
@@ -167,6 +167,8 @@ export async function openSelectionInNewEditor(): Promise<boolean> {
     const editor = getActiveEditor();
     if (!editor) { return Promise.reject("No active editor found"); }
 
+    if (editor.selection.isEmpty) { return; }
+    
     let selections = editor.selections;
     let text: string[] = [];
     selections.forEach(s => {

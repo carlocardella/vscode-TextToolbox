@@ -68,18 +68,19 @@ export async function sortLinesInternal(linesToSort: string[], direction: string
 
     // remove empty lines, need to convert to a string and the result back to an array
     let line = await linesToLine(linesToSort);
-    linesToSort = await getLinesFromString(await removeEmptyLinesInternal(line, false));
+    let lineWithoutEmpty = await removeEmptyLinesInternal(line, false);
+    let lines = lineWithoutEmpty.split("\r");
 
     let sortedLines;
     switch (direction) {
         case "ascending":
-            sortedLines = linesToSort.sort((a, b) => 0 - (a > b ? -1 : 1));
+            sortedLines = lines.sort((a, b) => 0 - (a > b ? -1 : 1));
             break;
         case "descending":
-            sortedLines = linesToSort.sort((a, b) => 0 - (a > b ? 1 : -1));
+            sortedLines = lines.sort((a, b) => 0 - (a > b ? 1 : -1));
             break;
         case "reverse":
-            sortedLines = linesToSort.reverse();
+            sortedLines = lines.reverse();
             break;
         default:
             return;
