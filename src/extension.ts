@@ -8,6 +8,7 @@ import * as ControlCharacters from './modules/controlCharacters';
 import * as Helpers from './modules/helpers';
 import * as TextManipulation from './modules/textManipulation';
 // import * as AlignText from './modules/alignText';
+import { getActiveEditor } from './modules/helpers';
 
 
 export function activate(context: ExtensionContext) {
@@ -37,6 +38,8 @@ export function activate(context: ExtensionContext) {
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.InsertLineNumbers', () => { InsertText.insertLineNumbers(); }));
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.InsertSequenceNumbers', () => { InsertText.insertSequence(InsertText.sequenceType.Numbers); }));
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.InsertLoremIpsum', () => { InsertText.insertLoremIpsum(); }));
+	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.InsertNumber', () => { InsertText.insertNumber(); }));
+	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.InsertCurrency', () => { InsertText.insertCurrency(); }));
 
 	// filter text
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.RemoveAllEmptyLines', () => { FilterText.removeEmptyLines(false); }));
@@ -63,6 +66,10 @@ export function activate(context: ExtensionContext) {
 	workspace.onDidChangeTextDocument(event => {
 		let activeEditor = Helpers.getActiveEditor();
 		if (activeEditor) { ControlCharacters.decorateControlCharacters(activeEditor); }
+
+		// if (workspace.getConfiguration().get('tt.removeControlCharactersOnPaste')) {
+		// 	ControlCharacters.removeControlCharacters(getActiveEditor());
+		// }
 	}, null, context.subscriptions);
 	context.subscriptions.push(workspace.onDidChangeConfiguration(e => {
 		if (e.affectsConfiguration("tt.decorateControlCharacters")) {
@@ -70,7 +77,7 @@ export function activate(context: ExtensionContext) {
 			if (editor) { ControlCharacters.decorateControlCharacters(editor, true); }
 		}
 	}));
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texteditor.RemoveControlCharacters', () => { ControlCharacters.removeControlCharacters(); }));
+	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.RemoveControlCharacters', () => { ControlCharacters.removeControlCharacters(); }));
 
 
 	// status bar selection

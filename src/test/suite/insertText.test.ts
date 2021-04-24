@@ -1,7 +1,7 @@
 import * as assert from 'assert';
 import * as guid from 'guid';
 import { sleep, createNewEditor, selectAllText, closeTextEditor, getDocumentTextOrSelection, getActiveEditor, getLinesFromSelection } from '../../modules/helpers';
-import { insertGUID, insertDateTimeInternal, padDirection, padSelectionInternal, insertLineNumbersInternal, sequenceType, insertSequanceInternal as insertSequenceInternal, insertLoremIpsumInternal } from '../../modules/insertText';
+import { insertGUID, insertDateTimeInternal, padDirection, padSelectionInternal, insertLineNumbersInternal, sequenceType, insertSequenceInternal as insertSequenceInternal, insertLoremIpsumInternal, insertNumber, insertCurrencyInternal } from '../../modules/insertText';
 import { before, after, describe } from 'mocha';
 import { DateTime } from 'luxon';
 import { EOL } from 'os';
@@ -228,7 +228,7 @@ suite('insertText', () => {
         });
 
         describe("Insert Lorem Ipsum", () => {
-            let loremTypes = [
+            const loremTypes = [
                 { type: "Paragraphs" },
                 { type: "Sentences" },
                 { type: "Words" }
@@ -254,6 +254,50 @@ suite('insertText', () => {
                         default:
                             assert.fail('Invalid Lorem Ipsum paragraph type');
                     }
+                });
+            });
+        });
+
+        describe('Insert Number', () => {
+            test('Insert a random Integer', async () => {
+                await createNewEditor();
+                await insertNumber();
+                await sleep(500);
+
+                const newText = getDocumentTextOrSelection();
+                assert.doesNotThrow(() => {
+                    Number.parseInt(newText!);
+                });
+            });
+        });
+
+        describe('Insert currency', () => {
+            const currencies = [
+                { currency: "$ - US Dollar" },
+                { currency: "€ - Euro" },
+                { currency: "£ - British Pound" },
+                { currency: "¥ - Japanese Yen" },
+                { currency: "¥ - Chinese Yuan" },
+                { currency: "₨ - Indian Rupee" },
+                { currency: "$ - Mexican Peso" }
+            ];
+
+            currencies.forEach(c => {
+                test(`Insert ${c.currency}`, async () => {
+                    await createNewEditor();
+                    await insertCurrencyInternal(c.currency);
+                    await sleep(500);
+
+                    const newText = getDocumentTextOrSelection();
+
+                    assert.deepStrictEqual(
+                        newText?.substring(0, 1),
+                        c.currency.substring(0, 1)
+                    );
+
+                    assert.doesNotThrow(() => {
+                        Number.parseFloat(newText.substring(1));
+                    });
                 });
             });
         });

@@ -46,12 +46,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
     * max
     * negative
     * prime
-  * currency
-    * dollars
-    * euros
-    * british pound
-    * yen
-    * yuan
   * randomIntCustomRange
   * randomStringCustomLength
   * randomSampleFromInput
@@ -59,9 +53,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
   * insert multicursor should insert different strings, not the same repeated one
 * Other
   * if there is no selection update the entire line
-  * remove control characters/bad characters
-    * on paste (with config toggle)
-    * show progress bar for long operations (e.g. large files)
+  * remove control characters/bad characters on paste (with config toggle)
+  * show progress bar for long operations (e.g. filters on large files)
 * Status bar
   * allow to update position without reloading the entire window
 
@@ -76,6 +69,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ### Added
 
 * Insert `Lorem Ipsum` Paragraphs, Sentences or Words
+* Insert random Number
+* Insert random Currency amount
 
 ### Fixed
 

@@ -1,4 +1,4 @@
-import { TextEditorRevealType, window } from 'vscode';
+import { FileChangeType, window } from 'vscode';
 import { DateTime } from 'luxon';
 import { Chance } from 'chance';
 import { getActiveEditor, getLinesFromSelection } from './helpers';
@@ -413,7 +413,7 @@ export async function insertSequence(type: sequenceType): Promise<boolean> {
     if (!length) { return false; }
 
     return Promise.resolve(
-        await insertSequanceInternal(type, startFrom!, Number(length))
+        await insertSequenceInternal(type, startFrom!, Number(length))
     );
 }
 
@@ -426,7 +426,7 @@ export async function insertSequence(type: sequenceType): Promise<boolean> {
  * @return {*} {Promise<boolean>}
  * @async
  */
-export async function insertSequanceInternal(type: sequenceType, startFrom: string, length: number, direction?: string): Promise<boolean> {
+export async function insertSequenceInternal(type: sequenceType, startFrom: string, length: number, direction?: string): Promise<boolean> {
     const editor = getActiveEditor();
     if (!editor) { return false; }
 
@@ -511,4 +511,70 @@ export async function insertLoremIpsum() {
     if (!loremIpsumLength) { return; }
 
     insertLoremIpsumInternal(loremIpsumTypeChoice, Number(loremIpsumLength));
+}
+
+/**
+ * Insert a random Integer
+ * @export
+ * @return {*}  {(Promise<boolean | undefined>)}
+ */
+export async function insertNumber(): Promise<boolean | undefined> {
+    const editor = getActiveEditor();
+    if (!editor) { return; }
+
+    const chance = new Chance();
+    editor.edit(editBuilder => {
+        editor.selections.forEach(async s => {
+            editBuilder.insert(s.active, chance.integer().toString());
+        });
+    });
+
+    Promise.resolve(true);
+}
+
+/**
+ * Insert a random Currency value
+ * @export
+ * @return {*} 
+ */
+export async function insertCurrency() {
+    const editor = getActiveEditor();
+    if (!editor) { return; }
+
+    const currencies = [
+        "$ - US Dollar",
+        "€ - Euro",
+        "£ - British Pound",
+        "¥ - Japanese Yen",
+        "¥ - Chinese Yuan",
+        "₨ - Indian Rupee",
+        "$ - Mexican Peso"
+    ];
+
+    const currency: string | undefined = await window.showQuickPick(currencies, { ignoreFocusOut: true });
+    if (!currency) { return; }
+
+    insertCurrencyInternal(currency);
+}
+
+/**
+ * Insert a random currency value
+ * @export
+ * @param {string} currency
+ * @return {*}  {(Promise<boolean | undefined>)}
+ */
+export async function insertCurrencyInternal(currency: string): Promise<boolean | undefined> {
+    const editor = getActiveEditor();
+    if (!editor) { return; }
+
+    const currencySymbol = currency.substring(0, 1);
+    const chance = new Chance();
+
+    editor.edit(editBuilder => {
+        editor.selections.forEach(s => {
+            editBuilder.insert(s.active, currencySymbol + chance.floating({ min: 0, fixed: 2 }).toLocaleString());
+        });
+    });
+
+    Promise.resolve(true);
 }
