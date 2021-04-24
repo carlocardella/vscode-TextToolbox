@@ -32,8 +32,8 @@ export async function removeEmptyLines(redundantOnly: boolean) {
 /**
  * Removes empty lines from the active document or selection; optionally removes only duplicate empty lines.
  * This function is called by `removeEmptyLines` by Mocha tests
- * @param {string} text
- * @param {boolean} redundantOnly
+ * @param {string} text The text to remove empty lines from
+ * @param {boolean} redundantOnly Removes only duplicate empty lines, or all
  * @async
  * @returns {Promise<string>}
  */
@@ -91,8 +91,8 @@ export async function removeDuplicateLines(openInNewTextEditor: boolean) {
 
 /**
  * Filter the active Selection or Document based on user's input, either regexp (default) or simple string.
- *   - `regexp` behaves like a normal regual expression, returns the result of the RegExp match.
- *   - `string` returns all lines containing the search string, exactly how is typed.
+ *   - `regexp` behaves like a normal regular expression, returns the result of the RegExp match.
+ *   - `string` returns all lines containing    the search string, exactly how is typed.
  * The default search string type (regexp or string) can be configured using `tt.filtersUseRegularExpressions`
  * Default: regexp
  * @param {boolean} openInNewTextEditor

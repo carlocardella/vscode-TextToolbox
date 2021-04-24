@@ -1,8 +1,9 @@
-import { window } from 'vscode';
+import { TextEditorRevealType, window } from 'vscode';
 import { DateTime } from 'luxon';
 import { Chance } from 'chance';
 import { getActiveEditor, getLinesFromSelection } from './helpers';
 import { EOL } from 'os';
+import { LoremIpsum } from 'lorem-ipsum';
 
 
 /**
@@ -301,7 +302,7 @@ export enum padDirection {
 }
 
 /**
- * Ask the user info about the paddind:
+ * Ask the user info about the padding:
  *   - string to use for padding
  *   - length of the resulting string after padding
  * @param {padDirection} padDirection
@@ -326,7 +327,7 @@ export async function padSelection(padDirection: string) {
 export async function padSelectionInternal(padDirection: string, padString: string, length: number) {
     const editor = getActiveEditor();
 
-    editor?.edit(editBulder => {
+    editor?.edit(editBuilder => {
         let lines = getLinesFromSelection(editor);
         let paddedSelection: string;
 
@@ -338,7 +339,7 @@ export async function padSelectionInternal(padDirection: string, padString: stri
                 paddedSelection = line.text.padStart(length, padString);
             }
 
-            editBulder.replace(line.range, paddedSelection);
+            editBuilder.replace(line.range, paddedSelection);
         });
     });
 }
@@ -417,7 +418,7 @@ export async function insertSequence(type: sequenceType): Promise<boolean> {
 }
 
 /**
- * Internal functkon to inserts the sequence of numbers or letters as selected by the user
+ * Internal function to inserts the sequence of numbers or letters as selected by the user
  * @param {sequenceType} type The type of characters to use for the sequence to insert
  * @param {string} startFrom Starting index (for numbers sequence) or letter (for letters sequence) 
  * @param {number} length The length of the sequence to insert
@@ -453,4 +454,61 @@ export async function insertSequanceInternal(type: sequenceType, startFrom: stri
     });
 
     return Promise.resolve(true);
+}
+
+/**
+ * Insert random Lorem Ipsum style text.
+ * @export
+ * @param {string} loremIpsumType Type of text to insert: Paragraphs, Sentences or Words
+ * @param {number} length Length of the text to insert: how many (Paragraphs, Sentences, Words).
+ * @return {*}  {Promise<boolean>}
+ */
+export async function insertLoremIpsumInternal(loremIpsumType: string, length: number): Promise<boolean> {
+    const editor = getActiveEditor();
+    const loremIpsum = new LoremIpsum();
+    var lorem: string;
+
+    switch (loremIpsumType) {
+        case 'Paragraphs':
+            lorem = loremIpsum.generateParagraphs(length);
+            break;
+        case 'Sentences':
+            lorem = loremIpsum.generateSentences(length);
+            break;
+        case 'Words':
+            lorem = loremIpsum.generateWords(length);
+            break;
+        default:
+            break;
+    }
+
+    editor?.edit(editBuilder => {
+        editor.selections.forEach(async s => {
+            editBuilder.insert(s.active, lorem);
+        });
+    });
+
+    return Promise.resolve(true);
+}
+
+/**
+ * Insert random Lorem Ipsum style text.
+ * Choose the type of text to insert (Paragraph, Sentence, Word) and it's length (how many to insert).
+ * @export
+ * @async
+ */
+export async function insertLoremIpsum() {
+    const loremIpsumType = [
+        'Paragraphs',
+        'Sentences',
+        'Words'
+    ];
+    const loremIpsumTypeChoice: string | undefined = await window.showQuickPick(loremIpsumType, { ignoreFocusOut: true });
+    if (!loremIpsumTypeChoice) { return; }
+    const loremIpsumLength: string | undefined = await window.showInputBox({
+        prompt: "Insert length", value: "5", ignoreFocusOut: true
+    });
+    if (!loremIpsumLength) { return; }
+
+    insertLoremIpsumInternal(loremIpsumTypeChoice, Number(loremIpsumLength));
 }

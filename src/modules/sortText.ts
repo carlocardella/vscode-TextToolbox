@@ -1,4 +1,4 @@
-import { createNewEditor, getDocumentTextOrSelection, getSelection, linesToLine, getLinesFromString } from './helpers';
+import { createNewEditor, getDocumentTextOrSelection, getSelection, getLinesFromString, linesToLine } from './helpers';
 import * as os from 'os';
 import { window } from 'vscode';
 import { removeEmptyLinesInternal } from './filterText';
@@ -15,7 +15,6 @@ export const sortDirection = ["ascending", "descending", "reverse"];
  * @async
  */
 export async function askForSortDirection(openInNewTextEditor?: boolean) {
-    // const direction = await window.showQuickPick(Object.keys(sortDirection), {
     const direction = await window.showQuickPick(sortDirection, {
         ignoreFocusOut: true,
         canPickMany: false,
@@ -69,7 +68,7 @@ export async function sortLinesInternal(linesToSort: string[], direction: string
     // remove empty lines, need to convert to a string and the result back to an array
     let line = await linesToLine(linesToSort);
     let lineWithoutEmpty = await removeEmptyLinesInternal(line, false);
-    let lines = lineWithoutEmpty.split("\r");
+    let lines = lineWithoutEmpty.split(os.EOL);
 
     let sortedLines;
     switch (direction) {

@@ -36,6 +36,7 @@ export function activate(context: ExtensionContext) {
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.PadSelectionLeft', () => { InsertText.padSelection(InsertText.padDirection.left); }));
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.InsertLineNumbers', () => { InsertText.insertLineNumbers(); }));
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.InsertSequenceNumbers', () => { InsertText.insertSequence(InsertText.sequenceType.Numbers); }));
+	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.InsertLoremIpsum', () => { InsertText.insertLoremIpsum(); }));
 
 	// filter text
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.RemoveAllEmptyLines', () => { FilterText.removeEmptyLines(false); }));

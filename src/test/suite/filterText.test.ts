@@ -8,7 +8,7 @@ import { ConfigurationTarget, window, workspace, Selection } from 'vscode';
 
 suite("filterText", () => {
     before(() => {
-        console.log('Starting insertText tests');
+        console.log('Starting filterText tests');
     });
     after(async () => {
         await sleep(500);

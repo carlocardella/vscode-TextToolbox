@@ -35,7 +35,37 @@
 		"sort"
 	],
 	"activationEvents": [
-		"*"
+		"onCommand:vscode-texttoolbox.Uppercase",
+		"onCommand:vscode-texttoolbox.Lowercase",
+		"onCommand:vscode-texttoolbox.PascalCase",
+		"onCommand:vscode-texttoolbox.CapitalCase",
+		"onCommand:vscode-texttoolbox.CamelCase",
+		"onCommand:vscode-texttoolbox.ConstantCase",
+		"onCommand:vscode-texttoolbox.DotCase",
+		"onCommand:vscode-texttoolbox.HarderCase",
+		"onCommand:vscode-texttoolbox.NoCase",
+		"onCommand:vscode-texttoolbox.ParamCase",
+		"onCommand:vscode-texttoolbox.SentenceCase",
+		"onCommand:vscode-texttoolbox.SnakeCase",
+		"onCommand:vscode-texttoolbox.InsertGUID",
+		"onCommand:vscode-texttoolbox.InsertGuidAllZeros",
+		"onCommand:vscode-texttoolbox.InsertDate",
+		"onCommand:vscode-texttoolbox.PickRandom",
+		"onCommand:vscode-texttoolbox.PadSelectionRight",
+		"onCommand:vscode-texttoolbox.PadSelectionLeft",
+		"onCommand:vscode-texttoolbox.RemoveAllEmptyLines",
+		"onCommand:vscode-texttoolbox.RemoveRedundantEmptyLines",
+		"onCommand:vscode-texttoolbox.RemoveDuplicateLines",
+		"onCommand:vscode-texttoolbox.RemoveDuplicateLinesResultInNewEditor",
+		"onCommand:vscode-texttoolbox.FilterLinesUsingRegExpOrString",
+		"onCommand:vscode-texttoolbox.SortLinesResultInNewEditor",
+		"onCommand:vscode-texttoolbox.SortLines",
+		"onCommand:vscode-texttoolbox.OpenSelectionInNewEditor",
+		"onCommand:vscode-texttoolbox.InsertLineNumbers",
+		"onCommand:vscode-texttoolbox.InsertSequenceNumbers",
+		"onCommand:vscode-texttoolbox.RemoveControlCharacters",
+		"onCommand:vscode-texttoolbox.TrimLineOrSelection",
+		"onCommand:vscode-texttoolbox.InsertLoremIpsum"
 	],
 	"main": "./dist/extension",
 	"preview": true,
@@ -170,6 +200,10 @@
 			{
 				"command": "vscode-texttoolbox.TrimLineOrSelection",
 				"title": "TT: Trim"
+			},
+			{
+				"command": "vscode-texttoolbox.InsertLoremIpsum",
+				"title": "TT: Insert Lorem Ipsum"
 			}
 		],
 		"configuration": [
@@ -261,6 +295,7 @@
 		"eslint": "^6.8.0",
 		"glob": "^7.1.6",
 		"guid": "0.0.12",
+		"lorem-ipsum": "^2.0.3",
 		"mocha": "^7.2.0",
 		"mocha-explorer-launcher-scripts": "^0.3.0",
 		"node-uuid": "^1.4.8",

@@ -1,7 +1,7 @@
 import * as assert from 'assert';
 import * as guid from 'guid';
 import { sleep, createNewEditor, selectAllText, closeTextEditor, getDocumentTextOrSelection, getActiveEditor, getLinesFromSelection } from '../../modules/helpers';
-import { insertGUID, insertDateTimeInternal, padDirection, padSelectionInternal, insertLineNumbersInternal, sequenceType, insertSequanceInternal } from '../../modules/insertText';
+import { insertGUID, insertDateTimeInternal, padDirection, padSelectionInternal, insertLineNumbersInternal, sequenceType, insertSequanceInternal as insertSequenceInternal, insertLoremIpsumInternal } from '../../modules/insertText';
 import { before, after, describe } from 'mocha';
 import { DateTime } from 'luxon';
 import { EOL } from 'os';
@@ -46,7 +46,7 @@ suite('insertText', () => {
                     assert.ok(guid.isGuid(g), `Value "${g}" is not a valid GUID`);
                 });
             });
-            
+
             test('Insert GUID all zeros', async () => {
                 await createNewEditor();
                 insertGUID(true);
@@ -217,12 +217,43 @@ suite('insertText', () => {
                 tests.forEach(t => {
                     test(`Insert a number sequence starting from ${t.startFrom} for ${t.length} lines`, async () => {
                         await createNewEditor();
-                        await insertSequanceInternal(t.type, t.startFrom, t.length, t.direction);
+                        await insertSequenceInternal(t.type, t.startFrom, t.length, t.direction);
                         await sleep(500);
 
                         let text = String(getDocumentTextOrSelection());
                         assert.deepStrictEqual(text, t.expected);
                     });
+                });
+            });
+        });
+
+        describe("Insert Lorem Ipsum", () => {
+            let loremTypes = [
+                { type: "Paragraphs" },
+                { type: "Sentences" },
+                { type: "Words" }
+            ];
+
+            loremTypes.forEach(l => {
+                test(`Insert Lorem Ipsum ${l.type}`, async () => {
+                    await createNewEditor();
+                    await insertLoremIpsumInternal(l.type, 5);
+                    await sleep(500);
+
+                    let text = String(getDocumentTextOrSelection());
+                    switch (l.type) {
+                        case 'Paragraphs':
+                            assert.deepStrictEqual(text.split(EOL).length, 5);
+                            break;
+                        case 'Sentences':
+                            assert.deepStrictEqual(text.split('. ').length, 5);
+                            break;
+                        case 'Words':
+                            assert.deepStrictEqual(text.split(' ').length, 5);
+                            break;
+                        default:
+                            assert.fail('Invalid Lorem Ipsum paragraph type');
+                    }
                 });
             });
         });

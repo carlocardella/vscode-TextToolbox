@@ -20,14 +20,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 * Align:
   * to cursor
   * as table
-  * improve csv alignment, reduce empty space where possible
+  * align csv
 * Filtering
   * improve `Filter lines, result in new editor`: regex search only of the search string begins with `/`, otherwise default to text search (return the entire line containing the match)
   * add original line numbers when opening a selection/filter in a new editor
   * count line occurrences
   * add config values for regex global switches, default /gi
-* Sorting
-  * align csv
 * Split
   * split based on delimiter
   * split selection
@@ -41,9 +39,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
     * DateTime `round-trip` format: https://docs.microsoft.com/en-us/dotnet/standard/base-types/standard-date-and-time-format-strings#Roundtrip
     * improve command picker, show date format preview
     * add option to use times 12/24 formats
-  * Lorem Ipsum
-    * other famous excerpts, e.g. The Divine Comedy, Hamlet etc...
-    * excerpts in languages other than English
+  * famous excerpts, e.g. The Divine Comedy, Hamlet etc...
+  * excerpts in languages other than English
   * randomByte
     * min
     * max
@@ -69,6 +66,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
   * allow to update position without reloading the entire window
 
 ## Log
+
+## [0.13.0] - @todo
+
+### Changed
+
+* The extension is no longer loaded at startup
+
+### Added
+
+* Insert `Lorem Ipsum` Paragraphs, Sentences or Words
+
+### Fixed
+
+* Fixed sort selection on Mac and Linux
 
 ## [0.12.0] - 2021-04-18
 
