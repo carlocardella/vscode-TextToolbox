@@ -184,8 +184,18 @@ export async function pickRandom() {
         'PARAGRAPH',
         'HASH'
     ];
-    const selectedRandomType: string | undefined = await window.showQuickPick(randomTypeToInsert, { ignoreFocusOut: true });
-    if (selectedRandomType) { await insertRandomInternal(selectedRandomType); }
+
+    let quickPickItems: QuickPickItem[] = [];
+    randomTypeToInsert.forEach(async item => {
+        let qp: QuickPickItem = {
+            label: item,
+            description: await getRandomQuickPickItemDescription(item, true),
+        };
+        quickPickItems.push(qp);
+    });
+
+    const selectedRandomType = await window.showQuickPick(quickPickItems, { ignoreFocusOut: true });
+    if (selectedRandomType) { insertRandomInternal(selectedRandomType.label); }
 }
 
 /**
@@ -193,32 +203,50 @@ export async function pickRandom() {
  * @param {string | undefined} selectedRandomType User selected choice of random string to insert
  * @async
  */
-export async function insertRandomInternal(selectedRandomType: string | undefined) {
+export async function getRandomQuickPickItemDescription(selectedRandomType: string, picker?: boolean): Promise<string> {
     const chance = new Chance();
-    const editor = getActiveEditor();
-    let text: string | number;
+    let text: string = "";
 
     // calls to showQuickPick or showInputBox cannot happen inside editor.selections.forEach. 
     // I get a "Promised not resolved within 1 second" error on editBuilder.insert()
+    // https://github.com/microsoft/vscode/issues/87871
     let gender: string | undefined;
     let numberOfSentences: string | undefined;
     let hashLength: string | undefined;
     let colorType: string | undefined;
     if (selectedRandomType === "PERSON_NAME") {
-        gender = await window.showQuickPick(['random', 'male', 'female'], { ignoreFocusOut: true });
+        if (picker) {
+            gender = 'random';
+        }
+        else {
+            gender = await window.showQuickPick(['random', 'male', 'female'], { ignoreFocusOut: true, });
+        }
     }
     if (selectedRandomType === "COLOR") {
+        if (picker) {
+            colorType = 'hex';
+        }
+        else {
             colorType = await window.showQuickPick(['hex', 'rgb'], { ignoreFocusOut: true });
         }
+    }
     if (selectedRandomType === "PARAGRAPH") {
+        if (picker) {
+            numberOfSentences = "1";
+        }
+        else {
             numberOfSentences = await window.showInputBox({ prompt: 'How many sentences?', value: '5', ignoreFocusOut: true });
         }
+    }
     if (selectedRandomType === "HASH") {
+        if (picker) {
+            hashLength = "32";
+        }
+        else {
             hashLength = await window.showInputBox({ prompt: 'Enter length', value: '32', ignoreFocusOut: true });
         }
+    }
 
-    editor?.edit(editBuilder => {
-        editor?.selections.forEach(async s => {
     switch (selectedRandomType) {
         case 'IPV4':
             text = chance.ip();
@@ -227,7 +255,7 @@ export async function insertRandomInternal(selectedRandomType: string | undefine
             text = chance.ipv6();
             break;
         case 'NUMBER':
-            text = chance.natural();
+            text = chance.natural().toString();
             break;
         case 'PERSON_NAME':
             // TODO: add optional nationality
@@ -312,9 +340,24 @@ export async function insertRandomInternal(selectedRandomType: string | undefine
             break;
     }
 
-    editBuilder.insert(s.active, String(text));
-});
-});
+    return Promise.resolve(text);
+}
+
+/**
+ * Insert a Random string based on user's selection
+ * @export
+ * @param {string} randomType
+ */
+export async function insertRandomInternal(randomType: string) {
+    const editor = getActiveEditor();
+
+    await getRandomQuickPickItemDescription(randomType).then(_ => {
+        editor?.edit(async editBuilder => {
+            editor.selections.forEach(s => {
+                editBuilder.insert(s.active, _);
+            });
+        });
+    });
 }
 
 /**
