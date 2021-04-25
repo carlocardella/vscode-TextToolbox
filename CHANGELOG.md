@@ -60,7 +60,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## Log
 
-## [0.13.0] - @todo
+## [0.13.0] - 2021-04-25
 
 ### Changed
 
