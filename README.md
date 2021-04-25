@@ -43,6 +43,8 @@ Please open an issue to leave a comment, report a bug, request a feature etc... 
   * Lorem ipsum dolor sit amet => lorem_ipsum_dolor_sit_amet
 * Insert GUID
   * 14854fc2-f782-5136-aebb-a121b9ba6af1
+* Insert GUID all zeros
+  * 00000000-0000-0000-0000-000000000000
 * Insert Date
   * DATE_SHORT => 8/25/2020
   * TIME_SIMPLE => 5:34 PM
@@ -91,6 +93,19 @@ Please open an issue to leave a comment, report a bug, request a feature etc... 
   * TIMEZONE => Kamchatka Standard Time
   * PARAGRAPH => Cij wam lijoso fa molah il nasiskil ho andot akbuh uku zikahek. Ji balsiffe puzmaano nuug bofevu ra tehar heuwa zorjul hej na heci aka webo lorresu uwage uhe nirsiam.
   * HASH => 61960319307b5f8d298141627
+* Insert Lorem Ipsum
+  * Paragraphs
+  * Sentences
+  * Words
+* Insert random number
+* Insert random currency amount
+  * $ - US Dollar
+  * € - Euro
+  * £ - British Pound
+  * ¥ - Japanese Yen
+  * ¥ - Chinese Yuan
+  * ₨ - Indian Rupee
+  * $ - Mexican Peso
 * Pad Selection Right
 * Pad Selection Left
 * Remove all empty lines
@@ -112,11 +127,11 @@ Please open an issue to leave a comment, report a bug, request a feature etc... 
 * Insert line numbers
 * Insert numbers sequence
 * Highlight control characters
-  * By default control characters are highlighted with a red box but color and border shape can be customised through `tt.decorateControlCharacters`
+  * By default control characters are highlighted with a red box but color and border shape can be customized through `tt.decorateControlCharacters`
 * Remove control characters
   * By default control characters are replaced with an empty string but this can be changed through `tt.replaceControlCharactersWith`.
   * Removes control characters from the current selection(s) or from the entire document if no text is selected
-* Align text to a delimiter (can be used to align CSV elements)
+<!-- * Align text to a delimiter (can be used to align CSV elements)
   * Align left (default): inserts padding spaces after the separator
     ```
     London,    Paris,     Rome      
@@ -126,7 +141,7 @@ Please open an issue to leave a comment, report a bug, request a feature etc... 
     ```
     London    ,Paris     ,Rome      
     Tokyo     ,Singapore ,Syndey    
-    ```
+    ``` -->
 
 ### Thanks to:
 
