@@ -1,7 +1,7 @@
 import * as assert from 'assert';
 import * as guid from 'guid';
 import { sleep, createNewEditor, selectAllText, closeTextEditor, getDocumentTextOrSelection, getActiveEditor, getLinesFromSelection } from '../../modules/helpers';
-import { insertGUID, insertDateTimeInternal, padDirection, padSelectionInternal, insertLineNumbersInternal, sequenceType, insertSequenceInternal as insertSequenceInternal, insertLoremIpsumInternal, insertNumber, insertCurrencyInternal } from '../../modules/insertText';
+import { insertGUID, insertDateTimeInternal, padDirection, padSelectionInternal, insertLineNumbersInternal, sequenceType, insertSequenceInternal as insertSequenceInternal, insertLoremIpsumInternal, insertCurrencyInternal } from '../../modules/insertText';
 import { before, after, describe } from 'mocha';
 import { DateTime } from 'luxon';
 import { EOL } from 'os';
