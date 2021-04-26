@@ -99,13 +99,18 @@ Please open an issue to leave a comment, report a bug, request a feature etc... 
   * Words
 * Insert random number
 * Insert random currency amount
-  * $ - US Dollar
-  * € - Euro
-  * £ - British Pound
-  * ¥ - Japanese Yen
-  * ¥ - Chinese Yuan
-  * ₨ - Indian Rupee
-  * $ - Mexican Peso
+  * US Dollar
+  * Euro
+  * British Pound
+  * Japanese Yen
+  * Chinese Yuan
+  * Indian Rupee
+  * Mexican Peso
+  * New Israeli Shequel
+  * Bitcoin
+  * South Korean Won
+  * South African Rand
+  * Swiss Franc
 * Pad Selection Right
 * Pad Selection Left
 * Remove all empty lines

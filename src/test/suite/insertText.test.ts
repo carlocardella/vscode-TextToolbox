@@ -258,19 +258,6 @@ suite('insertText', () => {
             });
         });
 
-        describe('Insert Number', () => {
-            test('Insert a random Integer', async () => {
-                await createNewEditor();
-                await insertNumber();
-                await sleep(500);
-
-                const newText = getDocumentTextOrSelection();
-                assert.doesNotThrow(() => {
-                    Number.parseInt(newText!);
-                });
-            });
-        });
-
         describe('Insert currency', () => {
             const currencies = [
                 { currency: "US Dollar" },

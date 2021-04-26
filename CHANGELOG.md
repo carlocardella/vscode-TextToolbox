@@ -67,6 +67,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 * Updated the `Insert Random` picker, show a sample string based on the selection
 * Update the `Insert Currency` picker, show a sample string based on the selection
 
+### Added
+
+* `Insert Currency`
+  * Added `New Israeli Shequel`
+  * Added `Bitcoin`
+  * Added `South Korean Won`
+  * Added `South African Rand`
+  * Added `Swiss Franc`
+
 ## [0.13.0] - 2021-04-25
 
 ### Changed

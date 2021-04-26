@@ -2,7 +2,7 @@
 	"name": "vscode-texttoolbox",
 	"displayName": "Text Toolbox",
 	"description": "Collection of tools for text manipulation, filtering, sorting etc...",
-	"version": "0.13.0",
+	"version": "1.0.0",
 	"publisher": "carlocardella",
 	"author": {
 		"name": "Carlo Cardella",
@@ -69,7 +69,7 @@
 		"onCommand:vscode-texttoolbox.InsertLoremIpsum"
 	],
 	"main": "./dist/extension",
-	"preview": true,
+	"preview": false,
 	"badges": [],
 	"icon": "text_icon_regular.png",
 	"repository": {
