@@ -273,13 +273,19 @@ suite('insertText', () => {
 
         describe('Insert currency', () => {
             const currencies = [
-                { currency: "$ - US Dollar" },
-                { currency: "€ - Euro" },
-                { currency: "£ - British Pound" },
-                { currency: "¥ - Japanese Yen" },
-                { currency: "¥ - Chinese Yuan" },
-                { currency: "₨ - Indian Rupee" },
-                { currency: "$ - Mexican Peso" }
+                { currency: "US Dollar" },
+                { currency: "Euro" },
+                { currency: "British Pound" },
+                { currency: "Japanese Yen" },
+                { currency: "Chinese Yuan" },
+                { currency: "Indian Rupee" },
+                { currency: "Mexican Peso" },
+                { currency: "Russian Ruble" },
+                { currency: "New Israeli Shequel" },
+                { currency: "Bitcoin" },
+                { currency: "South Korean Won" },
+                { currency: "South African Rand" },
+                { currency: "Swiss Franc" }
             ];
 
             currencies.forEach(c => {

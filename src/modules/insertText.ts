@@ -1,9 +1,10 @@
 import { FileChangeType, QuickPickItem, UriHandler, window } from 'vscode';
 import { DateTime } from 'luxon';
 import { Chance } from 'chance';
-import { getActiveEditor, getLinesFromSelection } from './helpers';
+import { getActiveEditor, getLinesFromSelection, sleep } from './helpers';
 import { EOL } from 'os';
 import { LoremIpsum } from 'lorem-ipsum';
+import { removeControlCharacters } from './controlCharacters';
 
 
 /**
@@ -581,25 +582,6 @@ export async function insertLoremIpsum() {
 }
 
 /**
- * Insert a random Integer
- * @export
- * @return {*}  {(Promise<boolean | undefined>)}
- */
-export async function insertNumber(): Promise<boolean | undefined> {
-    const editor = getActiveEditor();
-    if (!editor) { return; }
-
-    const chance = new Chance();
-    editor.edit(editBuilder => {
-        editor.selections.forEach(async s => {
-            editBuilder.insert(s.active, chance.integer().toString());
-        });
-    });
-
-    Promise.resolve(true);
-}
-
-/**
  * Insert a random Currency value
  * @export
  * @return {*} 
@@ -609,39 +591,104 @@ export async function insertCurrency() {
     if (!editor) { return; }
 
     const currencies = [
-        "$ - US Dollar",
-        "€ - Euro",
-        "£ - British Pound",
-        "¥ - Japanese Yen",
-        "¥ - Chinese Yuan",
-        "₨ - Indian Rupee",
-        "$ - Mexican Peso"
+        "US Dollar",
+        "Euro",
+        "British Pound",
+        "Japanese Yen",
+        "Chinese Yuan",
+        "Indian Rupee",
+        "Mexican Peso",
+        "Russian Ruble",
+        "New Israeli Shequel",
+        "Bitcoin",
+        "South Korean Won",
+        "South African Rand",
+        "Swiss Franc"
     ];
 
-    const currency: string | undefined = await window.showQuickPick(currencies, { ignoreFocusOut: true });
-    if (!currency) { return; }
+    let quickPickItems: QuickPickItem[] = [];
+    currencies.forEach(item => {
+        let qp: QuickPickItem = {
+            label: item,
+            description: getCurrencyQuickPickItemDescription(item),
+        };
+        quickPickItems.push(qp);
+    });
 
-    insertCurrencyInternal(currency);
+    const selectedFormat = await window.showQuickPick(quickPickItems, { ignoreFocusOut: true });
+
+    if (selectedFormat) { await insertCurrencyInternal(selectedFormat.label); }
+}
+
+export function getCurrencyQuickPickItemDescription(item: string): string {
+    const chance = new Chance();
+    let number = chance.floating({ min: 0, fixed: 2 });
+    let currencyValue: string = "";
+
+    switch (item) {
+        case 'US Dollar':
+            currencyValue = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2, useGrouping: true }).format(number);
+            break;
+        case 'Euro':
+            currencyValue = new Intl.NumberFormat('it-IT', { style: 'currency', currency: 'EUR', maximumFractionDigits: 2, useGrouping: true }).format(number);
+            break;
+        case 'British Pound':
+            currencyValue = new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP', maximumFractionDigits: 2, useGrouping: true }).format(number);
+            break;
+        case 'Japanese Yen':
+            currencyValue = new Intl.NumberFormat('jp-JP', { style: 'currency', currency: 'JPY', maximumFractionDigits: 2, useGrouping: true }).format(number);
+            break;
+        case 'Chinese Yuan':
+            currencyValue = new Intl.NumberFormat('zh-CN', { style: 'currency', currency: 'CNY', maximumFractionDigits: 2, useGrouping: true }).format(number);
+            break;
+        case 'Indian Rupee':
+            currencyValue = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 2, useGrouping: true }).format(number);
+            break;
+        case 'Mexican Peso':
+            currencyValue = new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN', maximumFractionDigits: 2, useGrouping: true }).format(number);
+            break;
+        case 'Russian Ruble':
+            currencyValue = new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB', maximumFractionDigits: 2, useGrouping: true }).format(number);
+            break;
+        case 'New Israeli Shequel':
+            currencyValue = new Intl.NumberFormat('he-HE', { style: 'currency', currency: 'ILS', maximumFractionDigits: 2, useGrouping: true }).format(number);
+            break;
+        case 'Bitcoin':
+            currencyValue = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'BTC', maximumFractionDigits: 2, useGrouping: true }).format(number);
+            break;
+        case 'South Korean Won':
+            currencyValue = new Intl.NumberFormat('ko-KO', { style: 'currency', currency: 'KRW', maximumFractionDigits: 2, useGrouping: true }).format(number);
+            break;
+        case 'South African Rand':
+            currencyValue = new Intl.NumberFormat('en-ZA', { style: 'currency', currency: 'ZAR', maximumFractionDigits: 2, useGrouping: true }).format(number);
+            break;
+        case 'Swiss Franc':
+            currencyValue = new Intl.NumberFormat('de-CH', { style: 'currency', currency: 'CHF', maximumFractionDigits: 2, useGrouping: true }).format(number);
+            break;
+        default:
+            break;
+    }
+
+    return currencyValue;
 }
 
 /**
  * Insert a random currency value
  * @export
- * @param {string} currency
+ * @param {string} currency The currency to insert
  * @return {*}  {(Promise<boolean | undefined>)}
  */
 export async function insertCurrencyInternal(currency: string): Promise<boolean | undefined> {
     const editor = getActiveEditor();
     if (!editor) { return; }
 
-    const currencySymbol = currency.substring(0, 1);
-    const chance = new Chance();
-
     editor.edit(editBuilder => {
         editor.selections.forEach(s => {
-            editBuilder.insert(s.active, currencySymbol + chance.floating({ min: 0, fixed: 2 }).toLocaleString());
+            editBuilder.insert(s.active, getCurrencyQuickPickItemDescription(currency));
         });
     });
+
+    await removeControlCharacters(editor, " ");
 
     Promise.resolve(true);
 }

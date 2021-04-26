@@ -38,7 +38,6 @@ export function activate(context: ExtensionContext) {
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.InsertLineNumbers', () => { InsertText.insertLineNumbers(); }));
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.InsertSequenceNumbers', () => { InsertText.insertSequence(InsertText.sequenceType.Numbers); }));
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.InsertLoremIpsum', () => { InsertText.insertLoremIpsum(); }));
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.InsertNumber', () => { InsertText.insertNumber(); }));
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.InsertCurrency', () => { InsertText.insertCurrency(); }));
 
 	// filter text

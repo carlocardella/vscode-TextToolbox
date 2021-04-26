@@ -105,9 +105,9 @@ let textEditorDecorationType: TextEditorDecorationType;
  */
 export async function decorateControlCharacters(editor: TextEditor, configurationChanged?: boolean) {
     if (configurationChanged || !textEditorDecorationType) {
-        // update textEditorDecorationType only if the value is empty or if tt.decorateControlCharacters has changeed;
+        // update textEditorDecorationType only if the value is empty or if tt.decorateControlCharacters has changed;
         // this is to properly maintain/update/remove existing decorations.
-        // If textEditorDecorationType is updated unnecessarily, the recorations become all confused
+        // If textEditorDecorationType is updated unnecessarily, the decorations become all confused
         const decorationRenderOptions = workspace.getConfiguration("tt").decorateControlCharacters;
         textEditorDecorationType = await newDecorator(decorationRenderOptions);
     }
@@ -119,11 +119,13 @@ export async function decorateControlCharacters(editor: TextEditor, configuratio
  * @param {TextEditor} [editor] The active text editor
  * @async
  */
-export async function removeControlCharacters(editor?: TextEditor) {
+export async function removeControlCharacters(editor?: TextEditor, replaceControlCharactersWith?: any) {
     if (!editor) { editor = getActiveEditor(); }
     if (!editor) { return; }
-    const replaceControlCharactersWith = workspace.getConfiguration("tt").replaceControlCharactersWith;
-
+    if (!replaceControlCharactersWith) {
+        replaceControlCharactersWith = workspace.getConfiguration("tt").replaceControlCharactersWith;
+    }
+    
     let selections = await getSelections(editor);
     let text: string | undefined;
     let newText: string;

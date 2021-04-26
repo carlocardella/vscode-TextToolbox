@@ -65,7 +65,6 @@
 		"onCommand:vscode-texttoolbox.InsertSequenceNumbers",
 		"onCommand:vscode-texttoolbox.RemoveControlCharacters",
 		"onCommand:vscode-texttoolbox.TrimLineOrSelection",
-		"onCommand:vscode-texttoolbox.InsertNumber",
 		"onCommand:vscode-texttoolbox.InsertCurrency",
 		"onCommand:vscode-texttoolbox.InsertLoremIpsum"
 	],
@@ -202,10 +201,6 @@
 			{
 				"command": "vscode-texttoolbox.TrimLineOrSelection",
 				"title": "TT: Trim"
-			},
-			{
-				"command": "vscode-texttoolbox.InsertNumber",
-				"title": "TT: Insert Number"
 			},
 			{
 				"command": "vscode-texttoolbox.InsertCurrency",
