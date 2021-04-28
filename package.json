@@ -276,13 +276,8 @@
 		]
 	},
 	"scripts": {
-		"compile": "tsc -p ./",
-		"lint": "eslint src --ext ts",
-		"watch": "tsc -watch -p ./",
-		"pretest": "npm run compile && npm run lint",
-		"test": "node ./out/test/runTest.js",
 		"vscode:prepublish": "webpack --mode production",
-		"development": "webpack --mode development",
+		"webpack": "webpack --mode development",
 		"webpack-dev": "webpack --mode development --watch",
 		"test-compile": "tsc -p ./"
 	},
@@ -312,7 +307,7 @@
 		"mocha-explorer-launcher-scripts": "^0.3.0",
 		"node-uuid": "^1.4.8",
 		"pad": "^3.2.0",
-		"ts-loader": "^8.1.0",
+		"ts-loader": "^8.2.0",
 		"ts-node": "^9.0.0",
 		"typescript": "^3.8.3",
 		"uuid-lib": "0.0.6",
