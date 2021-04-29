@@ -23,7 +23,7 @@ suite("textManipulation", () => {
             const expected = `Hutruaka pouzjan pu${eol}elnordu ce${eol}jan gabajo${eol}genlosif fobavos vucozu jesidjo${eol}os ijme koige fomej zuce ruv juusuje${eol}`;
 
             await createNewEditor(text);
-            
+
             await trimLineOrSelection();
             await sleep(500);
             const editor = getActiveEditor();
@@ -50,5 +50,11 @@ suite("textManipulation", () => {
 
             assert.deepStrictEqual(trimmedText, expected);
         });
+    });
+
+    describe("Split Selection", () => {
+        const tests = [
+            { description: "Split one line by comma", delimiter: ",", text: "", expected: "", openInNewEditor: false }
+        ];
     });
 });

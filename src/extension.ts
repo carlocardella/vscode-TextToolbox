@@ -8,7 +8,6 @@ import * as ControlCharacters from './modules/controlCharacters';
 import * as Helpers from './modules/helpers';
 import * as TextManipulation from './modules/textManipulation';
 // import * as AlignText from './modules/alignText';
-import { getActiveEditor } from './modules/helpers';
 
 
 export function activate(context: ExtensionContext) {
@@ -54,6 +53,7 @@ export function activate(context: ExtensionContext) {
 
 	// text manipulations
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.TrimLineOrSelection', () => { TextManipulation.trimLineOrSelection(); }));
+	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.SplitSelection', () => { TextManipulation.splitSelection(false); }));
 
 	// align
 	// context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.AlignToSeparator', () => { AlignText.alignToSeparator(); }));

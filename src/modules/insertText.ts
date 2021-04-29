@@ -599,7 +599,7 @@ export async function insertCurrency() {
         "Indian Rupee",
         "Mexican Peso",
         "Russian Ruble",
-        "New Israeli Shequel",
+        "Israeli New Shequel",
         "Bitcoin",
         "South Korean Won",
         "South African Rand",
@@ -650,7 +650,7 @@ export function getCurrencyQuickPickItemDescription(item: string): string {
         case 'Russian Ruble':
             currencyValue = new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB', maximumFractionDigits: 2, useGrouping: true }).format(number);
             break;
-        case 'New Israeli Shequel':
+        case 'Israeli New Shequel':
             currencyValue = new Intl.NumberFormat('he-HE', { style: 'currency', currency: 'ILS', maximumFractionDigits: 2, useGrouping: true }).format(number);
             break;
         case 'Bitcoin':

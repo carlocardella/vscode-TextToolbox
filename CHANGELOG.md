@@ -59,6 +59,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## Log
 
+## [version] - 2021-04-26 @todo
+
+### Added
+
+* Split selection based on delimiter
+
+### Changed
+
+* Improved the `Sort` commands, remove empty lines from the sorted output
+
 ## [version] - 2021-04-25
 
 ### Changed
@@ -70,7 +80,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ### Added
 
 * `Insert Currency`
-  * Added `New Israeli Shequel`
+  * Added `Israeli New Shequel`
   * Added `Bitcoin`
   * Added `South Korean Won`
   * Added `South African Rand`

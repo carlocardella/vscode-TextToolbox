@@ -59,7 +59,7 @@ suite('sortText', () => {
             test("Sort selection " + t.sortDirection + (t.openInNewTextEditor ? " in new editor" : ""), async () => {
                 const editor = await createNewEditor(t.textUnsorted);
                 let selections: Selection[] = [];
-                selections.push(new Selection(9, 0, 12, 6));
+                selections.push(new Selection(9, 0, 12, 5));
                 editor!.selections = selections;
                 await sortLines(t.sortDirection, t.openInNewTextEditor);
                 await sleep(500);

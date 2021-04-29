@@ -66,6 +66,7 @@
 		"onCommand:vscode-texttoolbox.RemoveControlCharacters",
 		"onCommand:vscode-texttoolbox.TrimLineOrSelection",
 		"onCommand:vscode-texttoolbox.InsertCurrency",
+		"onCommand:vscode-texttoolbox.SplitSelection",
 		"onCommand:vscode-texttoolbox.InsertLoremIpsum"
 	],
 	"main": "./dist/extension",
@@ -205,6 +206,10 @@
 			{
 				"command": "vscode-texttoolbox.InsertCurrency",
 				"title": "TT: Insert Currency"
+			},
+			{
+				"command": "vscode-texttoolbox.SplitSelection",
+				"title": "TT: Split Selection"
 			},
 			{
 				"command": "vscode-texttoolbox.InsertLoremIpsum",
