@@ -109,7 +109,7 @@ suite('insertText', () => {
                 { padDirection: padDirection.left, padString: " ", lenght: 10, expected: "          " }
             ];
             tests.forEach(function (t) {
-                test('Padding on empty selection ' + t.padDirection, async () => {
+                test(`Padding ${t.padDirection} with "${t.padString}" on empty selection`, async () => {
                     await createNewEditor();
                     await padSelectionInternal(t.padDirection, t.padString, t.lenght);
                     await sleep(500);
@@ -261,7 +261,7 @@ suite('insertText', () => {
         describe('Insert currency', () => {
             const currencies = [
                 { currency: "US Dollar", symbol: "$" },
-                { currency: "Euro", synbol: "€" },
+                { currency: "Euro", symbol: "€" },
                 { currency: "British Pound", symbol: "£" },
                 { currency: "Japanese Yen", symbol: "¥" },
                 { currency: "Chinese Yuan", symbol: "¥" },
@@ -283,14 +283,12 @@ suite('insertText', () => {
 
                     const newText = getDocumentTextOrSelection();
 
-                    assert.deepStrictEqual(
-                        newText?.substring(0, 1),
-                        c.currency.substring(0, 1)
-                    );
-
-                    assert.doesNotThrow(() => {
-                        Number.parseFloat(newText.substring(1));
-                    });
+                    let symbolPosition = newText?.indexOf(c.symbol)!;
+                    assert.ok(symbolPosition >= 0, "Could not find currency symbol in output string");
+                    
+                    let currencyValue = newText?.replace(c.symbol!, "");
+                    let isValidAmount = Number.parseFloat(currencyValue!) ? true : false;
+                    assert.ok(isValidAmount === true, "Invalid currency amount");
                 });
             });
         });
