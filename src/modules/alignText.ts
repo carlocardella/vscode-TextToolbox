@@ -87,19 +87,19 @@ function padElement(elements: string[], separator: string, length: number): stri
     let newLineText: string = "";
     let newText: string[] = [];
     let joinSeparator: string = "";
-    let alignment = workspace.getConfiguration("tt").textElementAlignment;
+    // let alignment = workspace.getConfiguration("tt").textElementAlignment;
 
     let elementsLength = elements.length;
     let i = 0;
     elements.forEach(element => {
         i++;
         newLineText = element;
-        if (alignment === "left" && i < elementsLength) { newLineText = newLineText + separator; };
+        if (i < elementsLength) { newLineText = newLineText + separator; };
         newLineText = newLineText.padEnd(length + 1, " ");
         newText.push(newLineText);
     });
 
-    alignment === "right" ? joinSeparator = separator : joinSeparator = " ";
+    joinSeparator = " ";
     return newText.join(joinSeparator);
 }
 
