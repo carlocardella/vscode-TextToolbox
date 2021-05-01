@@ -1,10 +1,10 @@
 import { FileChangeType, QuickPickItem, UriHandler, window } from 'vscode';
 import { DateTime } from 'luxon';
 import { Chance } from 'chance';
-import { getActiveEditor, getLinesFromSelection, sleep } from './helpers';
+import { getActiveEditor, getLinesFromSelection, sleep, getTextFromSelection } from './helpers';
 import { EOL } from 'os';
 import { LoremIpsum } from 'lorem-ipsum';
-import { removeControlCharacters } from './controlCharacters';
+import { removeControlCharacters, removeControlCharactersFromString } from './controlCharacters';
 
 
 /**
@@ -617,7 +617,7 @@ export async function insertCurrency() {
 
     const selectedFormat = await window.showQuickPick(quickPickItems, { ignoreFocusOut: true });
 
-    if (selectedFormat) { await insertCurrencyInternal(selectedFormat.label); }
+    if (selectedFormat) { await insertCurrencyInternal(selectedFormat.label); };
 }
 
 export function getCurrencyQuickPickItemDescription(item: string): string {
@@ -687,8 +687,6 @@ export async function insertCurrencyInternal(currency: string): Promise<boolean 
             editBuilder.insert(s.active, getCurrencyQuickPickItemDescription(currency));
         });
     });
-
-    await removeControlCharacters(editor, " ");
 
     Promise.resolve(true);
 }

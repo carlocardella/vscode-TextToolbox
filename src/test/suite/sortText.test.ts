@@ -22,9 +22,9 @@ suite('sortText', () => {
         const expectedAscending = `Alabama${eol}Arkansas${eol}Connecticut${eol}Delaware${eol}New Jersey${eol}New York${eol}Pennsylvania${eol}Rhode Island${eol}Texas${eol}Washington`;
         const expectedDescending = `Washington${eol}Texas${eol}Rhode Island${eol}Pennsylvania${eol}New York${eol}New Jersey${eol}Delaware${eol}Connecticut${eol}Arkansas${eol}Alabama`;
         const expectedReverse = `Texas${eol}New York${eol}Washington${eol}New Jersey${eol}Arkansas${eol}Alabama${eol}Delaware${eol}Rhode Island${eol}Pennsylvania${eol}Connecticut`;
-        const selectionExpectedAscending = `Connecticut${eol}Pennsylvania${eol}Rhode Island${eol}${eol}${eol}Delaware${eol}Alabama${eol}Arkansas${eol}${eol}New Jersey${eol}New York${eol}Texas${eol}Washington${eol}${eol}`;
-        const selectionExpectedDescending = `Connecticut${eol}Pennsylvania${eol}Rhode Island${eol}${eol}${eol}Delaware${eol}Alabama${eol}Arkansas${eol}${eol}Washington${eol}Texas${eol}New York${eol}New Jersey${eol}${eol}`;
-        const selectionExpectedReverse = `Connecticut${eol}Pennsylvania${eol}Rhode Island${eol}${eol}${eol}Delaware${eol}Alabama${eol}Arkansas${eol}${eol}Texas${eol}New York${eol}Washington${eol}New Jersey${eol}${eol}`;
+        const selectionExpectedAscending = `New Jersey${eol}New York${eol}Texas${eol}Washington`;
+        const selectionExpectedDescending = `Washington${eol}Texas${eol}New York${eol}New Jersey`;
+        const selectionExpectedReverse = `Texas${eol}New York${eol}Washington${eol}New Jersey`;
 
         let tests = [
             { sortDirection: "ascending", textUnsorted: textUnsorted, expected: expectedAscending, openInNewTextEditor: false },
