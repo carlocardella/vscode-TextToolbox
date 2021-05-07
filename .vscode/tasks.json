@@ -2,24 +2,32 @@
 // for the documentation about the tasks.json format
 {
 	"version": "2.0.0",
-	"tasks": [{
-		"type": "npm",
-		"script": "webpack-dev",
-		"runOptions": {
-			"runOn": "folderOpen"
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "webpack-dev",
+			"runOptions": {
+				"runOn": "folderOpen"
+			},
+			"isBackground": true,
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "shared",
+				"showReuseMessage": true,
+				"clear": false
+			},
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
 		},
-		"isBackground": true,
-		"presentation": {
-			"echo": true,
-			"reveal": "always",
-			"focus": false,
-			"panel": "shared",
-			"showReuseMessage": true,
-			"clear": false
-		},
-		"group": {
-			"kind": "build",
-			"isDefault": true
+		{
+			"type": "npm",
+			"script": "unit-tests",
+			"problemMatcher": "$tsc-watch",
+			"isBackground": true
 		}
-	}]
+	]
 }

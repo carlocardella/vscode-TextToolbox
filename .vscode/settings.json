@@ -25,16 +25,13 @@
         "titleBar.inactiveForeground": "#e7e7e799"
     },
     "peacock.color": "#57455d",
-    "favorites.sortDirection": "ASC",
-
+    "cSpell.words": [
+        "carlocardella",
+        "luxon",
+        "texttoolbox"
+    ],
     // MOCHA EXPLORER
-    "mochaExplorer.launcherScript": "node_modules/mocha-explorer-launcher-scripts/vscode-test",
-    "mochaExplorer.autoload": false,
-    "mochaExplorer.ipcRole": "server",
-    "mochaExplorer.env": {
-        "VSCODE_VERSION": "insiders",
-        "ELECTRON_RUN_AS_NODE": null
-    },
-    "mochaExplorer.files": "test/**/*.ts",
     "mochaExplorer.require": "ts-node/register",
+    "mochaExplorer.files": "src/test/**/*.ts",
+    "mochaExplorer.logpanel": true
 }

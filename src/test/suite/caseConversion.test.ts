@@ -29,6 +29,7 @@ suite('caseConversion', () => {
 			await selectAllText();
 			convertToUppercase();
 			convertToLowercase();
+			await sleep(500);
 			assert.deepStrictEqual(getDocumentTextOrSelection(), 'test document');
 		});
 

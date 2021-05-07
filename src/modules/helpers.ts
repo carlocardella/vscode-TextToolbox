@@ -1,5 +1,6 @@
-import { commands, Range, Selection, TextEditor, window, workspace, TextLine } from 'vscode';
+import { commands, Range, Selection, TextEditor, window, workspace, TextLine, DocumentHighlight } from 'vscode';
 import * as os from 'os';
+import { listenerCount } from 'process';
 
 
 /**
@@ -117,6 +118,24 @@ export function getLinesFromSelection(editor: TextEditor): TextLine[] | undefine
     return lines!;
 }
 
+export function getLinesFromDocumentOrSelection(editor: TextEditor): TextLine[] | undefined {
+    const lineCount = editor.document.lineCount;
+    if (lineCount < 1) { return; }
+
+    let textLines: TextLine[] = [];
+
+    if (!editor.selection.isEmpty) {
+        return getLinesFromSelection(editor);
+    }
+    else {
+        for (let i = 0; i < lineCount; i++) {
+            textLines.push(editor.document.lineAt(i));
+        }
+    }
+
+    return textLines;
+}
+
 /**
  * Creates a new TextEditor containing the passed in text
  * @param {string} text
@@ -134,7 +153,7 @@ export function createNewEditor(text?: string): PromiseLike<TextEditor> {
 }
 
 /**
- * Close the active editor or all active editors in the current winddow
+ * Close the active editor or all active editors in the current window
  * @param {boolean} closeAll Optional: if `true`, closes all editors in the current window; if `false` or missing closes the active editor only
  * @returns {Promise}
  */

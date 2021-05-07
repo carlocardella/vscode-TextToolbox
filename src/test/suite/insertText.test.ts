@@ -1,11 +1,12 @@
 import * as assert from 'assert';
 import * as guid from 'guid';
 import { sleep, createNewEditor, selectAllText, closeTextEditor, getDocumentTextOrSelection, getActiveEditor, getLinesFromSelection } from '../../modules/helpers';
-import { insertGUID, insertDateTimeInternal, padDirection, padSelectionInternal, insertLineNumbersInternal, sequenceType, insertSequanceInternal } from '../../modules/insertText';
+import { insertGUID, insertDateTimeInternal, padDirection, padSelectionInternal, insertLineNumbersInternal, sequenceType, insertSequenceInternal as insertSequenceInternal, insertLoremIpsumInternal, insertCurrencyInternal } from '../../modules/insertText';
 import { before, after, describe } from 'mocha';
 import { DateTime } from 'luxon';
 import { EOL } from 'os';
 import { Selection } from 'vscode';
+import { removeControlCharactersFromString } from '../../modules/controlCharacters';
 
 suite('insertText', () => {
     before(() => {
@@ -37,6 +38,33 @@ suite('insertText', () => {
                 selections.push(new Selection(2, 0, 2, 3));
                 editor!.selections = selections;
                 insertGUID();
+                await sleep(500);
+
+                let lines = getLinesFromSelection(editor!);
+                let g: string;
+                lines?.forEach(line => {
+                    g = line.text.substr(3, 36);
+                    assert.ok(guid.isGuid(g), `Value "${g}" is not a valid GUID`);
+                });
+            });
+
+            test('Insert GUID all zeros', async () => {
+                await createNewEditor();
+                insertGUID(true);
+                await sleep(500);
+
+                let text = String(getDocumentTextOrSelection());
+                assert.ok(guid.isGuid(text), `Value "${text}" is not a valid GUID`);
+            });
+
+            test("Insert GUID all zeros multicursor", async () => {
+                await createNewEditor(`asd${EOL}${EOL}asd`);
+                const editor = getActiveEditor();
+                let selections: Selection[] = [];
+                selections.push(new Selection(0, 0, 0, 3));
+                selections.push(new Selection(2, 0, 2, 3));
+                editor!.selections = selections;
+                insertGUID(true);
                 await sleep(500);
 
                 let lines = getLinesFromSelection(editor!);
@@ -82,7 +110,7 @@ suite('insertText', () => {
                 { padDirection: padDirection.left, padString: " ", lenght: 10, expected: "          " }
             ];
             tests.forEach(function (t) {
-                test('Padding on empty selection ' + t.padDirection, async () => {
+                test(`Padding ${t.padDirection} with "${t.padString}" on empty selection`, async () => {
                     await createNewEditor();
                     await padSelectionInternal(t.padDirection, t.padString, t.lenght);
                     await sleep(500);
@@ -190,12 +218,79 @@ suite('insertText', () => {
                 tests.forEach(t => {
                     test(`Insert a number sequence starting from ${t.startFrom} for ${t.length} lines`, async () => {
                         await createNewEditor();
-                        await insertSequanceInternal(t.type, t.startFrom, t.length, t.direction);
+                        await insertSequenceInternal(t.type, t.startFrom, t.length, t.direction);
                         await sleep(500);
 
                         let text = String(getDocumentTextOrSelection());
                         assert.deepStrictEqual(text, t.expected);
                     });
+                });
+            });
+        });
+
+        describe("Insert Lorem Ipsum", () => {
+            const loremTypes = [
+                { type: "Paragraphs" },
+                { type: "Sentences" },
+                { type: "Words" }
+            ];
+
+            loremTypes.forEach(l => {
+                test(`Insert Lorem Ipsum ${l.type}`, async () => {
+                    await createNewEditor();
+                    await insertLoremIpsumInternal(l.type, 5);
+                    await sleep(500);
+
+                    let text = String(getDocumentTextOrSelection());
+                    switch (l.type) {
+                        case 'Paragraphs':
+                            assert.deepStrictEqual(text.split(EOL).length, 5);
+                            break;
+                        case 'Sentences':
+                            assert.deepStrictEqual(text.split('. ').length, 5);
+                            break;
+                        case 'Words':
+                            assert.deepStrictEqual(text.split(' ').length, 5);
+                            break;
+                        default:
+                            assert.fail('Invalid Lorem Ipsum paragraph type');
+                    }
+                });
+            });
+        });
+
+        describe('Insert currency', () => {
+            const currencies = [
+                { currency: "US Dollar", symbol: "$" },
+                { currency: "Euro", symbol: "€" },
+                { currency: "British Pound", symbol: "£" },
+                { currency: "Japanese Yen", symbol: "¥" },
+                { currency: "Chinese Yuan", symbol: "¥" },
+                { currency: "Indian Rupee", symbol: "₹" },
+                { currency: "Mexican Peso", symbol: "$" },
+                { currency: "Russian Ruble", symbol: "₽" },
+                { currency: "Israeli New Shequel", symbol: "₪" },
+                { currency: "Bitcoin", symbol: "BTC" },
+                { currency: "South Korean Won", symbol: "₩" },
+                { currency: "South African Rand", symbol: "R" },
+                { currency: "Swiss Franc", symbol: "CHF" }
+            ];
+
+            currencies.forEach(c => {
+                test(`Insert ${c.currency}`, async () => {
+                    await createNewEditor();
+                    await insertCurrencyInternal(c.currency);
+                    await sleep(500);
+
+                    const newText = getDocumentTextOrSelection();
+
+                    let symbolPosition = newText?.indexOf(c.symbol)!;
+                    assert.ok(symbolPosition >= 0, "Could not find currency symbol in output string");
+                    
+                    let currencyValue = newText?.replace(c.symbol!, "");
+                    currencyValue = removeControlCharactersFromString(currencyValue!, "");
+                    let isValidAmount = Number.parseFloat(currencyValue!) ? true : false;
+                    assert.ok(isValidAmount === true, "Invalid currency amount");
                 });
             });
         });

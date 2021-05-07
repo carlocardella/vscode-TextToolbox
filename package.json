@@ -2,7 +2,7 @@
 	"name": "vscode-texttoolbox",
 	"displayName": "Text Toolbox",
 	"description": "Collection of tools for text manipulation, filtering, sorting etc...",
-	"version": "0.11.0",
+	"version": "1.0.0",
 	"publisher": "carlocardella",
 	"author": {
 		"name": "Carlo Cardella",
@@ -35,10 +35,42 @@
 		"sort"
 	],
 	"activationEvents": [
-		"*"
+		"onCommand:vscode-texttoolbox.Uppercase",
+		"onCommand:vscode-texttoolbox.Lowercase",
+		"onCommand:vscode-texttoolbox.PascalCase",
+		"onCommand:vscode-texttoolbox.CapitalCase",
+		"onCommand:vscode-texttoolbox.CamelCase",
+		"onCommand:vscode-texttoolbox.ConstantCase",
+		"onCommand:vscode-texttoolbox.DotCase",
+		"onCommand:vscode-texttoolbox.HarderCase",
+		"onCommand:vscode-texttoolbox.NoCase",
+		"onCommand:vscode-texttoolbox.ParamCase",
+		"onCommand:vscode-texttoolbox.SentenceCase",
+		"onCommand:vscode-texttoolbox.SnakeCase",
+		"onCommand:vscode-texttoolbox.InsertGUID",
+		"onCommand:vscode-texttoolbox.InsertGuidAllZeros",
+		"onCommand:vscode-texttoolbox.InsertDate",
+		"onCommand:vscode-texttoolbox.PickRandom",
+		"onCommand:vscode-texttoolbox.PadSelectionRight",
+		"onCommand:vscode-texttoolbox.PadSelectionLeft",
+		"onCommand:vscode-texttoolbox.RemoveAllEmptyLines",
+		"onCommand:vscode-texttoolbox.RemoveRedundantEmptyLines",
+		"onCommand:vscode-texttoolbox.RemoveDuplicateLines",
+		"onCommand:vscode-texttoolbox.RemoveDuplicateLinesResultInNewEditor",
+		"onCommand:vscode-texttoolbox.FilterLinesUsingRegExpOrString",
+		"onCommand:vscode-texttoolbox.SortLinesResultInNewEditor",
+		"onCommand:vscode-texttoolbox.SortLines",
+		"onCommand:vscode-texttoolbox.OpenSelectionInNewEditor",
+		"onCommand:vscode-texttoolbox.InsertLineNumbers",
+		"onCommand:vscode-texttoolbox.InsertSequenceNumbers",
+		"onCommand:vscode-texttoolbox.RemoveControlCharacters",
+		"onCommand:vscode-texttoolbox.TrimLineOrSelection",
+		"onCommand:vscode-texttoolbox.InsertCurrency",
+		"onCommand:vscode-texttoolbox.SplitSelection",
+		"onCommand:vscode-texttoolbox.InsertLoremIpsum"
 	],
 	"main": "./dist/extension",
-	"preview": true,
+	"preview": false,
 	"badges": [],
 	"icon": "text_icon_regular.png",
 	"repository": {
@@ -104,6 +136,10 @@
 				"title": "TT: Insert GUID"
 			},
 			{
+				"command": "vscode-texttoolbox.InsertGuidAllZeros",
+				"title": "TT: Insert GUID all zeros"
+			},
+			{
 				"command": "vscode-texttoolbox.InsertDate",
 				"title": "TT: Insert Date"
 			},
@@ -140,15 +176,15 @@
 				"title": "TT: Filter lines, result in new Editor"
 			},
 			{
-				"command": "vscode-texteditor.SortLinesResultInNewEditor",
+				"command": "vscode-texttoolbox.SortLinesResultInNewEditor",
 				"title": "TT: Sort lines, result in new editor"
 			},
 			{
-				"command": "vscode-texteditor.SortLines",
+				"command": "vscode-texttoolbox.SortLines",
 				"title": "TT: Sort lines"
 			},
 			{
-				"command": "vscode-texteditor.OpenSelectionInNewEditor",
+				"command": "vscode-texttoolbox.OpenSelectionInNewEditor",
 				"title": "TT: Open selection in new editor"
 			},
 			{
@@ -160,20 +196,24 @@
 				"title": "TT: Insert numbers sequence"
 			},
 			{
-				"command": "vscode-texteditor.RemoveControlCharacters",
+				"command": "vscode-texttoolbox.RemoveControlCharacters",
 				"title": "TT: Remove control characters"
 			},
 			{
-				"command": "vscode-texttoolbox.AlignToSeparator",
-				"title": "TT: Align to separator"
+				"command": "vscode-texttoolbox.TrimLineOrSelection",
+				"title": "TT: Trim"
 			},
 			{
-				"command": "vscode-texttoolbox.SplitText",
+				"command": "vscode-texttoolbox.InsertCurrency",
+				"title": "TT: Insert Currency"
+			},
+			{
+				"command": "vscode-texttoolbox.SplitSelection",
 				"title": "TT: Split Selection"
 			},
 			{
-				"command": "vscode-texttoolbox.SplitTextOpenInNewEditor",
-				"title": "TT: Split Selection, open in new editor"
+				"command": "vscode-texttoolbox.InsertLoremIpsum",
+				"title": "TT: Insert Lorem Ipsum"
 			}
 		],
 		"configuration": [
@@ -230,30 +270,22 @@
 						"scope": "window",
 						"description": "Replace control characters (TT: Remove Control Characters) in the active document with this string"
 					},
-					"tt.textElementAlignment": {
-						"type": "string",
-						"enum": [
-							"left",
-							"right"
-						],
-						"default": "left",
+					"tt.removeControlCharactersOnPaste": {
+						"type": "boolean",
+						"default": false,
 						"scope": "window",
-						"description": "Controls where to place the separator when aligning text: Left inserts padding spaces after the separator, Right inserts padding spaces between text and separator."
+						"description": "Remove Control Characters on Paste"
 					}
 				}
 			}
 		]
 	},
 	"scripts": {
-		"compile": "tsc -p ./",
-		"lint": "eslint src --ext ts",
-		"watch": "tsc -watch -p ./",
-		"pretest": "npm run compile && npm run lint",
-		"test": "node ./out/test/runTest.js",
 		"vscode:prepublish": "webpack --mode production",
-		"development": "webpack --mode development",
+		"webpack": "webpack --mode development",
 		"webpack-dev": "webpack --mode development --watch",
-		"test-compile": "tsc -p ./"
+		"test-compile": "tsc -p ./",
+		"unit-tests": "tsc -w -p ./"
 	},
 	"devDependencies": {
 		"@types/assert": "^1.5.2",
@@ -272,20 +304,23 @@
 		"@typescript-eslint/eslint-plugin": "^2.30.0",
 		"@typescript-eslint/parser": "^2.30.0",
 		"assert": "^2.0.0",
+		"copy-to-clipboard": "^3.3.1",
 		"eslint": "^6.8.0",
 		"glob": "^7.1.6",
 		"guid": "0.0.12",
+		"lorem-ipsum": "^2.0.3",
 		"mocha": "^7.2.0",
 		"mocha-explorer-launcher-scripts": "^0.3.0",
 		"node-uuid": "^1.4.8",
 		"pad": "^3.2.0",
-		"ts-loader": "^8.0.4",
-		"ts-node": "^9.0.0",
+		"source-map-support": "^0.5.19",
+		"ts-loader": "^8.2.0",
+		"ts-node": "^9.1.1",
 		"typescript": "^3.8.3",
 		"uuid-lib": "0.0.6",
 		"vsce": "^1.79.3",
 		"vscode-test": "^1.3.0",
-		"webpack": "^4.44.2",
+		"webpack": "^4.46.0",
 		"webpack-cli": "^3.3.12",
 		"yarn": "^1.22.10"
 	},

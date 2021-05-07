@@ -8,7 +8,7 @@ import { ConfigurationTarget, window, workspace, Selection } from 'vscode';
 
 suite("filterText", () => {
     before(() => {
-        console.log('Starting insertText tests');
+        console.log('Starting filterText tests');
     });
     after(async () => {
         await sleep(500);
@@ -135,5 +135,7 @@ suite("filterText", () => {
 
             assert.deepStrictEqual(newText, expected);
         });
+
+        // TODO: add test for empty selection
     });
 });

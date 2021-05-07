@@ -6,3 +6,8 @@ vsc-extension-quickstart.md
 dist/
 *.zip
 *.tgz
+# .vscode
+
+# Local History for Visual Studio Code
+.history/
+./package-lock.json

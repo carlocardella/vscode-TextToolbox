@@ -1,7 +1,6 @@
-import { createNewEditor, getDocumentTextOrSelection, getSelection, linesToLine, getLinesFromString } from './helpers';
+import { createNewEditor, getDocumentTextOrSelection, getSelection, getLinesFromString, linesToLine, getActiveEditor } from './helpers';
 import * as os from 'os';
 import { window } from 'vscode';
-import { removeEmptyLinesInternal } from './filterText';
 
 
 /**
@@ -15,7 +14,6 @@ export const sortDirection = ["ascending", "descending", "reverse"];
  * @async
  */
 export async function askForSortDirection(openInNewTextEditor?: boolean) {
-    // const direction = await window.showQuickPick(Object.keys(sortDirection), {
     const direction = await window.showQuickPick(sortDirection, {
         ignoreFocusOut: true,
         canPickMany: false,
@@ -34,56 +32,36 @@ export async function askForSortDirection(openInNewTextEditor?: boolean) {
  * @async
  */
 export async function sortLines(direction: string, openInNewTextEditor?: boolean): Promise<boolean> {
-    let linesToSort = getDocumentTextOrSelection();
-    if (!linesToSort) { return Promise.reject(false); }
+    let newLines = getDocumentTextOrSelection()?.split(os.EOL).filter(el => { return el !== null && el !== ""; });
+    if (!newLines) { return Promise.reject("No lines to sort, all lines are null or empty"); }
 
-    let linesArray = await getLinesFromString(linesToSort);
-    if (!linesArray) { return Promise.reject(false); }
+    // newLines?.sort();
+    let sortedLines: string[];
+    switch (direction) {
+        case "ascending":
+            sortedLines = newLines.sort((a, b) => 0 - (a > b ? -1 : 1));
+            break;
+        case "descending":
+            sortedLines = newLines.sort((a, b) => 0 - (a > b ? 1 : -1));
+            break;
+        case "reverse":
+            sortedLines = newLines.reverse();
+            break;
+        default:
+            return Promise.reject("Sort direction is invalid");
+    }
 
-
-    let newLines = await sortLinesInternal(linesArray, direction);
     if (openInNewTextEditor) {
-        createNewEditor(newLines?.join(os.EOL));
+        createNewEditor(sortedLines?.join(os.EOL));
         return Promise.resolve(true);
     }
     else {
         const editor = window.activeTextEditor;
         const selection = getSelection(editor!);
         editor?.edit(editBuilder => {
-            editBuilder.replace(selection!, newLines!.join(os.EOL));
+            editBuilder.replace(selection!, sortedLines!.join(os.EOL));
         });
     }
 
     return Promise.resolve(true);
-}
-
-/**
- * Sort the passed in lines and returns a new sorted array of strings (text)
- * @param {string[]} linesToSort The lines to sort
- * @returns {string[] | undefined}
- * @async
- */
-export async function sortLinesInternal(linesToSort: string[], direction: string): Promise<string[] | undefined> {
-    if (!linesToSort) { return; }
-
-    // remove empty lines, need to convert to a string and the result back to an array
-    let line = await linesToLine(linesToSort);
-    linesToSort = await getLinesFromString(await removeEmptyLinesInternal(line, false));
-
-    let sortedLines;
-    switch (direction) {
-        case "ascending":
-            sortedLines = linesToSort.sort((a, b) => 0 - (a > b ? -1 : 1));
-            break;
-        case "descending":
-            sortedLines = linesToSort.sort((a, b) => 0 - (a > b ? 1 : -1));
-            break;
-        case "reverse":
-            sortedLines = linesToSort.reverse();
-            break;
-        default:
-            return;
-    }
-
-    return Promise.resolve(sortedLines);
 }

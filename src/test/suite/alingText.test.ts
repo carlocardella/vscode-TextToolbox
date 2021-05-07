@@ -18,7 +18,7 @@ suite('alignText', () => {
         console.log('All alignText tests done');
     });
 
-    describe("Align text to separator", () => {
+    describe.skip("Align text to separator", () => {
         let newText = `asd,qwesdfqer,as,a,qwe${EOL}3,sdf433,as@#$d,a234,4564sdsdf@#$6`;
         let expectedRight = `asd           ,qwesdfqer     ,as            ,a             ,qwe           ${EOL}3             ,sdf433        ,as@#$d        ,a234          ,4564sdsdf@#$6 `;
         let expectedLeft = `asd,           qwesdfqer,     as,            a,             qwe,          ${EOL}3,             sdf433,        as@#$d,        a234,          4564sdsdf@#$6`;
