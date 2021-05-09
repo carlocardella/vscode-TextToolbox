@@ -4,7 +4,6 @@ import { Chance } from 'chance';
 import { getActiveEditor, getLinesFromSelection, sleep, getTextFromSelection } from './helpers';
 import { EOL } from 'os';
 import { LoremIpsum } from 'lorem-ipsum';
-import { removeControlCharacters, removeControlCharactersFromString } from './controlCharacters';
 
 
 /**
