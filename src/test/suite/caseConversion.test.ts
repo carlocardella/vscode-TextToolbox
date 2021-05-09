@@ -25,9 +25,8 @@ suite('caseConversion', () => {
 		});
 
 		test('Convert to lowercase', async () => {
-			await createNewEditor("test document");
+			await createNewEditor("TEST DOCUMENT");
 			await selectAllText();
-			convertToUppercase();
 			convertToLowercase();
 			await sleep(500);
 			assert.deepStrictEqual(getDocumentTextOrSelection(), 'test document');

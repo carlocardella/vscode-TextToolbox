@@ -10,7 +10,7 @@ suite("controlCharacters", () => {
     before(async () => {
         console.log('Starting controlCharacters tests');
         let config = workspace.getConfiguration("tt", window.activeTextEditor?.document);
-        await config.update("replaceControlCharactersWith", undefined, ConfigurationTarget.Global);
+        await config.update("replaceControlCharactersWith", undefined);
     });
     after(async () => {
         await sleep(500);
@@ -20,7 +20,7 @@ suite("controlCharacters", () => {
 
     afterEach(async () => {
         let config = workspace.getConfiguration("tt", window.activeTextEditor?.document);
-        await config.update("replaceControlCharactersWith", undefined, ConfigurationTarget.Global);
+        await config.update("replaceControlCharactersWith", undefined);
     });
 
     describe("Control Characters", () => {
@@ -45,7 +45,7 @@ suite("controlCharacters", () => {
 
             test("Remove control characters from full document, replace with space", async () => {
                 let config = workspace.getConfiguration("tt", window.activeTextEditor?.document);
-                await config.update("replaceControlCharactersWith", " ", ConfigurationTarget.Global);
+                await config.update("replaceControlCharactersWith", " ", ConfigurationTarget.Workspace);
                 await createNewEditor(newTextEditor);
                 const editor = getActiveEditor();
                 await removeControlCharacters(editor);
@@ -57,7 +57,7 @@ suite("controlCharacters", () => {
 
             test("Remove control characters from full document, replace with custom string x", async () => {
                 let config = workspace.getConfiguration("tt", window.activeTextEditor?.document);
-                await config.update("replaceControlCharactersWith", "x", ConfigurationTarget.Global);
+                await config.update("replaceControlCharactersWith", "x", ConfigurationTarget.Workspace);
                 await createNewEditor(newTextEditor);
                 const editor = getActiveEditor();
                 await removeControlCharacters(editor);
@@ -89,7 +89,7 @@ suite("controlCharacters", () => {
 
             test("Remove control characters from selection, replace with space", async () => {
                 let config = workspace.getConfiguration("tt", window.activeTextEditor?.document);
-                await config.update("replaceControlCharactersWith", " ", ConfigurationTarget.Global);
+                await config.update("replaceControlCharactersWith", " ", ConfigurationTarget.Workspace);
                 await createNewEditor(newTextEditor);
                 const editor = getActiveEditor();
                 let selections: Selection[] = [];
@@ -105,7 +105,7 @@ suite("controlCharacters", () => {
 
             test("Remove control characters from selection, replace with custom string x", async () => {
                 let config = workspace.getConfiguration("tt", window.activeTextEditor?.document);
-                await config.update("replaceControlCharactersWith", "x", ConfigurationTarget.Global);
+                await config.update("replaceControlCharactersWith", "x", ConfigurationTarget.Workspace);
                 await createNewEditor(newTextEditor);
                 const editor = getActiveEditor();
                 let selections: Selection[] = [];
@@ -123,7 +123,7 @@ suite("controlCharacters", () => {
         describe('Remove control charachters on paste', () => {
             test('Remove control characters on paste', async () => {
                 let config = workspace.getConfiguration('tt', window.activeTextEditor?.document);
-                await config.update('removeControlCharactersOnPaste', true, ConfigurationTarget.Global);
+                await config.update('removeControlCharactersOnPaste', true, ConfigurationTarget.Workspace);
 
                 await createNewEditor();
                 await commands.executeCommand('editor.action.clipboardPasteAction');
@@ -134,7 +134,7 @@ suite("controlCharacters", () => {
 
                 assert.deepStrictEqual(newText, expectedFullDocumentWithEmptyString);
 
-                await config.update('removeControlCharactersOnPaste', undefined, ConfigurationTarget.Global);
+                await config.update('removeControlCharactersOnPaste', undefined);
             });
         });
     });

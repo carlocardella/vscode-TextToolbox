@@ -33,5 +33,13 @@
     // MOCHA EXPLORER
     "mochaExplorer.require": "ts-node/register",
     "mochaExplorer.files": "src/test/**/*.ts",
-    "mochaExplorer.logpanel": true
+    "mochaExplorer.logpanel": true,
+    // https://github.com/hbenl/vscode-mocha-test-adapter#running-vs-code-extension-tests-using-vscode-test
+    // "mochaExplorer.launcherScript": "node_modules/mocha-explorer-launcher-scripts/vscode-test",
+    // "mochaExplorer.autoload": false,
+    // "mochaExplorer.ipcRole": "server",
+    // "mochaExplorer.env": {
+    //     "VSCODE_VERSION": "stable",
+    //     "ELECTRON_RUN_AS_NODE": null
+    // }
 }

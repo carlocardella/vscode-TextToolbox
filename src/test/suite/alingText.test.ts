@@ -6,7 +6,7 @@ import { alignToSeparator } from '../../modules/alignText';
 import { closeTextEditor, sleep, createNewEditor, selectAllText, getDocumentTextOrSelection } from '../../modules/helpers';
 
 
-suite('alignText', () => {
+suite.skip('alignText', () => {
     before(() => {
         console.log('Starting alignText tests');
     });
@@ -14,11 +14,11 @@ suite('alignText', () => {
         await sleep(500);
         await closeTextEditor(true);
         let config = workspace.getConfiguration("tt", window.activeTextEditor?.document);
-        await config.update("textElementAlignment", undefined, ConfigurationTarget.Global);
+        await config.update("textElementAlignment", undefined);
         console.log('All alignText tests done');
     });
 
-    describe.skip("Align text to separator", () => {
+    describe("Align text to separator", () => {
         let newText = `asd,qwesdfqer,as,a,qwe${EOL}3,sdf433,as@#$d,a234,4564sdsdf@#$6`;
         let expectedRight = `asd           ,qwesdfqer     ,as            ,a             ,qwe           ${EOL}3             ,sdf433        ,as@#$d        ,a234          ,4564sdsdf@#$6 `;
         let expectedLeft = `asd,           qwesdfqer,     as,            a,             qwe,          ${EOL}3,             sdf433,        as@#$d,        a234,          4564sdsdf@#$6`;
@@ -30,7 +30,7 @@ suite('alignText', () => {
         tests.forEach(t => {
             test(`Align text to separator ${t.textElementAlignment}`, async () => {
                 let config = workspace.getConfiguration("tt", window.activeTextEditor?.document);
-                await config.update("textElementAlignment", t.textElementAlignment, ConfigurationTarget.Global);
+                await config.update("textElementAlignment", t.textElementAlignment, ConfigurationTarget.Workspace);
                 await createNewEditor(t.newText);
                 await selectAllText();
                 await alignToSeparator(",");

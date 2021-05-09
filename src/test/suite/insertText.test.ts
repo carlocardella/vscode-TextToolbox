@@ -6,7 +6,6 @@ import { before, after, describe } from 'mocha';
 import { DateTime } from 'luxon';
 import { EOL } from 'os';
 import { Selection } from 'vscode';
-import { removeControlCharactersFromString } from '../../modules/controlCharacters';
 
 suite('insertText', () => {
     before(() => {
@@ -288,7 +287,6 @@ suite('insertText', () => {
                     assert.ok(symbolPosition >= 0, "Could not find currency symbol in output string");
                     
                     let currencyValue = newText?.replace(c.symbol!, "");
-                    currencyValue = removeControlCharactersFromString(currencyValue!, "");
                     let isValidAmount = Number.parseFloat(currencyValue!) ? true : false;
                     assert.ok(isValidAmount === true, "Invalid currency amount");
                 });

@@ -98,7 +98,7 @@ suite("filterText", () => {
 
             test("Filter text with " + t.regExpString, async () => {
                 let config = workspace.getConfiguration("tt", window.activeTextEditor?.document);
-                await config.update("filtersUseRegularExpressions", false, ConfigurationTarget.Global);
+                await config.update("filtersUseRegularExpressions", false, ConfigurationTarget.Workspace);
 
                 await createNewEditor(t.textToFilter);
                 let result = findLinesMatchingRegEx(t.regExpString);
@@ -108,7 +108,7 @@ suite("filterText", () => {
                 let text = String(getDocumentTextOrSelection());
                 assert.deepStrictEqual(text, t.expected);
 
-                await config.update("filtersUseRegularExpressions", undefined, ConfigurationTarget.Global);
+                await config.update("filtersUseRegularExpressions", undefined);
             });
         });
     });

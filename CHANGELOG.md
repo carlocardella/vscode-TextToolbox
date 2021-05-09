@@ -27,10 +27,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
   * count line occurrences
   * add config values for regex global switches, default /gi
 * Split
-  * split based on delimiter
-  * split selection
-    * replace selection
-    * open in new editor
   * split clipboard
     * paste in place
     * paste in new editor
@@ -59,7 +55,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## Log
 
-## [version] - 2021-04-26 @todo
+## [1.1.0] - 2021-05-09
 
 ### Added
 
@@ -69,7 +65,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 * Improved the `Sort` commands, remove empty lines from the sorted output
 
-## [version] - 2021-04-25
+## [1.0.0] - 2021-04-25
 
 ### Changed
 
