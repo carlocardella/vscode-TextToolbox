@@ -54,6 +54,7 @@ export function activate(context: ExtensionContext) {
 	// text manipulations
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.TrimLineOrSelection', () => { TextManipulation.trimLineOrSelection(); }));
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.SplitSelection', () => { TextManipulation.splitSelection(false); }));
+	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.SplitSelectionOpenInNewEditor', () => { TextManipulation.splitSelection(true); }));
 
 	// align
 	// context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.AlignToSeparator', () => { AlignText.alignToSeparator(); }));
