@@ -32,7 +32,12 @@
 		"lines count",
 		"sort text",
 		"sort lines",
-		"sort"
+		"sort",
+		"Lorem Ipsum",
+		"split",
+		"random",
+		"insert date",
+		"duplicates"
 	],
 	"activationEvents": [
 		"*"
