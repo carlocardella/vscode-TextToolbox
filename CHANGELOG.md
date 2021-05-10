@@ -55,6 +55,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## Log
 
+## [1.1.1] - 2021-05-10
+
+### Added
+
+* Split selection and open the resulting text in a new editor
+
 ## [1.1.0] - 2021-05-09
 
 ### Added

@@ -137,6 +137,7 @@ Please open an issue to leave a comment, report a bug, request a feature etc... 
   * By default control characters are replaced with an empty string but this can be changed through `tt.replaceControlCharactersWith`.
   * Removes control characters from the current selection(s) or from the entire document if no text is selected
 * Split selection based on delimiter
+  * Split and open in new editor
 <!-- * Align text to a delimiter (can be used to align CSV elements)
   * Align left (default): inserts padding spaces after the separator
     ```
