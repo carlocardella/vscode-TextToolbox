@@ -22,6 +22,12 @@
 				"kind": "build",
 				"isDefault": true
 			}
+		},
+		{
+			"type": "npm",
+			"script": "unit-tests",
+			"problemMatcher": "$tsc-watch",
+			"isBackground": true
 		}
 	]
 }
