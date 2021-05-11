@@ -38,7 +38,7 @@ export function validateSelection(): boolean {
 }
 
 /**
- * Pauses execution of the given number of millisaeconds
+ * Pauses execution of the given number of milliseconds
  * @param milliseconds the number of milliseconds to wait
  */
 export function sleep(milliseconds: number): Promise<void> {

@@ -1,7 +1,7 @@
-import { FileChangeType, QuickPickItem, UriHandler, window } from 'vscode';
+import { QuickPickItem, window } from 'vscode';
 import { DateTime } from 'luxon';
 import { Chance } from 'chance';
-import { getActiveEditor, getLinesFromSelection, sleep, getTextFromSelection } from './helpers';
+import { getActiveEditor, getLinesFromSelection } from './helpers';
 import { EOL } from 'os';
 import { LoremIpsum } from 'lorem-ipsum';
 
