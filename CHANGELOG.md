@@ -7,8 +7,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ## Unreleased
 
 * Text manipulation
-  * escape (json)
-  * unescape (json)
   * remove empty lines (end of file)
   * duplicate string (ask user how many times)
   * convert number, dec to hex and vice versa
@@ -54,6 +52,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
   * allow to update position without reloading the entire window
 
 ## Log
+
+## [version] - @todo
+
+### Added
+
+* Stringify JSON
+* Fix JSON
+* Minify JSON
 
 ## [1.1.1] - 2021-05-10
 

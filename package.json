@@ -189,6 +189,18 @@
 				"title": "TT: Split Selection, result in new editor"
 			},
 			{
+				"command": "vscode-texttoolbox.FixJson",
+				"title": "TT: Fix and Format Json"
+			},
+			{
+				"command": "vscode-texttoolbox.StringifyJson",
+				"title": "TT: Stringify Json"
+			},
+			{
+				"command": "vscode-texttoolbox.MinifyJson",
+				"title": "TT: Minify Json"
+			},
+			{
 				"command": "vscode-texttoolbox.InsertLoremIpsum",
 				"title": "TT: Insert Lorem Ipsum"
 			}
@@ -272,6 +284,7 @@
 		"@types/dateformat": "^3.0.1",
 		"@types/glob": "^7.1.1",
 		"@types/guid": "^1.0.0",
+		"@types/jsonic": "^0.3.0",
 		"@types/luxon": "^1.24.4",
 		"@types/mocha": "^7.0.2",
 		"@types/node": "^13.11.0",
@@ -305,6 +318,7 @@
 	"dependencies": {
 		"chance": "^1.1.7",
 		"change-case": "^4.1.1",
+		"jsonic": "^1.0.1",
 		"luxon": "^1.25.0",
 		"os": "^0.1.1"
 	}
