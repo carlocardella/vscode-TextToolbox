@@ -15,6 +15,10 @@ The marketplace has a number of great extensions for text manipulation, I instal
 
 Please open an issue to leave a comment, report a bug, request a feature etc... (you know the drill).
 
+### Workspace Trust
+
+The extension does not require any special permission, therefore is enabled to run in an [Untrusted Workspace](https://github.com/microsoft/vscode/issues/120251)
+
 ## Current list of commands
 
 * UPPERCASE
@@ -149,6 +153,10 @@ Please open an issue to leave a comment, report a bug, request a feature etc... 
     London    ,Paris     ,Rome      
     Tokyo     ,Singapore ,Syndey    
     ``` -->
+
+* Stringify Json
+* Fix and Format Json
+* Minify Json
 
 ### Thanks to:
 
