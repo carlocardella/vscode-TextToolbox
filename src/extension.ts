@@ -61,6 +61,11 @@ export function activate(context: ExtensionContext) {
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.StringifyJson', () => { Json.stringifyJson(false); }));
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.FixJson', () => { Json.stringifyJson(true); }));
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.MinifyJson', () => { Json.minifyJson(); }));
+	
+	// path transformation
+	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.TransformPathToPosix', () => { TextManipulation.transformPath(TextManipulation.pathTransformationType.posix); }));
+	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.TransformPathToWin32', () => { TextManipulation.transformPath(TextManipulation.pathTransformationType.win32); }));
+	
 
 	// align
 	// context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.AlignToSeparator', () => { AlignText.alignToSeparator(); }));

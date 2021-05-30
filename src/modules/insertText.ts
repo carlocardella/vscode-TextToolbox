@@ -345,7 +345,6 @@ export async function getRandomQuickPickItemDescription(selectedRandomType: stri
 
 /**
  * Insert a Random string based on user's selection
- * @export
  * @param {string} randomType
  */
 export async function insertRandomInternal(randomType: string) {
@@ -525,7 +524,6 @@ export async function insertSequenceInternal(type: sequenceType, startFrom: stri
 
 /**
  * Insert random Lorem Ipsum style text.
- * @export
  * @param {string} loremIpsumType Type of text to insert: Paragraphs, Sentences or Words
  * @param {number} length Length of the text to insert: how many (Paragraphs, Sentences, Words).
  * @return {*}  {Promise<boolean>}
@@ -561,7 +559,6 @@ export async function insertLoremIpsumInternal(loremIpsumType: string, length: n
 /**
  * Insert random Lorem Ipsum style text.
  * Choose the type of text to insert (Paragraph, Sentence, Word) and it's length (how many to insert).
- * @export
  * @async
  */
 export async function insertLoremIpsum() {
@@ -582,7 +579,6 @@ export async function insertLoremIpsum() {
 
 /**
  * Insert a random Currency value
- * @export
  * @return {*} 
  */
 export async function insertCurrency() {
@@ -673,7 +669,6 @@ export function getCurrencyQuickPickItemDescription(item: string): string {
 
 /**
  * Insert a random currency value
- * @export
  * @param {string} currency The currency to insert
  * @return {*}  {(Promise<boolean | undefined>)}
  */

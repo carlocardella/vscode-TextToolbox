@@ -3,7 +3,6 @@ import * as jsonic from 'jsonic';
 
 /**
  * Transforms a text string into proper JSON format, optionally can fix syntax errors.
- * @export
  * @param {boolean} fixJson Fix syntax errors
  * @return {*}  {(Promise<string | undefined>)}
  */
@@ -31,7 +30,6 @@ export async function stringifyJson(fixJson: boolean): Promise<void> {
 
 /**
  * Minifies a JSON string or object
- * @export
  * @return {*}  {(Promise<string | undefined>)}
  */
 export async function minifyJson(): Promise<void> {

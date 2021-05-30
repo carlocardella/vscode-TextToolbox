@@ -13,7 +13,7 @@ suite('JSON', () => {
         console.log('All JSON tests done');
     });
 
-    describe('Json', () => {
+    describe('Json', async () => {
         let tests = [
             {
                 description: "Stringify",

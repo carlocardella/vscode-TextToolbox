@@ -1,8 +1,8 @@
 import * as assert from 'assert';
 import { before, after, describe } from 'mocha';
-import { sleep, closeTextEditor, createNewEditor, getActiveEditor } from '../../modules/helpers';
+import { sleep, closeTextEditor, createNewEditor, getActiveEditor, selectAllText, getDocumentTextOrSelection } from '../../modules/helpers';
 import * as os from 'os';
-import { trimLineOrSelection } from '../../modules/textManipulation';
+import { pathTransformationType, transformPath, trimLineOrSelection } from '../../modules/textManipulation';
 import { Selection } from 'vscode';
 
 suite("textManipulation", () => {
@@ -52,9 +52,23 @@ suite("textManipulation", () => {
         });
     });
 
-    describe("Split Selection", () => {
+    describe('Transform Path', () => {
         const tests = [
-            { description: "Split one line by comma", delimiter: ",", text: "", expected: "", openInNewEditor: false }
+            { type: pathTransformationType.posix, pathString: 'C:\\temp\\pippo.txt', expected: 'C:/temp/pippo.txt' },
+            { type: pathTransformationType.win32, pathString: 'C://temp//pippo.txt', expected: 'C:\\temp\\pippo.txt' }
         ];
+
+        tests.forEach(function (t) {
+            test(`Transform path to ${t.type}`, async () => {
+                await createNewEditor(t.pathString);
+                await selectAllText();
+                await transformPath(t.type);
+                sleep(500);
+
+                const actual = getDocumentTextOrSelection();
+
+                assert.deepStrictEqual(actual, t.expected);
+            });
+        });
     });
 });

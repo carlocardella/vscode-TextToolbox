@@ -15,7 +15,7 @@ suite('splitText', () => {
         console.log('All splitText tests done');
     });
 
-    describe('Split Text', () => {
+    describe('Split Text', async () => {
         const textToSplit = `Igceb rud ezwudel zu guc nuh, beoputac zidoti towposi alvez jomojsot, luhminka ve nabomo su wipwir.${EOL}Vo,zoenpi,zassagon,ipauv,kojuf,meronewis,degveam,zopev,anowoofi,ewol,disin,mo,la,olobozad,kafwa.,Vefoegu,vazuaw,jomo,cel,bim,zam,upmele,dinga,zulkuc,div,ca,kuratim,joim,avi,liut,bife,eranijoh.,Rezom,kuwher,ricaslo,je,rojhofil,cugi,cohjarjo,ev,wimecarar,ov,bi,egi,ucure.${EOL}Kelgi etfaelu vurozvu suduta kilaw tilespeg wojma cirgoja dezpa ot hajuidu, iru tukihuvap dupsatig dam usto wuasi.`;
         
         const textSplitSecondLine = `Igceb rud ezwudel zu guc nuh, beoputac zidoti towposi alvez jomojsot, luhminka ve nabomo su wipwir.${EOL}Vo${EOL}zoenpi${EOL}zassagon${EOL}ipauv${EOL}kojuf${EOL}meronewis${EOL}degveam${EOL}zopev${EOL}anowoofi${EOL}ewol${EOL}disin${EOL}mo${EOL}la${EOL}olobozad${EOL}kafwa.${EOL}Vefoegu${EOL}vazuaw${EOL}jomo${EOL}cel${EOL}bim${EOL}zam${EOL}upmele${EOL}dinga${EOL}zulkuc${EOL}div${EOL}ca${EOL}kuratim${EOL}joim${EOL}avi${EOL}liut${EOL}bife${EOL}eranijoh.${EOL}Rezom${EOL}kuwher${EOL}ricaslo${EOL}je${EOL}rojhofil${EOL}cugi${EOL}cohjarjo${EOL}ev${EOL}wimecarar${EOL}ov${EOL}bi${EOL}egi${EOL}ucure.${EOL}Kelgi etfaelu vurozvu suduta kilaw tilespeg wojma cirgoja dezpa ot hajuidu, iru tukihuvap dupsatig dam usto wuasi.`;

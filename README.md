@@ -142,6 +142,7 @@ The extension does not require any special permission, therefore is enabled to r
   * Removes control characters from the current selection(s) or from the entire document if no text is selected
 * Split selection based on delimiter
   * Split and open in new editor
+  
 <!-- * Align text to a delimiter (can be used to align CSV elements)
   * Align left (default): inserts padding spaces after the separator
     ```
@@ -157,8 +158,10 @@ The extension does not require any special permission, therefore is enabled to r
 * Stringify Json
 * Fix and Format Json
 * Minify Json
+* Convert path string to posix format
+* Convert path string to win32 format
 
-### Thanks to:
+### Thanks to
 
 Text Toolbox is freely inspired by these fine extensions:
 

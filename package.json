@@ -206,6 +206,14 @@
 				"title": "TT: Minify Json"
 			},
 			{
+				"command": "vscode-texttoolbox.TransformPathToPosix",
+				"title": "TT: Transform path to Posix"
+			},
+			{
+				"command": "vscode-texttoolbox.TransformPathToWin32",
+				"title": "TT: Transform path to Win32"
+			},
+			{
 				"command": "vscode-texttoolbox.InsertLoremIpsum",
 				"title": "TT: Insert Lorem Ipsum"
 			}
@@ -310,7 +318,7 @@
 		"nyc": "^15.1.0",
 		"pad": "^3.2.0",
 		"source-map-support": "^0.5.19",
-		"ts-loader": "^8.2.0",
+		"ts-loader": "^8.3.0",
 		"ts-node": "^9.1.1",
 		"typescript": "^3.8.3",
 		"uuid-lib": "0.0.6",

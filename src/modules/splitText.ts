@@ -4,7 +4,6 @@ import { EOL } from 'os';
 
 /**
  * Asks the user how to split the text or selection and which delimiter to use.
- * @export
  * @param {boolean} openInNewEditor Optionally open the result of this operation in a new editor
  * @return {*}  {Promise<boolean>}
  */
@@ -18,7 +17,6 @@ export async function splitText(openInNewEditor: boolean): Promise<boolean> {
 
 /**
  * Split test or selection based on the passed delimiter
- * @export
  * @param {string} delimiter Delimiter to use to split the selection or text document
  * @param {boolean} openInNewEditor Optionally open the result of this operation in a new editor
  * @return {*} 

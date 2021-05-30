@@ -1,10 +1,10 @@
-import { Position, Range, window } from 'vscode';
-import { getActiveEditor, getLinesFromDocumentOrSelection, getTextFromSelection, getDocumentTextOrSelection, createNewEditor } from './helpers';
+import { window } from 'vscode';
+import { getActiveEditor, getLinesFromDocumentOrSelection, getTextFromSelection, getDocumentTextOrSelection, createNewEditor, selectAllText } from './helpers';
 import * as os from 'os';
+import * as path from 'path';
 
 /**
  * Trim whitespaces from the active selection(s) or from the entire document
- * @export
  * @return {*}  {(Promise<boolean | undefined>)}
  */
 export async function trimLineOrSelection(): Promise<boolean | undefined> {
@@ -24,7 +24,6 @@ export async function trimLineOrSelection(): Promise<boolean | undefined> {
 
 /**
  * Split the selection using the passed in delimiter
- * @export
  * @return {*} 
  */
 export async function splitSelection(openInNewEditor: boolean) {
@@ -36,7 +35,6 @@ export async function splitSelection(openInNewEditor: boolean) {
 
 /**
  * Split the selection using the passed in delimiter
- * @export
  * @param {string} delimiter Delimiter to use to split the selection
  * @return {*}  {Promise<boolean>}
  */
@@ -66,4 +64,50 @@ export async function splitSelectionInternal(delimiter: string, openInNewEditor:
     }
 
     return Promise.resolve(true);
+}
+
+/**
+ * Enumerates Platform path types
+ * @enum {number}
+ */
+export enum pathTransformationType {
+    'posix' = 'posix',
+    'win32' = 'win32',
+    'darwin' = 'darwin'
+}
+
+/**
+ * Transforms the selected path string to the chosen platform type target
+ * @param {pathTransformationType} type Enum the Platform types to transform the path to
+ * @return {*}  {(Promise<string | undefined>)}
+ */
+export async function transformPath(type: pathTransformationType): Promise<string | undefined> {
+    const editor = getActiveEditor();
+    if (!editor) { return Promise.reject(); }
+
+    const selection = editor.selection;
+    if (!selection) { return Promise.reject(); }
+
+    let pathString = getTextFromSelection(editor, selection);
+
+    switch (type) {
+        case pathTransformationType.posix:
+            pathString = path.posix.normalize(pathString!).replace(/\\+/g, '/');
+            break;
+
+        case pathTransformationType.darwin:
+            pathString = path.posix.normalize(pathString!).replace(/\\+/g, '/');
+            break;
+
+        case pathTransformationType.win32:
+            pathString = path.posix.normalize(pathString!).replace(/\/+/g, '\\');
+            break;
+
+        default:
+            break;
+    }
+
+    editor.edit(editBuilder => {
+        editBuilder.replace(selection, pathString!);
+    });
 }
