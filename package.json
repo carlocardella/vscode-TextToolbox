@@ -271,12 +271,6 @@
 						"default": "",
 						"scope": "window",
 						"description": "Replace control characters (TT: Remove Control Characters) in the active document with this string"
-					},
-					"tt.removeControlCharactersOnPaste": {
-						"type": "boolean",
-						"default": false,
-						"scope": "window",
-						"description": "Remove Control Characters on Paste"
 					}
 				}
 			}

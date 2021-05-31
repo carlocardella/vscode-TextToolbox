@@ -78,6 +78,7 @@ export function activate(context: ExtensionContext) {
 		let activeEditor = Helpers.getActiveEditor();
 		if (activeEditor) { ControlCharacters.decorateControlCharacters(activeEditor); }
 
+		// todo: https://github.com/Microsoft/vscode/issues/30066
 		// if (workspace.getConfiguration().get('tt.removeControlCharactersOnPaste')) {
 		// 	ControlCharacters.removeControlCharacters(getActiveEditor());
 		// }
