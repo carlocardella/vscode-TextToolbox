@@ -151,6 +151,8 @@ suite('insertText', () => {
                 { dateFormat: 'DATETIME_SHORT', expected: '8/25/2020, 6:34 PM' },
                 { dateFormat: 'DATE_HUGE', expected: 'Tuesday, August 25, 2020' },
                 { dateFormat: 'SORTABLE', expected: '2020-08-25T18:34:41' },
+                { dateFormat: 'DATETIME_HUGE', expected: 'Tuesday, Aug 25, 20210, 6:34 PM PDT' },
+                { dateFormat: 'ROUNDTRIP', expected: '2020-08-25T15:34:41.000Z' },
                 { dateFormat: 'UNIVERSAL_SORTABLE', expected: '2020-08-25T22:34:41Z' },
                 { dateFormat: 'ISO8601', expected: '2020-08-25T18:34:41.000-04:00' },
                 { dateFormat: 'RFC2822', expected: 'Tue, 25 Aug 2020 18:34:41 -0400' },

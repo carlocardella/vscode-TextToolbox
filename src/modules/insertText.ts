@@ -35,9 +35,11 @@ export async function pickDateTime() {
         "TIME_SIMPLE", // 5:34 PM
         "TIME_WITH_SECONDS", // 5:34:45 PM
         "DATETIME_SHORT", // 8/25/2020, 5:34 PM
-        "DATE_HUGE", // Tuesday, August 25, 2020
+        "DATE_LONG", // Tuesday, August 25, 2020
+        "DATETIME_HUGE", // Sunday, May 30, 2021, 5:59 PM PDT
         "SORTABLE", // 2020-08-25T17:34:58
         "UNIVERSAL_SORTABLE", // 2020-08-26T00:35:01Z
+        'ROUNDTRIP', // 2021-05-31T00:52:12.057Z
         "ISO8601", // 2020-08-25T17:35:05.818-07:00
         "ISO8601_DATE", // 2020-08-25
         "ISO8601_TIME", // 17:35:05.818-07:00
@@ -82,8 +84,19 @@ function getTimeFormatsQuickPickItemDescription(format: string, testDate?: DateT
         case 'DATE_SHORT':
             dateTimeValue = date.toLocaleString(DateTime.DATE_SHORT)!;
             break;
-        case 'DATE_HUGE':
+        case 'DATE_LONG':
             dateTimeValue = date.toLocaleString(DateTime.DATE_HUGE)!;
+            break;
+        case 'DATETIME_HUGE':
+            dateTimeValue = date.toLocaleString({
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: 'numeric',
+                minute: '2-digit',
+                timeZoneName: 'short'
+            });
             break;
         case 'TIME_SIMPLE':
             dateTimeValue = date.toLocaleString(DateTime.TIME_SIMPLE)!;
@@ -96,6 +109,9 @@ function getTimeFormatsQuickPickItemDescription(format: string, testDate?: DateT
             break;
         case 'UNIVERSAL_SORTABLE':
             dateTimeValue = date.toUTC().toFormat("y-MM-dd'T'HH:mm:ss'Z");
+            break;
+        case 'ROUNDTRIP':
+            dateTimeValue = date.toUTC().toFormat("yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSS'Z");
             break;
         case 'ISO8601':
             dateTimeValue = date.toString();
