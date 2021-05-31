@@ -63,7 +63,7 @@ suite("textManipulation", () => {
                 await createNewEditor(t.pathString);
                 await selectAllText();
                 await transformPath(t.type);
-                sleep(500);
+                await sleep(500);
 
                 const actual = getDocumentTextOrSelection();
 

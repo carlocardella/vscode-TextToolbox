@@ -24,13 +24,13 @@ suite('JSON', () => {
             {
                 description: "Stringify simple object",
                 text: "a:a,b:b",
-                expected: '{\r\n    \"a\": \"a\",\r\n    \"b\": \"b\"\r\n}',
+                expected: '{\n    \"a\": \"a\",\n    \"b\": \"b\"\n}',
                 fixJson: true
             },
             {
                 description: "Stringify with duplicate properties",
                 text: "a:a,b:b,a:a",
-                expected: '{\r\n    \"a\": \"a\",\r\n    \"b\": \"b\"\r\n}',
+                expected: '{\n    \"a\": \"a\",\n    \"b\": \"b\"\n}',
                 fixJson: true
             }
         ];

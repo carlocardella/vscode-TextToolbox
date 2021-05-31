@@ -30,7 +30,7 @@ suite.skip('alignText', () => {
         tests.forEach(t => {
             test(`Align text to separator ${t.textElementAlignment}`, async () => {
                 let config = workspace.getConfiguration("tt", window.activeTextEditor?.document);
-                await config.update("textElementAlignment", t.textElementAlignment, ConfigurationTarget.Workspace);
+                await config.update("textElementAlignment", t.textElementAlignment, ConfigurationTarget.Global);
                 await createNewEditor(t.newText);
                 await selectAllText();
                 await alignToSeparator(",");

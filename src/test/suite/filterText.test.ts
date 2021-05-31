@@ -82,7 +82,7 @@ suite("filterText", () => {
         ];
 
         tests.forEach(function (t) {
-            test("Filter text with " + t.regExpString, async () => {
+            test(`Filter text with ${t.regExpString}`, async () => {
                 await createNewEditor(t.textToFilter);
                 let result = findLinesMatchingRegEx(t.regExpString);
                 await createNewEditor(await linesToLine(result!));
@@ -96,9 +96,9 @@ suite("filterText", () => {
                 { textToFilter: textToFilter, regExpString: "paperino", expected: regExpExpectedResult }
             ];
 
-            test("Filter text with " + t.regExpString, async () => {
+            test(`Filter text with ${t.regExpString} as string`, async () => {
                 let config = workspace.getConfiguration("tt", window.activeTextEditor?.document);
-                await config.update("filtersUseRegularExpressions", false, ConfigurationTarget.Workspace);
+                await config.update("filtersUseRegularExpressions", false, ConfigurationTarget.Global);
 
                 await createNewEditor(t.textToFilter);
                 let result = findLinesMatchingRegEx(t.regExpString);
