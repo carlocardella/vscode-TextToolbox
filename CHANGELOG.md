@@ -53,12 +53,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## Log
 
-## [version] - @todo
+## [1.3.0] - 2021-05-31
 
 ### Added
 
 * Convert path string to posix format
 * Convert path string to win32 format
+* Added `Roundtrip` date format: `2021-05-31T16:53:38.954Z`
+* Added `DATETIME_HUGE` date format: `Monday, May 31, 2021, 9:55 AM PDT`
+
+### Changed
+
+* Sorted DateTime formats, grouped similar formats closer together
 
 ## [1.2.0] - 2021-05-28
 

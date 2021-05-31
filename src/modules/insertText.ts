@@ -32,10 +32,12 @@ export function insertGUID(allZeros?: boolean) {
 export async function pickDateTime() {
     const dateTimeFormats = [
         "DATE_SHORT", // 8/25/2020
+        "DATE_LONG", // Tuesday, August 25, 2020
         "TIME_SIMPLE", // 5:34 PM
         "TIME_WITH_SECONDS", // 5:34:45 PM
         "DATETIME_SHORT", // 8/25/2020, 5:34 PM
-        "DATE_LONG", // Tuesday, August 25, 2020
+        "DATETIME_SHORT_WITH_SECONDS", // 8/25/2020, 5:35:17 PM
+        "DATETIME_FULL_WITH_SECONDS", // August 25, 2020, 5:35 PM PDT
         "DATETIME_HUGE", // Sunday, May 30, 2021, 5:59 PM PDT
         "SORTABLE", // 2020-08-25T17:34:58
         "UNIVERSAL_SORTABLE", // 2020-08-26T00:35:01Z
@@ -45,8 +47,6 @@ export async function pickDateTime() {
         "ISO8601_TIME", // 17:35:05.818-07:00
         "RFC2822", // Tue, 25 Aug 2020 17:35:10 -0700
         "HTTP", // Wed, 26 Aug 2020 00:35:13 GMT
-        "DATETIME_SHORT_WITH_SECONDS", // 8/25/2020, 5:35:17 PM
-        "DATETIME_FULL_WITH_SECONDS", // August 25, 2020, 5:35 PM PDT
         "UNIX_SECONDS", // 1598402124
         "UNIX_MILLISECONDS" // 1598402132390
     ];
