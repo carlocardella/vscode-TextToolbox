@@ -2,7 +2,7 @@ import * as assert from 'assert';
 import { after, before, describe } from 'mocha';
 import { closeTextEditor, sleep, createNewEditor, selectAllText, getDocumentTextOrSelection } from '../../modules/helpers';
 import { minifyJson, stringifyJson } from '../../modules/json';
-import { EOL, EOL } from 'os';
+import { EOL } from 'os';
 
 suite('JSON', () => {
     before(() => {
