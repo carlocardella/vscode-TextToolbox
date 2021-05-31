@@ -108,7 +108,7 @@ suite("filterText", () => {
                 let text = String(getDocumentTextOrSelection());
                 assert.deepStrictEqual(text, t.expected);
 
-                await config.update("filtersUseRegularExpressions", undefined);
+                await config.update("filtersUseRegularExpressions", undefined, ConfigurationTarget.Global);
             });
         });
     });

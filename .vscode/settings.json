@@ -29,7 +29,8 @@
   // MOCHA EXPLORER
   "mochaExplorer.require": "ts-node/register",
   "mochaExplorer.files": "src/test/**/*.ts",
-  "mochaExplorer.logpanel": true
+  "mochaExplorer.logpanel": true,
+  "python.pythonPath": "C:\\Users\\carloc\\AppData\\Local\\Programs\\Python\\Python39\\python.exe"
   // https://github.com/hbenl/vscode-mocha-test-adapter#running-vs-code-extension-tests-using-vscode-test
   // "mochaExplorer.launcherScript": "node_modules/mocha-explorer-launcher-scripts/vscode-test",
   // "mochaExplorer.autoload": false,

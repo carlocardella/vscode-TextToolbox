@@ -14,7 +14,7 @@ suite.skip('alignText', () => {
         await sleep(500);
         await closeTextEditor(true);
         let config = workspace.getConfiguration("tt", window.activeTextEditor?.document);
-        await config.update("textElementAlignment", undefined);
+        await config.update("textElementAlignment", undefined, ConfigurationTarget.Global);
         console.log('All alignText tests done');
     });
 

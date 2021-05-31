@@ -2,6 +2,7 @@ import * as assert from 'assert';
 import { after, before, describe } from 'mocha';
 import { closeTextEditor, sleep, createNewEditor, selectAllText, getDocumentTextOrSelection } from '../../modules/helpers';
 import { minifyJson, stringifyJson } from '../../modules/json';
+import { EOL, EOL } from 'os';
 
 suite('JSON', () => {
     before(() => {
@@ -24,13 +25,13 @@ suite('JSON', () => {
             {
                 description: "Stringify simple object",
                 text: "a:a,b:b",
-                expected: '{\n    \"a\": \"a\",\n    \"b\": \"b\"\n}',
+                expected: `{${EOL}    \"a\": \"a\",${EOL}    \"b\": \"b\"${EOL}}`,
                 fixJson: true
             },
             {
                 description: "Stringify with duplicate properties",
                 text: "a:a,b:b,a:a",
-                expected: '{\n    \"a\": \"a\",\n    \"b\": \"b\"\n}',
+                expected: `{${EOL}    \"a\": \"a\",${EOL}    \"b\": \"b\"${EOL}}`,
                 fixJson: true
             }
         ];
