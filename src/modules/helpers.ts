@@ -1,6 +1,5 @@
-import { commands, Range, Selection, TextEditor, window, workspace, TextLine, DocumentHighlight } from 'vscode';
+import { commands, Range, Selection, TextEditor, window, workspace, TextLine } from 'vscode';
 import * as os from 'os';
-import { listenerCount } from 'process';
 
 
 /**
