@@ -15,16 +15,15 @@ The marketplace has a number of great extensions for text manipulation, I instal
 
 Please open an issue to leave a comment, report a bug, request a feature etc... (you know the drill).
 
-### Workspace Trust
+## Workspace Trust
 
 The extension does not require any special permission, therefore is enabled to run in an [Untrusted Workspace](https://github.com/microsoft/vscode/issues/120251)
 
 ## Current list of commands
 
-* UPPERCASE
-  * Lorem ipsum dolor sit amet => LOREM IPSUM DOLOR SIT AMET
-* lowercase
-  * Lorem ipsum dolor sit amet => lorem ipsum dolor sit amet
+Notable absents: `Convert to Uppercase` and `Convert to Lowercase` have been removed in favor of the built-in commands in VScode.
+Likewise, `Conver to CapitalCase` has been removed in favor of the built-in VSCode command `Transform to Title Case`.
+
 * PascalCase
   * Lorem ipsum dolor sit amet => LoremIpsumDolorSitAmet
 * Capital Case
@@ -51,21 +50,23 @@ The extension does not require any special permission, therefore is enabled to r
   * 00000000-0000-0000-0000-000000000000
 * Insert Date
   * DATE_SHORT => 8/25/2020
+  * DATE_LONG => Tuesday, August 25, 2020
   * TIME_SIMPLE => 5:34 PM
   * TIME_WITH_SECONDS => 5:34:45 PM
   * DATETIME_SHORT => 8/25/2020, 5:34 PM
-  * DATE_HUGE => Tuesday, August 25, 2020
+  * DATETIME_SHORT_WITH_SECONDS => 8/25/2020, 5:35:17 PM
+  * DATETIME_FULL_WITH_SECONDS => August 25, 2020, 5:35 PM PDT
+  * DATETIME_HUGE => Sunday, May 30, 2021, 5:59 PM PDT
   * SORTABLE => 2020-08-25T17:34:58
   * UNIVERSAL_SORTABLE => 2020-08-26T00:35:01Z
+  * ROUNDTRIP => 2021-05-31T00:52:12.057Z
   * ISO8601 => 2020-08-25T17:35:05.818-07:00
   * ISO8601_DATE => 2020-08-25
   * ISO8601_TIME => 17:35:05.818-07:00
   * RFC2822 => Tue, 25 Aug 2020 17:35:10 -0700
   * HTTP => Wed, 26 Aug 2020 00:35:13 GMT
-  * DATETIME_SHORT_WITH_SECONDS => 8/25/2020, 5:35:17 PM
-  * DATETIME_FULL_WITH_SECONDS => August 25, 2020, 5:35 PM PDT
   * UNIX_SECONDS => 1598402124
-  * UNIX_MILLISECONDS =>/598402132390
+  * UNIX_MILLISECONDS =>1598402132390
 * Insert Random
   * IPV4 => 123.75.174.203
   * IPV6 => 7c50:a61a:5ee0:4562:0dda:b41d:114b:71e0

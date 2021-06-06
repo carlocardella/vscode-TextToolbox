@@ -30,7 +30,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
     * paste in new editor
 * Insert
   * insert date sequence
-    * DateTime `round-trip` format: https://docs.microsoft.com/en-us/dotnet/standard/base-types/standard-date-and-time-format-strings#Roundtrip
     * add option to use times 12/24 formats
   * famous excerpts, e.g. The Divine Comedy, Hamlet etc...
   * excerpts in languages other than English
@@ -53,13 +52,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## Log
 
+## [1.4.0] - 2021-06-05
+
+### Removed
+
+* Removed `Convert to Uppercase` in favor of the built-in VSCode command
+* Removed `Convert to Lowercase` in favor of the built-in VSCode command
+* Removed `Convert to CapitalCase` in favor of the built-in VSCode command `Transform to Title Case`
+
+
 ## [1.3.0] - 2021-05-31
 
 ### Added
 
 * Convert path string to posix format
 * Convert path string to win32 format
-* Added `Roundtrip` date format: `2021-05-31T16:53:38.954Z`
+* Added `Roundtrip` date format: `2021-05-31T16:53:38.954Z`: https://docs.microsoft.com/en-us/dotnet/standard/base-types/standard-date-and-time-format-strings#Roundtrip
 * Added `DATETIME_HUGE` date format: `Monday, May 31, 2021, 9:55 AM PDT`
 
 ### Changed

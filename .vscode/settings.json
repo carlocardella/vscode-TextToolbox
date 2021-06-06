@@ -22,7 +22,8 @@
     "titleBar.activeBackground": "#57455d",
     "titleBar.activeForeground": "#e7e7e7",
     "titleBar.inactiveBackground": "#57455d99",
-    "titleBar.inactiveForeground": "#e7e7e799"
+    "titleBar.inactiveForeground": "#e7e7e799",
+    "tab.activeBorder": "#725b7a"
   },
   "peacock.color": "#57455d",
   "cSpell.words": ["carlocardella", "luxon", "texttoolbox"],
