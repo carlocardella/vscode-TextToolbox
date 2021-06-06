@@ -1,6 +1,5 @@
-import { commands, Range, Selection, TextEditor, window, workspace, TextLine, DocumentHighlight } from 'vscode';
+import { commands, Range, Selection, TextEditor, window, workspace, TextLine } from 'vscode';
 import * as os from 'os';
-import { listenerCount } from 'process';
 
 
 /**
@@ -141,9 +140,9 @@ export function getLinesFromDocumentOrSelection(editor: TextEditor): TextLine[] 
  * @param {string} text
  * @returns {TextEditor}
  */
-export function createNewEditor(text?: string): PromiseLike<TextEditor> {
-    return new Promise((resolve, reject) => {
-        workspace.openTextDocument({ content: text, language: "plaintext", preview: false } as any).then(
+export function createNewEditor(text?: string): Promise<TextEditor> {
+    return new Promise(async (resolve, reject) => {
+        await workspace.openTextDocument({ content: text, language: "plaintext", preview: false } as any).then(
             (doc) => {
                 resolve(window.showTextDocument(doc));
             },

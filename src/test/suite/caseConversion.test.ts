@@ -1,7 +1,7 @@
 import * as assert from 'assert';
 import { after, before, describe } from 'mocha';
 import { sleep, createNewEditor, selectAllText, closeTextEditor, getDocumentTextOrSelection, getActiveEditor } from '../../modules/helpers';
-import { convertToUppercase, convertToLowercase, convertToCapitalCase, convertToDotCase, convertToPascalCase, convertToCamelCase, convertToParamCase, convertToNoCase, convertToHarderCase, convertToConstantCase, convertToPathCase, convertToSentenceCase, convertToSnakeCase } from '../../modules/caseConversion';
+import { convertToUppercase, convertToDotCase, convertToPascalCase, convertToCamelCase, convertToParamCase, convertToNoCase, convertToHarderCase, convertToConstantCase, convertToPathCase, convertToSentenceCase, convertToSnakeCase } from '../../modules/caseConversion';
 import { EOL } from 'os';
 import { Selection } from 'vscode';
 
@@ -16,30 +16,6 @@ suite('caseConversion', () => {
 	});
 
 	describe("Case Conversion", () => {
-		test('Convert to UPPERCASE', async () => {
-			await createNewEditor("test document");
-			await selectAllText();
-			convertToUppercase();
-			await sleep(500);
-			assert.deepStrictEqual(getDocumentTextOrSelection(), 'TEST DOCUMENT');
-		});
-
-		test('Convert to lowercase', async () => {
-			await createNewEditor("TEST DOCUMENT");
-			await selectAllText();
-			convertToLowercase();
-			await sleep(500);
-			assert.deepStrictEqual(getDocumentTextOrSelection(), 'test document');
-		});
-
-		test('Convert to Capital Case', async () => {
-			await createNewEditor("test document");
-			await selectAllText();
-			convertToCapitalCase();
-			await sleep(500);
-			assert.deepStrictEqual(getDocumentTextOrSelection(), 'Test Document');
-		});
-
 		test('Convert to PascalCase', async () => {
 			await createNewEditor("test document");
 			await selectAllText();
@@ -121,16 +97,16 @@ suite('caseConversion', () => {
 		});
 
 		test("Convert multicursor", async () => {
-			await createNewEditor(`asd${EOL}${EOL}asd`);
+			await createNewEditor(`asd asd${EOL}${EOL}asd asd`);
 			const editor = getActiveEditor();
 			let selections: Selection[] = [];
 			selections.push(new Selection(0, 0, 0, 3));
 			selections.push(new Selection(2, 0, 2, 3));
 			editor!.selections = selections;
-			convertToUppercase();
+			convertToSnakeCase();
 			await sleep(500);
 			await selectAllText();
-			assert.deepStrictEqual(getDocumentTextOrSelection(), `ASD${EOL}${EOL}ASD`);
+			assert.deepStrictEqual(getDocumentTextOrSelection(), `asd_asd${EOL}${EOL}asd_asd`);
 		});
 	});
 });

@@ -62,20 +62,8 @@
 	"contributes": {
 		"commands": [
 			{
-				"command": "vscode-texttoolbox.Uppercase",
-				"title": "TT: UPPERCASE"
-			},
-			{
-				"command": "vscode-texttoolbox.Lowercase",
-				"title": "TT: lowercase"
-			},
-			{
 				"command": "vscode-texttoolbox.PascalCase",
 				"title": "TT: PascalCase"
-			},
-			{
-				"command": "vscode-texttoolbox.CapitalCase",
-				"title": "TT: Capital Case"
 			},
 			{
 				"command": "vscode-texttoolbox.CamelCase",
