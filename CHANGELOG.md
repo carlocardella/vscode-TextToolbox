@@ -10,6 +10,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
   * remove empty lines (end of file)
   * duplicate string (ask user how many times)
   * convert number, dec to hex and vice versa
+  * Randomize selection (words in a selection)
+  * Reverse selection (lines or words in selection)
+  * Sort lines by length
 * Highlight
   * highlight word (and all occurrences)
   * highlight based on regex
@@ -24,11 +27,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
   * add original line numbers when opening a selection/filter in a new editor
   * count line occurrences
   * add config values for regex global switches, default /gi
+  * Count duplicate lines, open in new document, sorted by count descending:
+
+    ```text
+      8: dup1
+      4: dup2
+      3: dup3
+    ```
+
 * Split
   * split clipboard
     * paste in place
     * paste in new editor
 * Insert
+  * Insert UUID (universally unique identifier)
+  * Prefix lines with string
+  * Suffix lines with string
   * insert date sequence
     * add option to use times 12/24 formats
   * famous excerpts, e.g. The Divine Comedy, Hamlet etc...
@@ -43,10 +57,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
   * randomSampleFromInput
   * randomIban
   * insert multicursor should insert different strings, not the same repeated one
+* Copy text
+  * Copy without formatting
+  * Copy with line numbers
+  * Copy with metadata
 * Other
   * if there is no selection update the entire line
   * remove control characters/bad characters on paste (with config toggle)
   * show progress bar for long operations (e.g. filters on large files)
+* Encode/Decode
+  * Base64
+  * Html
+  * Url
 * Status bar
   * allow to update position without reloading the entire window
 
