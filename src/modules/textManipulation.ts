@@ -1,7 +1,7 @@
-import { window } from 'vscode';
-import { getActiveEditor, getLinesFromDocumentOrSelection, getTextFromSelection, getDocumentTextOrSelection, createNewEditor, selectAllText } from './helpers';
-import * as os from 'os';
-import * as path from 'path';
+import { window } from "vscode";
+import { getActiveEditor, getLinesFromDocumentOrSelection, getTextFromSelection, createNewEditor } from "./helpers";
+import * as os from "os";
+import * as path from "path";
 
 /**
  * Trim whitespaces from the active selection(s) or from the entire document
@@ -9,12 +9,14 @@ import * as path from 'path';
  */
 export async function trimLineOrSelection(): Promise<boolean | undefined> {
     const editor = getActiveEditor();
-    if (!editor) { return; }
+    if (!editor) {
+        return;
+    }
 
     const textLines = getLinesFromDocumentOrSelection(editor);
 
-    editor.edit(eb => {
-        textLines?.forEach(textLine => {
+    editor.edit((eb) => {
+        textLines?.forEach((textLine) => {
             eb.replace(textLine.range, textLine.text.trim());
         });
     });
@@ -24,11 +26,13 @@ export async function trimLineOrSelection(): Promise<boolean | undefined> {
 
 /**
  * Split the selection using the passed in delimiter
- * @return {*} 
+ * @return {*}
  */
 export async function splitSelection(openInNewEditor: boolean) {
     const delimiter = await window.showInputBox({ prompt: "delimiter" });
-    if (!delimiter) { return; }
+    if (!delimiter) {
+        return;
+    }
 
     splitSelectionInternal(delimiter, openInNewEditor);
 }
@@ -40,24 +44,25 @@ export async function splitSelection(openInNewEditor: boolean) {
  */
 export async function splitSelectionInternal(delimiter: string, openInNewEditor: boolean): Promise<boolean> {
     const editor = getActiveEditor();
-    if (!editor) { return Promise.resolve(false); }
+    if (!editor) {
+        return Promise.resolve(false);
+    }
 
-    if (editor.selection.isEmpty) { return Promise.resolve(false); }
-
-    let selection = getDocumentTextOrSelection();
+    if (editor.selection.isEmpty) {
+        return Promise.resolve(false);
+    }
 
     if (openInNewEditor) {
         let newEditorText: string = "";
 
-        editor.selections.forEach(s => {
+        editor.selections.forEach((s) => {
             newEditorText += getTextFromSelection(editor, s)?.split(delimiter) + os.EOL;
         });
 
         await createNewEditor(newEditorText);
-    }
-    else {
-        editor.edit(editBuilder => {
-            editor.selections.forEach(s => {
+    } else {
+        editor.edit((editBuilder) => {
+            editor.selections.forEach((s) => {
                 editBuilder.replace(s, getTextFromSelection(editor, s)?.split(delimiter).join(os.EOL)!);
             });
         });
@@ -71,9 +76,9 @@ export async function splitSelectionInternal(delimiter: string, openInNewEditor:
  * @enum {number}
  */
 export enum pathTransformationType {
-    'posix' = 'posix',
-    'win32' = 'win32',
-    'darwin' = 'darwin'
+    "posix" = "posix",
+    "win32" = "win32",
+    "darwin" = "darwin",
 }
 
 /**
@@ -83,31 +88,41 @@ export enum pathTransformationType {
  */
 export async function transformPath(type: pathTransformationType): Promise<string | undefined> {
     const editor = getActiveEditor();
-    if (!editor) { return Promise.reject(); }
+    if (!editor) {
+        return Promise.reject();
+    }
 
     const selection = editor.selection;
-    if (!selection) { return Promise.reject(); }
+    if (!selection) {
+        return Promise.reject();
+    }
 
     let pathString = getTextFromSelection(editor, selection);
 
     switch (type) {
         case pathTransformationType.posix:
-            pathString = path.posix.normalize(pathString!).replace(/\\+/g, '/');
+            pathString = path.posix.normalize(pathString!).replace(/\\+/g, "/");
             break;
 
         case pathTransformationType.darwin:
-            pathString = path.posix.normalize(pathString!).replace(/\\+/g, '/');
+            pathString = path.posix.normalize(pathString!).replace(/\\+/g, "/");
             break;
 
         case pathTransformationType.win32:
-            pathString = path.posix.normalize(pathString!).replace(/\/+/g, '\\');
+            // if this is a json document, use double backslashes
+            if (editor.document.languageId === "json" || editor.document.languageId === "jsonc") {
+                pathString = path.posix.normalize(pathString!).replace(/\/+/g, "\\\\");
+            } else {
+                pathString = path.posix.normalize(pathString!).replace(/\/+/g, "\\");
+            }
+
             break;
 
         default:
             break;
     }
 
-    editor.edit(editBuilder => {
+    editor.edit((editBuilder) => {
         editBuilder.replace(selection, pathString!);
     });
 }
