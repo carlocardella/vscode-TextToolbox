@@ -74,6 +74,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## Log
 
+## [1.4.1] - 2021-06-13
+
+### Changed
+
+* Updated `Transform path to Win32`: in a json document use double backslashes
+
 ## [1.4.0] - 2021-06-05
 
 ### Removed
