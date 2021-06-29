@@ -1,10 +1,9 @@
-import { QuickPickItem, window } from 'vscode';
-import { DateTime } from 'luxon';
-import { Chance } from 'chance';
-import { getActiveEditor, getLinesFromSelection } from './helpers';
-import { EOL } from 'os';
-import { LoremIpsum } from 'lorem-ipsum';
-
+import { QuickPickItem, window } from "vscode";
+import { DateTime } from "luxon";
+import { Chance } from "chance";
+import { getActiveEditor, getLinesFromSelection } from "./helpers";
+import { EOL } from "os";
+import { LoremIpsum } from "lorem-ipsum";
 
 /**
  * Insert a random GUID, or a neutral GUID made of all zeros
@@ -13,13 +12,12 @@ export function insertGUID(allZeros?: boolean) {
     const chance = new Chance();
     const editor = getActiveEditor();
 
-    editor?.edit(editBuilder => {
-        editor.selections.forEach(async s => {
+    editor?.edit((editBuilder) => {
+        editor.selections.forEach(async (s) => {
             if (allZeros) {
-                editBuilder.insert(s.active, "00000000-0000-0000-0000-000000000000");
-            }
-            else {
-                editBuilder.insert(s.active, chance.guid());
+                editBuilder.replace(s, "00000000-0000-0000-0000-000000000000");
+            } else {
+                editBuilder.replace(s, chance.guid());
             }
         });
     });
@@ -41,18 +39,18 @@ export async function pickDateTime() {
         "DATETIME_HUGE", // Sunday, May 30, 2021, 5:59 PM PDT
         "SORTABLE", // 2020-08-25T17:34:58
         "UNIVERSAL_SORTABLE", // 2020-08-26T00:35:01Z
-        'ROUNDTRIP', // 2021-05-31T00:52:12.057Z
+        "ROUNDTRIP", // 2021-05-31T00:52:12.057Z
         "ISO8601", // 2020-08-25T17:35:05.818-07:00
         "ISO8601_DATE", // 2020-08-25
         "ISO8601_TIME", // 17:35:05.818-07:00
         "RFC2822", // Tue, 25 Aug 2020 17:35:10 -0700
         "HTTP", // Wed, 26 Aug 2020 00:35:13 GMT
         "UNIX_SECONDS", // 1598402124
-        "UNIX_MILLISECONDS" // 1598402132390
+        "UNIX_MILLISECONDS", // 1598402132390
     ];
 
     let quickPickItems: QuickPickItem[] = [];
-    dateTimeFormats.forEach(item => {
+    dateTimeFormats.forEach((item) => {
         let qp: QuickPickItem = {
             label: item,
             description: getTimeFormatsQuickPickItemDescription(item),
@@ -62,7 +60,9 @@ export async function pickDateTime() {
 
     const selectedFormat = await window.showQuickPick(quickPickItems, { ignoreFocusOut: true });
 
-    if (selectedFormat) { await insertDateTimeInternal(selectedFormat.label); }
+    if (selectedFormat) {
+        await insertDateTimeInternal(selectedFormat.label);
+    }
 }
 
 /**
@@ -74,71 +74,71 @@ export async function pickDateTime() {
  */
 function getTimeFormatsQuickPickItemDescription(format: string, testDate?: DateTime): string {
     let date: DateTime;
-    testDate ? date = testDate : date = DateTime.local();
+    testDate ? (date = testDate) : (date = DateTime.local());
     let dateTimeValue: string;
 
     switch (format) {
-        case 'DATETIME_SHORT':
+        case "DATETIME_SHORT":
             dateTimeValue = date.toLocaleString(DateTime.DATETIME_SHORT)!;
             break;
-        case 'DATE_SHORT':
+        case "DATE_SHORT":
             dateTimeValue = date.toLocaleString(DateTime.DATE_SHORT)!;
             break;
-        case 'DATE_LONG':
+        case "DATE_LONG":
             dateTimeValue = date.toLocaleString(DateTime.DATE_HUGE)!;
             break;
-        case 'DATETIME_HUGE':
+        case "DATETIME_HUGE":
             dateTimeValue = date.toLocaleString({
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-                hour: 'numeric',
-                minute: '2-digit',
-                timeZoneName: 'short'
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+                hour: "numeric",
+                minute: "2-digit",
+                timeZoneName: "short",
             });
             break;
-        case 'TIME_SIMPLE':
+        case "TIME_SIMPLE":
             dateTimeValue = date.toLocaleString(DateTime.TIME_SIMPLE)!;
             break;
-        case 'TIME_WITH_SECONDS':
+        case "TIME_WITH_SECONDS":
             dateTimeValue = date.toLocaleString(DateTime.TIME_WITH_SECONDS)!;
             break;
-        case 'SORTABLE':
+        case "SORTABLE":
             dateTimeValue = date.toFormat("y-MM-dd'T'HH:mm:ss");
             break;
-        case 'UNIVERSAL_SORTABLE':
+        case "UNIVERSAL_SORTABLE":
             dateTimeValue = date.toUTC().toFormat("y-MM-dd'T'HH:mm:ss'Z");
             break;
-        case 'ROUNDTRIP':
+        case "ROUNDTRIP":
             dateTimeValue = date.toUTC().toFormat("yyyy'-'MM'-'dd'T'HH':'mm':'ss'.'SSS'Z");
             break;
-        case 'ISO8601':
+        case "ISO8601":
             dateTimeValue = date.toString();
             break;
-        case 'ISO8601_DATE':
+        case "ISO8601_DATE":
             dateTimeValue = date.toFormat("y-MM-dd");
             break;
-        case 'ISO8601_TIME':
+        case "ISO8601_TIME":
             dateTimeValue = date.toFormat("HH:mm:ss.SSSZZ");
             break;
-        case 'RFC2822':
+        case "RFC2822":
             dateTimeValue = date.toRFC2822()!;
             break;
-        case 'HTTP':
+        case "HTTP":
             dateTimeValue = date.toHTTP();
             break;
-        case 'DATETIME_SHORT_WITH_SECONDS':
+        case "DATETIME_SHORT_WITH_SECONDS":
             dateTimeValue = date.toLocaleString(DateTime.DATETIME_SHORT_WITH_SECONDS)!;
             break;
-        case 'DATETIME_FULL_WITH_SECONDS':
+        case "DATETIME_FULL_WITH_SECONDS":
             dateTimeValue = date.toLocaleString(DateTime.DATETIME_FULL)!;
             break;
-        case 'UNIX_SECONDS':
-            dateTimeValue = date.toFormat('X');
+        case "UNIX_SECONDS":
+            dateTimeValue = date.toFormat("X");
             break;
-        case 'UNIX_MILLISECONDS':
-            dateTimeValue = date.toFormat('x');
+        case "UNIX_MILLISECONDS":
+            dateTimeValue = date.toFormat("x");
             break;
         default:
             dateTimeValue = date.toString();
@@ -156,14 +156,14 @@ function getTimeFormatsQuickPickItemDescription(format: string, testDate?: DateT
  */
 export async function insertDateTimeInternal(selectedFormat: string, testDate?: DateTime) {
     let date: DateTime;
-    testDate ? date = testDate : date = DateTime.local();
+    testDate ? (date = testDate) : (date = DateTime.local());
     let text: string;
     const editor = getActiveEditor();
 
-    editor?.edit(editBuilder => {
-        editor?.selections.forEach(async s => {
+    editor?.edit((editBuilder) => {
+        editor?.selections.forEach(async (s) => {
             text = getTimeFormatsQuickPickItemDescription(selectedFormat, date);
-            editBuilder.insert(s.active, text);
+            editBuilder.replace(s, text);
         });
     });
 }
@@ -174,35 +174,35 @@ export async function insertDateTimeInternal(selectedFormat: string, testDate?: 
  */
 export async function pickRandom() {
     const randomTypeToInsert = [
-        'IPV4',
-        'IPV6',
-        'NUMBER',
-        'PERSON_NAME',
-        'SSN',
-        'PROFESSION',
-        'ANIMAL',
-        'COMPANY',
-        'DOMAIN',
-        'EMAIL',
-        'COLOR',
-        'TWITTER',
-        'URL',
-        'CITY',
-        'ADDRESS',
-        'COUNTRY',
-        'COUNTRY_FULL_NAME',
-        'PHONE',
-        'ZIP_CODE',
-        'STATE',
-        'STATE_FULL_NAME',
-        'STREET',
-        'TIMEZONE',
-        'PARAGRAPH',
-        'HASH'
+        "IPV4",
+        "IPV6",
+        "NUMBER",
+        "PERSON_NAME",
+        "SSN",
+        "PROFESSION",
+        "ANIMAL",
+        "COMPANY",
+        "DOMAIN",
+        "EMAIL",
+        "COLOR",
+        "TWITTER",
+        "URL",
+        "CITY",
+        "ADDRESS",
+        "COUNTRY",
+        "COUNTRY_FULL_NAME",
+        "PHONE",
+        "ZIP_CODE",
+        "STATE",
+        "STATE_FULL_NAME",
+        "STREET",
+        "TIMEZONE",
+        "PARAGRAPH",
+        "HASH",
     ];
 
     let quickPickItems: QuickPickItem[] = [];
-    randomTypeToInsert.forEach(async item => {
+    randomTypeToInsert.forEach(async (item) => {
         let qp: QuickPickItem = {
             label: item,
             description: await getRandomQuickPickItemDescription(item, true),
@@ -211,7 +211,9 @@ export async function pickRandom() {
     });
 
     const selectedRandomType = await window.showQuickPick(quickPickItems, { ignoreFocusOut: true });
-    if (selectedRandomType) { insertRandomInternal(selectedRandomType.label); }
+    if (selectedRandomType) {
+        insertRandomInternal(selectedRandomType.label);
+    }
 }
 
 /**
@@ -223,7 +225,7 @@ export async function getRandomQuickPickItemDescription(selectedRandomType: stri
     const chance = new Chance();
     let text: string = "";
 
-    // calls to showQuickPick or showInputBox cannot happen inside editor.selections.forEach. 
+    // calls to showQuickPick or showInputBox cannot happen inside editor.selections.forEach.
     // I get a "Promised not resolved within 1 second" error on editBuilder.insert()
     // https://github.com/microsoft/vscode/issues/87871
     let gender: string | undefined;
@@ -232,124 +234,118 @@ export async function getRandomQuickPickItemDescription(selectedRandomType: stri
     let colorType: string | undefined;
     if (selectedRandomType === "PERSON_NAME") {
         if (picker) {
-            gender = 'random';
-        }
-        else {
-            gender = await window.showQuickPick(['random', 'male', 'female'], { ignoreFocusOut: true, });
+            gender = "random";
+        } else {
+            gender = await window.showQuickPick(["random", "male", "female"], { ignoreFocusOut: true });
         }
     }
     if (selectedRandomType === "COLOR") {
         if (picker) {
-            colorType = 'hex';
-        }
-        else {
-            colorType = await window.showQuickPick(['hex', 'rgb'], { ignoreFocusOut: true });
+            colorType = "hex";
+        } else {
+            colorType = await window.showQuickPick(["hex", "rgb"], { ignoreFocusOut: true });
         }
     }
     if (selectedRandomType === "PARAGRAPH") {
         if (picker) {
             numberOfSentences = "1";
-        }
-        else {
-            numberOfSentences = await window.showInputBox({ prompt: 'How many sentences?', value: '5', ignoreFocusOut: true });
+        } else {
+            numberOfSentences = await window.showInputBox({ prompt: "How many sentences?", value: "5", ignoreFocusOut: true });
         }
     }
     if (selectedRandomType === "HASH") {
         if (picker) {
             hashLength = "32";
-        }
-        else {
-            hashLength = await window.showInputBox({ prompt: 'Enter length', value: '32', ignoreFocusOut: true });
+        } else {
+            hashLength = await window.showInputBox({ prompt: "Enter length", value: "32", ignoreFocusOut: true });
         }
     }
 
     switch (selectedRandomType) {
-        case 'IPV4':
+        case "IPV4":
             text = chance.ip();
             break;
-        case 'IPV6':
+        case "IPV6":
             text = chance.ipv6();
             break;
-        case 'NUMBER':
+        case "NUMBER":
             text = chance.natural().toString();
             break;
-        case 'PERSON_NAME':
+        case "PERSON_NAME":
             // TODO: add optional nationality
             // TODO: add optional middle name
             // TODO: add optional title
-            if (gender === 'male') {
-                text = chance.name({ gender: 'male' });
-            }
-            else if (gender === 'female') {
-                text = chance.name({ gender: 'female' });
-            }
-            else if (gender === 'random') {
+            if (gender === "male") {
+                text = chance.name({ gender: "male" });
+            } else if (gender === "female") {
+                text = chance.name({ gender: "female" });
+            } else if (gender === "random") {
                 text = chance.name();
             }
             break;
-        case 'SSN':
+        case "SSN":
             text = chance.ssn();
             break;
-        case 'PROFESSION':
+        case "PROFESSION":
             text = chance.profession({ rank: true });
             break;
-        case 'ANIMAL':
+        case "ANIMAL":
             // Allowed types are: ocean, desert, grassland, forest, farm, pet, and zoo
             text = chance.animal();
             break;
-        case 'COMPANY':
+        case "COMPANY":
             text = chance.company();
             break;
-        case 'DOMAIN':
+        case "DOMAIN":
             text = chance.domain();
             break;
-        case 'EMAIL':
+        case "EMAIL":
             text = chance.email();
             break;
-        case 'COLOR':
+        case "COLOR":
             text = chance.color({ format: colorType });
             break;
-        case 'TWITTER':
+        case "TWITTER":
             text = chance.twitter();
             break;
-        case 'URL':
+        case "URL":
             text = chance.url();
             break;
-        case 'CITY':
+        case "CITY":
             text = chance.city();
             break;
-        case 'ADDRESS':
+        case "ADDRESS":
             text = chance.address();
             break;
-        case 'COUNTRY':
+        case "COUNTRY":
             text = chance.country();
             break;
-        case 'COUNTRY_FULL_NAME':
+        case "COUNTRY_FULL_NAME":
             text = chance.country({ full: true });
             break;
-        case 'PHONE':
+        case "PHONE":
             text = chance.phone();
             break;
-        case 'ZIP_CODE':
+        case "ZIP_CODE":
             text = chance.zip();
             break;
-        case 'STATE':
+        case "STATE":
             text = chance.state();
             break;
-        case 'STATE_FULL_NAME':
+        case "STATE_FULL_NAME":
             text = chance.state({ full: true });
             break;
-        case 'STREET':
+        case "STREET":
             // INVESTIGATE: return the whole object?
             text = chance.street();
             break;
-        case 'TIMEZONE':
+        case "TIMEZONE":
             text = chance.timezone().name;
             break;
-        case 'PARAGRAPH':
+        case "PARAGRAPH":
             text = chance.paragraph({ sentences: numberOfSentences });
             break;
-        case 'HASH':
+        case "HASH":
             text = chance.hash({ length: hashLength });
             break;
         default:
@@ -366,10 +362,10 @@ export async function getRandomQuickPickItemDescription(selectedRandomType: stri
 export async function insertRandomInternal(randomType: string) {
     const editor = getActiveEditor();
 
-    await getRandomQuickPickItemDescription(randomType).then(_ => {
-        editor?.edit(async editBuilder => {
-            editor.selections.forEach(s => {
-                editBuilder.insert(s.active, _);
+    await getRandomQuickPickItemDescription(randomType).then((_) => {
+        editor?.edit(async (editBuilder) => {
+            editor.selections.forEach((s) => {
+                editBuilder.replace(s, _);
             });
         });
     });
@@ -379,8 +375,8 @@ export async function insertRandomInternal(randomType: string) {
  * Direction to pad the selection, used by `padText`
  */
 export enum padDirection {
-    right = 'right',
-    left = 'left'
+    right = "right",
+    left = "left",
 }
 
 /**
@@ -391,10 +387,14 @@ export enum padDirection {
  * @async
  */
 export async function padSelection(padDirection: string) {
-    const s: string | undefined = await window.showInputBox({ placeHolder: 'Padding string', ignoreFocusOut: true });
-    if (!s) { return; }
-    const n: string | undefined = await window.showInputBox({ placeHolder: 'Padding length', ignoreFocusOut: true });
-    if (!n) { return; }
+    const s: string | undefined = await window.showInputBox({ placeHolder: "Padding string", ignoreFocusOut: true });
+    if (!s) {
+        return;
+    }
+    const n: string | undefined = await window.showInputBox({ placeHolder: "Padding length", ignoreFocusOut: true });
+    if (!n) {
+        return;
+    }
 
     await padSelectionInternal(padDirection, s, Number(n));
 }
@@ -409,11 +409,11 @@ export async function padSelection(padDirection: string) {
 export async function padSelectionInternal(padDirection: string, padString: string, length: number) {
     const editor = getActiveEditor();
 
-    editor?.edit(editBuilder => {
+    editor?.edit((editBuilder) => {
         let lines = getLinesFromSelection(editor);
         let paddedSelection: string;
 
-        lines?.forEach(line => {
+        lines?.forEach((line) => {
             if (padDirection === "right") {
                 paddedSelection = line.text.padEnd(length, padString);
             }
@@ -433,7 +433,9 @@ export async function padSelectionInternal(padDirection: string, padString: stri
  */
 export async function insertLineNumbers(): Promise<boolean> {
     let startFrom = await window.showInputBox({ prompt: "start from", value: "1", ignoreFocusOut: true });
-    if (!startFrom) { return false; }
+    if (!startFrom) {
+        return false;
+    }
 
     return Promise.resolve(await insertLineNumbersInternal(startFrom));
 }
@@ -447,12 +449,14 @@ export async function insertLineNumbersInternal(startFrom: string): Promise<bool
     let i = Number(startFrom);
 
     const editor = getActiveEditor();
-    if (!editor) { return false; }
+    if (!editor) {
+        return false;
+    }
 
     let lines = getLinesFromSelection(editor);
 
-    editor.edit(editBuilder => {
-        lines?.forEach(line => {
+    editor.edit((editBuilder) => {
+        lines?.forEach((line) => {
             editBuilder.replace(line.range, `${i} ${line.text}`);
             i++;
         });
@@ -467,7 +471,7 @@ export async function insertLineNumbersInternal(startFrom: string): Promise<bool
  */
 export enum sequenceType {
     Numbers = "Numbers",
-    Letters = "Letters"
+    Letters = "Letters",
 }
 
 /**
@@ -481,28 +485,32 @@ export async function insertSequence(type: sequenceType): Promise<boolean> {
     switch (type) {
         case "Letters":
             startFrom = await window.showInputBox({ prompt: "start from", value: "a", ignoreFocusOut: true });
-            if (!startFrom) { return false; }
+            if (!startFrom) {
+                return false;
+            }
             break;
         case "Numbers":
             startFrom = await window.showInputBox({ prompt: "start from", value: "1", ignoreFocusOut: true });
-            if (!startFrom) { return false; }
+            if (!startFrom) {
+                return false;
+            }
             break;
         default:
             break;
     }
 
     const length = await window.showInputBox({ prompt: "length", value: "10", ignoreFocusOut: true });
-    if (!length) { return false; }
+    if (!length) {
+        return false;
+    }
 
-    return Promise.resolve(
-        await insertSequenceInternal(type, startFrom!, Number(length))
-    );
+    return Promise.resolve(await insertSequenceInternal(type, startFrom!, Number(length)));
 }
 
 /**
  * Internal function to inserts the sequence of numbers or letters as selected by the user
  * @param {sequenceType} type The type of characters to use for the sequence to insert
- * @param {string} startFrom Starting index (for numbers sequence) or letter (for letters sequence) 
+ * @param {string} startFrom Starting index (for numbers sequence) or letter (for letters sequence)
  * @param {number} length The length of the sequence to insert
  * @param {string} [direction] The direction of the sequence to insert
  * @return {*} {Promise<boolean>}
@@ -510,14 +518,16 @@ export async function insertSequence(type: sequenceType): Promise<boolean> {
  */
 export async function insertSequenceInternal(type: sequenceType, startFrom: string, length: number, direction?: string): Promise<boolean> {
     const editor = getActiveEditor();
-    if (!editor) { return false; }
+    if (!editor) {
+        return false;
+    }
 
     const alphabetLowercase = "abcdefghijklmnopqrstuvwxyz";
     const alphabetUppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     let i: number;
-    type === "Letters" ? i = alphabetLowercase.indexOf(startFrom) : i = Number(startFrom);
+    type === "Letters" ? (i = alphabetLowercase.indexOf(startFrom)) : (i = Number(startFrom));
 
-    editor.edit(editBuilder => {
+    editor.edit((editBuilder) => {
         let position = editor.selection.active;
         length = i + length;
         let newText: string = "";
@@ -550,22 +560,22 @@ export async function insertLoremIpsumInternal(loremIpsumType: string, length: n
     var lorem: string;
 
     switch (loremIpsumType) {
-        case 'Paragraphs':
+        case "Paragraphs":
             lorem = loremIpsum.generateParagraphs(length);
             break;
-        case 'Sentences':
+        case "Sentences":
             lorem = loremIpsum.generateSentences(length);
             break;
-        case 'Words':
+        case "Words":
             lorem = loremIpsum.generateWords(length);
             break;
         default:
             break;
     }
 
-    editor?.edit(editBuilder => {
-        editor.selections.forEach(async s => {
-            editBuilder.insert(s.active, lorem);
+    editor?.edit((editBuilder) => {
+        editor.selections.forEach(async (s) => {
+            editBuilder.replace(s, lorem);
         });
     });
 
@@ -578,28 +588,32 @@ export async function insertLoremIpsumInternal(loremIpsumType: string, length: n
  * @async
  */
 export async function insertLoremIpsum() {
-    const loremIpsumType = [
-        'Paragraphs',
-        'Sentences',
-        'Words'
-    ];
+    const loremIpsumType = ["Paragraphs", "Sentences", "Words"];
     const loremIpsumTypeChoice: string | undefined = await window.showQuickPick(loremIpsumType, { ignoreFocusOut: true });
-    if (!loremIpsumTypeChoice) { return; }
+    if (!loremIpsumTypeChoice) {
+        return;
+    }
     const loremIpsumLength: string | undefined = await window.showInputBox({
-        prompt: "Insert length", value: "5", ignoreFocusOut: true
+        prompt: "Insert length",
+        value: "5",
+        ignoreFocusOut: true,
     });
-    if (!loremIpsumLength) { return; }
+    if (!loremIpsumLength) {
+        return;
+    }
 
     insertLoremIpsumInternal(loremIpsumTypeChoice, Number(loremIpsumLength));
 }
 
 /**
  * Insert a random Currency value
- * @return {*} 
+ * @return {*}
  */
 export async function insertCurrency() {
     const editor = getActiveEditor();
-    if (!editor) { return; }
+    if (!editor) {
+        return;
+    }
 
     const currencies = [
         "US Dollar",
@@ -614,11 +628,11 @@ export async function insertCurrency() {
         "Bitcoin",
         "South Korean Won",
         "South African Rand",
-        "Swiss Franc"
+        "Swiss Franc",
     ];
 
     let quickPickItems: QuickPickItem[] = [];
-    currencies.forEach(item => {
+    currencies.forEach((item) => {
         let qp: QuickPickItem = {
             label: item,
             description: getCurrencyQuickPickItemDescription(item),
@@ -628,7 +642,9 @@ export async function insertCurrency() {
 
     const selectedFormat = await window.showQuickPick(quickPickItems, { ignoreFocusOut: true });
 
-    if (selectedFormat) { await insertCurrencyInternal(selectedFormat.label); };
+    if (selectedFormat) {
+        await insertCurrencyInternal(selectedFormat.label);
+    }
 }
 
 export function getCurrencyQuickPickItemDescription(item: string): string {
@@ -637,44 +653,44 @@ export function getCurrencyQuickPickItemDescription(item: string): string {
     let currencyValue: string = "";
 
     switch (item) {
-        case 'US Dollar':
-            currencyValue = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 2, useGrouping: true }).format(number);
+        case "US Dollar":
+            currencyValue = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 2, useGrouping: true }).format(number);
             break;
-        case 'Euro':
-            currencyValue = new Intl.NumberFormat('it-IT', { style: 'currency', currency: 'EUR', maximumFractionDigits: 2, useGrouping: true }).format(number);
+        case "Euro":
+            currencyValue = new Intl.NumberFormat("it-IT", { style: "currency", currency: "EUR", maximumFractionDigits: 2, useGrouping: true }).format(number);
             break;
-        case 'British Pound':
-            currencyValue = new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP', maximumFractionDigits: 2, useGrouping: true }).format(number);
+        case "British Pound":
+            currencyValue = new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP", maximumFractionDigits: 2, useGrouping: true }).format(number);
             break;
-        case 'Japanese Yen':
-            currencyValue = new Intl.NumberFormat('jp-JP', { style: 'currency', currency: 'JPY', maximumFractionDigits: 2, useGrouping: true }).format(number);
+        case "Japanese Yen":
+            currencyValue = new Intl.NumberFormat("jp-JP", { style: "currency", currency: "JPY", maximumFractionDigits: 2, useGrouping: true }).format(number);
             break;
-        case 'Chinese Yuan':
-            currencyValue = new Intl.NumberFormat('zh-CN', { style: 'currency', currency: 'CNY', maximumFractionDigits: 2, useGrouping: true }).format(number);
+        case "Chinese Yuan":
+            currencyValue = new Intl.NumberFormat("zh-CN", { style: "currency", currency: "CNY", maximumFractionDigits: 2, useGrouping: true }).format(number);
             break;
-        case 'Indian Rupee':
-            currencyValue = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 2, useGrouping: true }).format(number);
+        case "Indian Rupee":
+            currencyValue = new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 2, useGrouping: true }).format(number);
             break;
-        case 'Mexican Peso':
-            currencyValue = new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN', maximumFractionDigits: 2, useGrouping: true }).format(number);
+        case "Mexican Peso":
+            currencyValue = new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN", maximumFractionDigits: 2, useGrouping: true }).format(number);
             break;
-        case 'Russian Ruble':
-            currencyValue = new Intl.NumberFormat('ru-RU', { style: 'currency', currency: 'RUB', maximumFractionDigits: 2, useGrouping: true }).format(number);
+        case "Russian Ruble":
+            currencyValue = new Intl.NumberFormat("ru-RU", { style: "currency", currency: "RUB", maximumFractionDigits: 2, useGrouping: true }).format(number);
             break;
-        case 'Israeli New Shequel':
-            currencyValue = new Intl.NumberFormat('he-HE', { style: 'currency', currency: 'ILS', maximumFractionDigits: 2, useGrouping: true }).format(number);
+        case "Israeli New Shequel":
+            currencyValue = new Intl.NumberFormat("he-HE", { style: "currency", currency: "ILS", maximumFractionDigits: 2, useGrouping: true }).format(number);
             break;
-        case 'Bitcoin':
-            currencyValue = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'BTC', maximumFractionDigits: 2, useGrouping: true }).format(number);
+        case "Bitcoin":
+            currencyValue = new Intl.NumberFormat("en-US", { style: "currency", currency: "BTC", maximumFractionDigits: 2, useGrouping: true }).format(number);
             break;
-        case 'South Korean Won':
-            currencyValue = new Intl.NumberFormat('ko-KO', { style: 'currency', currency: 'KRW', maximumFractionDigits: 2, useGrouping: true }).format(number);
+        case "South Korean Won":
+            currencyValue = new Intl.NumberFormat("ko-KO", { style: "currency", currency: "KRW", maximumFractionDigits: 2, useGrouping: true }).format(number);
             break;
-        case 'South African Rand':
-            currencyValue = new Intl.NumberFormat('en-ZA', { style: 'currency', currency: 'ZAR', maximumFractionDigits: 2, useGrouping: true }).format(number);
+        case "South African Rand":
+            currencyValue = new Intl.NumberFormat("en-ZA", { style: "currency", currency: "ZAR", maximumFractionDigits: 2, useGrouping: true }).format(number);
             break;
-        case 'Swiss Franc':
-            currencyValue = new Intl.NumberFormat('de-CH', { style: 'currency', currency: 'CHF', maximumFractionDigits: 2, useGrouping: true }).format(number);
+        case "Swiss Franc":
+            currencyValue = new Intl.NumberFormat("de-CH", { style: "currency", currency: "CHF", maximumFractionDigits: 2, useGrouping: true }).format(number);
             break;
         default:
             break;
@@ -690,13 +706,17 @@ export function getCurrencyQuickPickItemDescription(item: string): string {
  */
 export async function insertCurrencyInternal(currency: string): Promise<boolean | undefined> {
     const editor = getActiveEditor();
-    if (!editor) { return; }
+    if (!editor) {
+        return;
+    }
 
-    editor.edit(editBuilder => {
-        editor.selections.forEach(s => {
-            editBuilder.insert(s.active, getCurrencyQuickPickItemDescription(currency));
+    editor.edit((editBuilder) => {
+        editor.selections.forEach((s) => {
+            editBuilder.replace(s, getCurrencyQuickPickItemDescription(currency));
         });
     });
 
     Promise.resolve(true);
 }
+
+// TODO: if there is a selection, the insert operation should replace it rather than append to it

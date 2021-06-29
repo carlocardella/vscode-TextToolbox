@@ -75,3 +75,5 @@ function convertSelection(text: Selection, conversion: caseConversions) {
         }
     });
 }
+
+// TODO: invest casing 

@@ -74,6 +74,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## Log
 
+## [1.5.0] - 2021-06-29
+
+### Changed
+
+* `Insert` commands overrite the existing selection (if there is one) instead of appending to it
+
 ## [1.4.1] - 2021-06-13
 
 ### Changed
