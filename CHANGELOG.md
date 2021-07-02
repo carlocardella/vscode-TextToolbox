@@ -74,6 +74,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## Log
 
+## [version] - 2021-07-02 @todo
+
+### Changed
+
+* Added `Incert case` command
+
 ## [1.5.0] - 2021-06-29
 
 ### Changed

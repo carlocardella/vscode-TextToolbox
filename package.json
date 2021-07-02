@@ -98,6 +98,10 @@
 				"title": "TT: snake_case"
 			},
 			{
+				"command": "vscode-texttoolbox.InvertCase",
+				"title": "TT: invert case"
+			},
+			{
 				"command": "vscode-texttoolbox.InsertGUID",
 				"title": "TT: Insert GUID"
 			},

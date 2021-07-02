@@ -44,6 +44,8 @@ Likewise, `Conver to CapitalCase` has been removed in favor of the built-in VSCo
   * Lorem ipsum dolor sit amet => Lorem ipsum dolor sit amet
 * snake_case
   * Lorem ipsum dolor sit amet => lorem_ipsum_dolor_sit_amet
+* Invert case
+  * Lorem Ipsum Dolor Sit Amet => lOREM iPSUM dOLOR sIT aMET
 * Insert GUID
   * 14854fc2-f782-5136-aebb-a121b9ba6af1
 * Insert GUID all zeros
