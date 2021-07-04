@@ -2,7 +2,7 @@ import { TextEditor, TextEditorDecorationType, workspace } from "vscode";
 import { newDecorator, updateDecorations } from "./decorations";
 import { getSelections, getTextFromSelection, getActiveEditor } from './helpers';
 
-
+// todo: test https://weblogs.asp.net/kon/finding-those-pesky-unicode-characters-in-visual-studio
 /**
  * Array of control (bad) chars
  * @type {*}
