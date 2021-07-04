@@ -78,7 +78,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ### Changed
 
-* Added `Incert case` command
+* Case conversions work with multiple selections
+
+### Added
+
+* Added `Insert case` command
 
 ## [1.5.0] - 2021-06-29
 
