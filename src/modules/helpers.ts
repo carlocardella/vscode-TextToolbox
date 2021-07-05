@@ -1,6 +1,5 @@
-import { commands, Range, Selection, TextEditor, window, workspace, TextLine } from 'vscode';
-import * as os from 'os';
-
+import { commands, Range, Selection, TextEditor, window, workspace, TextLine } from "vscode";
+import * as os from "os";
 
 /**
  * Returns the active text editor
@@ -15,7 +14,9 @@ export function getActiveEditor(): TextEditor | undefined {
  */
 function validateEditor() {
     const editor = getActiveEditor();
-    if (!editor) { return; }
+    if (!editor) {
+        return;
+    }
 }
 
 /**
@@ -26,7 +27,9 @@ export function validateSelection(): boolean {
     validateEditor();
 
     const selections = window.activeTextEditor?.selections;
-    if (!selections) { return false; }
+    if (!selections) {
+        return false;
+    }
 
     if (selections?.length < 1) {
         window.showWarningMessage("You must select some text first");
@@ -41,7 +44,7 @@ export function validateSelection(): boolean {
  * @param milliseconds the number of milliseconds to wait
  */
 export function sleep(milliseconds: number): Promise<void> {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
         setTimeout(resolve, milliseconds);
     });
 }
@@ -50,7 +53,7 @@ export function sleep(milliseconds: number): Promise<void> {
  * Selects all text in the active text editor
  */
 export function selectAllText(): Thenable<unknown> {
-    return commands.executeCommand('editor.action.selectAll');
+    return commands.executeCommand("editor.action.selectAll");
 }
 
 /**
@@ -63,8 +66,7 @@ export function getDocumentTextOrSelection(): string | undefined {
 
     if (selection.isEmpty) {
         return editor.document.getText();
-    }
-    else {
+    } else {
         return getTextFromSelection(editor, selection);
     }
 }
@@ -98,14 +100,24 @@ export function getTextFromSelection(editor: TextEditor, selection: Selection): 
 
 /**
  * Returns an object with line information for each line in the selection
+ * @param editor The Editor with the selection
+ * @param selection The Selection object to split into lines
  * @return {(TextLine[] | undefined)}
  */
-export function getLinesFromSelection(editor: TextEditor): TextLine[] | undefined {
+export function getLinesFromSelection(editor: TextEditor, selection?: Selection): TextLine[] | undefined {
     let lines: TextLine[] = [];
-    let selections = editor?.selections;
-    if (!selections) { return; }
+    let selections: Selection[] = [];
 
-    selections.forEach(s => {
+    if (selection) {
+        selections.push(selection);
+    } else {
+        selections = editor?.selections;
+        if (!selections) {
+            return;
+        }
+    }
+
+    selections.forEach((s) => {
         let selectionStartLine = s.start.line;
         let selectionEndLine = s.end.line;
 
@@ -117,16 +129,19 @@ export function getLinesFromSelection(editor: TextEditor): TextLine[] | undefine
     return lines!;
 }
 
-export function getLinesFromDocumentOrSelection(editor: TextEditor): TextLine[] | undefined {
+export function getLinesFromDocumentOrSelection(editor: TextEditor): TextLine[] | undefined;
+export function getLinesFromDocumentOrSelection(editor: TextEditor, selection: Selection): TextLine[] | undefined;
+export function getLinesFromDocumentOrSelection(editor: TextEditor, selection?: Selection): TextLine[] | undefined {
     const lineCount = editor.document.lineCount;
-    if (lineCount < 1) { return; }
+    if (lineCount < 1) {
+        return;
+    }
 
     let textLines: TextLine[] = [];
 
     if (!editor.selection.isEmpty) {
-        return getLinesFromSelection(editor);
-    }
-    else {
+        return getLinesFromSelection(editor, selection);
+    } else {
         for (let i = 0; i < lineCount; i++) {
             textLines.push(editor.document.lineAt(i));
         }
@@ -159,9 +174,8 @@ export function createNewEditor(text?: string): Promise<TextEditor> {
 export function closeTextEditor(closeAll?: boolean): Promise<void> {
     if (closeAll) {
         commands.executeCommand("workbench.action.closeAllEditors");
-    }
-    else {
-        commands.executeCommand('workbench.action.closeActiveEditor');
+    } else {
+        commands.executeCommand("workbench.action.closeActiveEditor");
     }
 
     return Promise.resolve();
@@ -188,7 +202,7 @@ export async function getLinesFromString(line: string): Promise<string[]> {
 }
 
 /**
- * Returns an array of selections if any is available in the active document, otherwise returns the entire document as a single selection 
+ * Returns an array of selections if any is available in the active document, otherwise returns the entire document as a single selection
  * @param {TextEditor} editor The active text editor to get the selections from
  * @return {*}  {Promise<Selection[]>}
  * @async
@@ -196,8 +210,7 @@ export async function getLinesFromString(line: string): Promise<string[]> {
 export async function getSelections(editor: TextEditor): Promise<Selection[]> {
     if (editor.selections.length >= 1 && !editor.selection.isEmpty) {
         return Promise.resolve(editor.selections);
-    }
-    else {
+    } else {
         const lastLine = editor.document.lineAt(editor.document.lineCount - 1);
         let selection = new Selection(0, 0, lastLine.lineNumber, lastLine.text.length);
         let selections: Selection[] = [];

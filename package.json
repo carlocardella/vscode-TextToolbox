@@ -1,324 +1,324 @@
 {
-	"name": "vscode-texttoolbox",
-	"displayName": "Text Toolbox",
-	"description": "Collection of tools for text manipulation, filtering, sorting etc...",
-	"version": "1.5.0",
-	"publisher": "carlocardella",
-	"author": {
-		"name": "Carlo Cardella",
-		"url": "https://cloudnotes.io"
-	},
-	"engines": {
-		"vscode": "^1.45.0"
-	},
-	"categories": [
-		"Other"
-	],
-	"capabilities": {
-		"untrustedWorkspaces": {
-			"supported": true
-		}
-	},
-	"keywords": [
-		"text",
-		"tools",
-		"grep",
-		"utilities",
-		"filter",
-		"filter text",
-		"filter lines",
-		"case",
-		"converter",
-		"converting",
-		"lorem",
-		"ipsum",
-		"random",
-		"word count",
-		"lines count",
-		"sort text",
-		"sort lines",
-		"sort",
-		"Lorem Ipsum",
-		"split",
-		"random",
-		"insert date",
-		"duplicates"
-	],
-	"activationEvents": [
-		"*"
-	],
-	"main": "./dist/extension",
-	"preview": false,
-	"badges": [],
-	"icon": "text_icon_regular.png",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/carlocardella/vscode-TextToolbox.git"
-	},
-	"bugs": {
-		"url": "https://github.com/carlocardella/vscode-TextToolbox/issues"
-	},
-	"license": "MIT",
-	"contributes": {
-		"commands": [
-			{
-				"command": "vscode-texttoolbox.PascalCase",
-				"title": "TT: PascalCase"
-			},
-			{
-				"command": "vscode-texttoolbox.CamelCase",
-				"title": "TT: camel Case"
-			},
-			{
-				"command": "vscode-texttoolbox.ConstantCase",
-				"title": "TT: CONSTANT_CASE"
-			},
-			{
-				"command": "vscode-texttoolbox.DotCase",
-				"title": "TT: dot.case"
-			},
-			{
-				"command": "vscode-texttoolbox.HarderCase",
-				"title": "TT: Harder-Case"
-			},
-			{
-				"command": "vscode-texttoolbox.NoCase",
-				"title": "TT: no case"
-			},
-			{
-				"command": "vscode-texttoolbox.ParamCase",
-				"title": "TT: param-case"
-			},
-			{
-				"command": "vscode-texttoolbox.SentenceCase",
-				"title": "TT: Sentence case"
-			},
-			{
-				"command": "vscode-texttoolbox.SnakeCase",
-				"title": "TT: snake_case"
-			},
-			{
-				"command": "vscode-texttoolbox.InvertCase",
-				"title": "TT: invert case"
-			},
-			{
-				"command": "vscode-texttoolbox.InsertGUID",
-				"title": "TT: Insert GUID"
-			},
-			{
-				"command": "vscode-texttoolbox.InsertGuidAllZeros",
-				"title": "TT: Insert GUID all zeros"
-			},
-			{
-				"command": "vscode-texttoolbox.InsertDate",
-				"title": "TT: Insert Date"
-			},
-			{
-				"command": "vscode-texttoolbox.PickRandom",
-				"title": "TT: Insert Random"
-			},
-			{
-				"command": "vscode-texttoolbox.PadSelectionRight",
-				"title": "TT: Pad Selection Right"
-			},
-			{
-				"command": "vscode-texttoolbox.PadSelectionLeft",
-				"title": "TT: Pad Selection Left"
-			},
-			{
-				"command": "vscode-texttoolbox.RemoveAllEmptyLines",
-				"title": "TT: Remove all empty lines"
-			},
-			{
-				"command": "vscode-texttoolbox.RemoveRedundantEmptyLines",
-				"title": "TT: Remove redundant empty lines"
-			},
-			{
-				"command": "vscode-texttoolbox.RemoveDuplicateLines",
-				"title": "TT: Remove duplicate lines"
-			},
-			{
-				"command": "vscode-texttoolbox.RemoveDuplicateLinesResultInNewEditor",
-				"title": "TT: Remove duplicate lines, result in new Editor"
-			},
-			{
-				"command": "vscode-texttoolbox.FilterLinesUsingRegExpOrString",
-				"title": "TT: Filter lines, result in new Editor"
-			},
-			{
-				"command": "vscode-texttoolbox.SortLinesResultInNewEditor",
-				"title": "TT: Sort lines, result in new editor"
-			},
-			{
-				"command": "vscode-texttoolbox.SortLines",
-				"title": "TT: Sort lines"
-			},
-			{
-				"command": "vscode-texttoolbox.OpenSelectionInNewEditor",
-				"title": "TT: Open selection in new editor"
-			},
-			{
-				"command": "vscode-texttoolbox.InsertLineNumbers",
-				"title": "TT: Insert line numbers"
-			},
-			{
-				"command": "vscode-texttoolbox.InsertSequenceNumbers",
-				"title": "TT: Insert numbers sequence"
-			},
-			{
-				"command": "vscode-texttoolbox.RemoveControlCharacters",
-				"title": "TT: Remove control characters"
-			},
-			{
-				"command": "vscode-texttoolbox.TrimLineOrSelection",
-				"title": "TT: Trim"
-			},
-			{
-				"command": "vscode-texttoolbox.InsertCurrency",
-				"title": "TT: Insert Currency"
-			},
-			{
-				"command": "vscode-texttoolbox.SplitSelection",
-				"title": "TT: Split Selection"
-			},
-			{
-				"command": "vscode-texttoolbox.SplitSelectionOpenInNewEditor",
-				"title": "TT: Split Selection, result in new editor"
-			},
-			{
-				"command": "vscode-texttoolbox.FixJson",
-				"title": "TT: Fix and Format Json"
-			},
-			{
-				"command": "vscode-texttoolbox.StringifyJson",
-				"title": "TT: Stringify Json"
-			},
-			{
-				"command": "vscode-texttoolbox.MinifyJson",
-				"title": "TT: Minify Json"
-			},
-			{
-				"command": "vscode-texttoolbox.TransformPathToPosix",
-				"title": "TT: Transform path to Posix"
-			},
-			{
-				"command": "vscode-texttoolbox.TransformPathToWin32",
-				"title": "TT: Transform path to Win32"
-			},
-			{
-				"command": "vscode-texttoolbox.InsertLoremIpsum",
-				"title": "TT: Insert Lorem Ipsum"
-			}
-		],
-		"configuration": [
-			{
-				"title": "Text Toolbox",
-				"properties": {
-					"tt.statusBarAlignment": {
-						"type": "string",
-						"enum": [
-							"Left",
-							"Right"
-						],
-						"default": "Right",
-						"scope": "window",
-						"description": "Text Toolbox word and selected lines count alignment in the StatusBar"
-					},
-					"tt.statusBarPriority": {
-						"type": "number",
-						"default": 100,
-						"scope": "window",
-						"description": "Text Toolbox word and selected lines count StatusBar priority"
-					},
-					"tt.enableStatusBarWordLineCount": {
-						"type": "boolean",
-						"default": true,
-						"scope": "window",
-						"description": "Enable or disable the StatusBar Text Toolbox word and selected lines count"
-					},
-					"tt.ignoreWhitespaceInLineFilters": {
-						"type": "boolean",
-						"default": true,
-						"scope": "window",
-						"description": "Ignore leading and trailing whitespaces when filtering lines: this can impact how duplicate lines are removed"
-					},
-					"tt.filtersUseRegularExpressions": {
-						"type": "boolean",
-						"default": true,
-						"scope": "window",
-						"description": "Filter use Regular Expression rather than simple text match"
-					},
-					"tt.decorateControlCharacters": {
-						"type": "object",
-						"description": "Control characters decoration appearance",
-						"default": {
-							"borderWidth": "1px",
-							"borderStyle": "solid",
-							"overviewRulerColor": "red",
-							"borderColor": "red"
-						}
-					},
-					"tt.replaceControlCharactersWith": {
-						"type": "string",
-						"default": "",
-						"scope": "window",
-						"description": "Replace control characters (TT: Remove Control Characters) in the active document with this string"
-					}
-				}
-			}
-		]
-	},
-	"scripts": {
-		"vscode:prepublish": "webpack --mode production",
-		"webpack": "webpack --mode development",
-		"webpack-dev": "webpack --mode development --watch",
-		"test-compile": "tsc -p ./",
-		"unit-tests": "tsc -w -p ./"
-	},
-	"devDependencies": {
-		"@types/assert": "^1.5.2",
-		"@types/chance": "^1.1.0",
-		"@types/change-case": "^2.3.1",
-		"@types/date-and-time": "^0.13.0",
-		"@types/dateformat": "^3.0.1",
-		"@types/glob": "^7.1.1",
-		"@types/guid": "^1.0.0",
-		"@types/jsonic": "^0.3.0",
-		"@types/luxon": "^1.24.4",
-		"@types/mocha": "^7.0.2",
-		"@types/node": "^13.11.0",
-		"@types/node-uuid": "0.0.28",
-		"@types/pad": "^2.1.0",
-		"@types/vscode": "^1.45.0",
-		"@typescript-eslint/eslint-plugin": "^2.30.0",
-		"@typescript-eslint/parser": "^2.30.0",
-		"assert": "^2.0.0",
-		"copy-to-clipboard": "^3.3.1",
-		"eslint": "^6.8.0",
-		"glob": "^7.1.6",
-		"guid": "0.0.12",
-		"lorem-ipsum": "^2.0.3",
-		"mocha": "^7.2.0",
-		"mocha-explorer-launcher-scripts": "^0.3.0",
-		"node-uuid": "^1.4.8",
-		"nyc": "^15.1.0",
-		"pad": "^3.2.0",
-		"source-map-support": "^0.5.19",
-		"ts-loader": "^8.3.0",
-		"ts-node": "^9.1.1",
-		"typescript": "^3.8.3",
-		"uuid-lib": "0.0.6",
-		"vsce": "^1.79.3",
-		"vscode-test": "^1.3.0",
-		"webpack": "^5.38.1",
-		"webpack-cli": "^3.3.12",
-		"yarn": "^1.22.10"
-	},
-	"dependencies": {
-		"chance": "^1.1.7",
-		"change-case": "^4.1.1",
-		"jsonic": "^1.0.1",
-		"luxon": "^1.25.0",
-		"os": "^0.1.1"
-	}
+    "name": "vscode-texttoolbox",
+    "displayName": "Text Toolbox",
+    "description": "Collection of tools for text manipulation, filtering, sorting etc...",
+    "version": "1.5.0",
+    "publisher": "carlocardella",
+    "author": {
+        "name": "Carlo Cardella",
+        "url": "https://cloudnotes.io"
+    },
+    "engines": {
+        "vscode": "^1.45.0"
+    },
+    "categories": [
+        "Other"
+    ],
+    "capabilities": {
+        "untrustedWorkspaces": {
+            "supported": true
+        }
+    },
+    "keywords": [
+        "text",
+        "tools",
+        "grep",
+        "utilities",
+        "filter",
+        "filter text",
+        "filter lines",
+        "case",
+        "converter",
+        "converting",
+        "lorem",
+        "ipsum",
+        "random",
+        "word count",
+        "lines count",
+        "sort text",
+        "sort lines",
+        "sort",
+        "Lorem Ipsum",
+        "split",
+        "random",
+        "insert date",
+        "duplicates"
+    ],
+    "activationEvents": [
+        "*"
+    ],
+    "main": "./dist/extension",
+    "preview": false,
+    "badges": [],
+    "icon": "text_icon_regular.png",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/carlocardella/vscode-TextToolbox.git"
+    },
+    "bugs": {
+        "url": "https://github.com/carlocardella/vscode-TextToolbox/issues"
+    },
+    "license": "MIT",
+    "contributes": {
+        "commands": [
+            {
+                "command": "vscode-texttoolbox.PascalCase",
+                "title": "TT: PascalCase"
+            },
+            {
+                "command": "vscode-texttoolbox.CamelCase",
+                "title": "TT: camel Case"
+            },
+            {
+                "command": "vscode-texttoolbox.ConstantCase",
+                "title": "TT: CONSTANT_CASE"
+            },
+            {
+                "command": "vscode-texttoolbox.DotCase",
+                "title": "TT: dot.case"
+            },
+            {
+                "command": "vscode-texttoolbox.HarderCase",
+                "title": "TT: Harder-Case"
+            },
+            {
+                "command": "vscode-texttoolbox.NoCase",
+                "title": "TT: no case"
+            },
+            {
+                "command": "vscode-texttoolbox.ParamCase",
+                "title": "TT: param-case"
+            },
+            {
+                "command": "vscode-texttoolbox.SentenceCase",
+                "title": "TT: Sentence case"
+            },
+            {
+                "command": "vscode-texttoolbox.SnakeCase",
+                "title": "TT: snake_case"
+            },
+            {
+                "command": "vscode-texttoolbox.InvertCase",
+                "title": "TT: invert case"
+            },
+            {
+                "command": "vscode-texttoolbox.InsertGUID",
+                "title": "TT: Insert GUID"
+            },
+            {
+                "command": "vscode-texttoolbox.InsertGuidAllZeros",
+                "title": "TT: Insert GUID all zeros"
+            },
+            {
+                "command": "vscode-texttoolbox.InsertDate",
+                "title": "TT: Insert Date"
+            },
+            {
+                "command": "vscode-texttoolbox.PickRandom",
+                "title": "TT: Insert Random"
+            },
+            {
+                "command": "vscode-texttoolbox.PadSelectionRight",
+                "title": "TT: Pad Selection Right"
+            },
+            {
+                "command": "vscode-texttoolbox.PadSelectionLeft",
+                "title": "TT: Pad Selection Left"
+            },
+            {
+                "command": "vscode-texttoolbox.RemoveAllEmptyLines",
+                "title": "TT: Remove all empty lines"
+            },
+            {
+                "command": "vscode-texttoolbox.RemoveRedundantEmptyLines",
+                "title": "TT: Remove redundant empty lines"
+            },
+            {
+                "command": "vscode-texttoolbox.RemoveDuplicateLines",
+                "title": "TT: Remove duplicate lines"
+            },
+            {
+                "command": "vscode-texttoolbox.RemoveDuplicateLinesResultInNewEditor",
+                "title": "TT: Remove duplicate lines, result in new Editor"
+            },
+            {
+                "command": "vscode-texttoolbox.FilterLinesUsingRegExpOrString",
+                "title": "TT: Filter lines, result in new Editor"
+            },
+            {
+                "command": "vscode-texttoolbox.SortLinesResultInNewEditor",
+                "title": "TT: Sort lines, result in new editor"
+            },
+            {
+                "command": "vscode-texttoolbox.SortLines",
+                "title": "TT: Sort lines"
+            },
+            {
+                "command": "vscode-texttoolbox.OpenSelectionInNewEditor",
+                "title": "TT: Open selection in new editor"
+            },
+            {
+                "command": "vscode-texttoolbox.InsertLineNumbers",
+                "title": "TT: Insert line numbers"
+            },
+            {
+                "command": "vscode-texttoolbox.InsertSequenceNumbers",
+                "title": "TT: Insert numbers sequence"
+            },
+            {
+                "command": "vscode-texttoolbox.RemoveControlCharacters",
+                "title": "TT: Remove control characters"
+            },
+            {
+                "command": "vscode-texttoolbox.TrimLineOrSelection",
+                "title": "TT: Trim"
+            },
+            {
+                "command": "vscode-texttoolbox.InsertCurrency",
+                "title": "TT: Insert Currency"
+            },
+            {
+                "command": "vscode-texttoolbox.SplitSelection",
+                "title": "TT: Split Selection"
+            },
+            {
+                "command": "vscode-texttoolbox.SplitSelectionOpenInNewEditor",
+                "title": "TT: Split Selection, result in new editor"
+            },
+            {
+                "command": "vscode-texttoolbox.FixJson",
+                "title": "TT: Fix and Format Json"
+            },
+            {
+                "command": "vscode-texttoolbox.StringifyJson",
+                "title": "TT: Stringify Json"
+            },
+            {
+                "command": "vscode-texttoolbox.MinifyJson",
+                "title": "TT: Minify Json"
+            },
+            {
+                "command": "vscode-texttoolbox.TransformPathToPosix",
+                "title": "TT: Transform path to Posix"
+            },
+            {
+                "command": "vscode-texttoolbox.TransformPathToWin32",
+                "title": "TT: Transform path to Win32"
+            },
+            {
+                "command": "vscode-texttoolbox.InsertLoremIpsum",
+                "title": "TT: Insert Lorem Ipsum"
+            }
+        ],
+        "configuration": [
+            {
+                "title": "Text Toolbox",
+                "properties": {
+                    "tt.statusBarAlignment": {
+                        "type": "string",
+                        "enum": [
+                            "Left",
+                            "Right"
+                        ],
+                        "default": "Right",
+                        "scope": "window",
+                        "description": "Text Toolbox word and selected lines count alignment in the StatusBar"
+                    },
+                    "tt.statusBarPriority": {
+                        "type": "number",
+                        "default": 100,
+                        "scope": "window",
+                        "description": "Text Toolbox word and selected lines count StatusBar priority"
+                    },
+                    "tt.enableStatusBarWordLineCount": {
+                        "type": "boolean",
+                        "default": true,
+                        "scope": "window",
+                        "description": "Enable or disable the StatusBar Text Toolbox word and selected lines count"
+                    },
+                    "tt.ignoreWhitespaceInLineFilters": {
+                        "type": "boolean",
+                        "default": true,
+                        "scope": "window",
+                        "description": "Ignore leading and trailing whitespaces when filtering lines: this can impact how duplicate lines are removed"
+                    },
+                    "tt.filtersUseRegularExpressions": {
+                        "type": "boolean",
+                        "default": true,
+                        "scope": "window",
+                        "description": "Filter use Regular Expression rather than simple text match"
+                    },
+                    "tt.decorateControlCharacters": {
+                        "type": "object",
+                        "description": "Control characters decoration appearance",
+                        "default": {
+                            "borderWidth": "1px",
+                            "borderStyle": "solid",
+                            "overviewRulerColor": "red",
+                            "borderColor": "red"
+                        }
+                    },
+                    "tt.replaceControlCharactersWith": {
+                        "type": "string",
+                        "default": "",
+                        "scope": "window",
+                        "description": "Replace control characters (TT: Remove Control Characters) in the active document with this string"
+                    }
+                }
+            }
+        ]
+    },
+    "scripts": {
+        "vscode:prepublish": "webpack --mode production",
+        "webpack": "webpack --mode development",
+        "webpack-dev": "webpack --mode development --watch",
+        "test-compile": "tsc -p ./",
+        "unit-tests": "tsc -w -p ./"
+    },
+    "devDependencies": {
+        "@types/assert": "^1.5.2",
+        "@types/chance": "^1.1.0",
+        "@types/change-case": "^2.3.1",
+        "@types/date-and-time": "^0.13.0",
+        "@types/dateformat": "^3.0.1",
+        "@types/glob": "^7.1.1",
+        "@types/guid": "^1.0.0",
+        "@types/jsonic": "^0.3.0",
+        "@types/luxon": "^1.24.4",
+        "@types/mocha": "^7.0.2",
+        "@types/node": "^13.11.0",
+        "@types/node-uuid": "0.0.28",
+        "@types/pad": "^2.1.0",
+        "@types/vscode": "^1.45.0",
+        "@typescript-eslint/eslint-plugin": "^2.30.0",
+        "@typescript-eslint/parser": "^2.30.0",
+        "assert": "^2.0.0",
+        "copy-to-clipboard": "^3.3.1",
+        "eslint": "^6.8.0",
+        "glob": "^7.1.6",
+        "guid": "0.0.12",
+        "lorem-ipsum": "^2.0.3",
+        "mocha": "^7.2.0",
+        "mocha-explorer-launcher-scripts": "^0.3.0",
+        "node-uuid": "^1.4.8",
+        "nyc": "^15.1.0",
+        "pad": "^3.2.0",
+        "source-map-support": "^0.5.19",
+        "ts-loader": "^8.3.0",
+        "ts-node": "^9.1.1",
+        "typescript": "^3.8.3",
+        "uuid-lib": "0.0.6",
+        "vsce": "^1.79.3",
+        "vscode-test": "^1.3.0",
+        "webpack": "^5.38.1",
+        "webpack-cli": "^3.3.12",
+        "yarn": "^1.22.10"
+    },
+    "dependencies": {
+        "chance": "^1.1.7",
+        "change-case": "^4.1.1",
+        "jsonic": "^1.0.1",
+        "luxon": "^1.25.0",
+        "os": "^0.1.1"
+    }
 }
