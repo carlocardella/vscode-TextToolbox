@@ -17,6 +17,7 @@ suite('insertText', () => {
         console.log('All insertText tests done');
     });
 
+    // TODO: test insert new text with no selection and replace text in existing selection
 
     describe('Insert Text', () => {
         describe("GUID", () => {

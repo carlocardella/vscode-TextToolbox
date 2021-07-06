@@ -1,4 +1,4 @@
-import { QuickPickItem, window } from "vscode";
+import { Position, QuickPickItem, window } from "vscode";
 import { DateTime } from "luxon";
 import { Chance } from "chance";
 import { getActiveEditor, getLinesFromSelection } from "./helpers";
@@ -14,10 +14,18 @@ export function insertGUID(allZeros?: boolean) {
 
     editor?.edit((editBuilder) => {
         editor.selections.forEach(async (s) => {
-            if (allZeros) {
-                editBuilder.replace(s, "00000000-0000-0000-0000-000000000000");
+            if (s.isEmpty) {
+                if (allZeros) {
+                    editBuilder.insert(s.active, "00000000-0000-0000-0000-000000000000");
+                } else {
+                    editBuilder.insert(s.active, chance.guid());
+                }
             } else {
-                editBuilder.replace(s, chance.guid());
+                if (allZeros) {
+                    editBuilder.replace(s, "00000000-0000-0000-0000-000000000000");
+                } else {
+                    editBuilder.replace(s, chance.guid());
+                }
             }
         });
     });
@@ -163,7 +171,7 @@ export async function insertDateTimeInternal(selectedFormat: string, testDate?: 
     editor?.edit((editBuilder) => {
         editor?.selections.forEach(async (s) => {
             text = getTimeFormatsQuickPickItemDescription(selectedFormat, date);
-            editBuilder.replace(s, text);
+            s.isEmpty ? editBuilder.insert(s.active, text) : editBuilder.replace(s, text);
         });
     });
 }
@@ -362,10 +370,10 @@ export async function getRandomQuickPickItemDescription(selectedRandomType: stri
 export async function insertRandomInternal(randomType: string) {
     const editor = getActiveEditor();
 
-    await getRandomQuickPickItemDescription(randomType).then((_) => {
+    await getRandomQuickPickItemDescription(randomType).then((selection) => {
         editor?.edit(async (editBuilder) => {
             editor.selections.forEach((s) => {
-                editBuilder.replace(s, _);
+                s.isEmpty ? editBuilder.insert(s.active, selection) : editBuilder.replace(s, selection);
             });
         });
     });
@@ -575,7 +583,7 @@ export async function insertLoremIpsumInternal(loremIpsumType: string, length: n
 
     editor?.edit((editBuilder) => {
         editor.selections.forEach(async (s) => {
-            editBuilder.replace(s, lorem);
+            s.isEmpty ? editBuilder.insert(s.active, lorem) : editBuilder.replace(s, lorem);
         });
     });
 
@@ -712,11 +720,12 @@ export async function insertCurrencyInternal(currency: string): Promise<boolean 
 
     editor.edit((editBuilder) => {
         editor.selections.forEach((s) => {
-            editBuilder.replace(s, getCurrencyQuickPickItemDescription(currency));
+            const userChoice = getCurrencyQuickPickItemDescription(currency);
+            s.isEmpty
+                ? editBuilder.insert(s.active, userChoice)
+                : editBuilder.replace(s, userChoice);
         });
     });
 
     Promise.resolve(true);
 }
-
-// TODO: if there is a selection, the insert operation should replace it rather than append to it

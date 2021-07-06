@@ -79,6 +79,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ### Changed
 
 * Case conversions work with multiple selections
+* `Insert` commands new replace the existing selection (if any), otherwise insert new text starting at the cursor's location (supports multi-election and multi-cursor)
 
 ### Added
 
