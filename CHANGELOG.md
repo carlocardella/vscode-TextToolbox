@@ -83,7 +83,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ### Added
 
-* Added `Insert case` command
+* Added `Invert case` command
 
 ## [1.5.0] - 2021-06-29
 
