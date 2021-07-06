@@ -74,7 +74,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## Log
 
-## [version] - 2021-07-02 @todo
+## [1.6.0] - 2021-07-06 @todo
 
 ### Changed
 
