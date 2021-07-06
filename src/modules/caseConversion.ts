@@ -1,7 +1,6 @@
 import { validateSelection, getActiveEditor, getTextFromSelection, getLinesFromSelection, getLinesFromDocumentOrSelection } from "./helpers";
-import * as cc from "change-case";
-
-
+import { Range } from "vscode";
+import G = require("glob");
 
 /**
  * Case conversion types
@@ -30,21 +29,18 @@ export function convertSelection(conversion: caseConversions) {
     const editor = getActiveEditor();
     editor?.edit((editBuilder) => {
         editor.selections.forEach((selection) => {
-            const lines = getLinesFromDocumentOrSelection(editor, selection);
-
-            lines?.forEach((line) => {
             switch (conversion) {
                 case caseConversions.pascalCase:
-                    editBuilder.replace(selection, cc.pascalCase(editor.document.getText(line.range)));
+                    editBuilder.replace(selection, ConvertCase.toPascalCase(editor.document.getText(new Range(selection.start, selection.end))));
                     break;
                 case caseConversions.camelCase:
-                    editBuilder.replace(selection, cc.camelCase(editor.document.getText(line.range)));
+                    editBuilder.replace(selection, ConvertCase.toCamelCase(editor.document.getText(new Range(selection.start, selection.end))));
                     break;
                 case caseConversions.constantCase:
-                    editBuilder.replace(selection, cc.constantCase(editor.document.getText(line.range)));
+                    editBuilder.replace(selection, ConvertCase.toConstantCase(editor.document.getText(new Range(selection.start, selection.end))));
                     break;
                 case caseConversions.dotCase:
-                    editBuilder.replace(selection, cc.dotCase(editor.document.getText(line.range)));
+                    editBuilder.replace(selection, ConvertCase.toDotCase(editor.document.getText(new Range(selection.start, selection.end))));
                     break;
                 case caseConversions.headerCase:
                     editBuilder.replace(selection, cc.headerCase(editor.document.getText(line.range)));
@@ -62,33 +58,60 @@ export function convertSelection(conversion: caseConversions) {
                     editBuilder.replace(selection, cc.sentenceCase(editor.document.getText(line.range)));
                     break;
                 case caseConversions.snakeCase:
-                    editBuilder.replace(selection, cc.snakeCase(editor.document.getText(line.range)));
+                    editBuilder.replace(selection, ConvertCase.toSnakeCase(editor.document.getText(new Range(selection.start, selection.end))));
                     break;
                 case caseConversions.invertCase:
-                    editBuilder.replace(selection, invertCaseInternal(editor.document.getText(line.range)));
+                    editBuilder.replace(selection, ConvertCase.invertCase(editor.document.getText(new Range(selection.start, selection.end))));
                     break;
             }
-            });
         });
     });
 }
 
-/**
- * Invert the case of the selected text
- * @param {string} text The text to invert
- * @return {*}  {string}
- */
-export function invertCaseInternal(text: string): string {
-    return text
-        .split("")
-        .map((value) => {
-            let char = value;
-            if (value === value.toUpperCase()) {
-                char = value.toLowerCase();
-            } else if (value === value.toLowerCase()) {
-                char = value.toUpperCase();
-            }
-            return char;
-        })
-        .join("");
+class ConvertCase {
+    static toPascalCase(text: string): string {
+        // return text.replace(/[ \t]|\b(.)/g, (match, group1) => group1.toUpperCase()); // fix: the first letter should be capitalized
+        const re = RegExp("[ \t]|\b(.)", "g");
+        return text.replace(re, (match, group1) => group1.toUpperCase());
+    }
+
+    static toCamelCase(text: string): string {
+        return text.replace(/[ \t]([^A-Z])/g, (match, group1) => `${group1.toUpperCase()}`);
+    }
+
+    static toSnakeCase(text: string): string {
+        return text.replace(/.*[^ \t]/g, (match) => match.toLowerCase().split(/[ \t]/g).join("_"));
+    }
+
+    static toKebabCase(text: string): string {
+        return text.replace(/.*[^ \t]/g, (match) => match.toLowerCase().split(/[ \t]/g).join("-"));
+    }
+
+    static toConstantCase(text: string): string {
+        return text.replace(/.*[^ \t]/g, (match) => match.toUpperCase().split(/[ \t]/g).join("_"));
+    }
+
+    static toDotCase(text: string): string {
+        return text.replace(/.*[^ \t]/g, (match) => match.toUpperCase().split(/[ \t]/g).join("."));
+    }
+
+    /**
+     * Invert the case of the selected text
+     * @param {string} text The text to invert
+     * @return {*}  {string}
+     */
+    static invertCase(text: string): string {
+        return text
+            .split("")
+            .map((value) => {
+                let char = value;
+                if (value === value.toUpperCase()) {
+                    char = value.toLowerCase();
+                } else if (value === value.toLowerCase()) {
+                    char = value.toUpperCase();
+                }
+                return char;
+            })
+            .join("");
+    }
 }
