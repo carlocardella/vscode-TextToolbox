@@ -1,7 +1,7 @@
 import * as assert from "assert";
 import { after, before, describe } from "mocha";
 import { sleep, createNewEditor, selectAllText, closeTextEditor, getDocumentTextOrSelection, getActiveEditor } from "../../modules/helpers";
-import { convertSelection, caseConversions, invertCaseInternal } from "../../modules/caseConversion";
+import { convertSelection, caseConversions } from "../../modules/caseConversion";
 import { EOL } from "os";
 import { Selection } from "vscode";
 
