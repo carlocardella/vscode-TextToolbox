@@ -86,6 +86,7 @@ class ConvertCase {
     }
 
     static toSnakeCase(text: string): string {
+        // fix: if the line begins with a space do not prepend it with an underscore
         return text.replace(/.*[^ \t]/g, (match) => match.toLowerCase().split(/[ \t]/g).join("_"));
     }
 
@@ -110,7 +111,8 @@ class ConvertCase {
     }
 
     static toSentenceCase(text: string): string {
-        return text.replace(/(\b[a-zA-Z])/g, (match, group1) => group1.toUpperCase());
+        // return text.replace(/(\b[a-zA-Z])/g, (match, group1) => group1.toUpperCase());
+        return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
     }
 
     static toCapitalCase(text: string): string {

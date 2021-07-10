@@ -74,7 +74,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## Log
 
-## [version] - 2021-07-09 // todo
+## [@todo] - 2021-07-09 // todo
+
+### Added
+
+* Added `TT: HEADER-CASE` text conversion
 
 ### Removed
 

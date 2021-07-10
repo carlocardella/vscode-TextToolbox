@@ -32,6 +32,8 @@ Likewise, `Convert to CapitalCase` has been removed in favor of the built-in VSC
   * Lorem ipsum dolor sit amet => loremIpsumDolorSitAmet
 * CONSTANT_CASE
   * Lorem ipsum dolor sit amet => LOREM_IPSUM_DOLOR_SIT_AMET
+* HEADER-CASE
+  * Lorem ipsum dolor sit amet => LOREM-IPSUM-DOLOR-SIT-AMET
 * dot.case
   * Lorem ipsum dolor sit amet => lorem.ipsum.dolor.sit.amet
 * Harder-Case

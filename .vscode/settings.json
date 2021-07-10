@@ -1,44 +1,44 @@
 // Place your settings in this file to overwrite default and user settings.
 {
-  "files.exclude": {
-    "out": false // set this to true to hide the "out" folder with the compiled JS files
-  },
-  "search.exclude": {
-    "out": true // set this to false to include "out" folder in search results
-  },
-  // Turn off tsc task auto detection since we have the necessary tasks as npm scripts
-  "typescript.tsc.autoDetect": "off",
-  "workbench.colorCustomizations": {
-    "activityBar.activeBackground": "#ab307e",
-    "activityBar.activeBorder": "#25320e",
-    "activityBar.background": "#ab307e",
-    "activityBar.foreground": "#e7e7e7",
-    "activityBar.inactiveForeground": "#e7e7e799",
-    "activityBarBadge.background": "#25320e",
-    "activityBarBadge.foreground": "#e7e7e7",
-    "statusBar.background": "#832561",
-    "statusBar.foreground": "#e7e7e7",
-    "statusBarItem.hoverBackground": "#ab307e",
-    "titleBar.activeBackground": "#832561",
-    "titleBar.activeForeground": "#e7e7e7",
-    "titleBar.inactiveBackground": "#83256199",
-    "titleBar.inactiveForeground": "#e7e7e799",
-    "tab.activeBorder": "#ab307e"
-  },
-  "peacock.color": "#832561",
-  "cSpell.words": ["carlocardella", "luxon", "texttoolbox"],
-  // MOCHA EXPLORER
-  "mochaExplorer.require": "ts-node/register",
-  "mochaExplorer.files": "src/test/**/*.ts",
-  "mochaExplorer.logpanel": true,
-  "python.pythonPath": "C:\\Users\\carloc\\AppData\\Local\\Programs\\Python\\Python39\\python.exe",
-  "favorites.sortDirection": "ASC"
-  // https://github.com/hbenl/vscode-mocha-test-adapter#running-vs-code-extension-tests-using-vscode-test
-  // "mochaExplorer.launcherScript": "node_modules/mocha-explorer-launcher-scripts/vscode-test",
-  // "mochaExplorer.autoload": false,
-  // "mochaExplorer.ipcRole": "server",
-  // "mochaExplorer.env": {
-  //     "VSCODE_VERSION": "stable",
-  //   "VSCODE_LAUNCH_ARGS": "[\"--disable-extensions\"]"
-  // }
+    "files.exclude": {
+        "out": false // set this to true to hide the "out" folder with the compiled JS files
+    },
+    "search.exclude": {
+        "out": true // set this to false to include "out" folder in search results
+    },
+    // Turn off tsc task auto detection since we have the necessary tasks as npm scripts
+    "typescript.tsc.autoDetect": "off",
+    "workbench.colorCustomizations": {
+        "activityBar.activeBackground": "#ab307e",
+        "activityBar.activeBorder": "#25320e",
+        "activityBar.background": "#ab307e",
+        "activityBar.foreground": "#e7e7e7",
+        "activityBar.inactiveForeground": "#e7e7e799",
+        "activityBarBadge.background": "#25320e",
+        "activityBarBadge.foreground": "#e7e7e7",
+        "statusBar.background": "#832561",
+        "statusBar.foreground": "#e7e7e7",
+        "statusBarItem.hoverBackground": "#ab307e",
+        "titleBar.activeBackground": "#832561",
+        "titleBar.activeForeground": "#e7e7e7",
+        "titleBar.inactiveBackground": "#83256199",
+        "titleBar.inactiveForeground": "#e7e7e799",
+        "tab.activeBorder": "#ab307e"
+    },
+    "peacock.color": "#832561",
+    "cSpell.words": ["carlocardella", "luxon", "texttoolbox", "untrusted"],
+    // MOCHA EXPLORER
+    "mochaExplorer.require": "ts-node/register",
+    "mochaExplorer.files": "src/test/**/*.ts",
+    "mochaExplorer.logpanel": true,
+    "python.pythonPath": "C:\\Users\\carloc\\AppData\\Local\\Programs\\Python\\Python39\\python.exe",
+    "favorites.sortDirection": "ASC"
+    // https://github.com/hbenl/vscode-mocha-test-adapter#running-vs-code-extension-tests-using-vscode-test
+    // "mochaExplorer.launcherScript": "node_modules/mocha-explorer-launcher-scripts/vscode-test",
+    // "mochaExplorer.autoload": false,
+    // "mochaExplorer.ipcRole": "server",
+    // "mochaExplorer.env": {
+    //     "VSCODE_VERSION": "stable",
+    //   "VSCODE_LAUNCH_ARGS": "[\"--disable-extensions\"]"
+    // }
 }
