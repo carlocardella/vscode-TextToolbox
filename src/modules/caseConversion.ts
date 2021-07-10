@@ -1,6 +1,6 @@
-import { validateSelection, getActiveEditor, getTextFromSelection, getLinesFromSelection, getLinesFromDocumentOrSelection } from "./helpers";
+import { validateSelection, getActiveEditor } from "./helpers";
 import { Range } from "vscode";
-import G = require("glob");
+import * as os from "os";
 
 /**
  * Case conversion types
@@ -10,13 +10,14 @@ export const enum caseConversions {
     constantCase = "constantCase",
     dotCase = "dotCase",
     headerCase = "headerCase",
-    noCase = "noCase",
-    paramCase = "paramCase",
+    kebabCase = "kebabCase",
     pascalCase = "pascalCase",
     pathCase = "pathCase",
     sentenceCase = "sentenceCase",
     snakeCase = "snakeCase",
     invertCase = "invertCase",
+    capitalCase = "capitalCase",
+    titleCase = "titleCase",
 }
 
 /**
@@ -43,25 +44,28 @@ export function convertSelection(conversion: caseConversions) {
                     editBuilder.replace(selection, ConvertCase.toDotCase(editor.document.getText(new Range(selection.start, selection.end))));
                     break;
                 case caseConversions.headerCase:
-                    editBuilder.replace(selection, cc.headerCase(editor.document.getText(line.range)));
+                    editBuilder.replace(selection, ConvertCase.toHeaderCase(editor.document.getText(new Range(selection.start, selection.end))));
                     break;
-                case caseConversions.noCase:
-                    editBuilder.replace(selection, cc.noCase(editor.document.getText(line.range)));
-                    break;
-                case caseConversions.paramCase:
-                    editBuilder.replace(selection, cc.paramCase(editor.document.getText(line.range)));
+                case caseConversions.kebabCase:
+                    editBuilder.replace(selection, ConvertCase.toKebabCase(editor.document.getText(new Range(selection.start, selection.end))));
                     break;
                 case caseConversions.pathCase:
-                    editBuilder.replace(selection, cc.pathCase(editor.document.getText(line.range)));
+                    editBuilder.replace(selection, ConvertCase.toPathCase(editor.document.getText(new Range(selection.start, selection.end))));
                     break;
                 case caseConversions.sentenceCase:
-                    editBuilder.replace(selection, cc.sentenceCase(editor.document.getText(line.range)));
+                    editBuilder.replace(selection, ConvertCase.toSentenceCase(editor.document.getText(new Range(selection.start, selection.end))));
                     break;
                 case caseConversions.snakeCase:
                     editBuilder.replace(selection, ConvertCase.toSnakeCase(editor.document.getText(new Range(selection.start, selection.end))));
                     break;
                 case caseConversions.invertCase:
                     editBuilder.replace(selection, ConvertCase.invertCase(editor.document.getText(new Range(selection.start, selection.end))));
+                    break;
+                case caseConversions.capitalCase:
+                    editBuilder.replace(selection, ConvertCase.toCapitalCase(editor.document.getText(new Range(selection.start, selection.end))));
+                    break;
+                case caseConversions.titleCase:
+                    editBuilder.replace(selection, ConvertCase.toTitleCase(editor.document.getText(new Range(selection.start, selection.end))));
                     break;
             }
         });
@@ -70,13 +74,15 @@ export function convertSelection(conversion: caseConversions) {
 
 class ConvertCase {
     static toPascalCase(text: string): string {
-        // return text.replace(/[ \t]|\b(.)/g, (match, group1) => group1.toUpperCase()); // fix: the first letter should be capitalized
-        const re = RegExp("[ \t]|\b(.)", "g");
-        return text.replace(re, (match, group1) => group1.toUpperCase());
+        return text
+            .toLowerCase()
+            .replace(/\b\w|[ \t]./g, (_) => _.toUpperCase())
+            .split(" ")
+            .join("");
     }
 
     static toCamelCase(text: string): string {
-        return text.replace(/[ \t]([^A-Z])/g, (match, group1) => `${group1.toUpperCase()}`);
+        return text.toLowerCase().replace(/[ \t]([^A-Z])/g, (match, group1) => group1.toUpperCase());
     }
 
     static toSnakeCase(text: string): string {
@@ -92,7 +98,40 @@ class ConvertCase {
     }
 
     static toDotCase(text: string): string {
-        return text.replace(/.*[^ \t]/g, (match) => match.toUpperCase().split(/[ \t]/g).join("."));
+        return text.replace(/.*[^ \t]/g, (match) => match.toLowerCase().split(/[ \t]/g).join("."));
+    }
+
+    static toPathCase(text: string): string {
+        return text.replace(/.*[^ \t]/g, (match) => match.toLowerCase().split(/[ \t]/g).join(os.EOL)); // todo: this could be controlled by a settings variable
+    }
+
+    static toHeaderCase(text: string): string {
+        return text.replace(/.*[^ \t]/g, (match) => match.toUpperCase().split(/[ \t]/g).join("-"));
+    }
+
+    static toSentenceCase(text: string): string {
+        return text.replace(/(\b[a-zA-Z])/g, (match, group1) => group1.toUpperCase());
+    }
+
+    static toCapitalCase(text: string): string {
+        return text.replace(/\b\w/g, (_) => _.toUpperCase());
+    }
+
+    static toTitleCase(text: string): string {
+        const exclusions = ["in", "to", "and", "but", "for", "nor", "the", "a", "an", "as", "it"];
+        const theLastWord = text.split(" ").length - 1;
+        return text
+            .split(" ")
+            .map((word, index) => {
+                if (index === theLastWord) {
+                    return word.charAt(0).toUpperCase() + word.slice(1);
+                } else if (exclusions.indexOf(word) > -1) {
+                    return word.toLowerCase();
+                } else {
+                    return word.charAt(0).toUpperCase() + word.slice(1);
+                }
+            })
+            .join(" ");
     }
 
     /**

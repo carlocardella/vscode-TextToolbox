@@ -56,18 +56,10 @@ suite("caseConversion", () => {
             assert.deepStrictEqual(getDocumentTextOrSelection(), "Test-Document");
         });
 
-        test("Convert to no case", async () => {
+        test("Convert to kebab-case", async () => {
             await createNewEditor("test document");
             await selectAllText();
-            convertSelection(caseConversions.noCase);
-            await sleep(500);
-            assert.deepStrictEqual(getDocumentTextOrSelection(), "test document");
-        });
-
-        test("Convert to param_case", async () => {
-            await createNewEditor("test document");
-            await selectAllText();
-            convertSelection(caseConversions.paramCase);
+            convertSelection(caseConversions.kebabCase);
             await sleep(500);
             assert.deepStrictEqual(getDocumentTextOrSelection(), "test-document");
         });
@@ -116,7 +108,7 @@ suite("caseConversion", () => {
             await selectAllText();
 
             const selectedText = getDocumentTextOrSelection();
-            invertCaseInternal(selectedText!);
+            convertSelection(caseConversions.invertCase);
             await sleep(500);
 
             assert.deepStrictEqual(getDocumentTextOrSelection(), expected);

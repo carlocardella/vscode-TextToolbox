@@ -28,6 +28,7 @@
         "filter text",
         "filter lines",
         "case",
+        "case conversion",
         "converter",
         "converting",
         "lorem",
@@ -82,12 +83,8 @@
                 "title": "TT: Harder-Case"
             },
             {
-                "command": "vscode-texttoolbox.NoCase",
-                "title": "TT: no case"
-            },
-            {
-                "command": "vscode-texttoolbox.ParamCase",
-                "title": "TT: param-case"
+                "command": "vscode-texttoolbox.KebabCase",
+                "title": "TT: kebab-case"
             },
             {
                 "command": "vscode-texttoolbox.SentenceCase",
@@ -98,8 +95,16 @@
                 "title": "TT: snake_case"
             },
             {
+                "command": "vscode-texttoolbox.HeaderCase",
+                "title": "TT: HEADER_CASE"
+            },
+            {
                 "command": "vscode-texttoolbox.InvertCase",
                 "title": "TT: invert case"
+            },
+            {
+                "command": "vscode-texttoolbox.PathCase",
+                "title": "TT: path/case"
             },
             {
                 "command": "vscode-texttoolbox.InsertGUID",

@@ -74,7 +74,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## Log
 
-## [1.6.0] - 2021-07-06 @todo
+## [version] - 2021-07-09 // todo
+
+### Removed
+
+* Removed `No Case` conversion
+* Removed dependency from `change-case` NPM package, using a slim custom class instead
+
+### Changed
+
+* Renamed `TT: param-case` to `TT: kebab-case`
+
+### Fixed
+
+* Conversions to Pascal Case and Camel Case properly convert the first word in a multiline selection
+
+## [1.6.0] - 2021-07-06
 
 ### Changed
 

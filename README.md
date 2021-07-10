@@ -24,12 +24,10 @@ The extension does not require any special permission, therefore is enabled to r
 ## Current list of commands
 
 Notable absents: `Convert to Uppercase` and `Convert to Lowercase` have been removed in favor of the built-in commands in VScode.
-Likewise, `Conver to CapitalCase` has been removed in favor of the built-in VSCode command `Transform to Title Case`.
+Likewise, `Convert to CapitalCase` has been removed in favor of the built-in VSCode command `Transform to Title Case`.
 
 * PascalCase
   * Lorem ipsum dolor sit amet => LoremIpsumDolorSitAmet
-* Capital Case
-  * Lorem ipsum dolor sit amet => Lorem Ipsum Dolor Sit Amet
 * camelCase
   * Lorem ipsum dolor sit amet => loremIpsumDolorSitAmet
 * CONSTANT_CASE
@@ -38,9 +36,7 @@ Likewise, `Conver to CapitalCase` has been removed in favor of the built-in VSCo
   * Lorem ipsum dolor sit amet => lorem.ipsum.dolor.sit.amet
 * Harder-Case
   * Lorem ipsum dolor sit amet => Lorem-Ipsum-Dolor-Sit-Amet
-* no case
-  * Lorem ipsum dolor sit amet => lorem ipsum dolor sit amet
-* param-case
+* kebab-case
   * Lorem ipsum dolor sit amet => lorem-ipsum-dolor-sit-amet
 * Sentence case
   * Lorem ipsum dolor sit amet => Lorem ipsum dolor sit amet

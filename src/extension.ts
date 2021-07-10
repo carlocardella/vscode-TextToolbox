@@ -19,12 +19,12 @@ export function activate(context: ExtensionContext) {
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.CamelCase', () => { CaseConversion.convertSelection(CaseConversion.caseConversions.camelCase); }));
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.ConstantCase', () => { CaseConversion.convertSelection(CaseConversion.caseConversions.constantCase); }));
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.DotCase', () => { CaseConversion.convertSelection(CaseConversion.caseConversions.dotCase); }));
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.HarderCase', () => { CaseConversion.convertSelection(CaseConversion.caseConversions.headerCase); }));
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.NoCase', () => { CaseConversion.convertSelection(CaseConversion.caseConversions.noCase); }));
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.ParamCase', () => { CaseConversion.convertSelection(CaseConversion.caseConversions.paramCase); }));
+	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.HeaderCase', () => { CaseConversion.convertSelection(CaseConversion.caseConversions.headerCase); }));
+	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.KebabCase', () => { CaseConversion.convertSelection(CaseConversion.caseConversions.kebabCase); }));
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.SentenceCase', () => { CaseConversion.convertSelection(CaseConversion.caseConversions.sentenceCase); }));
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.SnakeCase', () => { CaseConversion.convertSelection(CaseConversion.caseConversions.snakeCase); }));
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.InvertCase', () => { CaseConversion.convertSelection(CaseConversion.caseConversions.invertCase); }));
+	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.PathCase', () => { CaseConversion.convertSelection(CaseConversion.caseConversions.pathCase); }));
 
 	// insert text
 	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.InsertGUID', () => { InsertText.insertGUID(); }));
