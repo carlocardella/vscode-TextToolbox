@@ -56,7 +56,7 @@ export async function splitSelectionInternal(delimiter: string, openInNewEditor:
         let newEditorText: string = "";
 
         editor.selections.forEach((s) => {
-            newEditorText += getTextFromSelection(editor, s)?.split(delimiter) + os.EOL;
+            newEditorText += getTextFromSelection(editor, s)?.split(delimiter).join(os.EOL) + os.EOL;
         });
 
         await createNewEditor(newEditorText);
