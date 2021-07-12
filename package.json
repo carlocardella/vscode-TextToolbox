@@ -216,6 +216,14 @@
                 {
                     "submenu": "tt.editorContext",
                     "group": "textToolbox"
+                },
+                {
+                    "command": "vscode-texttoolbox.RemoveControlCharacters",
+                    "group": "textToolbox"
+                },
+                {
+                    "command": "vscode-texttoolbox.TrimLineOrSelection",
+                    "group": "textToolbox"
                 }
             ],
             "tt.editorContext": [
@@ -228,12 +236,12 @@
                     "group": "filter"
                 },
                 {
-                    "submenu": "tt.controlCharacters",
-                    "group": "controlCharacters"
-                },
-                {
                     "submenu": "tt.insert",
                     "group": "insert"
+                },
+                {   
+                    "submenu": "tt.split",
+                    "group": "split"
                 },
                 {
                     "submenu": "tt.json",
@@ -332,6 +340,16 @@
                     "command": "vscode-texttoolbox.InsertCurrency"
                 }
             ],
+            "tt.split": [
+                {
+                    "group": "tt.split",
+                    "command": "vscode-texttoolbox.SplitSelection"
+                },
+                {
+                    "group": "tt.split",
+                    "command": "vscode-texttoolbox.SplitSelectionOpenInNewEditor"
+                }
+            ],
             "tt.filter": [
                 {
                     "group": "tt.filter",
@@ -356,12 +374,6 @@
                 {
                     "group": "tt.filter",
                     "command": "vscode-texttoolbox.OpenSelectionInNewEditor"
-                }
-            ],
-            "tt.controlCharacters": [
-                {
-                    "group": "tt.controlCharacters",
-                    "command": "vscode-texttoolbox.RemoveControlCharacters"
                 }
             ],
             "tt.json": [
@@ -410,15 +422,15 @@
             },
             {
                 "id": "tt.filter",
-                "label": "Filter and Extract"
-            },
-            {
-                "id": "tt.controlCharacters",
-                "label": "Remove Control Characters"
+                "label": "Filter, Extract and Split"
             },
             {
                 "id": "tt.insert",
                 "label": "Insert"
+            },
+            {
+                "id": "tt.split",
+                "label": "Split"
             },
             {
                 "id": "tt.json",
