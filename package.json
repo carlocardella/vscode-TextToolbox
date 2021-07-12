@@ -79,10 +79,6 @@
                 "title": "TT: dot.case"
             },
             {
-                "command": "vscode-texttoolbox.HarderCase",
-                "title": "TT: Harder-Case"
-            },
-            {
                 "command": "vscode-texttoolbox.KebabCase",
                 "title": "TT: kebab-case"
             },

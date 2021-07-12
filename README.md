@@ -8,7 +8,7 @@
 [![GitHub issues](https://img.shields.io/github/issues/carlocardella/vscode-TextToolbox.svg)](https://github.com/carlocardella/vscode-TextToolbox/issues)
 [![GitHub license](https://img.shields.io/github/license/carlocardella/vscode-TextToolbox.svg)](https://github.com/carlocardella/vscode-TextToolbox/blob/master/LICENSE.md)
 [![Twitter](https://img.shields.io/twitter/url/https/github.com/carlocardella/vscode-TextToolbox.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Fcarlocardella%2Fvscode-TextToolbox)
-[![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/carlocardella/vscode-texttoolbox)
+<!-- [![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/carlocardella/vscode-texttoolbox) -->
 
 
 Collection of tools for text manipulation, filtering, sorting etc...
@@ -36,8 +36,6 @@ Likewise, `Convert to CapitalCase` has been removed in favor of the built-in VSC
   * Lorem ipsum dolor sit amet => LOREM-IPSUM-DOLOR-SIT-AMET
 * dot.case
   * Lorem ipsum dolor sit amet => lorem.ipsum.dolor.sit.amet
-* Harder-Case
-  * Lorem ipsum dolor sit amet => Lorem-Ipsum-Dolor-Sit-Amet
 * kebab-case
   * Lorem ipsum dolor sit amet => lorem-ipsum-dolor-sit-amet
 * Sentence case
