@@ -96,7 +96,7 @@
             },
             {
                 "command": "vscode-texttoolbox.HeaderCase",
-                "title": "TT: HEADER_CASE"
+                "title": "TT: HEADER-CASE"
             },
             {
                 "command": "vscode-texttoolbox.InvertCase",
@@ -213,6 +213,228 @@
             {
                 "command": "vscode-texttoolbox.InsertLoremIpsum",
                 "title": "TT: Insert Lorem Ipsum"
+            }
+        ],
+        "menus": {
+            "editor/context": [
+                {
+                    "submenu": "tt.editorContext",
+                    "group": "textToolbox"
+                }
+            ],
+            "tt.editorContext": [
+                {
+                    "submenu": "tt.caseConversion",
+                    "group": "caseConversion"
+                },
+                {
+                    "submenu": "tt.filter",
+                    "group": "filter"
+                },
+                {
+                    "submenu": "tt.controlCharacters",
+                    "group": "controlCharacters"
+                },
+                {
+                    "submenu": "tt.insert",
+                    "group": "insert"
+                },
+                {
+                    "submenu": "tt.json",
+                    "group": "json"
+                },
+                {
+                    "submenu": "tt.sort",
+                    "group": "sort"
+                },
+                {
+                    "submenu": "tt.path",
+                    "group": "path"
+                }
+            ],
+            "tt.caseConversion": [
+                {
+                    "group": "caseConversion",
+                    "command": "vscode-texttoolbox.PascalCase"
+                },
+                {
+                    "group": "caseConversion",
+                    "command": "vscode-texttoolbox.CamelCase"
+                },
+                {
+                    "group": "caseConversion",
+                    "command": "vscode-texttoolbox.ConstantCase"
+                },
+                {
+                    "group": "caseConversion",
+                    "command": "vscode-texttoolbox.DotCase"
+                },
+                {
+                    "group": "caseConversion",
+                    "command": "vscode-texttoolbox.HeaderCase"
+                },
+                {
+                    "group": "caseConversion",
+                    "command": "vscode-texttoolbox.KebabCase"
+                },
+                {
+                    "group": "caseConversion",
+                    "command": "vscode-texttoolbox.SentenceCase"
+                },
+                {
+                    "group": "caseConversion",
+                    "command": "vscode-texttoolbox.SnakeCase"
+                },
+                {
+                    "group": "caseConversion",
+                    "command": "vscode-texttoolbox.InvertCase"
+                },
+                {
+                    "group": "caseConversion",
+                    "command": "vscode-texttoolbox.PathCase"
+                }
+            ],
+            "tt.insert": [
+                {
+                    "group": "tt.insert",
+                    "command": "vscode-texttoolbox.InsertGUID"
+                },
+                {
+                    "group": "tt.insert",
+                    "command": "vscode-texttoolbox.InsertGuidAllZeros"
+                },
+                {
+                    "group": "tt.insert",
+                    "command": "vscode-texttoolbox.InsertDate"
+                },
+                {
+                    "group": "tt.insert",
+                    "command": "vscode-texttoolbox.PickRandom"
+                },
+                {
+                    "group": "tt.insert",
+                    "command": "vscode-texttoolbox.PadSelectionRight"
+                },
+                {
+                    "group": "tt.insert",
+                    "command": "vscode-texttoolbox.PadSelectionLeft"
+                },
+                {
+                    "group": "tt.insert",
+                    "command": "vscode-texttoolbox.InsertLineNumbers"
+                },
+                {
+                    "group": "tt.insert",
+                    "command": "vscode-texttoolbox.InsertSequenceNumbers"
+                },
+                {
+                    "group": "tt.insert",
+                    "command": "vscode-texttoolbox.InsertLoremIpsum"
+                },
+                {
+                    "group": "tt.insert",
+                    "command": "vscode-texttoolbox.InsertCurrency"
+                }
+            ],
+            "tt.filter": [
+                {
+                    "group": "tt.filter",
+                    "command": "vscode-texttoolbox.RemoveAllEmptyLines"
+                },
+                {
+                    "group": "tt.filter",
+                    "command": "vscode-texttoolbox.RemoveRedundantEmptyLines"
+                },
+                {
+                    "group": "tt.filter",
+                    "command": "vscode-texttoolbox.RemoveDuplicateLines"
+                },
+                {
+                    "group": "tt.filter",
+                    "command": "vscode-texttoolbox.RemoveDuplicateLinesResultInNewEditor"
+                },
+                {
+                    "group": "tt.filter",
+                    "command": "vscode-texttoolbox.FilterLinesUsingRegExpOrString"
+                },
+                {
+                    "group": "tt.filter",
+                    "command": "vscode-texttoolbox.OpenSelectionInNewEditor"
+                }
+            ],
+            "tt.controlCharacters": [
+                {
+                    "group": "tt.controlCharacters",
+                    "command": "vscode-texttoolbox.RemoveControlCharacters"
+                }
+            ],
+            "tt.json": [
+                {
+                    "group": "tt.json",
+                    "command": "vscode-texttoolbox.StringifyJson"
+                },
+                {
+                    "group": "tt.json",
+                    "command": "vscode-texttoolbox.FixJson"
+                },
+                {
+                    "group": "tt.json",
+                    "command": "vscode-texttoolbox.MinifyJson"
+                }
+            ],
+            "tt.sort": [
+                {
+                    "group": "tt.sort",
+                    "command": "vscode-texttoolbox.SortLinesResultInNewEditor"
+                },
+                {
+                    "group": "tt.sort",
+                    "command": "vscode-texttoolbox.SortLines"
+                }
+            ],
+            "tt.path": [
+                {
+                    "group": "tt.path",
+                    "command": "vscode-texttoolbox.TransformPathToPosix"
+                },
+                {
+                    "group": "tt.path",
+                    "command": "vscode-texttoolbox.TransformPathToWin32"
+                }
+            ]
+        },
+        "submenus": [
+            {
+                "id": "tt.editorContext",
+                "label": "Text Toolbox"
+            },
+            {
+                "id": "tt.caseConversion",
+                "label": "Convert case"
+            },
+            {
+                "id": "tt.filter",
+                "label": "Filter and Extract"
+            },
+            {
+                "id": "tt.controlCharacters",
+                "label": "Remove Control Characters"
+            },
+            {
+                "id": "tt.insert",
+                "label": "Insert"
+            },
+            {
+                "id": "tt.json",
+                "label": "Json"
+            },
+            {
+                "id": "tt.sort",
+                "label": "Sort"
+            },
+            {
+                "id": "tt.path",
+                "label": "Path"
             }
         ],
         "configuration": [
