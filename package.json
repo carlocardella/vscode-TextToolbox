@@ -209,6 +209,10 @@
             {
                 "command": "vscode-texttoolbox.InsertLoremIpsum",
                 "title": "TT: Insert Lorem Ipsum"
+            },
+            {
+                "command": "vscode-texttoolbox.AlignToSeparator",
+                "title": "TT: Align to separator"
             }
         ],
         "menus": {
