@@ -13,6 +13,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
   * Randomize selection (words in a selection)
   * Reverse selection (lines or words in selection)
   * Sort lines by length
+  * Explore disabling italic (suggestion from https://github.com/microsoft/vscode/issues/25895#issuecomment-890614837)
+   * for all emoji
+   * based on theme
+   * all
 * Highlight
   * highlight word (and all occurrences)
   * highlight based on regex
