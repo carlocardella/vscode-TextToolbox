@@ -17,6 +17,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
    * for all emoji
    * based on theme
    * all
+* Json
+  * Validate
+  * Escape
+  * Unescape
+  * Work on selection
+  * Work on the entire file if file type is json or cjson
 * Highlight
   * highlight word (and all occurrences)
   * highlight based on regex
