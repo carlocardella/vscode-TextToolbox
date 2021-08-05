@@ -2,7 +2,7 @@
     "name": "vscode-texttoolbox",
     "displayName": "Text Toolbox",
     "description": "Collection of tools for text manipulation, filtering, sorting etc...",
-    "version": "1.7.1",
+    "version": "1.8.0",
     "publisher": "carlocardella",
     "author": {
         "name": "Carlo Cardella",
@@ -508,8 +508,8 @@
                         "description": "Replace control characters (TT: Remove Control Characters) in the active document with this string"
                     },
                     "tt.alignTextDefaultSeparator": {
-                        "type":"string",
-                        "default":",",
+                        "type": "string",
+                        "default": ",",
                         "scope": "window",
                         "description": "Align text default separator (TT: Align Text)"
                     }
