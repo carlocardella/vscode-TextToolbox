@@ -161,6 +161,7 @@ Likewise, `Convert to CapitalCase` has been removed in favor of the built-in VSC
 * Minify Json
 * Convert path string to posix format
 * Convert path string to win32 format
+* Align to separator
 
 ### Thanks to
 

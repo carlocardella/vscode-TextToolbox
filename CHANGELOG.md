@@ -74,6 +74,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## Log
 
+## [1.8.0] - 2021-08-04
+
+### Added
+
+* `Align to separator`: align a selection in a CSV type, choose the type of separator to use
+  * The default separator can be controlled by the setting `tt.alignTextDefaultSeparator`
+
+### Changed
+
+* Consolidated some context menu commands
+
 ## [1.7.1] - 2021-07-12
 
 ### Fixed
