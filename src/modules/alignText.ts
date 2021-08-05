@@ -1,6 +1,5 @@
-import { TextEditor, TextLine, window, workspace } from "vscode";
-import { getActiveEditor, getLinesFromSelection } from './helpers';
-
+import { TextEditor, TextLine, window, workspace } from 'vscode';
+import { getActiveEditor, getLinesFromSelection } from "./helpers";
 
 /**
  * Asks the user which separator to use for the alignment. Default is comma (",").
@@ -8,8 +7,11 @@ import { getActiveEditor, getLinesFromSelection } from './helpers';
  * @async
  */
 export async function aksForSeparator(): Promise<string> {
-    const separator = await window.showInputBox({ ignoreFocusOut: true, value: ",", prompt: "Choose a separator" });
-    if (!separator) { return Promise.reject("Operation cancelled by the user"); }
+    const config = workspace.getConfiguration().get<string>("tt.alignTextDefaultSeparator");
+    const separator = await window.showInputBox({ ignoreFocusOut: true, value: config, prompt: "Choose a separator" });
+    if (!separator) {
+        return Promise.reject("Operation cancelled by the user");
+    }
 
     return Promise.resolve(separator);
 }
@@ -23,12 +25,14 @@ export async function aksForSeparator(): Promise<string> {
  */
 async function getLineElements(editor: TextEditor, separator: string): Promise<LineElement[]> {
     const lines = getLinesFromSelection(editor);
-    if (!lines) { return Promise.reject(); }
+    if (!lines) {
+        return Promise.reject();
+    }
 
     let elements: any[] = [];
 
-    lines.forEach(line => {
-        let element = new LineElement(line, line.text.split(separator));
+    lines.forEach((line) => {
+        let element = new LineElement(line, separator);
         elements.push(element);
     });
 
@@ -43,9 +47,11 @@ async function getLineElements(editor: TextEditor, separator: string): Promise<L
  */
 async function getElementMaxLength(lineElements: LineElement[]): Promise<number> {
     let maxElementLength: number = 0;
-    lineElements.forEach(lineElement => {
-        lineElement.Elements.forEach(element => {
-            if (element.length > maxElementLength) { maxElementLength = element.length; };
+    lineElements.forEach((lineElement) => {
+        lineElement.Elements.forEach((element) => {
+            if (element.length > maxElementLength) {
+                maxElementLength = element.length;
+            }
         });
     });
 
@@ -53,67 +59,147 @@ async function getElementMaxLength(lineElements: LineElement[]): Promise<number>
 }
 
 /**
- * 
+ * Align the text in the active editor
+ * @export
+ * @param {string} [separator] The separator to use to align the text
  * @return {*}  {Promise<boolean>}
- * @async
  */
 export async function alignToSeparator(separator?: string): Promise<boolean> {
-    if (!separator) { separator = await aksForSeparator(); }
-    const editor = getActiveEditor();
-    if (!editor) { return Promise.reject(); };
-    const lineElements = await getLineElements(editor, separator);
-    const elementMaxLength = await getElementMaxLength(lineElements);
+    if (!separator) {
+        separator = await aksForSeparator();
+    }
+    if (!separator) {
+        Promise.reject(false);
+    }
 
+    const editor = getActiveEditor();
+    if (!editor) {
+        return Promise.reject();
+    }
+
+    const columns = await getColumns(editor, separator);
     let newLineText: string = "";
-    editor.edit(editBuilder => {
-        lineElements.forEach(async elements => {
-            newLineText = padElement(elements.Elements, separator!, elementMaxLength);
-            editBuilder.replace(elements.Line.range, newLineText);
-        });
+    editor.edit((editBuilder) => {
+        newLineText = padElements(columns, separator!);
+        editBuilder.replace(editor.selection, newLineText);
     });
 
     return Promise.resolve(true);
 }
 
 /**
- * Build the lines of text joining the relevant elements with proper separator and padding
- * @param {string[]} elements Elements array to pad and join
- * @param {string} separator Separator to use to rebuild the padded element
- * @param {number} length Length of the resulting padded line
- * @return {*}  {Promise<string>}
- * @async
+ * Returns an array of ColumnElements, each ColumnElement is a tuple [LineNumber, Length, Text].
+ * LineNumber indicates to which line number each column belongs to.
+ * Length indicates the max length of the column: this is used to pad shorter columns.
+ * Text is the string contained in that particular cell (Column at LineNumber)
+ * @param {TextEditor} editor The text editor to use to get the selections from
+ * @param {string} separator The separator to use to split each line and retrieve its elements
+ * @return {*}  {Promise<ColumnElement[]>}
  */
-function padElement(elements: string[], separator: string, length: number): string {
-    let newLineText: string = "";
-    let newText: string[] = [];
-    let joinSeparator: string = "";
-    // let alignment = workspace.getConfiguration("tt").textElementAlignment;
+async function getColumns(editor: TextEditor, separator: string): Promise<ColumnElement[]> {
+    return new Promise<ColumnElement[]>(async (resolve, reject) => {
+        let lines = await getLineElements(editor, separator);
 
-    let elementsLength = elements.length;
-    let i = 0;
-    elements.forEach(element => {
-        i++;
-        newLineText = element;
-        if (i < elementsLength) { newLineText = newLineText + separator; };
-        newLineText = newLineText.padEnd(length + 1, " ");
-        newText.push(newLineText);
+        let columns: ColumnElement[] = [];
+        let longestLineLength = getLongestLine(lines);
+
+        for (let ii = 0; ii < longestLineLength; ii++) {
+            let longestColumnElement = 0;
+            let lineNumber = 0;
+            lines.forEach((line) => {
+                if (line.Elements[ii] && line.Elements[ii].length > longestColumnElement) {
+                    longestColumnElement = line.Elements[ii].length;
+                }
+                lineNumber = line.LineNumber;
+            });
+
+            lines.forEach((line) => {
+                columns.push(new ColumnElement(line.LineNumber, line.Elements[ii], longestColumnElement));
+            });
+        }
+
+        resolve(columns);
+    });
+}
+
+/**
+ * Get the longest line (in term of number of elements) from the lineElements array
+ * @param {LineElement[]} lines Array of line elements to measure and retrieve the max length from
+ * @return {*}  {number}
+ */
+function getLongestLine(lines: LineElement[]): number {
+    let longestLine: number = 0;
+
+    lines.forEach((line) => {
+        if (line.Elements.length > longestLine) {
+            longestLine = line.Elements.length;
+        }
     });
 
-    joinSeparator = " ";
-    return newText.join(joinSeparator);
+    return longestLine;
+}
+
+/**
+ * Build the aligned text from the columnElements array
+ * @param {ColumnElement[]} columns Array of column elements to build the aligned text from
+ * @param {string} separator The separator to use to build the aligned text
+ * @return {*}  {string}
+ */
+function padElements(columns: ColumnElement[], separator: string): string {
+    let newLineText: string = "";
+    const lines = getLinesFromSelection(getActiveEditor()!);
+
+    let paddedElement = "";
+    for (let line of lines!) {
+        let c = columns.filter((column) => column.LineNumber === line.lineNumber);
+
+        let s = "";
+        for (let ii = 0; ii < c.length; ii++) {
+            if (c[ii].Text) {
+                ii === c.length - 1 ? (s = "") : (s = separator);
+                paddedElement = `${c[ii].Text}${s}`.padEnd(c[ii].Length + 2, " ");
+                newLineText += paddedElement;
+            }
+        }
+
+        newLineText += "\n";
+    }
+
+    return newLineText;
 }
 
 /**
  * LineElement type, used to describe line elements to pad and align
  * @param line {TextLine} TextLine type
- * @param elements {string[]} Elements composing a text line, split by separator
+ * @param separator {string} Separator to use split the line and extract the elements to align
  */
 class LineElement {
-    public Line!: TextLine;
-    public Elements!: string[];
+    public LineNumber: number;
+    public Text: TextLine;
+    public Elements: string[];
 
-    constructor(line?: TextLine, elements?: string[]) {
-        if (line) { this.Line = line; }
-        if (elements) { this.Elements = elements; }
+    constructor(line: TextLine, separator: string) {
+        this.LineNumber = line.lineNumber;
+        this.Text = line;
+        this.Elements = line.text.split(separator);
+    }
+}
+
+/**
+ * ColumnElement type, used to describe column elements to pad and align
+ * @param Id: {number} Column index
+ * @param Text: {string} Text to pad and align
+ * @param Length: {number} Length of the column padded text
+ * @class ColumnElement
+ */
+class ColumnElement {
+    public LineNumber: number;
+    public Text: string;
+    public Length: number;
+
+    constructor(lineNumber: number, text: string, length: number) {
+        this.LineNumber = lineNumber;
+        this.Text = text;
+        this.Length = length;
     }
 }

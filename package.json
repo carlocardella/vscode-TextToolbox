@@ -209,20 +209,16 @@
             {
                 "command": "vscode-texttoolbox.InsertLoremIpsum",
                 "title": "TT: Insert Lorem Ipsum"
+            },
+            {
+                "command": "vscode-texttoolbox.AlignToSeparator",
+                "title": "TT: Align to separator"
             }
         ],
         "menus": {
             "editor/context": [
                 {
                     "submenu": "tt.editorContext",
-                    "group": "textToolbox"
-                },
-                {
-                    "command": "vscode-texttoolbox.RemoveControlCharacters",
-                    "group": "textToolbox"
-                },
-                {
-                    "command": "vscode-texttoolbox.TrimLineOrSelection",
                     "group": "textToolbox"
                 }
             ],
@@ -240,8 +236,8 @@
                     "group": "insert"
                 },
                 {
-                    "submenu": "tt.split",
-                    "group": "split"
+                    "submenu": "tt.transform",
+                    "group": "filter"
                 },
                 {
                     "submenu": "tt.json",
@@ -249,7 +245,7 @@
                 },
                 {
                     "submenu": "tt.sort",
-                    "group": "sort"
+                    "group": "filter"
                 },
                 {
                     "submenu": "tt.path",
@@ -340,14 +336,26 @@
                     "command": "vscode-texttoolbox.InsertCurrency"
                 }
             ],
-            "tt.split": [
+            "tt.transform": [
                 {
-                    "group": "tt.split",
+                    "group": "tt.transform",
                     "command": "vscode-texttoolbox.SplitSelection"
                 },
                 {
-                    "group": "tt.split",
+                    "group": "tt.transform",
                     "command": "vscode-texttoolbox.SplitSelectionOpenInNewEditor"
+                },
+                {
+                    "group": "tt.transform",
+                    "command": "vscode-texttoolbox.AlignToSeparator"
+                },
+                {
+                    "group": "tt.transform",
+                    "command": "vscode-texttoolbox.RemoveControlCharacters"
+                },
+                {
+                    "group": "tt.transform",
+                    "command": "vscode-texttoolbox.TrimLineOrSelection"
                 }
             ],
             "tt.filter": [
@@ -422,15 +430,15 @@
             },
             {
                 "id": "tt.filter",
-                "label": "Filter, Extract and Split"
+                "label": "Filter, Extract"
             },
             {
                 "id": "tt.insert",
                 "label": "Insert"
             },
             {
-                "id": "tt.split",
-                "label": "Split"
+                "id": "tt.transform",
+                "label": "Transform"
             },
             {
                 "id": "tt.json",
@@ -498,6 +506,12 @@
                         "default": "",
                         "scope": "window",
                         "description": "Replace control characters (TT: Remove Control Characters) in the active document with this string"
+                    },
+                    "tt.alignTextDefaultSeparator": {
+                        "type":"string",
+                        "default":",",
+                        "scope": "window",
+                        "description": "Align text default separator (TT: Align Text)"
                     }
                 }
             }

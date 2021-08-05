@@ -8,7 +8,7 @@ import * as ControlCharacters from './modules/controlCharacters';
 import * as Helpers from './modules/helpers';
 import * as TextManipulation from './modules/textManipulation';
 import * as Json from './modules/json';
-// import * as AlignText from './modules/alignText';
+import * as AlignText from './modules/alignText';
 
 
 export function activate(context: ExtensionContext) {
@@ -66,7 +66,7 @@ export function activate(context: ExtensionContext) {
 
 
 	// align
-	// context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.AlignToSeparator', () => { AlignText.alignToSeparator(); }));
+	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.AlignToSeparator', () => { AlignText.alignToSeparator(); }));
 
 	// control characters
 	window.onDidChangeActiveTextEditor(editor => {
