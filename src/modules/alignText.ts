@@ -1,4 +1,4 @@
-import { TextEditor, TextLine, window, workspace } from 'vscode';
+import { TextEditor, TextLine, window, workspace } from "vscode";
 import { getActiveEditor, getLinesFromSelection } from "./helpers";
 
 /**
@@ -64,27 +64,35 @@ async function getElementMaxLength(lineElements: LineElement[]): Promise<number>
  * @param {string} [separator] The separator to use to align the text
  * @return {*}  {Promise<boolean>}
  */
-export async function alignToSeparator(separator?: string): Promise<boolean> {
-    if (!separator) {
-        separator = await aksForSeparator();
-    }
-    if (!separator) {
-        Promise.reject(false);
-    }
+export function alignToSeparator(separator?: string): Promise<boolean> {
+    return new Promise(async (resolve, reject) => {
+        if (!separator) {
+            separator = await aksForSeparator();
+        }
+        if (!separator) {
+            return reject(false);
+        }
 
-    const editor = getActiveEditor();
-    if (!editor) {
-        return Promise.reject();
-    }
+        const editor = getActiveEditor();
+        if (!editor) {
+            return reject(false);
+        }
 
-    const columns = await getColumns(editor, separator);
-    let newLineText: string = "";
-    editor.edit((editBuilder) => {
-        newLineText = padElements(columns, separator!);
-        editBuilder.replace(editor.selection, newLineText);
+        if (editor.selection.isEmpty) {
+            return reject(false);
+        }
+
+        // fix: ^ rejected promise not handled within 1 second
+
+        const columns = await getColumns(editor, separator);
+        let newLineText: string = "";
+        editor.edit((editBuilder) => {
+            newLineText = padElements(columns, separator!);
+            editBuilder.replace(editor.selection, newLineText);
+        });
+
+        return resolve(true);
     });
-
-    return Promise.resolve(true);
 }
 
 /**
@@ -102,6 +110,12 @@ async function getColumns(editor: TextEditor, separator: string): Promise<Column
 
         let columns: ColumnElement[] = [];
         let longestLineLength = getLongestLine(lines);
+
+        // fix: bad alignment and lost column if one of the tokens is empty
+        // e.g.
+        // asd, asd, asd, asd
+        // asd, asd,, asd
+        // asd, asd, asd, asd
 
         for (let ii = 0; ii < longestLineLength; ii++) {
             let longestColumnElement = 0;

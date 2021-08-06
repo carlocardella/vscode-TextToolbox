@@ -84,6 +84,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## Log
 
+## [1.8.1] - 2021-08-05
+
+### Fixed
+
+* Align to cursor does not change the text near the cursor if there is no selection
+
 ## [1.8.0] - 2021-08-04
 
 ### Added
