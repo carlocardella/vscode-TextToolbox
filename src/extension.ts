@@ -1,103 +1,267 @@
-import { commands, ExtensionContext, window, workspace } from 'vscode';
+import { commands, ExtensionContext, window, workspace } from "vscode";
 import * as CaseConversion from "./modules/caseConversion";
 import * as InsertText from "./modules/insertText";
-import * as StatusBarSelection from './modules/statusBarSelection';
-import * as FilterText from './modules/filterText';
-import * as SortLines from './modules/sortText';
-import * as ControlCharacters from './modules/controlCharacters';
-import * as Helpers from './modules/helpers';
-import * as TextManipulation from './modules/textManipulation';
-import * as Json from './modules/json';
-import * as AlignText from './modules/alignText';
-
+import * as StatusBarSelection from "./modules/statusBarSelection";
+import * as FilterText from "./modules/filterText";
+import * as SortLines from "./modules/sortText";
+import * as ControlCharacters from "./modules/controlCharacters";
+import * as Helpers from "./modules/helpers";
+import * as TextManipulation from "./modules/textManipulation";
+import * as Json from "./modules/json";
+import * as AlignText from "./modules/alignText";
 
 export function activate(context: ExtensionContext) {
-	console.log("vscode-texttoolbox is active");
+    console.log("vscode-texttoolbox is active");
 
-	// case conversions
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.PascalCase', () => { CaseConversion.convertSelection(CaseConversion.caseConversions.pascalCase); }));
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.CamelCase', () => { CaseConversion.convertSelection(CaseConversion.caseConversions.camelCase); }));
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.ConstantCase', () => { CaseConversion.convertSelection(CaseConversion.caseConversions.constantCase); }));
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.DotCase', () => { CaseConversion.convertSelection(CaseConversion.caseConversions.dotCase); }));
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.HeaderCase', () => { CaseConversion.convertSelection(CaseConversion.caseConversions.headerCase); }));
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.KebabCase', () => { CaseConversion.convertSelection(CaseConversion.caseConversions.kebabCase); }));
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.SentenceCase', () => { CaseConversion.convertSelection(CaseConversion.caseConversions.sentenceCase); }));
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.SnakeCase', () => { CaseConversion.convertSelection(CaseConversion.caseConversions.snakeCase); }));
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.InvertCase', () => { CaseConversion.convertSelection(CaseConversion.caseConversions.invertCase); }));
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.PathCase', () => { CaseConversion.convertSelection(CaseConversion.caseConversions.pathCase); }));
+    // case conversions
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.PascalCase", () => {
+            CaseConversion.convertSelection(CaseConversion.caseConversions.pascalCase);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.CamelCase", () => {
+            CaseConversion.convertSelection(CaseConversion.caseConversions.camelCase);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.ConstantCase", () => {
+            CaseConversion.convertSelection(CaseConversion.caseConversions.constantCase);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.DotCase", () => {
+            CaseConversion.convertSelection(CaseConversion.caseConversions.dotCase);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.HeaderCase", () => {
+            CaseConversion.convertSelection(CaseConversion.caseConversions.headerCase);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.KebabCase", () => {
+            CaseConversion.convertSelection(CaseConversion.caseConversions.kebabCase);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.SentenceCase", () => {
+            CaseConversion.convertSelection(CaseConversion.caseConversions.sentenceCase);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.SnakeCase", () => {
+            CaseConversion.convertSelection(CaseConversion.caseConversions.snakeCase);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.InvertCase", () => {
+            CaseConversion.convertSelection(CaseConversion.caseConversions.invertCase);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.PathCase", () => {
+            CaseConversion.convertSelection(CaseConversion.caseConversions.pathCase);
+        })
+    );
 
-	// insert text
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.InsertGUID', () => { InsertText.insertGUID(); }));
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.InsertGuidAllZeros', () => { InsertText.insertGUID(true); }));
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.InsertDate', () => { InsertText.pickDateTime(); }));
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.PickRandom', () => { InsertText.pickRandom(); }));
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.PadSelectionRight', () => { InsertText.padSelection(InsertText.padDirection.right); }));
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.PadSelectionLeft', () => { InsertText.padSelection(InsertText.padDirection.left); }));
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.InsertLineNumbers', () => { InsertText.insertLineNumbers(); }));
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.InsertSequenceNumbers', () => { InsertText.insertSequence(InsertText.sequenceType.Numbers); }));
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.InsertLoremIpsum', () => { InsertText.insertLoremIpsum(); }));
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.InsertCurrency', () => { InsertText.insertCurrency(); }));
+    // insert text
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.InsertGUID", () => {
+            InsertText.insertGUID();
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.InsertGuidAllZeros", () => {
+            InsertText.insertGUID(true);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.InsertDate", () => {
+            InsertText.pickDateTime();
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.PickRandom", () => {
+            InsertText.pickRandom();
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.PadSelectionRight", () => {
+            InsertText.padSelection(InsertText.padDirection.right);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.PadSelectionLeft", () => {
+            InsertText.padSelection(InsertText.padDirection.left);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.InsertLineNumbers", () => {
+            InsertText.insertLineNumbers();
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.InsertSequenceNumbers", () => {
+            InsertText.insertSequence(InsertText.sequenceType.Numbers);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.InsertLoremIpsum", () => {
+            InsertText.insertLoremIpsum();
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.InsertCurrency", () => {
+            InsertText.insertCurrency();
+        })
+    );
 
-	// filter text
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.RemoveAllEmptyLines', () => { FilterText.removeEmptyLines(false); }));
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.RemoveRedundantEmptyLines', () => { FilterText.removeEmptyLines(true); }));
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.RemoveDuplicateLines', () => { FilterText.removeDuplicateLines(false); }));
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.RemoveDuplicateLinesResultInNewEditor', () => { FilterText.removeDuplicateLines(true); }));
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.FilterLinesUsingRegExpOrString', () => { FilterText.filterLinesUsingRegExpOrString(true); }));
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.OpenSelectionInNewEditor', () => { FilterText.openSelectionInNewEditor(); }));
+    // filter text
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.RemoveAllEmptyLines", () => {
+            FilterText.removeEmptyLines(false);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.RemoveRedundantEmptyLines", () => {
+            FilterText.removeEmptyLines(true);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.RemoveDuplicateLines", () => {
+            FilterText.removeDuplicateLines(false);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.RemoveDuplicateLinesResultInNewEditor", () => {
+            FilterText.removeDuplicateLines(true);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.FilterLinesUsingRegExpOrString", () => {
+            FilterText.filterLinesUsingRegExpOrString(true);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.OpenSelectionInNewEditor", () => {
+            FilterText.openSelectionInNewEditor();
+        })
+    );
 
-	// sort text
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.SortLinesResultInNewEditor', () => { SortLines.askForSortDirection(true); }));
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.SortLines', () => { SortLines.askForSortDirection(); }));
+    // sort text
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.SortLinesResultInNewEditor", () => {
+            SortLines.askForSortDirection(true);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.SortLines", () => {
+            SortLines.askForSortDirection();
+        })
+    );
 
-	// text manipulations
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.TrimLineOrSelection', () => { TextManipulation.trimLineOrSelection(); }));
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.SplitSelection', () => { TextManipulation.splitSelection(false); }));
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.SplitSelectionOpenInNewEditor', () => { TextManipulation.splitSelection(true); }));
+    // text manipulations
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.TrimLineOrSelection", () => {
+            TextManipulation.trimLineOrSelection();
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.SplitSelection", () => {
+            TextManipulation.splitSelection(false);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.SplitSelectionOpenInNewEditor", () => {
+            TextManipulation.splitSelection(true);
+        })
+    );
 
-	// json
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.StringifyJson', () => { Json.stringifyJson(false); }));
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.FixJson', () => { Json.stringifyJson(true); }));
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.MinifyJson', () => { Json.minifyJson(); }));
+    // json
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.StringifyJson", () => {
+            Json.stringifyJson(false);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.FixJson", () => {
+            Json.stringifyJson(true);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.MinifyJson", () => {
+            Json.minifyJson();
+        })
+    );
 
-	// path transformation
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.TransformPathToPosix', () => { TextManipulation.transformPath(TextManipulation.pathTransformationType.posix); }));
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.TransformPathToWin32', () => { TextManipulation.transformPath(TextManipulation.pathTransformationType.win32); }));
+    // path transformation
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.TransformPathToPosix", () => {
+            TextManipulation.transformPath(TextManipulation.pathTransformationType.posix);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.TransformPathToWin32", () => {
+            TextManipulation.transformPath(TextManipulation.pathTransformationType.win32);
+        })
+    );
 
+    // align
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.AlignToSeparator", () => {
+            AlignText.alignToSeparator();
+        })
+    );
 
-	// align
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.AlignToSeparator', () => { AlignText.alignToSeparator(); }));
+    // control characters
+    window.onDidChangeActiveTextEditor(
+        (editor) => {
+            if (editor) {
+                ControlCharacters.decorateControlCharacters(editor);
+            }
+        },
+        null,
+        context.subscriptions
+    );
+    workspace.onDidChangeTextDocument(
+        (event) => {
+            let activeEditor = Helpers.getActiveEditor();
+            if (activeEditor) {
+                ControlCharacters.decorateControlCharacters(activeEditor);
+            }
 
-	// control characters
-	window.onDidChangeActiveTextEditor(editor => {
-		if (editor) { ControlCharacters.decorateControlCharacters(editor); }
-	}, null, context.subscriptions);
-	workspace.onDidChangeTextDocument(event => {
-		let activeEditor = Helpers.getActiveEditor();
-		if (activeEditor) { ControlCharacters.decorateControlCharacters(activeEditor); }
+            // todo: https://github.com/Microsoft/vscode/issues/30066
+            // if (workspace.getConfiguration().get('TextToolbox.removeControlCharactersOnPaste')) {
+            // 	ControlCharacters.removeControlCharacters(getActiveEditor());
+            // }
+        },
+        null,
+        context.subscriptions
+    );
+    context.subscriptions.push(
+        workspace.onDidChangeConfiguration((e) => {
+            if (e.affectsConfiguration("TextToolbox.decorateControlCharacters")) {
+                const editor = Helpers.getActiveEditor();
+                if (editor) {
+                    ControlCharacters.decorateControlCharacters(editor, true);
+                }
+            }
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.RemoveControlCharacters", () => {
+            ControlCharacters.removeControlCharacters();
+        })
+    );
 
-		// todo: https://github.com/Microsoft/vscode/issues/30066
-		// if (workspace.getConfiguration().get('tt.removeControlCharactersOnPaste')) {
-		// 	ControlCharacters.removeControlCharacters(getActiveEditor());
-		// }
-	}, null, context.subscriptions);
-	context.subscriptions.push(workspace.onDidChangeConfiguration(e => {
-		if (e.affectsConfiguration("tt.decorateControlCharacters")) {
-			const editor = Helpers.getActiveEditor();
-			if (editor) { ControlCharacters.decorateControlCharacters(editor, true); }
-		}
-	}));
-	context.subscriptions.push(commands.registerTextEditorCommand('vscode-texttoolbox.RemoveControlCharacters', () => { ControlCharacters.removeControlCharacters(); }));
-
-
-	// status bar selection
-	if (workspace.getConfiguration().get('tt.enableStatusBarWordLineCount')) {
-		StatusBarSelection.createStatusBarItem(context);
-	}
-};
-
+    // status bar selection
+    if (workspace.getConfiguration().get("TextToolbox.enableStatusBarWordLineCount")) {
+        StatusBarSelection.createStatusBarItem(context);
+    }
+}
 
 // this method is called when your extension is deactivated
 export function deactivate() {
-	StatusBarSelection.disposeStatusBarItem();
+    StatusBarSelection.disposeStatusBarItem();
 }

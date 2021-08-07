@@ -1,7 +1,6 @@
-import { getActiveEditor, getDocumentTextOrSelection, createNewEditor, getSelection, linesToLine, getLinesFromString, getTextFromSelection } from './helpers';
+import { getActiveEditor, getDocumentTextOrSelection, createNewEditor, getSelection, linesToLine, getLinesFromString, getTextFromSelection } from "./helpers";
 import * as os from "os";
 import { window, workspace } from "vscode";
-
 
 /**
  * Removes empty lines from the active document or selection; optionally removes only duplicate empty lines.
@@ -23,7 +22,9 @@ export async function removeEmptyLines(redundantOnly: boolean) {
     }
 
     let selection = getSelection(editor);
-    if (!selection) { return; }
+    if (!selection) {
+        return;
+    }
     editor.edit((editBuilder) => {
         editBuilder.replace(selection, newText);
     });
@@ -59,9 +60,11 @@ export async function removeDuplicateLines(openInNewTextEditor: boolean) {
     let text = getDocumentTextOrSelection();
     const o = os;
     let lines = text?.split(os.EOL);
-    if (!lines) { return; }
+    if (!lines) {
+        return;
+    }
 
-    const ignoreWhitespaces = workspace.getConfiguration().get("tt.ignoreWhitespaceInLineFilters");
+    const ignoreWhitespaces = workspace.getConfiguration().get("TextToolbox.ignoreWhitespaceInLineFilters");
     if (ignoreWhitespaces) {
         for (let i = 0; i < lines.length - 1; i++) {
             lines[i] = lines[i].trim();
@@ -84,7 +87,7 @@ export async function removeDuplicateLines(openInNewTextEditor: boolean) {
     const editor = getActiveEditor();
     let selection = getSelection(editor!);
 
-    editor!.edit(editBuilder => {
+    editor!.edit((editBuilder) => {
         editBuilder.replace(selection!, newText);
     });
 }
@@ -93,20 +96,21 @@ export async function removeDuplicateLines(openInNewTextEditor: boolean) {
  * Filter the active Selection or Document based on user's input, either regexp (default) or simple string.
  *   - `regexp` behaves like a normal regular expression, returns the result of the RegExp match.
  *   - `string` returns all lines containing    the search string, exactly how is typed.
- * The default search string type (regexp or string) can be configured using `tt.filtersUseRegularExpressions`
+ * The default search string type (regexp or string) can be configured using `TextToolbox.filtersUseRegularExpressions`
  * Default: regexp
  * @param {boolean} openInNewTextEditor
  * @async
  */
 export async function filterLinesUsingRegExpOrString(openInNewTextEditor?: boolean) {
     let searchString = await window.showInputBox({ ignoreFocusOut: true, placeHolder: "Regular Expression or String to match" });
-    if (!searchString) { return; }
+    if (!searchString) {
+        return;
+    }
 
     let text;
-    if (workspace.getConfiguration().get("tt.filtersUseRegularExpressions")) {
+    if (workspace.getConfiguration().get("TextToolbox.filtersUseRegularExpressions")) {
         text = findLinesMatchingRegEx(searchString)!;
-    }
-    else {
+    } else {
         text = await findLinesMatchingString(searchString);
     }
 
@@ -115,25 +119,28 @@ export async function filterLinesUsingRegExpOrString(openInNewTextEditor?: boole
 
 /**
  * Searches the current Selection and returns all RegExp matches
- * @param {string | undefined} searchString 
+ * @param {string | undefined} searchString
  * @returns {string[] | undefined}
  */
 export function findLinesMatchingRegEx(searchString: string | undefined): string[] | undefined {
-    if (!searchString) { return; }
+    if (!searchString) {
+        return;
+    }
 
     let text: string | any = [];
 
-    const regExpFlags = searchString.match("(?!.*\/).*")![0] || undefined;
-    const regExpString = searchString.match("(?<=\/)(.*?)(?=\/)")![0];
+    const regExpFlags = searchString.match("(?!.*/).*")![0] || undefined;
+    const regExpString = searchString.match("(?<=/)(.*?)(?=/)")![0];
     const regExp = new RegExp(regExpString, regExpFlags);
 
     let match;
     if (!regExpFlags || regExpFlags?.indexOf("g") < 0) {
         match = regExp.exec(getDocumentTextOrSelection()!);
-        if (match) { text.push(match[0]); }
-    }
-    else if (regExpFlags || regExpFlags.indexOf("g") >= 0) {
-        while (match = regExp.exec(getDocumentTextOrSelection()!)) {
+        if (match) {
+            text.push(match[0]);
+        }
+    } else if (regExpFlags || regExpFlags.indexOf("g") >= 0) {
+        while ((match = regExp.exec(getDocumentTextOrSelection()!))) {
             text.push(match[0]);
         }
     }
@@ -148,12 +155,16 @@ export function findLinesMatchingRegEx(searchString: string | undefined): string
  * @async
  */
 export async function findLinesMatchingString(searchString: string): Promise<string[] | undefined> {
-    if (!searchString) { return; }
+    if (!searchString) {
+        return;
+    }
     let text: string[] | undefined = [];
 
     text = await getLinesFromString(getDocumentTextOrSelection()!);
-    if (!text) { return; }
-    text = text.filter(line => line.indexOf(searchString) >= 0);
+    if (!text) {
+        return;
+    }
+    text = text.filter((line) => line.indexOf(searchString) >= 0);
 
     return Promise.resolve(text);
 }
@@ -165,13 +176,17 @@ export async function findLinesMatchingString(searchString: string): Promise<str
  */
 export async function openSelectionInNewEditor(): Promise<boolean> {
     const editor = getActiveEditor();
-    if (!editor) { return Promise.reject("No active editor found"); }
+    if (!editor) {
+        return Promise.reject("No active editor found");
+    }
 
-    if (editor.selection.isEmpty) { return false; }
-    
+    if (editor.selection.isEmpty) {
+        return false;
+    }
+
     let selections = editor.selections;
     let text: string[] = [];
-    selections.forEach(s => {
+    selections.forEach((s) => {
         text.push(getTextFromSelection(editor, s)! + os.EOL);
     });
 

@@ -64,155 +64,193 @@
         "commands": [
             {
                 "command": "vscode-texttoolbox.PascalCase",
-                "title": "TT: PascalCase"
+                "title": "PascalCase",
+                "category": "Text Toolbox"
             },
             {
                 "command": "vscode-texttoolbox.CamelCase",
-                "title": "TT: camel Case"
+                "title": "camel Case",
+                "category": "Text Toolbox"
             },
             {
                 "command": "vscode-texttoolbox.ConstantCase",
-                "title": "TT: CONSTANT_CASE"
+                "title": "CONSTANT_CASE",
+                "category": "Text Toolbox"
             },
             {
                 "command": "vscode-texttoolbox.DotCase",
-                "title": "TT: dot.case"
+                "title": "dot.case",
+                "category": "Text Toolbox"
             },
             {
                 "command": "vscode-texttoolbox.KebabCase",
-                "title": "TT: kebab-case"
+                "title": "kebab-case",
+                "category": "Text Toolbox"
             },
             {
                 "command": "vscode-texttoolbox.SentenceCase",
-                "title": "TT: Sentence case"
+                "title": "Sentence case",
+                "category": "Text Toolbox"
             },
             {
                 "command": "vscode-texttoolbox.SnakeCase",
-                "title": "TT: snake_case"
+                "title": "snake_case",
+                "category": "Text Toolbox"
             },
             {
                 "command": "vscode-texttoolbox.HeaderCase",
-                "title": "TT: HEADER-CASE"
+                "title": "HEADER-CASE",
+                "category": "Text Toolbox"
             },
             {
                 "command": "vscode-texttoolbox.InvertCase",
-                "title": "TT: invert case"
+                "title": "invert case",
+                "category": "Text Toolbox"
             },
             {
                 "command": "vscode-texttoolbox.PathCase",
-                "title": "TT: path/case"
+                "title": "path/case",
+                "category": "Text Toolbox"
             },
             {
                 "command": "vscode-texttoolbox.InsertGUID",
-                "title": "TT: Insert GUID"
+                "title": "Insert GUID",
+                "category": "Text Toolbox"
             },
             {
                 "command": "vscode-texttoolbox.InsertGuidAllZeros",
-                "title": "TT: Insert GUID all zeros"
+                "title": "Insert GUID all zeros",
+                "category": "Text Toolbox"
             },
             {
                 "command": "vscode-texttoolbox.InsertDate",
-                "title": "TT: Insert Date"
+                "title": "Insert Date",
+                "category": "Text Toolbox"
             },
             {
                 "command": "vscode-texttoolbox.PickRandom",
-                "title": "TT: Insert Random"
+                "title": "Insert Random",
+                "category": "Text Toolbox"
             },
             {
                 "command": "vscode-texttoolbox.PadSelectionRight",
-                "title": "TT: Pad Selection Right"
+                "title": "Pad Selection Right",
+                "category": "Text Toolbox"
             },
             {
                 "command": "vscode-texttoolbox.PadSelectionLeft",
-                "title": "TT: Pad Selection Left"
+                "title": "Pad Selection Left",
+                "category": "Text Toolbox"
             },
             {
                 "command": "vscode-texttoolbox.RemoveAllEmptyLines",
-                "title": "TT: Remove all empty lines"
+                "title": "Remove all empty lines",
+                "category": "Text Toolbox"
             },
             {
                 "command": "vscode-texttoolbox.RemoveRedundantEmptyLines",
-                "title": "TT: Remove redundant empty lines"
+                "title": "Remove redundant empty lines",
+                "category": "Text Toolbox"
             },
             {
                 "command": "vscode-texttoolbox.RemoveDuplicateLines",
-                "title": "TT: Remove duplicate lines"
+                "title": "Remove duplicate lines",
+                "category": "Text Toolbox"
             },
             {
                 "command": "vscode-texttoolbox.RemoveDuplicateLinesResultInNewEditor",
-                "title": "TT: Remove duplicate lines, result in new Editor"
+                "title": "Remove duplicate lines, result in new Editor",
+                "category": "Text Toolbox"
             },
             {
                 "command": "vscode-texttoolbox.FilterLinesUsingRegExpOrString",
-                "title": "TT: Filter lines, result in new Editor"
+                "title": "Filter lines, result in new Editor",
+                "category": "Text Toolbox"
             },
             {
                 "command": "vscode-texttoolbox.SortLinesResultInNewEditor",
-                "title": "TT: Sort lines, result in new editor"
+                "title": "Sort lines, result in new editor",
+                "category": "Text Toolbox"
             },
             {
                 "command": "vscode-texttoolbox.SortLines",
-                "title": "TT: Sort lines"
+                "title": "Sort lines",
+                "category": "Text Toolbox"
             },
             {
                 "command": "vscode-texttoolbox.OpenSelectionInNewEditor",
-                "title": "TT: Open selection in new editor"
+                "title": "Open selection in new editor",
+                "category": "Text Toolbox"
             },
             {
                 "command": "vscode-texttoolbox.InsertLineNumbers",
-                "title": "TT: Insert line numbers"
+                "title": "Insert line numbers",
+                "category": "Text Toolbox"
             },
             {
                 "command": "vscode-texttoolbox.InsertSequenceNumbers",
-                "title": "TT: Insert numbers sequence"
+                "title": "Insert numbers sequence",
+                "category": "Text Toolbox"
             },
             {
                 "command": "vscode-texttoolbox.RemoveControlCharacters",
-                "title": "TT: Remove control characters"
+                "title": "Remove control characters",
+                "category": "Text Toolbox"
             },
             {
                 "command": "vscode-texttoolbox.TrimLineOrSelection",
-                "title": "TT: Trim"
+                "title": "Trim",
+                "category": "Text Toolbox"
             },
             {
                 "command": "vscode-texttoolbox.InsertCurrency",
-                "title": "TT: Insert Currency"
+                "title": "Insert Currency",
+                "category": "Text Toolbox"
             },
             {
                 "command": "vscode-texttoolbox.SplitSelection",
-                "title": "TT: Split Selection"
+                "title": "Split Selection",
+                "category": "Text Toolbox"
             },
             {
                 "command": "vscode-texttoolbox.SplitSelectionOpenInNewEditor",
-                "title": "TT: Split Selection, result in new editor"
+                "title": "Split Selection, result in new editor",
+                "category": "Text Toolbox"
             },
             {
                 "command": "vscode-texttoolbox.FixJson",
-                "title": "TT: Fix and Format Json"
+                "title": "Fix and Format Json",
+                "category": "Text Toolbox"
             },
             {
                 "command": "vscode-texttoolbox.StringifyJson",
-                "title": "TT: Stringify Json"
+                "title": "Stringify Json",
+                "category": "Text Toolbox"
             },
             {
                 "command": "vscode-texttoolbox.MinifyJson",
-                "title": "TT: Minify Json"
+                "title": "Minify Json",
+                "category": "Text Toolbox"
             },
             {
                 "command": "vscode-texttoolbox.TransformPathToPosix",
-                "title": "TT: Transform path to Posix"
+                "title": "Transform path to Posix",
+                "category": "Text Toolbox"
             },
             {
                 "command": "vscode-texttoolbox.TransformPathToWin32",
-                "title": "TT: Transform path to Win32"
+                "title": "Transform path to Win32",
+                "category": "Text Toolbox"
             },
             {
                 "command": "vscode-texttoolbox.InsertLoremIpsum",
-                "title": "TT: Insert Lorem Ipsum"
+                "title": "Insert Lorem Ipsum",
+                "category": "Text Toolbox"
             },
             {
                 "command": "vscode-texttoolbox.AlignToSeparator",
-                "title": "TT: Align to separator"
+                "title": "Align to separator",
+                "category": "Text Toolbox"
             }
         ],
         "menus": {
@@ -457,7 +495,7 @@
             {
                 "title": "Text Toolbox",
                 "properties": {
-                    "tt.statusBarAlignment": {
+                    "TextToolbox.statusBarAlignment": {
                         "type": "string",
                         "enum": [
                             "Left",
@@ -467,31 +505,31 @@
                         "scope": "window",
                         "description": "Text Toolbox word and selected lines count alignment in the StatusBar"
                     },
-                    "tt.statusBarPriority": {
+                    "TextToolbox.statusBarPriority": {
                         "type": "number",
                         "default": 100,
                         "scope": "window",
                         "description": "Text Toolbox word and selected lines count StatusBar priority"
                     },
-                    "tt.enableStatusBarWordLineCount": {
+                    "TextToolbox.enableStatusBarWordLineCount": {
                         "type": "boolean",
                         "default": true,
                         "scope": "window",
                         "description": "Enable or disable the StatusBar Text Toolbox word and selected lines count"
                     },
-                    "tt.ignoreWhitespaceInLineFilters": {
+                    "TextToolbox.ignoreWhitespaceInLineFilters": {
                         "type": "boolean",
                         "default": true,
                         "scope": "window",
                         "description": "Ignore leading and trailing whitespaces when filtering lines: this can impact how duplicate lines are removed"
                     },
-                    "tt.filtersUseRegularExpressions": {
+                    "TextToolbox.filtersUseRegularExpressions": {
                         "type": "boolean",
                         "default": true,
                         "scope": "window",
                         "description": "Filter use Regular Expression rather than simple text match"
                     },
-                    "tt.decorateControlCharacters": {
+                    "TextToolbox.decorateControlCharacters": {
                         "type": "object",
                         "description": "Control characters decoration appearance",
                         "default": {
@@ -501,15 +539,15 @@
                             "borderColor": "red"
                         }
                     },
-                    "tt.replaceControlCharactersWith": {
+                    "TextToolbox.replaceControlCharactersWith": {
                         "type": "string",
                         "default": "",
                         "scope": "window",
                         "description": "Replace control characters (TT: Remove Control Characters) in the active document with this string"
                     },
-                    "tt.alignTextDefaultSeparator": {
-                        "type":"string",
-                        "default":",",
+                    "TextToolbox.alignTextDefaultSeparator": {
+                        "type": "string",
+                        "default": ",",
                         "scope": "window",
                         "description": "Align text default separator (TT: Align Text)"
                     }
