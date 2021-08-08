@@ -103,15 +103,16 @@ let textEditorDecorationType: TextEditorDecorationType;
  * @param {boolean} configurationChanged If true, reads the TextToolbox.decorateControlCharacters configuration
  * @async
  */
-export async function decorateControlCharacters(editor: TextEditor, configurationChanged?: boolean) {
+export async function decorateControlCharacters(editor: TextEditor, configurationChanged?: boolean): Promise<void> {
     if (configurationChanged || !textEditorDecorationType) {
         // update textEditorDecorationType only if the value is empty or if TextToolbox.decorateControlCharacters has changed;
         // this is to properly maintain/update/remove existing decorations.
         // If textEditorDecorationType is updated unnecessarily, the decorations become all confused
-        const decorationRenderOptions = workspace.getConfiguration("tt").decorateControlCharacters;
+        const decorationRenderOptions = workspace.getConfiguration("TextToolbox").decorateControlCharacters;
         textEditorDecorationType = await newDecorator(decorationRenderOptions);
     }
     updateDecorations(editor, regexp, textEditorDecorationType);
+    return Promise.resolve();
 }
 
 /**
@@ -119,12 +120,12 @@ export async function decorateControlCharacters(editor: TextEditor, configuratio
  * @param {TextEditor} [editor] The active text editor
  * @async
  */
-export async function removeControlCharacters(editor?: TextEditor, replaceControlCharactersWith?: any) {
+export async function removeControlCharacters(editor?: TextEditor, replaceControlCharactersWith?: any): Promise<void> {
     if (!editor) {
         editor = getActiveEditor();
     }
     if (!editor) {
-        return;
+        return Promise.reject();
     }
     if (!replaceControlCharactersWith) {
         replaceControlCharactersWith = workspace.getConfiguration("tt").replaceControlCharactersWith;
@@ -141,4 +142,6 @@ export async function removeControlCharacters(editor?: TextEditor, replaceContro
             editBuilder.replace(selection, newText);
         });
     });
+
+    return Promise.resolve();
 }

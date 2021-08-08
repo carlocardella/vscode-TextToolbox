@@ -1,24 +1,24 @@
-import * as assert from 'assert';
-import { after, before, describe, afterEach } from 'mocha';
-import { EOL } from 'os';
-import { removeControlCharacters } from '../../modules/controlCharacters';
-import { closeTextEditor, createNewEditor, getActiveEditor, getDocumentTextOrSelection, selectAllText, sleep } from '../../modules/helpers';
-import { ConfigurationTarget, Selection, window, workspace, commands, env } from 'vscode';
+import * as assert from "assert";
+import { after, before, describe, afterEach } from "mocha";
+import { EOL } from "os";
+import { removeControlCharacters } from "../../modules/controlCharacters";
+import { closeTextEditor, createNewEditor, getActiveEditor, getDocumentTextOrSelection, selectAllText, sleep } from "../../modules/helpers";
+import { ConfigurationTarget, Selection, window, workspace, commands, env } from "vscode";
 
 suite("controlCharacters", () => {
     before(async () => {
-        console.log('Starting controlCharacters tests');
-        let config = workspace.getConfiguration("tt", window.activeTextEditor?.document);
+        console.log("Starting controlCharacters tests");
+        let config = workspace.getConfiguration("TextToolbox", window.activeTextEditor?.document);
         await config.update("replaceControlCharactersWith", undefined, ConfigurationTarget.Global);
     });
     after(async () => {
         await sleep(500);
         await closeTextEditor(true);
-        console.log('All controlCharacters tests done');
+        console.log("All controlCharacters tests done");
     });
 
     afterEach(async () => {
-        let config = workspace.getConfiguration("tt", window.activeTextEditor?.document);
+        let config = workspace.getConfiguration("TextToolbox", window.activeTextEditor?.document);
         await config.update("replaceControlCharactersWith", undefined, ConfigurationTarget.Global);
     });
 
@@ -43,7 +43,7 @@ suite("controlCharacters", () => {
             });
 
             test("Remove control characters from full document, replace with space", async () => {
-                let config = workspace.getConfiguration("tt", window.activeTextEditor?.document);
+                let config = workspace.getConfiguration("TextToolbox", window.activeTextEditor?.document);
                 await config.update("replaceControlCharactersWith", " ", ConfigurationTarget.Global);
                 await createNewEditor(newTextEditor);
                 const editor = getActiveEditor();
@@ -55,7 +55,7 @@ suite("controlCharacters", () => {
             });
 
             test("Remove control characters from full document, replace with custom string x", async () => {
-                let config = workspace.getConfiguration("tt", window.activeTextEditor?.document);
+                let config = workspace.getConfiguration("TextToolbox", window.activeTextEditor?.document);
                 await config.update("replaceControlCharactersWith", "x", ConfigurationTarget.Global);
                 await createNewEditor(newTextEditor);
                 const editor = getActiveEditor();
@@ -87,7 +87,7 @@ suite("controlCharacters", () => {
             });
 
             test("Remove control characters from selection, replace with space", async () => {
-                let config = workspace.getConfiguration("tt", window.activeTextEditor?.document);
+                let config = workspace.getConfiguration("TextToolbox", window.activeTextEditor?.document);
                 await config.update("replaceControlCharactersWith", " ", ConfigurationTarget.Global);
                 await createNewEditor(newTextEditor);
                 const editor = getActiveEditor();
@@ -103,7 +103,7 @@ suite("controlCharacters", () => {
             });
 
             test("Remove control characters from selection, replace with custom string x", async () => {
-                let config = workspace.getConfiguration("tt", window.activeTextEditor?.document);
+                let config = workspace.getConfiguration("TextToolbox", window.activeTextEditor?.document);
                 await config.update("replaceControlCharactersWith", "x", ConfigurationTarget.Global);
                 await createNewEditor(newTextEditor);
                 const editor = getActiveEditor();
@@ -119,15 +119,15 @@ suite("controlCharacters", () => {
             });
         });
 
-        describe.skip('Remove control charachters on paste', () => {
-            test('Remove control characters on paste', async () => {
-                let config = workspace.getConfiguration('tt', window.activeTextEditor?.document);
-                await config.update('removeControlCharactersOnPaste', true, ConfigurationTarget.Global);
+        describe.skip("Remove control charachters on paste", () => {
+            test("Remove control characters on paste", async () => {
+                let config = workspace.getConfiguration("tt", window.activeTextEditor?.document);
+                await config.update("removeControlCharactersOnPaste", true, ConfigurationTarget.Global);
 
                 await env.clipboard.writeText(newTextEditor);
 
                 await createNewEditor();
-                await commands.executeCommand('editor.action.clipboardPasteAction');
+                await commands.executeCommand("editor.action.clipboardPasteAction");
                 await sleep(500);
 
                 const newText = getDocumentTextOrSelection();
@@ -135,7 +135,7 @@ suite("controlCharacters", () => {
 
                 assert.deepStrictEqual(newText, expectedFullDocumentWithEmptyString);
 
-                await config.update('removeControlCharactersOnPaste', undefined, ConfigurationTarget.Global);
+                await config.update("removeControlCharactersOnPaste", undefined, ConfigurationTarget.Global);
             });
         });
     });
