@@ -1,19 +1,18 @@
-import * as assert from 'assert';
-import { before, after, describe } from 'mocha';
-import { sleep, createNewEditor, selectAllText, getDocumentTextOrSelection, closeTextEditor, linesToLine, getActiveEditor } from '../../modules/helpers';
-import { findLinesMatchingRegEx, openSelectionInNewEditor, removeDuplicateLines, removeEmptyLines } from '../../modules/filterText';
-import * as os from 'os';
-import { ConfigurationTarget, window, workspace, Selection } from 'vscode';
-
+import * as assert from "assert";
+import { before, after, describe } from "mocha";
+import { sleep, createNewEditor, selectAllText, getDocumentTextOrSelection, closeTextEditor, linesToLine, getActiveEditor } from "../../modules/helpers";
+import { findLinesMatchingRegEx, openSelectionInNewEditor, removeDuplicateLines, removeEmptyLines } from "../../modules/filterText";
+import * as os from "os";
+import { ConfigurationTarget, window, workspace, Selection } from "vscode";
 
 suite("filterText", () => {
     before(() => {
-        console.log('Starting filterText tests');
+        console.log("Starting filterText tests");
     });
     after(async () => {
         await sleep(500);
         await closeTextEditor(true);
-        console.log('All insertText tests done');
+        console.log("All insertText tests done");
     });
 
     describe("Remove all empty lines", async () => {
@@ -24,12 +23,12 @@ suite("filterText", () => {
 
         let tests = [
             { docText: testEditorText, redundantOnly: true, expected: testEditorTextRedundantExpected },
-            { docText: testEditorText, redundantOnly: false, expected: testEditorTextAllExpected }
+            { docText: testEditorText, redundantOnly: false, expected: testEditorTextAllExpected },
         ];
 
         tests.forEach(function (t) {
             let itRedundant;
-            t.redundantOnly ? itRedundant = "redundant" : itRedundant = "all";
+            t.redundantOnly ? (itRedundant = "redundant") : (itRedundant = "all");
             test("Remove " + itRedundant + " empty lines", async () => {
                 await createNewEditor(testEditorText);
                 await removeEmptyLines(t.redundantOnly);
@@ -55,14 +54,21 @@ suite("filterText", () => {
 
         tests.forEach(function (t) {
             let testTitle: string;
-            if (t.selection && !t.openInNewEditor) { testTitle = "Remove duplicate lines and update selection"; }
-            else if (!t.selection && !t.openInNewEditor) { testTitle = "Remove duplicate lines from the document"; }
-            else if (t.selection && t.openInNewEditor) { testTitle = "Remove duplciate lines, open result in new editor"; }
-            else if (!t.selection && t.openInNewEditor) { testTitle = "Remove duplicate lines from the document, open resul in new editor"; }
+            if (t.selection && !t.openInNewEditor) {
+                testTitle = "Remove duplicate lines and update selection";
+            } else if (!t.selection && !t.openInNewEditor) {
+                testTitle = "Remove duplicate lines from the document";
+            } else if (t.selection && t.openInNewEditor) {
+                testTitle = "Remove duplciate lines, open result in new editor";
+            } else if (!t.selection && t.openInNewEditor) {
+                testTitle = "Remove duplicate lines from the document, open resul in new editor";
+            }
 
             test(testTitle!, async () => {
                 await createNewEditor(t.docText);
-                if (t.selection) { await selectAllText(); }
+                if (t.selection) {
+                    await selectAllText();
+                }
                 await removeDuplicateLines(t.openInNewEditor);
                 await sleep(500);
 
@@ -77,9 +83,7 @@ suite("filterText", () => {
         const textToFilter = `pippo${eol}pippo${eol}${eol}paperino${eol}paperino pippo${eol}${eol}${eol}pippo${eol}paperino${eol}pippo paperino${eol}${eol}paperino${eol}paperino${eol}${eol}paperino${eol}`;
         const regExpExpectedResult = `paperino${eol}paperino pippo${eol}paperino${eol}pippo paperino${eol}paperino${eol}paperino${eol}paperino`;
 
-        let tests = [
-            { textToFilter: textToFilter, regExpString: "/.*paperino.*/gm", expected: regExpExpectedResult },
-        ];
+        let tests = [{ textToFilter: textToFilter, regExpString: "/.*paperino.*/gm", expected: regExpExpectedResult }];
 
         tests.forEach(function (t) {
             test(`Filter text with ${t.regExpString}`, async () => {
@@ -92,12 +96,10 @@ suite("filterText", () => {
                 assert.deepStrictEqual(text, t.expected);
             });
 
-            tests = [
-                { textToFilter: textToFilter, regExpString: "paperino", expected: regExpExpectedResult }
-            ];
+            tests = [{ textToFilter: textToFilter, regExpString: "paperino", expected: regExpExpectedResult }];
 
             test(`Filter text with ${t.regExpString} as string`, async () => {
-                let config = workspace.getConfiguration("tt", window.activeTextEditor?.document);
+                let config = workspace.getConfiguration("TextToolbox", window.activeTextEditor?.document);
                 await config.update("filtersUseRegularExpressions", false, ConfigurationTarget.Global);
 
                 await createNewEditor(t.textToFilter);

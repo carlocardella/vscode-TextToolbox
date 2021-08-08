@@ -7,7 +7,7 @@ import { getActiveEditor, getLinesFromSelection } from "./helpers";
  * @async
  */
 export async function aksForSeparator(): Promise<string> {
-    const config = workspace.getConfiguration().get<string>("tt.alignTextDefaultSeparator");
+    const config = workspace.getConfiguration().get<string>("TextToolbox.alignTextDefaultSeparator");
     const separator = await window.showInputBox({ ignoreFocusOut: true, value: config, prompt: "Choose a separator" });
     if (!separator) {
         return Promise.reject("Operation cancelled by the user");

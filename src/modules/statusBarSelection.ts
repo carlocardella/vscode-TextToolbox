@@ -1,5 +1,4 @@
-import { window, ExtensionContext, workspace, StatusBarAlignment, Selection, StatusBarItem } from 'vscode';
-
+import { window, ExtensionContext, workspace, StatusBarAlignment, Selection, StatusBarItem } from "vscode";
 
 let statusBarItem: StatusBarItem;
 
@@ -15,38 +14,40 @@ export function createStatusBarItem(context: ExtensionContext) {
     context.subscriptions.push(window.onDidChangeTextEditorSelection(updateStatusBar));
     context.subscriptions.push(window.onDidChangeActiveTextEditor(updateStatusBar));
     context.subscriptions.push(window.onDidChangeActiveTextEditor(countWords));
-    context.subscriptions.push(workspace.onDidChangeConfiguration(e => {
-        if (e.affectsConfiguration("tt.enableStatusBarWordLineCount") || e.affectsConfiguration("tt.statusBarPriority")) {
-            window.showInformationMessage("Please reload the window for the change to take effect");
-        }
-    }));
+    context.subscriptions.push(
+        workspace.onDidChangeConfiguration((e) => {
+            if (e.affectsConfiguration("TextToolbox.enableStatusBarWordLineCount") || e.affectsConfiguration("TextToolbox.statusBarPriority")) {
+                window.showInformationMessage("Please reload the window for the change to take effect");
+            }
+        })
+    );
 }
 
 /**
  * Updates the StatusBar configuration for this extension
  */
 function updateStatusBarConfiguration() {
-    if (!workspace.getConfiguration().get('tt.enableStatusBarWordLineCount')) {
+    if (!workspace.getConfiguration().get("TextToolbox.enableStatusBarWordLineCount")) {
         disposeStatusBarItem();
         return;
     }
 
     let statusBarAlignment;
-    switch (workspace.getConfiguration().get('tt.statusBarAlignment')) {
-        case 'Right':
+    switch (workspace.getConfiguration().get("TextToolbox.statusBarAlignment")) {
+        case "Right":
             statusBarAlignment = StatusBarAlignment.Right;
             break;
-        case 'Left':
+        case "Left":
             statusBarAlignment = StatusBarAlignment.Left;
             break;
         default:
             break;
     }
-    const statusBarPriority: number | undefined = workspace.getConfiguration().get('tt.statusBarPriority');
+    const statusBarPriority: number | undefined = workspace.getConfiguration().get("TextToolbox.statusBarPriority");
 
     if (!statusBarItem) {
         statusBarItem = window.createStatusBarItem(statusBarAlignment, statusBarPriority);
-        statusBarItem.command = 'vscode-texttoolbox.createStatusBarItem';
+        statusBarItem.command = "vscode-texttoolbox.createStatusBarItem";
     }
 }
 
@@ -62,8 +63,7 @@ function countSelectedLines(selection: Selection): number {
             // only one line
             n += 1;
         }
-    }
-    else {
+    } else {
         n = selection.end.line - selection.start.line + 1;
     }
 
@@ -76,11 +76,13 @@ function countSelectedLines(selection: Selection): number {
  */
 function countWords(): number {
     let text = window.activeTextEditor?.document.getText();
-    if (!text) { return 0; }
+    if (!text) {
+        return 0;
+    }
 
     // remove unnecessary whitespaces
-    text = text.replace(/(< ([^>]+)<)/g, '').replace(/\s+/g, ' ');
-    text = text.replace(/^\s\s*/, '').replace(/\s\s*$/, '');
+    text = text.replace(/(< ([^>]+)<)/g, "").replace(/\s+/g, " ");
+    text = text.replace(/^\s\s*/, "").replace(/\s\s*$/, "");
     let n = 0;
     if (text !== "") {
         n = text.split(" ").length;
@@ -94,7 +96,9 @@ function countWords(): number {
  */
 function updateStatusBar() {
     const selections = window.activeTextEditor?.selections;
-    if (!selections) { return; }
+    if (!selections) {
+        return;
+    }
     let lineCount = selections.reduce((previous, current) => previous + countSelectedLines(current), 0);
 
     let wordCount = countWords();
@@ -102,8 +106,7 @@ function updateStatusBar() {
     if (lineCount > 0 || wordCount > 0) {
         statusBarItem.text = `Lns: ${lineCount}, Wds: ${wordCount}`;
         statusBarItem.show();
-    }
-    else {
+    } else {
         statusBarItem.hide();
     }
 }
