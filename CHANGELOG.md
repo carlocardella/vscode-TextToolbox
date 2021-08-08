@@ -84,6 +84,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## Log
 
+## [1.9.0] - 2021-08-08
+
+### Changed
+
+* Update commands and context menu labels: `TT:` replaced by `Text Toolbox:`
+
 ## [1.8.1] - 2021-08-05
 
 ### Fixed
