@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD024 -->
 # **Change Log**
 
 All notable changes to the "vscode-TextToolbox" extension will be documented in this file.
@@ -13,10 +14,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
   * Randomize selection (words in a selection)
   * Reverse selection (lines or words in selection)
   * Sort lines by length
-  * Explore disabling italic (suggestion from https://github.com/microsoft/vscode/issues/25895#issuecomment-890614837)
-   * for all emoji
-   * based on theme
-   * all
+  * Explore disabling italic (suggestion from [Stop rendering pseudo-italic fonts when italic is not available](https://github.com/microsoft/vscode/issues/25895#issuecomment-890614837))
+    * for all emoji
+    * based on theme
+    * all
 * Highlight
   * highlight word (and all occurrences)
   * highlight based on regex
@@ -175,14 +176,13 @@ to:
 * Removed `Convert to Lowercase` in favor of the built-in VSCode command
 * Removed `Convert to CapitalCase` in favor of the built-in VSCode command `Transform to Title Case`
 
-
 ## [1.3.0] - 2021-05-31
 
 ### Added
 
 * Convert path string to posix format
 * Convert path string to win32 format
-* Added `Roundtrip` date format: `2021-05-31T16:53:38.954Z`: https://docs.microsoft.com/en-us/dotnet/standard/base-types/standard-date-and-time-format-strings#Roundtrip
+* Added `Roundtrip` date format: `2021-05-31T16:53:38.954Z`: [Roudtrip DateTime Format](https://docs.microsoft.com/en-us/dotnet/standard/base-types/standard-date-and-time-format-strings#Roundtrip)
 * Added `DATETIME_HUGE` date format: `Monday, May 31, 2021, 9:55 AM PDT`
 
 ### Changed
@@ -270,12 +270,15 @@ to:
 
 * Align text to separator (can be used to align CSV elements):
   * Align left (default): inserts padding spaces after the separator
-    ```
+
+    ```text
     London,    Paris,     Rome
     Tokyo,     Singapore, Sydney
     ```
+
   * Align right: inserts padding spaces between text and separator
-    ```
+  
+    ```text
     London    ,Paris     ,Rome
     Tokyo     ,Singapore ,Sydney
     ```
