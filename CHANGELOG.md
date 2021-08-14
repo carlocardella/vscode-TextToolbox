@@ -17,12 +17,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
    * for all emoji
    * based on theme
    * all
-* Json
-  * Validate
-  * Escape
-  * Unescape
-  * Work on selection
-  * Work on the entire file if file type is json or cjson
 * Highlight
   * highlight word (and all occurrences)
   * highlight based on regex
@@ -31,7 +25,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 * Align:
   * to cursor
   * as table
-  * align csv
 * Filtering
   * improve `Filter lines, result in new editor`: regex search only of the search string begins with `/`, otherwise default to text search (return the entire line containing the match)
   * add original line numbers when opening a selection/filter in a new editor
@@ -51,8 +44,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
     * paste in new editor
 * Insert
   * Insert UUID (universally unique identifier)
-  * Prefix lines with string
-  * Suffix lines with string
   * insert date sequence
     * add option to use times 12/24 formats
   * famous excerpts, e.g. The Divine Comedy, Hamlet etc...
@@ -83,6 +74,26 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
   * allow to update position without reloading the entire window
 
 ## Log
+
+## [version] - @todo
+
+### Added
+
+* `Fix Win32 path in Json`: transforms:
+
+```json
+{
+    "path": "\Temp\Myfolder\myFile.txt"
+}
+```
+
+to:
+
+```json
+{
+    "path": "\\Temp\\Myfolder\\myFile.txt"
+}
+```
 
 ## [1.9.0] - 2021-08-08
 

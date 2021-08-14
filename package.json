@@ -251,6 +251,11 @@
                 "command": "vscode-texttoolbox.AlignToSeparator",
                 "title": "Align to separator",
                 "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.EscapeWin32PathInJson",
+                "title": "Fix Win32 path in Json",
+                "category": "Text Toolbox"
             }
         ],
         "menus": {
@@ -434,6 +439,10 @@
                 {
                     "group": "tt.json",
                     "command": "vscode-texttoolbox.MinifyJson"
+                },
+                {
+                    "group": "tt.json",
+                    "command": "vscode-texttoolbox.EscapeWin32PathInJson"
                 }
             ],
             "tt.sort": [

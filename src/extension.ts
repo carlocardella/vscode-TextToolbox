@@ -194,6 +194,11 @@ export function activate(context: ExtensionContext) {
             Json.minifyJson();
         })
     );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.EscapeWin32PathInJson", () => {
+            Json.escapeWin32PathInJson();
+        })
+    );
 
     // path transformation
     context.subscriptions.push(

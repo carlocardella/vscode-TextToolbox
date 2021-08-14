@@ -1,5 +1,5 @@
-import { getActiveEditor, getTextFromSelection } from './helpers';
-import * as jsonic from 'jsonic';
+import { getActiveEditor, getTextFromSelection } from "./helpers";
+import * as jsonic from "jsonic";
 
 /**
  * Transforms a text string into proper JSON format, optionally can fix syntax errors.
@@ -8,16 +8,17 @@ import * as jsonic from 'jsonic';
  */
 export async function stringifyJson(fixJson: boolean): Promise<void> {
     const editor = getActiveEditor();
-    if (!editor) { return Promise.reject(); };
+    if (!editor) {
+        return Promise.reject();
+    }
 
-    editor.edit(editBuilder => {
-        editor.selections.forEach(s => {
+    editor.edit((editBuilder) => {
+        editor.selections.forEach((s) => {
             let newJson: string = "";
             let selectionText = getTextFromSelection(editor, s);
             if (fixJson) {
                 newJson = JSON.stringify(jsonic(selectionText!), null, 4);
-            }
-            else {
+            } else {
                 newJson = JSON.stringify(selectionText, null, 4);
             }
 
@@ -34,10 +35,12 @@ export async function stringifyJson(fixJson: boolean): Promise<void> {
  */
 export async function minifyJson(): Promise<void> {
     const editor = getActiveEditor();
-    if (!editor) { return Promise.reject(); };
+    if (!editor) {
+        return Promise.reject();
+    }
 
-    editor.edit(editBuilder => {
-        editor.selections.forEach(s => {
+    editor.edit((editBuilder) => {
+        editor.selections.forEach((s) => {
             let selectionText = getTextFromSelection(editor, s);
             let newJson = JSON.stringify(jsonic(selectionText!));
 
@@ -46,4 +49,21 @@ export async function minifyJson(): Promise<void> {
     });
 
     return Promise.resolve();
+}
+
+export function escapeWin32PathInJson() {
+    const editor = getActiveEditor();
+    if (!editor) {
+        return;
+    }
+
+    editor.edit((editBuilder) => {
+        editor.selections.forEach((selection) => {
+            const text = getTextFromSelection(editor, selection);
+            const newText = text!.replace(/\\/g, "\\\\");
+            editBuilder.replace(selection, newText);
+        });
+    });
+
+    return;
 }
