@@ -128,7 +128,7 @@ export async function removeControlCharacters(editor?: TextEditor, replaceContro
         return Promise.reject();
     }
     if (!replaceControlCharactersWith) {
-        replaceControlCharactersWith = workspace.getConfiguration("tt").replaceControlCharactersWith;
+        replaceControlCharactersWith = workspace.getConfiguration("TextToolbox").replaceControlCharactersWith;
     }
 
     let selections = await getSelections(editor);

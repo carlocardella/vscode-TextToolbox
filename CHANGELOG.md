@@ -44,7 +44,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
     * paste in place
     * paste in new editor
 * Insert
-  * Insert UUID (universally unique identifier)
   * insert date sequence
     * add option to use times 12/24 formats
   * famous excerpts, e.g. The Divine Comedy, Hamlet etc...
@@ -95,6 +94,10 @@ to:
     "path": "\\Temp\\Myfolder\\myFile.txt"
 }
 ```
+
+### Fixed
+
+* Fixed a case where "Remove control characters" was inserting "undefined" when replacing control characters with empty strings
 
 ## [1.9.0] - 2021-08-08
 

@@ -3,7 +3,7 @@ import { getDocumentTextOrSelection } from './helpers';
 
 
 /**
- * Creates a new Deorator object to decorate text in a Text Editor
+ * Creates a new Decorator object to decorate text in a Text Editor
  * @param {DecorationRenderOptions} decorationRenderOptions Configuration to use with the new decoration
  * @return {*}  {Promise<TextEditorDecorationType>}
  * @async

@@ -121,7 +121,7 @@ suite("controlCharacters", () => {
 
         describe.skip("Remove control charachters on paste", () => {
             test("Remove control characters on paste", async () => {
-                let config = workspace.getConfiguration("tt", window.activeTextEditor?.document);
+                let config = workspace.getConfiguration("TextToolbox", window.activeTextEditor?.document);
                 await config.update("removeControlCharactersOnPaste", true, ConfigurationTarget.Global);
 
                 await env.clipboard.writeText(newTextEditor);
