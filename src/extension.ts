@@ -9,6 +9,7 @@ import * as Helpers from "./modules/helpers";
 import * as TextManipulation from "./modules/textManipulation";
 import * as Json from "./modules/json";
 import * as AlignText from "./modules/alignText";
+import * as Decorations from "./modules/decorations";
 
 export function activate(context: ExtensionContext) {
     console.log("vscode-texttoolbox is active");
@@ -257,6 +258,23 @@ export function activate(context: ExtensionContext) {
     context.subscriptions.push(
         commands.registerTextEditorCommand("vscode-texttoolbox.RemoveControlCharacters", () => {
             ControlCharacters.removeControlCharacters();
+        })
+    );
+
+    // decorations
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.HighlightText", () => {
+            Decorations.highlightText(true);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.HighlightTextWithColor", () => {
+            Decorations.highlightText(false);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.RemoveDecoration", () => {
+            Decorations.removeDecoration();
         })
     );
 

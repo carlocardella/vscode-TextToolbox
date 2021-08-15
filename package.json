@@ -134,12 +134,12 @@
             },
             {
                 "command": "vscode-texttoolbox.PadSelectionRight",
-                "title": "Pad Selection Right",
+                "title": "Pad Selection Right...",
                 "category": "Text Toolbox"
             },
             {
                 "command": "vscode-texttoolbox.PadSelectionLeft",
-                "title": "Pad Selection Left",
+                "title": "Pad Selection Left...",
                 "category": "Text Toolbox"
             },
             {
@@ -164,7 +164,7 @@
             },
             {
                 "command": "vscode-texttoolbox.FilterLinesUsingRegExpOrString",
-                "title": "Filter lines, result in new Editor",
+                "title": "Filter lines, result in new Editor...",
                 "category": "Text Toolbox"
             },
             {
@@ -204,17 +204,17 @@
             },
             {
                 "command": "vscode-texttoolbox.InsertCurrency",
-                "title": "Insert Currency",
+                "title": "Insert Currency...",
                 "category": "Text Toolbox"
             },
             {
                 "command": "vscode-texttoolbox.SplitSelection",
-                "title": "Split Selection",
+                "title": "Split Selection...",
                 "category": "Text Toolbox"
             },
             {
                 "command": "vscode-texttoolbox.SplitSelectionOpenInNewEditor",
-                "title": "Split Selection, result in new editor",
+                "title": "Split Selection, result in new editor...",
                 "category": "Text Toolbox"
             },
             {
@@ -256,6 +256,21 @@
                 "command": "vscode-texttoolbox.EscapeWin32PathInJson",
                 "title": "Fix Win32 path in Json",
                 "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.HighlightText",
+                "title": "Highlight",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.HighlightTextWithColor",
+                "title": "Highlight with color...",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.RemoveDecoration",
+                "title": "Remove decoration",
+                "category": "Text Toolbox"
             }
         ],
         "menus": {
@@ -293,6 +308,24 @@
                 {
                     "submenu": "tt.path",
                     "group": "path"
+                },
+                {
+                    "submenu": "tt.highlight",
+                    "group": "highlight"
+                }
+            ],
+            "tt.highlight": [
+                {
+                    "group": "highlight",
+                    "command": "vscode-texttoolbox.HighlightText"
+                },
+                {
+                    "group": "highlight",
+                    "command": "vscode-texttoolbox.HighlightTextWithColor"
+                },
+                {
+                    "group": "highlight",
+                    "command": "vscode-texttoolbox.RemoveDecoration"
                 }
             ],
             "tt.caseConversion": [
@@ -498,6 +531,10 @@
             {
                 "id": "tt.path",
                 "label": "Path"
+            },
+            {
+                "id": "tt.highlight",
+                "label": "Highlight"
             }
         ],
         "configuration": [
@@ -559,6 +596,110 @@
                         "default": ",",
                         "scope": "window",
                         "description": "Align text default separator (Align Text)"
+                    },
+                    "TextToolbox.decorationDefaults": {
+                        "default": [
+                            {
+                                "light": {
+                                    "backgroundColor": "darkred",
+                                    "color": "white"
+                                },
+                                "dark": {
+                                    "backgroundColor": "red",
+                                    "color": "white"
+                                }
+                            },
+                            {
+                                "light": {
+                                    "backgroundColor": "darkgreen",
+                                    "color": "white"
+                                },
+                                "dark": {
+                                    "backgroundColor": "green",
+                                    "color": "white"
+                                }
+                            },
+                            {
+                                "light": {
+                                    "backgroundColor": "darkblue",
+                                    "color": "white"
+                                },
+                                "dark": {
+                                    "backgroundColor": "blue",
+                                    "color": "white"
+                                }
+                            },
+                            {
+                                "light": {
+                                    "backgroundColor": "darkcyan",
+                                    "color": "white"
+                                },
+                                "dark": {
+                                    "backgroundColor": "cyan",
+                                    "color": "black"
+                                }
+                            },
+                            {
+                                "light": {
+                                    "backgroundColor": "darkmagenta",
+                                    "color": "white"
+                                },
+                                "dark": {
+                                    "backgroundColor": "magenta",
+                                    "color": "white"
+                                }
+                            },
+                            {
+                                "light": {
+                                    "backgroundColor": "darkyellow",
+                                    "color": "black"
+                                },
+                                "dark": {
+                                    "backgroundColor": "yellow",
+                                    "color": "black"
+                                }
+                            },
+                            {
+                                "light": {
+                                    "backgroundColor": "darkgray",
+                                    "color": "white"
+                                },
+                                "dark": {
+                                    "backgroundColor": "gray",
+                                    "color": "black"
+                                }
+                            },
+                            {
+                                "light": {
+                                    "backgroundColor": "darkorange",
+                                    "color": "black"
+                                },
+                                "dark": {
+                                    "backgroundColor": "orange",
+                                    "color": "black"
+                                }
+                            },
+                            {
+                                "light": {
+                                    "backgroundColor": "darkpurple",
+                                    "color": "white"
+                                },
+                                "dark": {
+                                    "backgroundColor": "purple",
+                                    "color": "white"
+                                }
+                            },
+                            {
+                                "light": {
+                                    "backgroundColor": "darkbrown",
+                                    "color": "white"
+                                },
+                                "dark": {
+                                    "backgroundColor": "brown",
+                                    "color": "white"
+                                }
+                            }
+                        ]
                     }
                 }
             }
