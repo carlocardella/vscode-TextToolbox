@@ -9,7 +9,7 @@ import * as Helpers from "./modules/helpers";
 import * as TextManipulation from "./modules/textManipulation";
 import * as Json from "./modules/json";
 import * as AlignText from "./modules/alignText";
-import * as Decorations from "./modules/decorations";
+import TTDecorations from "./modules/decorations";
 
 export function activate(context: ExtensionContext) {
     console.log("vscode-texttoolbox is active");
@@ -220,11 +220,41 @@ export function activate(context: ExtensionContext) {
         })
     );
 
+    // decorations
+    let decorations: TTDecorations;
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.HighlightText", () => {
+            if (!decorations) {
+                decorations = new TTDecorations();
+            }
+            decorations.HighlightText(true);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.HighlightTextWithColor", () => {
+            if (!decorations) {
+                decorations = new TTDecorations();
+            }
+            decorations.HighlightText(false);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.RemoveDecoration", () => {
+            if (!decorations) {
+                decorations = new TTDecorations();
+            }
+            decorations.RemoveDecoration();
+        })
+    );
+
     // control characters
     window.onDidChangeActiveTextEditor(
         (editor) => {
             if (editor) {
                 ControlCharacters.decorateControlCharacters(editor);
+                if (decorations) {
+                    decorations.RefreshDecorations();
+                }
             }
         },
         null,
@@ -235,6 +265,10 @@ export function activate(context: ExtensionContext) {
             let activeEditor = Helpers.getActiveEditor();
             if (activeEditor) {
                 ControlCharacters.decorateControlCharacters(activeEditor);
+            }
+
+            if (decorations) {
+                decorations.RefreshDecorations();
             }
 
             // todo: https://github.com/Microsoft/vscode/issues/30066
@@ -258,23 +292,6 @@ export function activate(context: ExtensionContext) {
     context.subscriptions.push(
         commands.registerTextEditorCommand("vscode-texttoolbox.RemoveControlCharacters", () => {
             ControlCharacters.removeControlCharacters();
-        })
-    );
-
-    // decorations
-    context.subscriptions.push(
-        commands.registerTextEditorCommand("vscode-texttoolbox.HighlightText", () => {
-            Decorations.highlightText(true);
-        })
-    );
-    context.subscriptions.push(
-        commands.registerTextEditorCommand("vscode-texttoolbox.HighlightTextWithColor", () => {
-            Decorations.highlightText(false);
-        })
-    );
-    context.subscriptions.push(
-        commands.registerTextEditorCommand("vscode-texttoolbox.RemoveDecoration", () => {
-            Decorations.removeDecoration();
         })
     );
 
