@@ -37,7 +37,7 @@ export default class TTDecorations implements TTDecorators {
 
         let decoratorRenderOptions: DecorationRenderOptions | undefined;
         // default decorator or user input
-        pickDefaultDecorator ? (decoratorRenderOptions = this.GetRandomDecorator()) : (decoratorRenderOptions = await this.AskForDecorationColor());
+        pickDefaultDecorator ? (decoratorRenderOptions = this.GetRandomHighlight()) : (decoratorRenderOptions = await this.AskForDecorationColor());
 
         let rangeToDecorate: Range | undefined = undefined;
         if (editor.selection.isEmpty) {
@@ -53,7 +53,7 @@ export default class TTDecorations implements TTDecorators {
 
         this.Decorators.push(decorator);
 
-        this.RefreshDecorations();
+        this.RefreshHighlights();
     }
 
     /**
@@ -62,7 +62,7 @@ export default class TTDecorations implements TTDecorators {
      * @return {*} 
      * @memberof TTDecorations
      */
-    RefreshDecorations() {
+    RefreshHighlights() {
         const editor = getActiveEditor();
         if (!editor) {
             return;
@@ -82,7 +82,7 @@ export default class TTDecorations implements TTDecorators {
      * @return {*}  {DecorationRenderOptions}
      * @memberof TTDecorations
      */
-    private GetRandomDecorator(): DecorationRenderOptions {
+    private GetRandomHighlight(): DecorationRenderOptions {
         const chance = new Chance();
         let decorationColors = this.config.get<DecorationRenderOptions[]>("decorationDefaults")!;
         return chance.pickone(decorationColors);
@@ -112,7 +112,7 @@ export default class TTDecorations implements TTDecorators {
      * @return {*} 
      * @memberof TTDecorations
      */
-    RemoveDecoration() {
+    RemoveHighlight() {
         const editor = getActiveEditor();
         if (!editor) {
             return;
@@ -122,7 +122,7 @@ export default class TTDecorations implements TTDecorators {
             d.range = new Range(0, 0, 0, 0); // empty range removes the decorator
         });
 
-        this.RefreshDecorations();
+        this.RefreshHighlights();
         this.Decorators = [];
     }
 }

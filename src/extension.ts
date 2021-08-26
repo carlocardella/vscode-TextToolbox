@@ -239,11 +239,11 @@ export function activate(context: ExtensionContext) {
         })
     );
     context.subscriptions.push(
-        commands.registerTextEditorCommand("vscode-texttoolbox.RemoveDecoration", () => {
+        commands.registerTextEditorCommand("vscode-texttoolbox.RemoveHighlight", () => {
             if (!decorations) {
                 decorations = new TTDecorations();
             }
-            decorations.RemoveDecoration();
+            decorations.RemoveHighlight();
         })
     );
 
@@ -253,7 +253,7 @@ export function activate(context: ExtensionContext) {
             if (editor) {
                 ControlCharacters.decorateControlCharacters(editor);
                 if (decorations) {
-                    decorations.RefreshDecorations();
+                    decorations.RefreshHighlights();
                 }
             }
         },
@@ -268,7 +268,7 @@ export function activate(context: ExtensionContext) {
             }
 
             if (decorations) {
-                decorations.RefreshDecorations();
+                decorations.RefreshHighlights();
             }
 
             // todo: https://github.com/Microsoft/vscode/issues/30066

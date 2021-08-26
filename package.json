@@ -268,8 +268,8 @@
                 "category": "Text Toolbox"
             },
             {
-                "command": "vscode-texttoolbox.RemoveDecoration",
-                "title": "Remove decoration",
+                "command": "vscode-texttoolbox.RemoveHighlight",
+                "title": "Remove highlight",
                 "category": "Text Toolbox"
             }
         ],
