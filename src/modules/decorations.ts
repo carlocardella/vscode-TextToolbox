@@ -2,13 +2,33 @@ import { DecorationOptions, DecorationRenderOptions, Range, window, workspace } 
 import { getActiveEditor } from "./helpers";
 import { Chance } from "chance";
 
-interface TTDecorators {}
+/**
+ * Interface for a decoration provider.
+ *
+ * @interface TTDecorators
+ */
+interface TTDecorators { }
+
+/**
+ * Class to manage text highlight (decorations)
+ *
+ * @export
+ * @class TTDecorations
+ * @implements {TTDecorators}
+ */
 export default class TTDecorations implements TTDecorators {
     public Decorators: any[] = [];
     private config = workspace.getConfiguration("TextToolbox");
 
     constructor() {}
 
+    /**
+     * Highlight the current word or selection
+     *
+     * @param {boolean} pickDefaultDecorator Pick a random decorator from the list of available decorators in Settings or ask the user for a color
+     * @return {*} 
+     * @memberof TTDecorations
+     */
     async HighlightText(pickDefaultDecorator: boolean) {
         const editor = getActiveEditor();
         if (!editor) {
@@ -36,6 +56,12 @@ export default class TTDecorations implements TTDecorators {
         this.RefreshDecorations();
     }
 
+    /**
+     * Refresh the existing decorations
+     *
+     * @return {*} 
+     * @memberof TTDecorations
+     */
     RefreshDecorations() {
         const editor = getActiveEditor();
         if (!editor) {
@@ -49,12 +75,25 @@ export default class TTDecorations implements TTDecorators {
         }
     }
 
+    /**
+     * Get a random decorator from the list of available decorators in Settings
+     *
+     * @private
+     * @return {*}  {DecorationRenderOptions}
+     * @memberof TTDecorations
+     */
     private GetRandomDecorator(): DecorationRenderOptions {
         const chance = new Chance();
         let decorationColors = this.config.get<DecorationRenderOptions[]>("decorationDefaults")!;
         return chance.pickone(decorationColors);
     }
 
+    /**
+     * Ask for decoration color
+     *
+     * @return {*}  {(Promise<DecorationRenderOptions | undefined>)}
+     * @memberof TTDecorations
+     */
     async AskForDecorationColor(): Promise<DecorationRenderOptions | undefined> {
         const userColor = await window.showInputBox({ ignoreFocusOut: true, prompt: "Enter a color. Accepted formats: color name, hex, rgba" });
         if (!userColor) {
@@ -67,6 +106,12 @@ export default class TTDecorations implements TTDecorators {
         return Promise.resolve(userDecoration);
     }
 
+    /**
+     * Remove all decorations
+     * 
+     * @return {*} 
+     * @memberof TTDecorations
+     */
     RemoveDecoration() {
         const editor = getActiveEditor();
         if (!editor) {
@@ -74,8 +119,7 @@ export default class TTDecorations implements TTDecorators {
         }
 
         this.Decorators.forEach((d) => {
-            // d.renderOptions = window.createTextEditorDecorationType({}),
-            editor.setDecorations(d.renderOptions, []);
+            d.range = new Range(0, 0, 0, 0); // empty range removes the decorator
         });
 
         this.RefreshDecorations();
