@@ -325,7 +325,7 @@
                 },
                 {
                     "group": "highlight",
-                    "command": "vscode-texttoolbox.RemoveDecoration"
+                    "command": "vscode-texttoolbox.RemoveHighlight"
                 }
             ],
             "tt.caseConversion": [

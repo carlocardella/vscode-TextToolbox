@@ -21,8 +21,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 * Highlight
   * highlight word (and all occurrences)
   * highlight based on regex
-  * ask the user for the highlight color
-  * toggle/clear command in context menu
 * Align:
   * to cursor
   * as table
@@ -94,6 +92,11 @@ to:
     "path": "\\Temp\\Myfolder\\myFile.txt"
 }
 ```
+
+* Highlight word or selection:
+  * `Highlight`
+  * `Highlight with color...`
+  * `Remove highlight`
 
 ### Fixed
 

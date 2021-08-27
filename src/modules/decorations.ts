@@ -7,7 +7,12 @@ import { Chance } from "chance";
  *
  * @interface TTDecorators
  */
-interface TTDecorators { }
+interface TTDecorators {
+    HighlightText(pickDefaultDecorator: boolean, rangeOrSelection?: Range): void;
+    RefreshHighlights(): void;
+    AskForDecorationColor(): Promise<DecorationRenderOptions | undefined>;
+    RemoveHighlight(): void;
+}
 
 /**
  * Class to manage text highlight (decorations)
@@ -20,16 +25,20 @@ export default class TTDecorations implements TTDecorators {
     public Decorators: any[] = [];
     private config = workspace.getConfiguration("TextToolbox");
 
+    /**
+     * Creates an instance of TTDecorations.
+     * @memberof TTDecorations
+     */
     constructor() {}
 
     /**
      * Highlight the current word or selection
      *
      * @param {boolean} pickDefaultDecorator Pick a random decorator from the list of available decorators in Settings or ask the user for a color
-     * @return {*} 
+     * @return {*}
      * @memberof TTDecorations
      */
-    async HighlightText(pickDefaultDecorator: boolean) {
+    async HighlightText(pickDefaultDecorator: boolean, rangeOrSelection?: Range) {
         const editor = getActiveEditor();
         if (!editor) {
             return;
@@ -39,16 +48,18 @@ export default class TTDecorations implements TTDecorators {
         // default decorator or user input
         pickDefaultDecorator ? (decoratorRenderOptions = this.GetRandomHighlight()) : (decoratorRenderOptions = await this.AskForDecorationColor());
 
-        let rangeToDecorate: Range | undefined = undefined;
-        if (editor.selection.isEmpty) {
-            rangeToDecorate = editor.document.getWordRangeAtPosition(editor.selection.active);
-        } else {
-            rangeToDecorate = new Range(editor.selection.start, editor.selection.end);
+        // let rangeToDecorate: Range | undefined = undefined;
+        if (!rangeOrSelection) {
+            if (editor.selection.isEmpty) {
+                rangeOrSelection = editor.document.getWordRangeAtPosition(editor.selection.active);
+            } else {
+                rangeOrSelection = new Range(editor.selection.start, editor.selection.end);
+            }
         }
 
         let decorator = {
             renderOptions: window.createTextEditorDecorationType(decoratorRenderOptions!),
-            range: rangeToDecorate,
+            range: rangeOrSelection,
         } as DecorationOptions;
 
         this.Decorators.push(decorator);
@@ -59,7 +70,7 @@ export default class TTDecorations implements TTDecorators {
     /**
      * Refresh the existing decorations
      *
-     * @return {*} 
+     * @return {*}
      * @memberof TTDecorations
      */
     RefreshHighlights() {
@@ -108,8 +119,8 @@ export default class TTDecorations implements TTDecorators {
 
     /**
      * Remove all decorations
-     * 
-     * @return {*} 
+     *
+     * @return {*}
      * @memberof TTDecorations
      */
     RemoveHighlight() {
