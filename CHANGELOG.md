@@ -120,7 +120,7 @@ to:
 ### Added
 
 * `Align to separator`: align a selection in a CSV type, choose the type of separator to use
-  * The default separator can be controlled by the setting `tt.alignTextDefaultSeparator`
+  * The default separator can be controlled by the setting `TextToolbox.alignTextDefaultSeparator`
 
 ### Changed
 
@@ -301,9 +301,9 @@ to:
 ### Added
 
 * Highlight control characters
-  * By default control characters are highlighted with a red box but color and border shape can be customized through `tt.decorateControlCharacters`
+  * By default control characters are highlighted with a red box but color and border shape can be customized through `TextToolbox.decorateControlCharacters`
 * Remove control characters
-  * By default control characters are replaced with an empty string but this can be changed through `tt.replaceControlCharactersWith`.
+  * By default control characters are replaced with an empty string but this can be changed through `TextToolbox.replaceControlCharactersWith`.
   * Removes control characters from the current selection(s) or from the entire document if no text is selected
 
 ## [0.9.0] - 2020-09-28
@@ -352,7 +352,7 @@ to:
 ### Added
 
 * Find text using RegEx or simple text match and open the result in a new Editor
-  * By default the search uses RegEx: can be changed using `tt.filtersUseRegularExpressions`
+  * By default the search uses RegEx: can be changed using `TextToolbox.filtersUseRegularExpressions`
 
 ## [0.3.0] - 2020-09-05
 
