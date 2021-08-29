@@ -131,7 +131,7 @@ Likewise, `Convert to CapitalCase` has been removed in favor of the built-in VSC
 ### Filter
 
 * Filter lines, result in new Editor
-  * use RegExp (default) or set `tt.filtersUseRegularExpressions` to `false` to use simple string match instead
+  * use RegExp (default) or set `TextToolbox.filtersUseRegularExpressions` to `false` to use simple string match instead
   * RegExp allow for a more targeted search; use global flags to fine tune your search. RegExp must use forward slashes (`/`) to delimit the expression and the global flags (optional): `/<expression>/flags`
     * `/\d.*/gm`
   * string match allows to find all lines containing the string you are looking for, the string must match exactly
@@ -155,16 +155,16 @@ Likewise, `Convert to CapitalCase` has been removed in favor of the built-in VSC
 ### Control characters
 
 * Highlight control characters
-  * By default control characters are highlighted with a red box but color and border shape can be customized through `tt.decorateControlCharacters`
+  * By default control characters are highlighted with a red box but color and border shape can be customized through `TextToolbox.decorateControlCharacters`
 * Remove control characters
-  * By default control characters are replaced with an empty string but this can be changed through `tt.replaceControlCharactersWith`.
+  * By default control characters are replaced with an empty string but this can be changed through `TextToolbox.replaceControlCharactersWith`.
   * Removes control characters from the current selection(s) or from the entire document if no text is selected
 
 ### Split
 
 * Split selection based on delimiter
   * Split and open in new editor
-  
+
 ### Json
 
 * Stringify Json
@@ -172,7 +172,14 @@ Likewise, `Convert to CapitalCase` has been removed in favor of the built-in VSC
 * Minify Json
 * Fix Win32 path in Json
 
-### Others 
+### Highlight text
+
+* Highlight
+* Highlight with color...
+* Remove all highlights
+* Remove highlight
+
+### Others
 
 * Open selection(s) in new editor
 * Align to separator

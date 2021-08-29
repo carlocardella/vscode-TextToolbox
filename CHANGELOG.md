@@ -97,6 +97,7 @@ to:
   * `Highlight`
   * `Highlight with color...`
   * `Remove highlight`
+  * `Remove all highlights`
 
 ### Fixed
 
