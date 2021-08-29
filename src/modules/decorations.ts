@@ -10,6 +10,7 @@ import { Chance } from "chance";
 class TTDecoration {
     public Range: Range;
     public DecorationType: TextEditorDecorationType;
+    public Index: any;
 
     /**
      * Creates an instance of TTDecoration.
@@ -20,6 +21,9 @@ class TTDecoration {
     constructor(range: Range, decoratorRenderOptions: DecorationRenderOptions) {
         this.Range = range;
         this.DecorationType = window.createTextEditorDecorationType(decoratorRenderOptions!);
+
+        const chance = new Chance();
+        this.Index = chance.guid();
     }
 }
 
@@ -157,7 +161,7 @@ export default class TTDecorations implements TTDecorators {
     }
 
     /**
-     * Remove all decorations
+     * Remove decorations
      *
      * @return {*}
      * @memberof TTDecorations
@@ -176,10 +180,23 @@ export default class TTDecorations implements TTDecorators {
             this.Decorators = [];
         } else {
             let rangeToRemove = this.GetRangeToHighlight()!;
+            let decorationToRemove = this.FindDecoration(rangeToRemove);
+            if (decorationToRemove) {
+                decorationToRemove.Range = new Range(0, 0, 0, 0);
+            }
+            this.RefreshHighlights();
         }
+    }
 
-        this.RefreshHighlights();
-        this.Decorators = [];
+    /**
+     * Find the decoration to remove
+     *
+     * @param {Range} range Range to find
+     * @return {*}  {(TTDecoration | undefined)}
+     * @memberof TTDecorations
+     */
+    FindDecoration(range: Range): TTDecoration | undefined {
+        return this.Decorators.find((d) => d.Range.isEqual(range));
     }
 
     async FindMatches(): Promise<Range[] | undefined> {
