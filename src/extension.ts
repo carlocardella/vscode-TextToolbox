@@ -220,7 +220,7 @@ export function activate(context: ExtensionContext) {
         })
     );
 
-    // decorations
+    // highlight
     let decorations: TTDecorations;
     context.subscriptions.push(
         commands.registerTextEditorCommand("vscode-texttoolbox.HighlightText", () => {
@@ -239,15 +239,23 @@ export function activate(context: ExtensionContext) {
         })
     );
     context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.RemoveAllHighlights", () => {
+            if (!decorations) {
+                decorations = new TTDecorations();
+            }
+            decorations.RemoveHighlight(true);
+        })
+    );
+    context.subscriptions.push(
         commands.registerTextEditorCommand("vscode-texttoolbox.RemoveHighlight", () => {
             if (!decorations) {
                 decorations = new TTDecorations();
             }
-            decorations.RemoveHighlight();
+            decorations.RemoveHighlight(false);
         })
     );
 
-    // control characters
+    // events
     window.onDidChangeActiveTextEditor(
         (editor) => {
             if (editor) {
@@ -279,6 +287,8 @@ export function activate(context: ExtensionContext) {
         null,
         context.subscriptions
     );
+
+    // control characters
     context.subscriptions.push(
         workspace.onDidChangeConfiguration((e) => {
             if (e.affectsConfiguration("TextToolbox.decorateControlCharacters")) {

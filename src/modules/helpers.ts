@@ -130,8 +130,9 @@ export function getLinesFromSelection(editor: TextEditor, selection?: Selection)
 }
 
 export function getLinesFromDocumentOrSelection(editor: TextEditor): TextLine[] | undefined;
+export function getLinesFromDocumentOrSelection(editor: TextEditor, range: Range): TextLine[] | undefined;
 export function getLinesFromDocumentOrSelection(editor: TextEditor, selection: Selection): TextLine[] | undefined;
-export function getLinesFromDocumentOrSelection(editor: TextEditor, selection?: Selection): TextLine[] | undefined {
+export function getLinesFromDocumentOrSelection(editor: TextEditor, range?: Range, selection?: Selection): TextLine[] | undefined {
     const lineCount = editor.document.lineCount;
     if (lineCount < 1) {
         return;
@@ -141,6 +142,8 @@ export function getLinesFromDocumentOrSelection(editor: TextEditor, selection?: 
 
     if (!editor.selection.isEmpty) {
         return getLinesFromSelection(editor, selection);
+    } else if (range) {
+        return getLinesFromSelection(editor, new Selection(range.start, range.end));
     } else {
         for (let i = 0; i < lineCount; i++) {
             textLines.push(editor.document.lineAt(i));

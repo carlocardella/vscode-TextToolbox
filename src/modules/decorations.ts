@@ -1,6 +1,27 @@
-import { DecorationOptions, DecorationRenderOptions, Range, window, workspace } from "vscode";
-import { getActiveEditor } from "./helpers";
+import { DecorationRenderOptions, Range, Selection, window, workspace, TextEditorDecorationType } from "vscode";
+import { getActiveEditor, getLinesFromDocumentOrSelection, getTextFromSelection } from "./helpers";
 import { Chance } from "chance";
+
+/**
+ * TTDecoration type
+ *
+ * @class TTDecoration
+ */
+class TTDecoration {
+    public Range: Range;
+    public DecorationType: TextEditorDecorationType;
+
+    /**
+     * Creates an instance of TTDecoration.
+     * @param {Range} range Range to decorate
+     * @param {DecorationRenderOptions} decoratorRenderOptions Decoration render options
+     * @memberof TTDecoration
+     */
+    constructor(range: Range, decoratorRenderOptions: DecorationRenderOptions) {
+        this.Range = range;
+        this.DecorationType = window.createTextEditorDecorationType(decoratorRenderOptions!);
+    }
+}
 
 /**
  * Interface for a decoration provider.
@@ -9,9 +30,10 @@ import { Chance } from "chance";
  */
 interface TTDecorators {
     HighlightText(pickDefaultDecorator: boolean, rangeOrSelection?: Range): void;
+    GetRangeToHighlight(): Range | undefined;
     RefreshHighlights(): void;
-    AskForDecorationColor(): Promise<DecorationRenderOptions | undefined>;
-    RemoveHighlight(): void;
+    RemoveHighlight(removeAll: boolean): void;
+    FindMatches(): Promise<Range[] | undefined>;
 }
 
 /**
@@ -22,7 +44,7 @@ interface TTDecorators {
  * @implements {TTDecorators}
  */
 export default class TTDecorations implements TTDecorators {
-    public Decorators: any[] = [];
+    public Decorators: TTDecoration[] = [];
     private config = workspace.getConfiguration("TextToolbox");
 
     /**
@@ -38,7 +60,7 @@ export default class TTDecorations implements TTDecorators {
      * @return {*}
      * @memberof TTDecorations
      */
-    async HighlightText(pickDefaultDecorator: boolean, rangeOrSelection?: Range) {
+    async HighlightText(pickDefaultDecorator: boolean, rangeToHighlight?: Range) {
         const editor = getActiveEditor();
         if (!editor) {
             return;
@@ -48,23 +70,40 @@ export default class TTDecorations implements TTDecorators {
         // default decorator or user input
         pickDefaultDecorator ? (decoratorRenderOptions = this.GetRandomHighlight()) : (decoratorRenderOptions = await this.AskForDecorationColor());
 
-        // let rangeToDecorate: Range | undefined = undefined;
-        if (!rangeOrSelection) {
-            if (editor.selection.isEmpty) {
-                rangeOrSelection = editor.document.getWordRangeAtPosition(editor.selection.active);
-            } else {
-                rangeOrSelection = new Range(editor.selection.start, editor.selection.end);
-            }
+        if (!rangeToHighlight) {
+            rangeToHighlight = this.GetRangeToHighlight();
+        }
+        if (!rangeToHighlight) {
+            return;
         }
 
-        let decorator = {
-            renderOptions: window.createTextEditorDecorationType(decoratorRenderOptions!),
-            range: rangeOrSelection,
-        } as DecorationOptions;
+        let decorator = new TTDecoration(rangeToHighlight, decoratorRenderOptions!);
 
         this.Decorators.push(decorator);
 
         this.RefreshHighlights();
+    }
+
+    /**
+     * Get the range to highlight
+     *
+     * @return {*}  {(Range | undefined)}
+     * @memberof TTDecorations
+     */
+    GetRangeToHighlight(): Range | undefined {
+        const editor = getActiveEditor();
+        if (!editor) {
+            return;
+        }
+
+        let rangeToHighlight: Range;
+        if (editor.selection.isEmpty) {
+            rangeToHighlight = editor.document.getWordRangeAtPosition(editor.selection.active)!;
+        } else {
+            rangeToHighlight = new Range(editor.selection.start, editor.selection.end);
+        }
+
+        return rangeToHighlight;
     }
 
     /**
@@ -81,7 +120,7 @@ export default class TTDecorations implements TTDecorators {
 
         if (this.Decorators) {
             this.Decorators.forEach((d) => {
-                editor.setDecorations(d.renderOptions, [d.range]);
+                editor.setDecorations(d.DecorationType, [d.Range]);
             });
         }
     }
@@ -105,7 +144,7 @@ export default class TTDecorations implements TTDecorators {
      * @return {*}  {(Promise<DecorationRenderOptions | undefined>)}
      * @memberof TTDecorations
      */
-    async AskForDecorationColor(): Promise<DecorationRenderOptions | undefined> {
+    private async AskForDecorationColor(): Promise<DecorationRenderOptions | undefined> {
         const userColor = await window.showInputBox({ ignoreFocusOut: true, prompt: "Enter a color. Accepted formats: color name, hex, rgba" });
         if (!userColor) {
             Promise.reject();
@@ -123,17 +162,50 @@ export default class TTDecorations implements TTDecorators {
      * @return {*}
      * @memberof TTDecorations
      */
-    RemoveHighlight() {
+    RemoveHighlight(removeAll: boolean) {
         const editor = getActiveEditor();
         if (!editor) {
             return;
         }
 
-        this.Decorators.forEach((d) => {
-            d.range = new Range(0, 0, 0, 0); // empty range removes the decorator
-        });
+        if (removeAll) {
+            this.Decorators.forEach((d) => {
+                d.Range = new Range(0, 0, 0, 0); // empty range removes the decorator
+            });
+            this.RefreshHighlights();
+            this.Decorators = [];
+        } else {
+            let rangeToRemove = this.GetRangeToHighlight()!;
+        }
 
         this.RefreshHighlights();
         this.Decorators = [];
+    }
+
+    async FindMatches(): Promise<Range[] | undefined> {
+        const editor = getActiveEditor();
+        if (!editor) {
+            return Promise.reject();
+        }
+
+        let range = this.GetRangeToHighlight();
+        if (!range) {
+            return Promise.reject();
+        }
+
+        let word = getTextFromSelection(editor, new Selection(range!.start, range!.end));
+        if (!word) {
+            return Promise.reject();
+        }
+
+        let matches: Range[] = [];
+        let lines = getLinesFromDocumentOrSelection(editor, range);
+        let text = lines?.forEach((line) => {
+            if (line.text.indexOf(word!) > -1) {
+                matches.push(new Range(line.lineNumber, line.text.indexOf(word!), line.lineNumber, line.text.indexOf(word!) + word!.length));
+            }
+        });
+
+        Promise.resolve(matches);
     }
 }

@@ -268,6 +268,11 @@
                 "category": "Text Toolbox"
             },
             {
+                "command": "vscode-texttoolbox.RemoveAllHighlights",
+                "title": "Remove all highlights",
+                "category": "Text Toolbox"
+            },
+            {
                 "command": "vscode-texttoolbox.RemoveHighlight",
                 "title": "Remove highlight",
                 "category": "Text Toolbox"
