@@ -140,7 +140,7 @@ export function getLinesFromDocumentOrSelection(editor: TextEditor, range?: Rang
 
     let textLines: TextLine[] = [];
 
-    if (!editor.selection.isEmpty) {
+    if (selection) {
         return getLinesFromSelection(editor, selection);
     } else if (range) {
         return getLinesFromSelection(editor, new Selection(range.start, range.end));

@@ -11,6 +11,7 @@ class TTDecoration {
     public Range: Range;
     public DecorationType: TextEditorDecorationType;
     public Index: any;
+    public File: string;
 
     /**
      * Creates an instance of TTDecoration.
@@ -18,12 +19,23 @@ class TTDecoration {
      * @param {DecorationRenderOptions} decoratorRenderOptions Decoration render options
      * @memberof TTDecoration
      */
-    constructor(range: Range, decoratorRenderOptions: DecorationRenderOptions) {
+    constructor(range: Range, decoratorRenderOptions: DecorationRenderOptions, file: string) {
         this.Range = range;
         this.DecorationType = window.createTextEditorDecorationType(decoratorRenderOptions!);
+        this.File = file;
 
         const chance = new Chance();
         this.Index = chance.guid();
+    }
+}
+
+class TTDecorationMatches {
+    Range: Range;
+    File: string;
+
+    constructor(range: Range, file: string) {
+        this.Range = range;
+        this.File = file;
     }
 }
 
@@ -33,11 +45,11 @@ class TTDecoration {
  * @interface TTDecorators
  */
 interface TTDecorators {
-    HighlightText(pickDefaultDecorator: boolean, rangeOrSelection?: Range): void;
+    HighlightText(pickDefaultDecorator: boolean, all?: boolean, rangeToHighlight?: Range): void;
     GetRangeToHighlight(): Range | undefined;
     RefreshHighlights(): void;
     RemoveHighlight(removeAll: boolean): void;
-    FindMatches(): Promise<Range[] | undefined>;
+    FindMatches(matchCase: boolean): Promise<TTDecorationMatches[]>;
 }
 
 /**
@@ -64,7 +76,9 @@ export default class TTDecorations implements TTDecorators {
      * @return {*}
      * @memberof TTDecorations
      */
-    async HighlightText(pickDefaultDecorator: boolean, rangeToHighlight?: Range) {
+    // async HighlightText(pickDefaultDecorator: boolean, rangeToHighlight: Range): Promise<void>;
+    // async HighlightText(pickDefaultDecorator: boolean, all: boolean): Promise<void>;
+    async HighlightText(pickDefaultDecorator: boolean, all?: boolean, rangeToHighlight?: Range): Promise<void> {
         const editor = getActiveEditor();
         if (!editor) {
             return;
@@ -81,11 +95,22 @@ export default class TTDecorations implements TTDecorators {
             return;
         }
 
-        let decorator = new TTDecoration(rangeToHighlight, decoratorRenderOptions!);
+        let decorator: any;
+        if (all) {
+            let matches = await this.FindMatches();
+
+            matches.forEach(async (m) => {
+                decorator = new TTDecoration(m.Range, decoratorRenderOptions!, editor.document.uri.fsPath);
+                this.Decorators.push(decorator);
+            });
+        } else {
+            decorator = new TTDecoration(rangeToHighlight, decoratorRenderOptions!, editor.document.uri.fsPath);
+        }
 
         this.Decorators.push(decorator);
 
         this.RefreshHighlights();
+        return Promise.resolve();
     }
 
     /**
@@ -179,6 +204,7 @@ export default class TTDecorations implements TTDecorators {
             this.RefreshHighlights();
             this.Decorators = [];
         } else {
+            // todo: remove the decoration that was clicked on
             let rangeToRemove = this.GetRangeToHighlight()!;
             let decorationToRemove = this.FindDecoration(rangeToRemove);
             if (decorationToRemove) {
@@ -199,7 +225,13 @@ export default class TTDecorations implements TTDecorators {
         return this.Decorators.find((d) => d.Range.isEqual(range));
     }
 
-    async FindMatches(): Promise<Range[] | undefined> {
+    /**
+     * Find word matches
+     *
+     * @return {*}
+     * @memberof TTDecorations
+     */
+    async FindMatches(matchCase: boolean): Promise<TTDecorationMatches[]> {
         const editor = getActiveEditor();
         if (!editor) {
             return Promise.reject();
@@ -215,14 +247,17 @@ export default class TTDecorations implements TTDecorators {
             return Promise.reject();
         }
 
-        let matches: Range[] = [];
-        let lines = getLinesFromDocumentOrSelection(editor, range);
-        let text = lines?.forEach((line) => {
-            if (line.text.indexOf(word!) > -1) {
-                matches.push(new Range(line.lineNumber, line.text.indexOf(word!), line.lineNumber, line.text.indexOf(word!) + word!.length));
+        let matches: TTDecorationMatches[] = [];
+        let lines = getLinesFromDocumentOrSelection(editor);
+        lines?.forEach((line) => {
+            let index = 0;
+            matchCase ? line.text.indexOf(word!) : line.text.toLowerCase().indexOf(word!.toLowerCase());
+            if (index > -1) {
+                let rangeMatch = new Range(line.lineNumber, index, line.lineNumber, index + word!.length);
+                matches.push(new TTDecorationMatches(rangeMatch, editor.document.uri.fsPath));
             }
         });
 
-        Promise.resolve(matches);
+        return Promise.resolve(matches);
     }
 }

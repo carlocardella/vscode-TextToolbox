@@ -263,6 +263,11 @@
                 "category": "Text Toolbox"
             },
             {
+                "command": "vscode-texttoolbox.HighlightAllMatches",
+                "title": "Highlight all matches",
+                "category": "Text Toolbox"
+            },
+            {
                 "command": "vscode-texttoolbox.HighlightTextWithColor",
                 "title": "Highlight with color...",
                 "category": "Text Toolbox"
@@ -326,11 +331,19 @@
                 },
                 {
                     "group": "highlight",
+                    "command": "vscode-texttoolbox.HighlightAllMatches"
+                },
+                {
+                    "group": "highlight",
                     "command": "vscode-texttoolbox.HighlightTextWithColor"
                 },
                 {
                     "group": "highlight",
                     "command": "vscode-texttoolbox.RemoveHighlight"
+                },
+                {
+                    "group": "highlight",
+                    "command": "vscode-texttoolbox.RemoveAllHighlights"
                 }
             ],
             "tt.caseConversion": [
