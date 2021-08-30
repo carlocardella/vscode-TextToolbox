@@ -239,6 +239,14 @@ export function activate(context: ExtensionContext) {
         })
     );
     context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.HighlightAllMatchesWithColor", () => {
+            if (!decorations) {
+                decorations = new TTDecorations();
+            }
+            decorations.HighlightText(false, true);
+        })
+    );
+    context.subscriptions.push(
         commands.registerTextEditorCommand("vscode-texttoolbox.HighlightTextWithColor", () => {
             if (!decorations) {
                 decorations = new TTDecorations();
