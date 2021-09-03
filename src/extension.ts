@@ -231,11 +231,27 @@ export function activate(context: ExtensionContext) {
         })
     );
     context.subscriptions.push(
-        commands.registerTextEditorCommand("vscode-texttoolbox.HighlightAllMatches", () => {
+        commands.registerTextEditorCommand("vscode-texttoolbox.HighlightAllMatchesCaseSensitive", () => {
             if (!decorations) {
                 decorations = new TTDecorations();
             }
-            decorations.HighlightText(true, true);
+            decorations.HighlightText(true, {allMatches: true, matchCase: true});
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.HighlightAllMatchesCaseInsensitive", () => {
+            if (!decorations) {
+                decorations = new TTDecorations();
+            }
+            decorations.HighlightText(true, { allMatches: true, matchCase: false });
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.HighlightWithRegExp", () => {
+            if (!decorations) {
+                decorations = new TTDecorations();
+            }
+            decorations.HighlightText(true, {regex: true});
         })
     );
     context.subscriptions.push(
@@ -243,11 +259,11 @@ export function activate(context: ExtensionContext) {
             if (!decorations) {
                 decorations = new TTDecorations();
             }
-            decorations.HighlightText(false, true);
+            decorations.HighlightText(false);
         })
     );
     context.subscriptions.push(
-        commands.registerTextEditorCommand("vscode-texttoolbox.HighlightTextWithColor", () => {
+        commands.registerTextEditorCommand("vscode-texttoolbox.HighlightWithColor", () => {
             if (!decorations) {
                 decorations = new TTDecorations();
             }

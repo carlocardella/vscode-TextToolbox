@@ -129,9 +129,41 @@ export function getLinesFromSelection(editor: TextEditor, selection?: Selection)
     return lines!;
 }
 
+/**
+ * Returns an array of lines from the document or selection
+ *
+ * @export
+ * @param {TextEditor} editor The editor containing the selection
+ * @return {*}  {(TextLine[] | undefined)}
+ */
 export function getLinesFromDocumentOrSelection(editor: TextEditor): TextLine[] | undefined;
+/**
+ * Returns an array of lines from the document or selection
+ *
+ * @export
+ * @param {TextEditor} editor The editor containing the selection
+ * @param {Range} range The range to split into lines
+ * @return {*}  {(TextLine[] | undefined)}
+ */
 export function getLinesFromDocumentOrSelection(editor: TextEditor, range: Range): TextLine[] | undefined;
+/**
+ * Returns an array of lines from the document or selection
+ *
+ * @export
+ * @param {TextEditor} editor The editor containing the selection
+ * @param {Selection} selection The selection to split into lines
+ * @return {*}  {(TextLine[] | undefined)}
+ */
 export function getLinesFromDocumentOrSelection(editor: TextEditor, selection: Selection): TextLine[] | undefined;
+/**
+ * Returns an array of lines from the document or selection
+ *
+ * @export
+ * @param {TextEditor} editor The editor containing the selection
+ * @param {Range} [range] The range to get lines from
+ * @param {Selection} [selection] The selection to get lines from
+ * @return {*}  {(TextLine[] | undefined)}
+ */
 export function getLinesFromDocumentOrSelection(editor: TextEditor, range?: Range, selection?: Selection): TextLine[] | undefined {
     const lineCount = editor.document.lineCount;
     if (lineCount < 1) {
@@ -220,4 +252,19 @@ export async function getSelections(editor: TextEditor): Promise<Selection[]> {
         selections.push(selection);
         return Promise.resolve(selections);
     }
+}
+
+/**
+ * Returns a RegExp object based on a RegExp string and flags
+ *
+ * @export
+ * @param {string} regex The RegExp string to convert into a RegExp object
+ * @return {*}  {RegExp}
+ */
+export function getRegExpObject(regex: string): RegExp {
+    const regExpFlags = regex.match("(?!.*/).*")![0] || undefined;
+    const regExpString = regex.match("(?<=/)(.*?)(?=/)")![0];
+    const regExpObject = new RegExp(regExpString, regExpFlags);
+
+    return new RegExp(regExpObject);
 }

@@ -1,5 +1,5 @@
 import { DecorationRenderOptions, Range, Selection, window, workspace, TextEditorDecorationType, Position } from "vscode";
-import { getActiveEditor, getLinesFromDocumentOrSelection, getTextFromSelection } from "./helpers";
+import { getActiveEditor, getLinesFromDocumentOrSelection, getTextFromSelection, getRegExpObject } from "./helpers";
 import { Chance } from "chance";
 
 /**
@@ -29,7 +29,7 @@ class TTDecoration {
     }
 }
 
-class TTDecorationMatches {
+class TTDecorationRange {
     Range: Range;
     File: string;
 
@@ -39,17 +39,22 @@ class TTDecorationMatches {
     }
 }
 
+interface IRangeToHighlightSettings {
+    allMatches?: boolean;
+    matchCase?: boolean;
+    regex?: boolean;
+}
+
 /**
  * Interface for a decoration provider.
  *
  * @interface TTDecorators
  */
-interface TTDecorators {
-    HighlightText(pickDefaultDecorator: boolean, all?: boolean, rangeToHighlight?: Range): void;
-    GetRangeToHighlight(): Range | undefined;
-    RefreshHighlights(): void;
-    RemoveHighlight(removeAll: boolean): void;
-    FindMatches(matchCase: boolean): Promise<TTDecorationMatches[]>;
+interface IDecorators {
+    // HighlightText(pickDefaultDecorator: boolean, rangeToHighlight: Range[]): void;
+    // RefreshHighlights(): void;
+    // RemoveHighlight(removeAll: boolean): void;
+    // GetRangeToHighlight(matchCase: boolean, regex?: RegExp): Promise<TTDecorationRange[]>;
 }
 
 /**
@@ -57,9 +62,9 @@ interface TTDecorators {
  *
  * @export
  * @class TTDecorations
- * @implements {TTDecorators}
+ * @implements {IDecorators}
  */
-export default class TTDecorations implements TTDecorators {
+export default class TTDecorations implements IDecorators {
     public Decorators: TTDecoration[] = [];
     private config = workspace.getConfiguration("TextToolbox");
 
@@ -76,9 +81,7 @@ export default class TTDecorations implements TTDecorators {
      * @return {*}
      * @memberof TTDecorations
      */
-    // async HighlightText(pickDefaultDecorator: boolean, rangeToHighlight?: Range): Promise<void>;
-    async HighlightText(pickDefaultDecorator: boolean, all?: boolean): Promise<void>;
-    async HighlightText(pickDefaultDecorator: boolean, all?: boolean, rangeToHighlight?: Range): Promise<void> {
+    async HighlightText(pickDefaultDecorator: boolean, settings?: IRangeToHighlightSettings, rangeToHighlight?: TTDecorationRange[]): Promise<void> {
         const editor = getActiveEditor();
         if (!editor) {
             return;
@@ -88,51 +91,19 @@ export default class TTDecorations implements TTDecorators {
         // default decorator or user input
         pickDefaultDecorator ? (decoratorRenderOptions = this.GetRandomHighlight()) : (decoratorRenderOptions = await this.AskForDecorationColor());
 
-        if (!rangeToHighlight) {
-            rangeToHighlight = this.GetRangeToHighlight();
-        }
-        if (!rangeToHighlight) {
-            return;
-        }
-
         let decorator: any;
-        if (all) {
-            let matches = await this.FindMatches(all);
-
-            matches.forEach(async (m) => {
-                decorator = new TTDecoration(m.Range, decoratorRenderOptions!, editor.document.uri.fsPath);
-                this.Decorators.push(decorator);
-            });
-        } else {
-            decorator = new TTDecoration(rangeToHighlight, decoratorRenderOptions!, editor.document.uri.fsPath);
+        if (!rangeToHighlight) {
+            rangeToHighlight = await this.GetRangeToHighlight(settings);
         }
 
-        this.Decorators.push(decorator);
+        rangeToHighlight.forEach((range) => {
+            // fix
+            decorator = new TTDecoration(range.Range, decoratorRenderOptions!, editor.document.uri.fsPath);
+            this.Decorators.push(decorator);
+        });
 
         this.RefreshHighlights();
         return Promise.resolve();
-    }
-
-    /**
-     * Get the range to highlight
-     *
-     * @return {*}  {(Range | undefined)}
-     * @memberof TTDecorations
-     */
-    GetRangeToHighlight(): Range | undefined {
-        const editor = getActiveEditor();
-        if (!editor) {
-            return;
-        }
-
-        let rangeToHighlight: Range;
-        if (editor.selection.isEmpty) {
-            rangeToHighlight = editor.document.getWordRangeAtPosition(editor.selection.active)!;
-        } else {
-            rangeToHighlight = new Range(editor.selection.start, editor.selection.end);
-        }
-
-        return rangeToHighlight;
     }
 
     /**
@@ -176,7 +147,7 @@ export default class TTDecorations implements TTDecorators {
     private async AskForDecorationColor(): Promise<DecorationRenderOptions | undefined> {
         const userColor = await window.showInputBox({ ignoreFocusOut: true, prompt: "Enter a color. Accepted formats: color name, hex, rgba" });
         if (!userColor) {
-            Promise.reject();
+            return Promise.reject();
         }
 
         const userDecoration: DecorationRenderOptions = {
@@ -191,7 +162,7 @@ export default class TTDecorations implements TTDecorators {
      * @return {*}
      * @memberof TTDecorations
      */
-    RemoveHighlight(removeAll: boolean) {
+    async RemoveHighlight(removeAll: boolean) {
         const editor = getActiveEditor();
         if (!editor) {
             return;
@@ -204,9 +175,8 @@ export default class TTDecorations implements TTDecorators {
             this.RefreshHighlights();
             this.Decorators = [];
         } else {
-            // todo: remove the decoration that was clicked on
-            let rangeToRemove = this.GetRangeToHighlight()!;
-            let decorationToRemove = this.FindDecoration(rangeToRemove);
+            let rangeToRemove = await this.GetRangeToHighlight()!; // fix: if the cursor is at the end of the highlighted word, the decoration is not removed. E.g. "editor.fontSize" where "editor" is highlighted and the cursor is between "editor" and the following "."
+            let decorationToRemove = this.FindDecoration(rangeToRemove[0].Range); // todo: remove multiple highlights?
             if (decorationToRemove) {
                 decorationToRemove.Range = new Range(0, 0, 0, 0);
             }
@@ -215,14 +185,12 @@ export default class TTDecorations implements TTDecorators {
     }
 
     /**
-     * Find the decoration to remove
+     * Find an existing decoration
      *
      * @param {Range} range Range to find
      * @return {*}  {(TTDecoration | undefined)}
      * @memberof TTDecorations
      */
-    // FindDecoration(range: Range): TTDecoration | undefined;
-    // FindDecoration(cursorPosition: Position): TTDecoration | undefined;
     FindDecoration(range: Range, cursorPosition?: Position): TTDecoration | undefined {
         let match: TTDecoration | undefined;
 
@@ -244,33 +212,75 @@ export default class TTDecorations implements TTDecorators {
      * @return {*}
      * @memberof TTDecorations
      */
-    async FindMatches(matchCase: boolean): Promise<TTDecorationMatches[]> {
+    async GetRangeToHighlight(settings?: IRangeToHighlightSettings): Promise<TTDecorationRange[]> {
         const editor = getActiveEditor();
         if (!editor) {
-            return Promise.reject();
+            return Promise.reject([]);
         }
 
-        let range = this.GetRangeToHighlight();
-        if (!range) {
-            return Promise.reject();
-        }
+        let rangeToHighlight: Range[] = [];
 
-        let word = getTextFromSelection(editor, new Selection(range!.start, range!.end));
-        if (!word) {
-            return Promise.reject();
-        }
-
-        let matches: TTDecorationMatches[] = [];
-        let lines = getLinesFromDocumentOrSelection(editor);
-        lines?.forEach((line) => {
-            let index = 0;
-            matchCase ? (index = line.text.indexOf(word!)) : (index = line.text.toLowerCase().indexOf(word!.toLowerCase()));
-            if (index > -1) {
-                let rangeMatch = new Range(line.lineNumber, index, line.lineNumber, index + word!.length);
-                matches.push(new TTDecorationMatches(rangeMatch, editor.document.uri.fsPath));
+        if (!settings?.regex) {
+            if (editor.selection.isEmpty) {
+                rangeToHighlight.push(editor.document.getWordRangeAtPosition(editor.selection.active)!);
+            } else {
+                rangeToHighlight.push(new Range(editor.selection.start, editor.selection.end));
             }
+        }
+
+        let word: any | undefined;
+        if (settings?.regex) {
+            // search by regex
+            word = await this.AskForRegEx();
+        } else {
+            // search by selection or cursor position
+            word = getTextFromSelection(editor, new Selection(rangeToHighlight[0].start, rangeToHighlight[0].end));
+        }
+
+        if (!word) {
+            return Promise.reject([]);
+        }
+
+        let matches: TTDecorationRange[] = [];
+        let lines = getLinesFromDocumentOrSelection(editor);
+        if (settings?.regex) {
+            lines?.forEach((line) => {
+                let regExpMatches = line.text.match(word);
+                // there might be multiple matches in a line
+                let index = 0;
+                regExpMatches?.forEach((regExpMatch) => {
+                    index = line.text.indexOf(regExpMatch, index);
+                    if (index > -1) {
+                        let rangeMatch = new Range(line.lineNumber, index, line.lineNumber, index + regExpMatch!.length);
+                        matches.push(new TTDecorationRange(rangeMatch, editor.document.uri.fsPath));
+                    }
+                });
+            });
+        } else if (settings?.allMatches) {
+            lines?.forEach((line) => {
+                let index = 0;
+                settings?.matchCase ? (index = line.text.indexOf(word!)) : (index = line.text.toLowerCase().indexOf(word!.toLowerCase()));
+                if (index > -1) {
+                    let rangeMatch = new Range(line.lineNumber, index, line.lineNumber, index + word!.length);
+                    matches.push(new TTDecorationRange(rangeMatch, editor.document.uri.fsPath));
+                }
+            });
+        }
+
+        rangeToHighlight.forEach((range) => {
+            matches.push(new TTDecorationRange(range, editor.document.uri.fsPath));
         });
 
         return Promise.resolve(matches);
+    }
+
+    private async AskForRegEx(): Promise<RegExp | undefined> {
+        const regex = await window.showInputBox({ ignoreFocusOut: true, prompt: "Regular Expression to search the document" });
+        if (!regex) {
+            return Promise.reject();
+        }
+
+        let regExp = getRegExpObject(regex);
+        return Promise.resolve(new RegExp(regExp));
     }
 }

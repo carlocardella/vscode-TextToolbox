@@ -263,8 +263,18 @@
                 "category": "Text Toolbox"
             },
             {
-                "command": "vscode-texttoolbox.HighlightAllMatches",
-                "title": "Highlight all matches",
+                "command": "vscode-texttoolbox.HighlightAllMatchesCaseSensitive",
+                "title": "Highlight all matches, case sensitive",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.HighlightAllMatchesCaseInsensitive",
+                "title": "Highlight all matches, case insensitive",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.HighlightWithRegExp",
+                "title": "Highlight with RegExp",
                 "category": "Text Toolbox"
             },
             {
@@ -273,7 +283,7 @@
                 "category": "Text Toolbox"
             },
             {
-                "command": "vscode-texttoolbox.HighlightTextWithColor",
+                "command": "vscode-texttoolbox.HighlightWithColor",
                 "title": "Highlight with color...",
                 "category": "Text Toolbox"
             },
@@ -336,15 +346,23 @@
                 },
                 {
                     "group": "highlight",
-                    "command": "vscode-texttoolbox.HighlightAllMatches"
+                    "command": "vscode-texttoolbox.HighlightWithColor"
+                },
+                {
+                    "group": "highlight",
+                    "command": "vscode-texttoolbox.HighlightAllMatchesCaseSensitive"
+                },
+                {
+                    "group": "highlight",
+                    "command": "vscode-texttoolbox.HighlightAllMatchesCaseInsensitive"
+                },
+                {
+                    "group": "highlight",
+                    "command": "vscode-texttoolbox.HighlightWithRegExp"
                 },
                 {
                     "group": "highlight",
                     "command": "vscode-texttoolbox.HighlightAllMatchesWithColor"
-                },
-                {
-                    "group": "highlight",
-                    "command": "vscode-texttoolbox.HighlightTextWithColor"
                 },
                 {
                     "group": "highlight",
