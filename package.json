@@ -263,6 +263,11 @@
                 "category": "Text Toolbox"
             },
             {
+                "command": "vscode-texttoolbox.HighlightTextWithColor",
+                "title": "Highlight with color...",
+                "category": "Text Toolbox"
+            },
+            {
                 "command": "vscode-texttoolbox.HighlightAllMatchesCaseSensitive",
                 "title": "Highlight all matches, case sensitive",
                 "category": "Text Toolbox"
@@ -273,18 +278,23 @@
                 "category": "Text Toolbox"
             },
             {
+                "command": "vscode-texttoolbox.HighlightAllMatchesCaseSensitiveWithColor",
+                "title": "Highlight all matches, case sensitive, with color...",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.HighlightAllMatchesCaseInsensitiveWithColor",
+                "title": "Highlight all matches, case insensitive, with color...",
+                "category": "Text Toolbox"
+            },
+            {
                 "command": "vscode-texttoolbox.HighlightWithRegExp",
                 "title": "Highlight with RegExp",
                 "category": "Text Toolbox"
             },
             {
-                "command": "vscode-texttoolbox.HighlightAllMatchesWithColor",
-                "title": "Highlight all matches with color...",
-                "category": "Text Toolbox"
-            },
-            {
-                "command": "vscode-texttoolbox.HighlightWithColor",
-                "title": "Highlight with color...",
+                "command": "vscode-texttoolbox.HighlightWithRegExpWithColor",
+                "title": "Highlight with RegExp with color...",
                 "category": "Text Toolbox"
             },
             {
@@ -346,23 +356,31 @@
                 },
                 {
                     "group": "tt.highlight.add",
-                    "command": "vscode-texttoolbox.HighlightWithColor"
+                    "command": "vscode-texttoolbox.HighlightTextWithColor"
                 },
                 {
-                    "group": "tt.highlight.add",
+                    "group": "tt.highlight.addall",
                     "command": "vscode-texttoolbox.HighlightAllMatchesCaseSensitive"
                 },
                 {
-                    "group": "tt.highlight.add",
+                    "group": "tt.highlight.addall",
                     "command": "vscode-texttoolbox.HighlightAllMatchesCaseInsensitive"
                 },
                 {
-                    "group": "tt.highlight.add",
+                    "group": "tt.highlight.addall",
+                    "command": "vscode-texttoolbox.HighlightAllMatchesCaseSensitiveWithColor"
+                },
+                {
+                    "group": "tt.highlight.addall",
+                    "command": "vscode-texttoolbox.HighlightAllMatchesCaseInsensitiveWithColor"
+                },
+                {
+                    "group": "tt.highlight.addregexp",
                     "command": "vscode-texttoolbox.HighlightWithRegExp"
                 },
                 {
-                    "group": "tt.highlight.add",
-                    "command": "vscode-texttoolbox.HighlightAllMatchesWithColor"
+                    "group": "tt.highlight.addregexp",
+                    "command": "vscode-texttoolbox.HighlightWithRegExpWithColor"
                 },
                 {
                     "group": "tt.highlight.remove",

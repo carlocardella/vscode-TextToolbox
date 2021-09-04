@@ -231,11 +231,19 @@ export function activate(context: ExtensionContext) {
         })
     );
     context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.HighlightTextWithColor", () => {
+            if (!decorations) {
+                decorations = new TTDecorations();
+            }
+            decorations.HighlightText(false);
+        })
+    );
+    context.subscriptions.push(
         commands.registerTextEditorCommand("vscode-texttoolbox.HighlightAllMatchesCaseSensitive", () => {
             if (!decorations) {
                 decorations = new TTDecorations();
             }
-            decorations.HighlightText(true, {allMatches: true, matchCase: true});
+            decorations.HighlightText(true, { allMatches: true, matchCase: true });
         })
     );
     context.subscriptions.push(
@@ -247,27 +255,35 @@ export function activate(context: ExtensionContext) {
         })
     );
     context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.HighlightAllMatchesCaseSensitiveWithColor", () => {
+            if (!decorations) {
+                decorations = new TTDecorations();
+            }
+            decorations.HighlightText(false, { allMatches: true, matchCase: true });
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.HighlightAllMatchesCaseInsensitiveWithColor", () => {
+            if (!decorations) {
+                decorations = new TTDecorations();
+            }
+            decorations.HighlightText(false, { allMatches: true, matchCase: false });
+        })
+    );
+    context.subscriptions.push(
         commands.registerTextEditorCommand("vscode-texttoolbox.HighlightWithRegExp", () => {
             if (!decorations) {
                 decorations = new TTDecorations();
             }
-            decorations.HighlightText(true, {regex: true});
+            decorations.HighlightText(true, { regex: true });
         })
     );
     context.subscriptions.push(
-        commands.registerTextEditorCommand("vscode-texttoolbox.HighlightAllMatchesWithColor", () => {
+        commands.registerTextEditorCommand("vscode-texttoolbox.HighlightWithRegExpWithColor", () => {
             if (!decorations) {
                 decorations = new TTDecorations();
             }
-            decorations.HighlightText(false);
-        })
-    );
-    context.subscriptions.push(
-        commands.registerTextEditorCommand("vscode-texttoolbox.HighlightWithColor", () => {
-            if (!decorations) {
-                decorations = new TTDecorations();
-            }
-            decorations.HighlightText(false);
+            decorations.HighlightText(false, { regex: true });
         })
     );
     context.subscriptions.push(

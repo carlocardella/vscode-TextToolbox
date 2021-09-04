@@ -92,13 +92,15 @@ to:
 
 * Highlight word or selection:
   * `Highlight`
+  * `Highlight with color...`
   * `Highlight all matches, case sensitive`
   * `Highlight all matches, case insensitive`
+  * `Highlight all matches, case sensitive, with color...`
+  * `Highlight all matches, case insensitive, with color...`
   * `Highlight with RegExp`
-  * `Highlight with color...`
-  * `Highlight all matches with color...`
-  * `Remove highlight`
+  * `Highlight with RegExp with color...`
   * `Remove all highlights`
+  * `Remove highlight`
 
 ### Fixed
 
