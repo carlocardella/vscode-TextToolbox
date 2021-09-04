@@ -18,9 +18,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
     * for all emoji
     * based on theme
     * all
-* Highlight
-  * highlight word (and all occurrences)
-  * highlight based on regex
 * Align:
   * to cursor
   * as table
@@ -95,7 +92,11 @@ to:
 
 * Highlight word or selection:
   * `Highlight`
+  * `Highlight all matches, case sensitive`
+  * `Highlight all matches, case insensitive`
+  * `Highlight with RegExp`
   * `Highlight with color...`
+  * `Highlight all matches with color...`
   * `Remove highlight`
   * `Remove all highlights`
 

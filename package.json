@@ -341,35 +341,35 @@
             ],
             "tt.highlight": [
                 {
-                    "group": "highlight",
+                    "group": "tt.highlight.add",
                     "command": "vscode-texttoolbox.HighlightText"
                 },
                 {
-                    "group": "highlight",
+                    "group": "tt.highlight.add",
                     "command": "vscode-texttoolbox.HighlightWithColor"
                 },
                 {
-                    "group": "highlight",
+                    "group": "tt.highlight.add",
                     "command": "vscode-texttoolbox.HighlightAllMatchesCaseSensitive"
                 },
                 {
-                    "group": "highlight",
+                    "group": "tt.highlight.add",
                     "command": "vscode-texttoolbox.HighlightAllMatchesCaseInsensitive"
                 },
                 {
-                    "group": "highlight",
+                    "group": "tt.highlight.add",
                     "command": "vscode-texttoolbox.HighlightWithRegExp"
                 },
                 {
-                    "group": "highlight",
+                    "group": "tt.highlight.add",
                     "command": "vscode-texttoolbox.HighlightAllMatchesWithColor"
                 },
                 {
-                    "group": "highlight",
+                    "group": "tt.highlight.remove",
                     "command": "vscode-texttoolbox.RemoveHighlight"
                 },
                 {
-                    "group": "highlight",
+                    "group": "tt.highlight.remove",
                     "command": "vscode-texttoolbox.RemoveAllHighlights"
                 }
             ],

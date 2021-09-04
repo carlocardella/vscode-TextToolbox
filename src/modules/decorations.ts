@@ -96,8 +96,7 @@ export default class TTDecorations implements IDecorators {
             rangeToHighlight = await this.GetRangeToHighlight(settings);
         }
 
-        rangeToHighlight.forEach((range) => {
-            // fix
+        rangeToHighlight?.forEach((range) => {
             decorator = new TTDecoration(range.Range, decoratorRenderOptions!, editor.document.uri.fsPath);
             this.Decorators.push(decorator);
         });
@@ -175,12 +174,14 @@ export default class TTDecorations implements IDecorators {
             this.RefreshHighlights();
             this.Decorators = [];
         } else {
-            let rangeToRemove = await this.GetRangeToHighlight()!; // fix: if the cursor is at the end of the highlighted word, the decoration is not removed. E.g. "editor.fontSize" where "editor" is highlighted and the cursor is between "editor" and the following "."
-            let decorationToRemove = this.FindDecoration(rangeToRemove[0].Range); // todo: remove multiple highlights?
-            if (decorationToRemove) {
-                decorationToRemove.Range = new Range(0, 0, 0, 0);
+            let rangeToRemove = await this.GetRangeToHighlight();
+            if (rangeToRemove) {
+                let decorationToRemove = this.FindDecoration(rangeToRemove[0].Range); // todo: remove multiple highlights?
+                if (decorationToRemove) {
+                    decorationToRemove.Range = new Range(0, 0, 0, 0);
+                }
+                this.RefreshHighlights();
             }
-            this.RefreshHighlights();
         }
     }
 
@@ -212,33 +213,41 @@ export default class TTDecorations implements IDecorators {
      * @return {*}
      * @memberof TTDecorations
      */
-    async GetRangeToHighlight(settings?: IRangeToHighlightSettings): Promise<TTDecorationRange[]> {
+    async GetRangeToHighlight(settings?: IRangeToHighlightSettings): Promise<TTDecorationRange[] | undefined> {
         const editor = getActiveEditor();
         if (!editor) {
-            return Promise.reject([]);
+            return Promise.reject("error"); // fix: undefined?
         }
 
         let rangeToHighlight: Range[] = [];
 
         if (!settings?.regex) {
             if (editor.selection.isEmpty) {
-                rangeToHighlight.push(editor.document.getWordRangeAtPosition(editor.selection.active)!);
+                // https://code.visualstudio.com/api/references/vscode-api#TextDocument
+                // By default words are defined by common separators, like space, -, _, etc. In addition, per language custom [word definitions] can be defined
+                // note: if the cursor is at the end of line after a word separator (e.g. a comma), getWordRangeAtPosition() returns null therefore Highlight() or RemoveHighlight() will not work. This is by design
+                let range = editor.document.getWordRangeAtPosition(editor.selection.active);
+                if (range) {
+                    rangeToHighlight.push(range);
+                }
             } else {
                 rangeToHighlight.push(new Range(editor.selection.start, editor.selection.end));
             }
         }
 
-        let word: any | undefined;
+        let word: any;
         if (settings?.regex) {
             // search by regex
             word = await this.AskForRegEx();
         } else {
             // search by selection or cursor position
-            word = getTextFromSelection(editor, new Selection(rangeToHighlight[0].start, rangeToHighlight[0].end));
+            if (rangeToHighlight.length > 0) {
+                word = getTextFromSelection(editor, new Selection(rangeToHighlight[0].start, rangeToHighlight[0].end));
+            }
         }
 
-        if (!word) {
-            return Promise.reject([]);
+        if (word === undefined) {
+            return Promise.reject(); // fix: undefined?
         }
 
         let matches: TTDecorationRange[] = [];

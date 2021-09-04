@@ -175,9 +175,13 @@ Likewise, `Convert to CapitalCase` has been removed in favor of the built-in VSC
 ### Highlight text
 
 * Highlight
+* Highlight all matches, case sensitive
+* Highlight all matches, case insensitive
+* Highlight with RegExp
 * Highlight with color...
-* Remove all highlights
+* Highlight all matches with color...
 * Remove highlight
+* Remove all highlights
 
 ### Others
 
