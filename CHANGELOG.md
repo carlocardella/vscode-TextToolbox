@@ -59,6 +59,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
   * Copy with metadata
 * Indentation
   * Increase and decrease intendation (2-4 spaces)
+* Highlight
+  * Persist highlights across VSCode restarts
 * Other
   * if there is no selection update the entire line
   * remove control characters/bad characters on paste (with config toggle)
