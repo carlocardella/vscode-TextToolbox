@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD024 -->
 # **Change Log**
 
 All notable changes to the "vscode-TextToolbox" extension will be documented in this file.
@@ -13,25 +14,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
   * Randomize selection (words in a selection)
   * Reverse selection (lines or words in selection)
   * Sort lines by length
-  * Explore disabling italic (suggestion from https://github.com/microsoft/vscode/issues/25895#issuecomment-890614837)
-   * for all emoji
-   * based on theme
-   * all
-* Json
-  * Validate
-  * Escape
-  * Unescape
-  * Work on selection
-  * Work on the entire file if file type is json or cjson
-* Highlight
-  * highlight word (and all occurrences)
-  * highlight based on regex
-  * ask the user for the highlight color
-  * toggle/clear command in context menu
+  * Explore disabling italic (suggestion from [Stop rendering pseudo-italic fonts when italic is not available](https://github.com/microsoft/vscode/issues/25895#issuecomment-890614837))
+    * for all emoji
+    * based on theme
+    * all
 * Align:
   * to cursor
   * as table
-  * align csv
 * Filtering
   * improve `Filter lines, result in new editor`: regex search only of the search string begins with `/`, otherwise default to text search (return the entire line containing the match)
   * add original line numbers when opening a selection/filter in a new editor
@@ -50,9 +39,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
     * paste in place
     * paste in new editor
 * Insert
-  * Insert UUID (universally unique identifier)
-  * Prefix lines with string
-  * Suffix lines with string
   * insert date sequence
     * add option to use times 12/24 formats
   * famous excerpts, e.g. The Divine Comedy, Hamlet etc...
@@ -86,6 +72,42 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## Log
 
+## [2.0.0] - 2021-09-03
+
+### Added
+
+* `Fix Win32 path in Json`: transforms:
+
+```json
+{
+    "path": "\Temp\Myfolder\myFile.txt"
+}
+```
+
+to:
+
+```json
+{
+    "path": "\\Temp\\Myfolder\\myFile.txt"
+}
+```
+
+* Highlight word or selection:
+  * `Highlight`
+  * `Highlight with color...`
+  * `Highlight all matches, case sensitive`
+  * `Highlight all matches, case insensitive`
+  * `Highlight all matches, case sensitive, with color...`
+  * `Highlight all matches, case insensitive, with color...`
+  * `Highlight with RegExp`
+  * `Highlight with RegExp with color...`
+  * `Remove all highlights`
+  * `Remove highlight`
+
+### Fixed
+
+* Fixed a case where "Remove control characters" was inserting "undefined" when replacing control characters with empty strings
+
 ## [1.9.0] - 2021-08-08
 
 ### Changed
@@ -103,7 +125,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ### Added
 
 * `Align to separator`: align a selection in a CSV type, choose the type of separator to use
-  * The default separator can be controlled by the setting `tt.alignTextDefaultSeparator`
+  * The default separator can be controlled by the setting `TextToolbox.alignTextDefaultSeparator`
 
 ### Changed
 
@@ -166,14 +188,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 * Removed `Convert to Lowercase` in favor of the built-in VSCode command
 * Removed `Convert to CapitalCase` in favor of the built-in VSCode command `Transform to Title Case`
 
-
 ## [1.3.0] - 2021-05-31
 
 ### Added
 
 * Convert path string to posix format
 * Convert path string to win32 format
-* Added `Roundtrip` date format: `2021-05-31T16:53:38.954Z`: https://docs.microsoft.com/en-us/dotnet/standard/base-types/standard-date-and-time-format-strings#Roundtrip
+* Added `Roundtrip` date format: `2021-05-31T16:53:38.954Z`: [Roudtrip DateTime Format](https://docs.microsoft.com/en-us/dotnet/standard/base-types/standard-date-and-time-format-strings#Roundtrip)
 * Added `DATETIME_HUGE` date format: `Monday, May 31, 2021, 9:55 AM PDT`
 
 ### Changed
@@ -261,12 +282,15 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 * Align text to separator (can be used to align CSV elements):
   * Align left (default): inserts padding spaces after the separator
-    ```
+
+    ```text
     London,    Paris,     Rome
     Tokyo,     Singapore, Sydney
     ```
+
   * Align right: inserts padding spaces between text and separator
-    ```
+  
+    ```text
     London    ,Paris     ,Rome
     Tokyo     ,Singapore ,Sydney
     ```
@@ -282,9 +306,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ### Added
 
 * Highlight control characters
-  * By default control characters are highlighted with a red box but color and border shape can be customized through `tt.decorateControlCharacters`
+  * By default control characters are highlighted with a red box but color and border shape can be customized through `TextToolbox.decorateControlCharacters`
 * Remove control characters
-  * By default control characters are replaced with an empty string but this can be changed through `tt.replaceControlCharactersWith`.
+  * By default control characters are replaced with an empty string but this can be changed through `TextToolbox.replaceControlCharactersWith`.
   * Removes control characters from the current selection(s) or from the entire document if no text is selected
 
 ## [0.9.0] - 2020-09-28
@@ -333,7 +357,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ### Added
 
 * Find text using RegEx or simple text match and open the result in a new Editor
-  * By default the search uses RegEx: can be changed using `tt.filtersUseRegularExpressions`
+  * By default the search uses RegEx: can be changed using `TextToolbox.filtersUseRegularExpressions`
 
 ## [0.3.0] - 2020-09-05
 

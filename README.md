@@ -26,6 +26,8 @@ The extension does not require any special permission, therefore is enabled to r
 Notable absents: `Convert to Uppercase` and `Convert to Lowercase` have been removed in favor of the built-in commands in VScode.
 Likewise, `Convert to CapitalCase` has been removed in favor of the built-in VSCode command `Transform to Title Case`.
 
+### Text conversions
+
 * PascalCase
   * Lorem ipsum dolor sit amet => LoremIpsumDolorSitAmet
 * camelCase
@@ -44,6 +46,11 @@ Likewise, `Convert to CapitalCase` has been removed in favor of the built-in VSC
   * Lorem ipsum dolor sit amet => lorem_ipsum_dolor_sit_amet
 * Invert case
   * Lorem Ipsum Dolor Sit Amet => lOREM iPSUM dOLOR sIT aMET
+* Convert path string to posix format
+* Convert path string to win32 format
+
+### Insert text
+
 * Insert GUID
   * 14854fc2-f782-5136-aebb-a121b9ba6af1
 * Insert GUID all zeros
@@ -116,51 +123,73 @@ Likewise, `Convert to CapitalCase` has been removed in favor of the built-in VSC
   * South Korean Won
   * South African Rand
   * Swiss Franc
+* Insert line numbers
+* Insert numbers sequence
 * Pad Selection Right
 * Pad Selection Left
+
+### Filter
+
+* Filter lines, result in new Editor
+  * use RegExp (default) or set `TextToolbox.filtersUseRegularExpressions` to `false` to use simple string match instead
+  * RegExp allow for a more targeted search; use global flags to fine tune your search. RegExp must use forward slashes (`/`) to delimit the expression and the global flags (optional): `/<expression>/flags`
+    * `/\d.*/gm`
+  * string match allows to find all lines containing the string you are looking for, the string must match exactly
+
+### Remove
+
 * Remove all empty lines
   * remove all empty lines from the current document
 * Remove redundant empty line
   * remove all redundant empty lines from the current document: reduces multiple empty lines to one
 * Remove duplicate lines
 * Remove duplicate lines, result in new Editor
-* Filter lines, result in new Editor
-  * use RegExp (default) or set `tt.filtersUseRegularExpressions` to `false` to use simple string match instead
-  * RegExp allow for a more targeted search; use global flags to fine tune your search. RegExp must use forward slashes (`/`) to delimit the expression and the global flags (optional): `/<expression>/flags`
-    * `/\d.*/gm`
-  * string match allows to find all lines containing the string you are looking for, the string must match exactly
+
+### Sort
+
 * Sort lines
   * Ascending
   * Descending
   * Reverse
-* Open selection(s) in new editor
-* Insert line numbers
-* Insert numbers sequence
+
+### Control characters
+
 * Highlight control characters
-  * By default control characters are highlighted with a red box but color and border shape can be customized through `tt.decorateControlCharacters`
+  * By default control characters are highlighted with a red box but color and border shape can be customized through `TextToolbox.decorateControlCharacters`
 * Remove control characters
-  * By default control characters are replaced with an empty string but this can be changed through `tt.replaceControlCharactersWith`.
+  * By default control characters are replaced with an empty string but this can be changed through `TextToolbox.replaceControlCharactersWith`.
   * Removes control characters from the current selection(s) or from the entire document if no text is selected
+
+### Split
+
 * Split selection based on delimiter
   * Split and open in new editor
-  
-<!-- * Align text to a delimiter (can be used to align CSV elements)
-  * Align left (default): inserts padding spaces after the separator
-    ```
-    London,    Paris,     Rome      
-    Tokyo,     Singapore, Syndey     
-    ```
-  * Align right: inserts padding spaces between text and separator
-    ```
-    London    ,Paris     ,Rome      
-    Tokyo     ,Singapore ,Syndey    
-    ``` -->
+
+### Json
 
 * Stringify Json
 * Fix and Format Json
 * Minify Json
-* Convert path string to posix format
-* Convert path string to win32 format
+* Fix Win32 path in Json
+
+### Highlight text
+
+* Highlight
+* Highlight with color...
+* Highlight all matches, case sensitive
+* Highlight all matches, case insensitive
+* Highlight all matches, case sensitive, with color...
+* Highlight all matches, case insensitive, with color...
+* Highlight with RegExp
+* Highlight with RegExp with color...
+* Remove all highlights
+* Remove highlight
+
+_Note_: In this release, highlights and decorations are persisted as long as the VSCode instance is running but are not restored if VSCode is restarted. Persistence across restarts will be added in a future release.
+
+### Others
+
+* Open selection(s) in new editor
 * Align to separator
 
 ### Thanks to

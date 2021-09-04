@@ -9,6 +9,7 @@ import * as Helpers from "./modules/helpers";
 import * as TextManipulation from "./modules/textManipulation";
 import * as Json from "./modules/json";
 import * as AlignText from "./modules/alignText";
+import TTDecorations from "./modules/decorations";
 
 export function activate(context: ExtensionContext) {
     console.log("vscode-texttoolbox is active");
@@ -194,6 +195,11 @@ export function activate(context: ExtensionContext) {
             Json.minifyJson();
         })
     );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.EscapeWin32PathInJson", () => {
+            Json.escapeWin32PathInJson();
+        })
+    );
 
     // path transformation
     context.subscriptions.push(
@@ -214,11 +220,97 @@ export function activate(context: ExtensionContext) {
         })
     );
 
-    // control characters
+    // highlight
+    let decorations: TTDecorations;
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.HighlightText", () => {
+            if (!decorations) {
+                decorations = new TTDecorations();
+            }
+            decorations.HighlightText(true);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.HighlightTextWithColor", () => {
+            if (!decorations) {
+                decorations = new TTDecorations();
+            }
+            decorations.HighlightText(false);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.HighlightAllMatchesCaseSensitive", () => {
+            if (!decorations) {
+                decorations = new TTDecorations();
+            }
+            decorations.HighlightText(true, { allMatches: true, matchCase: true });
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.HighlightAllMatchesCaseInsensitive", () => {
+            if (!decorations) {
+                decorations = new TTDecorations();
+            }
+            decorations.HighlightText(true, { allMatches: true, matchCase: false });
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.HighlightAllMatchesCaseSensitiveWithColor", () => {
+            if (!decorations) {
+                decorations = new TTDecorations();
+            }
+            decorations.HighlightText(false, { allMatches: true, matchCase: true });
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.HighlightAllMatchesCaseInsensitiveWithColor", () => {
+            if (!decorations) {
+                decorations = new TTDecorations();
+            }
+            decorations.HighlightText(false, { allMatches: true, matchCase: false });
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.HighlightWithRegExp", () => {
+            if (!decorations) {
+                decorations = new TTDecorations();
+            }
+            decorations.HighlightText(true, { regex: true });
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.HighlightWithRegExpWithColor", () => {
+            if (!decorations) {
+                decorations = new TTDecorations();
+            }
+            decorations.HighlightText(false, { regex: true });
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.RemoveAllHighlights", () => {
+            if (!decorations) {
+                decorations = new TTDecorations();
+            }
+            decorations.RemoveHighlight(true);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.RemoveHighlight", () => {
+            if (!decorations) {
+                decorations = new TTDecorations();
+            }
+            decorations.RemoveHighlight(false);
+        })
+    );
+
+    // events
     window.onDidChangeActiveTextEditor(
         (editor) => {
             if (editor) {
                 ControlCharacters.decorateControlCharacters(editor);
+                if (decorations) {
+                    decorations.RefreshHighlights();
+                }
             }
         },
         null,
@@ -231,6 +323,10 @@ export function activate(context: ExtensionContext) {
                 ControlCharacters.decorateControlCharacters(activeEditor);
             }
 
+            if (decorations) {
+                decorations.RefreshHighlights();
+            }
+
             // todo: https://github.com/Microsoft/vscode/issues/30066
             // if (workspace.getConfiguration().get('TextToolbox.removeControlCharactersOnPaste')) {
             // 	ControlCharacters.removeControlCharacters(getActiveEditor());
@@ -239,6 +335,8 @@ export function activate(context: ExtensionContext) {
         null,
         context.subscriptions
     );
+
+    // control characters
     context.subscriptions.push(
         workspace.onDidChangeConfiguration((e) => {
             if (e.affectsConfiguration("TextToolbox.decorateControlCharacters")) {

@@ -134,12 +134,12 @@
             },
             {
                 "command": "vscode-texttoolbox.PadSelectionRight",
-                "title": "Pad Selection Right",
+                "title": "Pad Selection Right...",
                 "category": "Text Toolbox"
             },
             {
                 "command": "vscode-texttoolbox.PadSelectionLeft",
-                "title": "Pad Selection Left",
+                "title": "Pad Selection Left...",
                 "category": "Text Toolbox"
             },
             {
@@ -164,7 +164,7 @@
             },
             {
                 "command": "vscode-texttoolbox.FilterLinesUsingRegExpOrString",
-                "title": "Filter lines, result in new Editor",
+                "title": "Filter lines, result in new Editor...",
                 "category": "Text Toolbox"
             },
             {
@@ -204,17 +204,17 @@
             },
             {
                 "command": "vscode-texttoolbox.InsertCurrency",
-                "title": "Insert Currency",
+                "title": "Insert Currency...",
                 "category": "Text Toolbox"
             },
             {
                 "command": "vscode-texttoolbox.SplitSelection",
-                "title": "Split Selection",
+                "title": "Split Selection...",
                 "category": "Text Toolbox"
             },
             {
                 "command": "vscode-texttoolbox.SplitSelectionOpenInNewEditor",
-                "title": "Split Selection, result in new editor",
+                "title": "Split Selection, result in new editor...",
                 "category": "Text Toolbox"
             },
             {
@@ -250,6 +250,61 @@
             {
                 "command": "vscode-texttoolbox.AlignToSeparator",
                 "title": "Align to separator",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.EscapeWin32PathInJson",
+                "title": "Fix Win32 path in Json",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.HighlightText",
+                "title": "Highlight",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.HighlightTextWithColor",
+                "title": "Highlight with color...",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.HighlightAllMatchesCaseSensitive",
+                "title": "Highlight all matches, case sensitive",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.HighlightAllMatchesCaseInsensitive",
+                "title": "Highlight all matches, case insensitive",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.HighlightAllMatchesCaseSensitiveWithColor",
+                "title": "Highlight all matches, case sensitive, with color...",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.HighlightAllMatchesCaseInsensitiveWithColor",
+                "title": "Highlight all matches, case insensitive, with color...",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.HighlightWithRegExp",
+                "title": "Highlight with RegExp",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.HighlightWithRegExpWithColor",
+                "title": "Highlight with RegExp with color...",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.RemoveAllHighlights",
+                "title": "Remove all highlights",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.RemoveHighlight",
+                "title": "Remove highlight",
                 "category": "Text Toolbox"
             }
         ],
@@ -288,6 +343,52 @@
                 {
                     "submenu": "tt.path",
                     "group": "path"
+                },
+                {
+                    "submenu": "tt.highlight",
+                    "group": "highlight"
+                }
+            ],
+            "tt.highlight": [
+                {
+                    "group": "tt.highlight.add",
+                    "command": "vscode-texttoolbox.HighlightText"
+                },
+                {
+                    "group": "tt.highlight.add",
+                    "command": "vscode-texttoolbox.HighlightTextWithColor"
+                },
+                {
+                    "group": "tt.highlight.addall",
+                    "command": "vscode-texttoolbox.HighlightAllMatchesCaseSensitive"
+                },
+                {
+                    "group": "tt.highlight.addall",
+                    "command": "vscode-texttoolbox.HighlightAllMatchesCaseInsensitive"
+                },
+                {
+                    "group": "tt.highlight.addall",
+                    "command": "vscode-texttoolbox.HighlightAllMatchesCaseSensitiveWithColor"
+                },
+                {
+                    "group": "tt.highlight.addall",
+                    "command": "vscode-texttoolbox.HighlightAllMatchesCaseInsensitiveWithColor"
+                },
+                {
+                    "group": "tt.highlight.addregexp",
+                    "command": "vscode-texttoolbox.HighlightWithRegExp"
+                },
+                {
+                    "group": "tt.highlight.addregexp",
+                    "command": "vscode-texttoolbox.HighlightWithRegExpWithColor"
+                },
+                {
+                    "group": "tt.highlight.remove",
+                    "command": "vscode-texttoolbox.RemoveHighlight"
+                },
+                {
+                    "group": "tt.highlight.remove",
+                    "command": "vscode-texttoolbox.RemoveAllHighlights"
                 }
             ],
             "tt.caseConversion": [
@@ -434,6 +535,10 @@
                 {
                     "group": "tt.json",
                     "command": "vscode-texttoolbox.MinifyJson"
+                },
+                {
+                    "group": "tt.json",
+                    "command": "vscode-texttoolbox.EscapeWin32PathInJson"
                 }
             ],
             "tt.sort": [
@@ -489,6 +594,10 @@
             {
                 "id": "tt.path",
                 "label": "Path"
+            },
+            {
+                "id": "tt.highlight",
+                "label": "Highlight"
             }
         ],
         "configuration": [
@@ -550,6 +659,110 @@
                         "default": ",",
                         "scope": "window",
                         "description": "Align text default separator (Align Text)"
+                    },
+                    "TextToolbox.decorationDefaults": {
+                        "default": [
+                            {
+                                "light": {
+                                    "backgroundColor": "darkred",
+                                    "color": "white"
+                                },
+                                "dark": {
+                                    "backgroundColor": "red",
+                                    "color": "white"
+                                }
+                            },
+                            {
+                                "light": {
+                                    "backgroundColor": "darkgreen",
+                                    "color": "white"
+                                },
+                                "dark": {
+                                    "backgroundColor": "green",
+                                    "color": "white"
+                                }
+                            },
+                            {
+                                "light": {
+                                    "backgroundColor": "darkblue",
+                                    "color": "white"
+                                },
+                                "dark": {
+                                    "backgroundColor": "blue",
+                                    "color": "white"
+                                }
+                            },
+                            {
+                                "light": {
+                                    "backgroundColor": "darkcyan",
+                                    "color": "white"
+                                },
+                                "dark": {
+                                    "backgroundColor": "cyan",
+                                    "color": "black"
+                                }
+                            },
+                            {
+                                "light": {
+                                    "backgroundColor": "darkmagenta",
+                                    "color": "white"
+                                },
+                                "dark": {
+                                    "backgroundColor": "magenta",
+                                    "color": "white"
+                                }
+                            },
+                            {
+                                "light": {
+                                    "backgroundColor": "darkyellow",
+                                    "color": "black"
+                                },
+                                "dark": {
+                                    "backgroundColor": "yellow",
+                                    "color": "black"
+                                }
+                            },
+                            {
+                                "light": {
+                                    "backgroundColor": "darkgray",
+                                    "color": "white"
+                                },
+                                "dark": {
+                                    "backgroundColor": "gray",
+                                    "color": "black"
+                                }
+                            },
+                            {
+                                "light": {
+                                    "backgroundColor": "darkorange",
+                                    "color": "black"
+                                },
+                                "dark": {
+                                    "backgroundColor": "orange",
+                                    "color": "black"
+                                }
+                            },
+                            {
+                                "light": {
+                                    "backgroundColor": "darkpurple",
+                                    "color": "white"
+                                },
+                                "dark": {
+                                    "backgroundColor": "purple",
+                                    "color": "white"
+                                }
+                            },
+                            {
+                                "light": {
+                                    "backgroundColor": "darkbrown",
+                                    "color": "white"
+                                },
+                                "dark": {
+                                    "backgroundColor": "brown",
+                                    "color": "white"
+                                }
+                            }
+                        ]
                     }
                 }
             }

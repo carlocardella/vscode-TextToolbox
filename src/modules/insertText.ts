@@ -1,4 +1,4 @@
-import { Position, QuickPickItem, window } from "vscode";
+import { QuickPickItem, window } from "vscode";
 import { DateTime } from "luxon";
 import { Chance } from "chance";
 import { getActiveEditor, getLinesFromSelection } from "./helpers";
