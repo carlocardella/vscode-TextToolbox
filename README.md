@@ -185,6 +185,8 @@ Likewise, `Convert to CapitalCase` has been removed in favor of the built-in VSC
 * Remove all highlights
 * Remove highlight
 
+_Note_: In this release, highlights and decorations are persisted as long as the VSCode instance is running but are not restored if VSCode is restarted. Persistence across restarts will be added in a future release.
+
 ### Others
 
 * Open selection(s) in new editor
