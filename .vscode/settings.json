@@ -23,7 +23,9 @@
         "titleBar.activeForeground": "#e7e7e7",
         "titleBar.inactiveBackground": "#83256199",
         "titleBar.inactiveForeground": "#e7e7e799",
-        "tab.activeBorder": "#ab307e"
+        "tab.activeBorder": "#ab307e",
+        "statusBarItem.remoteBackground": "#832561",
+        "statusBarItem.remoteForeground": "#e7e7e7"
     },
     "peacock.color": "#832561",
     "cSpell.words": ["carlocardella", "darkred", "luxon", "pickone", "submenu", "texttoolbox", "untrusted"],

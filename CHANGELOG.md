@@ -21,6 +21,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 * Align:
   * to cursor
   * as table
+  * to special characters (e.g. tabs)
 * Filtering
   * improve `Filter lines, result in new editor`: regex search only of the search string begins with `/`, otherwise default to text search (return the entire line containing the match)
   * add original line numbers when opening a selection/filter in a new editor
