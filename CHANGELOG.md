@@ -18,6 +18,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
     * for all emoji
     * based on theme
     * all
+* Tables
+  * Format table for text files (similar to markdown tables)
+  * Convert CSV to ASCII table
 * Align:
   * to cursor
   * as table
