@@ -219,6 +219,16 @@ export function activate(context: ExtensionContext) {
             AlignText.alignToSeparator();
         })
     );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.AlignAsTable", () => {
+            AlignText.alignToSeparator(undefined, true);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.AlignAsTableWithHeaders", () => {
+            AlignText.alignToSeparator(undefined, true, true);
+        })
+    );
 
     // highlight
     let decorations: TTDecorations;

@@ -253,6 +253,16 @@
                 "category": "Text Toolbox"
             },
             {
+                "command": "vscode-texttoolbox.AlignAsTable",
+                "title": "Align as table",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.AlignAsTableWithHeaders",
+                "title": "Align as table with headers",
+                "category": "Text Toolbox"
+            },
+            {
                 "command": "vscode-texttoolbox.EscapeWin32PathInJson",
                 "title": "Fix Win32 path in Json",
                 "category": "Text Toolbox"
@@ -487,6 +497,14 @@
                 {
                     "group": "tt.transform",
                     "command": "vscode-texttoolbox.AlignToSeparator"
+                },
+                {
+                    "group": "tt.transform",
+                    "command": "vscode-texttoolbox.AlignAsTable"
+                },
+                {
+                    "group": "tt.transform",
+                    "command": "vscode-texttoolbox.AlignAsTableWithHeaders"
                 },
                 {
                     "group": "tt.transform",

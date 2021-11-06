@@ -18,12 +18,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
     * for all emoji
     * based on theme
     * all
-* Tables
-  * Format table for text files (similar to markdown tables)
-  * Convert CSV to ASCII table
-* Align:
+* Align
   * to cursor
-  * as table
   * to special characters (e.g. tabs)
 * Filtering
   * improve `Filter lines, result in new editor`: regex search only of the search string begins with `/`, otherwise default to text search (return the entire line containing the match)
@@ -62,7 +58,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
   * Copy with line numbers
   * Copy with metadata
 * Indentation
-  * Increase and decrease intendation (2-4 spaces)
+  * Increase and decrease indentation (2-4 spaces)
 * Highlight
   * Persist highlights across VSCode restarts
 * Other
@@ -77,6 +73,49 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
   * allow to update position without reloading the entire window
 
 ## Log
+
+## [version] - @todo
+
+### Added
+
+Align a CSV file or selection as a markdown table, no matter the actual file language
+
+* `Align as table`
+
+```text
+| asdfasdfasd | fadfasdfasdfasdf | adsfadf | asdf  | asdfa | df            |    |   |    |         |
+| asdasdfa    | sdfasdfa         | sdf     | adsf  | asd   | fasdfasdfadsf |    |   |    |         |
+| asd         | sdfasdfa         | dsf     | asdfa | sdf   | as            | df | a | df | adfadfa |
+```
+
+* `Align as table with headers`
+
+```text
+| asdfasdfasd | fadfasdfasdfasdf | adsfadf | asdf  | asdfa | df            |    |   |    |         |
+|-------------|------------------|---------|-------|-------|---------------|----|---|----|---------|
+| asdasdfa    | sdfasdfa         | sdf     | adsf  | asd   | fasdfasdfadsf |    |   |    |         |
+| asd         | sdfasdfa         | dsf     | asdfa | sdf   | as            | df | a | df | adfadfa |
+```
+
+### Changed
+
+* If a CSV selection has records with different length, the command `Align to separator` now fills the missing records (columns) as empty separators
+
+*old behavior*
+
+```text
+asdfasdfasd, fadfasdfasdfasdf, adsfadf, asdf,  asdfa, df,            
+asdasdfa,    sdfasdfa,         sdf,     adsf,  asd,   fasdfasdfadsf, 
+asd,         sdfasdfa,         dsf,     asdfa, sdf,   as,            df, a, df, adfadfa  
+```
+
+*new behavior*
+
+```text
+asdfasdfasd, fadfasdfasdfasdf, adsfadf, asdf,  asdfa, df,            ,,,,
+asdasdfa,    sdfasdfa,         sdf,     adsf,  asd,   fasdfasdfadsf, ,,,,
+asd,         sdfasdfa,         dsf,     asdfa, sdf,   as,            df, a, df, adfadfa 
+```
 
 ## [2.0.0] - 2021-09-03
 
@@ -303,7 +342,7 @@ to:
 
 ## [0.10.1] - 2020-10-04
 
-### Update
+### Changed
 
 * Update readme and changelog
 
@@ -342,7 +381,7 @@ to:
 
 ## [0.6.0] - 2020-09-24
 
-### Updated
+### Changedd
 
 * Case conversion and Insert commands now work on multiple selections
 * Renamed "Pad Right" and "Pad Left" to "Pad Selection Right" and "Pad Selection Left" respectively
@@ -354,7 +393,7 @@ to:
 * Sort lines, ascending, descending or reverse the lines order
   * Update the current selection or entire document, or open the sorted lines in a new editor
 
-### Updated
+### Changedd
 
 * Better handle configuration changes, react to the event only if `Text Toolbox` configuration is undated, ignore all other changes
 
@@ -376,13 +415,13 @@ to:
 
 * Fixed a bug with padding where the padded string length was incorrect
 
-### Updated
+### Changedd
 
 * Updated tests, close the editors after every `Describe` rather than after every test
 
 ## [0.2.0] - 2020-08-30
 
-### Updated
+### Changedd
 
 * Updated padding, split the previous command in `PadRight` and `PadLeft`.
   * If there is a selection, the string is padded up to the length specified

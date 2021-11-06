@@ -64,7 +64,7 @@ async function getElementMaxLength(lineElements: LineElement[]): Promise<number>
  * @param {string} [separator] The separator to use to align the text
  * @return {*}  {Promise<boolean>}
  */
-export function alignToSeparator(separator?: string): Promise<boolean> {
+export function alignToSeparator(separator?: string, formatTable?: boolean, withHeaders?: boolean): Promise<boolean> {
     return new Promise(async (resolve, reject) => {
         if (!separator) {
             separator = await aksForSeparator();
@@ -87,7 +87,7 @@ export function alignToSeparator(separator?: string): Promise<boolean> {
         const columns = await getColumns(editor, separator);
         let newLineText: string = "";
         editor.edit((editBuilder) => {
-            newLineText = padElements(columns, separator!);
+            formatTable ? (newLineText = padAsTable(columns, withHeaders)) : (newLineText = padToSeparator(columns, separator!));
             editBuilder.replace(editor.selection, newLineText);
         });
 
@@ -119,12 +119,12 @@ async function getColumns(editor: TextEditor, separator: string): Promise<Column
 
         for (let ii = 0; ii < longestLineLength; ii++) {
             let longestColumnElement = 0;
-            let lineNumber = 0;
+            // let lineNumber = 0;
             lines.forEach((line) => {
                 if (line.Elements[ii] && line.Elements[ii].length > longestColumnElement) {
                     longestColumnElement = line.Elements[ii].length;
                 }
-                lineNumber = line.LineNumber;
+                // lineNumber = line.LineNumber;
             });
 
             lines.forEach((line) => {
@@ -159,7 +159,7 @@ function getLongestLine(lines: LineElement[]): number {
  * @param {string} separator The separator to use to build the aligned text
  * @return {*}  {string}
  */
-function padElements(columns: ColumnElement[], separator: string): string {
+function padToSeparator(columns: ColumnElement[], separator: string): string {
     let newLineText: string = "";
     const lines = getLinesFromSelection(getActiveEditor()!);
 
@@ -167,16 +167,69 @@ function padElements(columns: ColumnElement[], separator: string): string {
     for (let line of lines!) {
         let c = columns.filter((column) => column.LineNumber === line.lineNumber);
 
-        let s = "";
         for (let ii = 0; ii < c.length; ii++) {
+            let paddedElement = "";
+
             if (c[ii].Text) {
-                ii === c.length - 1 ? (s = "") : (s = separator);
-                paddedElement = `${c[ii].Text}${s}`.padEnd(c[ii].Length + 2, " ");
-                newLineText += paddedElement;
+                if (ii === c.length - 1) {
+                    paddedElement = `${c[ii].Text}`.padEnd(c[ii].Length + 1, " ");
+                } else {
+                    paddedElement = `${c[ii].Text}${separator}`.padEnd(c[ii].Length + 2, " ");
+                }
+            } else {
+                paddedElement = separator;
             }
+            newLineText += paddedElement;
         }
 
         newLineText += "\n";
+    }
+
+    return newLineText;
+}
+
+/**
+ * Build the aligned text from the columnElements array, formatted as a markdown table
+ * @param {ColumnElement[]} columns Array of column elements to build the aligned text from
+ * @param {(boolean | undefined)} withHeaders If true, the first line will be formatted as a table header
+ * @return {*}  {string}
+ */
+function padAsTable(columns: ColumnElement[], withHeaders: boolean | undefined): string {
+    const lines = getLinesFromSelection(getActiveEditor()!);
+    let sSeparator = "| ";
+    let rSeparator = " |";
+    let newLineText = "";
+
+    for (let line of lines!) {
+        let c = columns.filter((column) => column.LineNumber === line.lineNumber);
+
+        for (let ii = 0; ii < c.length; ii++) {
+            let paddedElement = "";
+            let text = "";
+            c[ii].Text ? (text = c[ii].Text) : (text = "");
+
+            if (ii === c.length - 1) {
+                paddedElement = `${sSeparator}${text}`.padEnd(c[ii].Length + 2, " ") + rSeparator;
+            } else {
+                paddedElement = `${sSeparator}${text}`.padEnd(c[ii].Length + 3, " ");
+            }
+            newLineText += paddedElement;
+        }
+        newLineText += "\n";
+
+        // add headers separator row
+        if (withHeaders && line.lineNumber === 0) {
+            for (let ii = 0; ii < c.length; ii++) {
+                let paddedElement = "";
+                if (ii === c.length - 1) {
+                    paddedElement = `|${"".padEnd(c[ii].Length + 2, "-")}` + "|";
+                } else {
+                    paddedElement = `|${"".padEnd(c[ii].Length + 2, "-")}`;
+                }
+                newLineText += paddedElement;
+            }
+            newLineText += "\n";
+        }
     }
 
     return newLineText;
