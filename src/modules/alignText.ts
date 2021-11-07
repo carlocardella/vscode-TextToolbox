@@ -64,7 +64,7 @@ async function getElementMaxLength(lineElements: LineElement[]): Promise<number>
  * @param {string} [separator] The separator to use to align the text
  * @return {*}  {Promise<boolean>}
  */
-export function alignToSeparator(separator?: string, formatTable?: boolean, withHeaders?: boolean): Promise<boolean> {
+export function alignText(separator?: string, formatTable?: boolean, withHeaders?: boolean): Promise<boolean> {
     return new Promise(async (resolve, reject) => {
         if (!separator) {
             separator = await aksForSeparator();

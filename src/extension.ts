@@ -216,17 +216,17 @@ export function activate(context: ExtensionContext) {
     // align
     context.subscriptions.push(
         commands.registerTextEditorCommand("vscode-texttoolbox.AlignToSeparator", () => {
-            AlignText.alignToSeparator();
+            AlignText.alignText();
         })
     );
     context.subscriptions.push(
         commands.registerTextEditorCommand("vscode-texttoolbox.AlignAsTable", () => {
-            AlignText.alignToSeparator(undefined, true);
+            AlignText.alignText(undefined, true);
         })
     );
     context.subscriptions.push(
         commands.registerTextEditorCommand("vscode-texttoolbox.AlignAsTableWithHeaders", () => {
-            AlignText.alignToSeparator(undefined, true, true);
+            AlignText.alignText(undefined, true, true);
         })
     );
 

@@ -1,7 +1,7 @@
 import * as assert from "assert";
 import { after, before, describe } from "mocha";
 import { EOL } from "os";
-import { alignToSeparator } from '../../modules/alignText';
+import { alignText } from '../../modules/alignText';
 import { closeTextEditor, sleep, createNewEditor, selectAllText, getDocumentTextOrSelection } from '../../modules/helpers';
 
 suite("alignText", () => {
@@ -24,7 +24,7 @@ suite("alignText", () => {
             test(`Align text to separator '${t.separator}'`, async () => {
                 await createNewEditor(t.newText);
                 await selectAllText();
-                await alignToSeparator(t.separator);
+                await alignText(t.separator);
                 await sleep(500);
 
                 const text = getDocumentTextOrSelection();
@@ -47,7 +47,7 @@ suite("alignText", () => {
             test(`Align text as table ${t.withHeaders ? "with headers" : ""}`, async () => {
                 await createNewEditor(t.newText);
                 await selectAllText();
-                await alignToSeparator(t.separator, true, t.withHeaders);
+                await alignText(t.separator, true, t.withHeaders);
                 await sleep(500);
 
                 const text = getDocumentTextOrSelection();
