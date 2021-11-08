@@ -187,10 +187,17 @@ Likewise, `Convert to CapitalCase` has been removed in favor of the built-in VSC
 
 _Note_: In this release, highlights and decorations are persisted as long as the VSCode instance is running but are not restored if VSCode is restarted. Persistence across restarts will be added in a future release.
 
+### Align
+
+* Align as table
+  * Formats a CSV selection as a markdown style table: does not need to be a markdown file, but the table is formatted using the markdown stile
+* Align as table with headers
+  * Uses the first line in the CSV selection as table headers, markdown style
+* Align to separator
+
 ### Others
 
 * Open selection(s) in new editor
-* Align to separator
 
 ### Thanks to
 
