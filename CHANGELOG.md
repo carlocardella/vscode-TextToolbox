@@ -74,6 +74,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## Log
 
+## [2.2.0] - 2022-02-11
+
+### Added
+
+* `Duplicate tab`: open the curren document's text in a new, unsaved document (tab)
+* The extension is now available for [VS Codium](https://vscodium.com/) from [Open VSX Registry](https://open-vsx.org/extension/carlocardella/vscode-texttoolbox)
+
+### Changed
+
+* Update node modules
+
 ## [2.1.0] - 2021-11-08
 
 ### Added

@@ -1,7 +1,7 @@
 import { QuickPickItem, window } from "vscode";
 import { DateTime } from "luxon";
 import { Chance } from "chance";
-import { getActiveEditor, getLinesFromSelection } from "./helpers";
+import { createNewEditor, getActiveEditor, getLinesFromSelection } from "./helpers";
 import { EOL } from "os";
 import { LoremIpsum } from "lorem-ipsum";
 
@@ -728,4 +728,14 @@ export async function insertCurrencyInternal(currency: string): Promise<boolean 
     });
 
     Promise.resolve(true);
+}
+
+export async function duplicateTab(): Promise<boolean | undefined> {
+    let currentEditor = getActiveEditor();
+    if (!currentEditor) {
+        return Promise.reject(false);
+    }
+
+    await createNewEditor(currentEditor.document.getText());
+    return Promise.resolve(true);
 }
