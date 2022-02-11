@@ -10,10 +10,13 @@
 [![Twitter](https://img.shields.io/twitter/url/https/github.com/carlocardella/vscode-TextToolbox.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Fcarlocardella%2Fvscode-TextToolbox)
 <!-- [![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/carlocardella/vscode-texttoolbox) -->
 
+[Download for VS Code](https://marketplace.visualstudio.com/items?itemName=CarloCardella.vscode-texttoolbox) 
+
+[Download for VS Codium](https://open-vsx.org/extension/carlocardella/vscode-texttoolbox)
 
 Collection of tools for text manipulation, filtering, sorting etc...
 
-The marketplace has a number of great extensions for text manipulation, I installed a few of them to cover the entire range of actions I normally use, unfortunately that means there is some overlapping between them, basically the same action is contributed by multiple extensions (case conversion, for example). That is what motivated me to build this extension: I like the idea to have a single extension for all those operations and without duplicates; plus, it is a good pastime 😊.
+The [VS Code Marketplace](https://marketplace.visualstudio.com/vscode) has a number of great extensions for text manipulation, I installed a few of them to cover the entire range of actions I normally use, unfortunately that means there is some overlapping between them, basically the same action is contributed by multiple extensions (case conversion, for example). That is what motivated me to build this extension: I like the idea to have a single extension for all those operations and without duplicates; plus, it is a good pastime 😊.
 
 Please open an issue to leave a comment, report a bug, request a feature etc... (you know the drill).
 
@@ -198,6 +201,7 @@ _Note_: In this release, highlights and decorations are persisted as long as the
 ### Others
 
 * Open selection(s) in new editor
+* Duplicate tab (open the current document's text in a new unsaved document)
 
 ### Thanks to
 

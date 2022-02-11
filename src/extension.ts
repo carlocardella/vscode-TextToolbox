@@ -117,6 +117,11 @@ export function activate(context: ExtensionContext) {
             InsertText.insertCurrency();
         })
     );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.DuplicateTab", () => {
+            InsertText.duplicateTab();
+        })
+    );
 
     // filter text
     context.subscriptions.push(
