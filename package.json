@@ -368,6 +368,10 @@
                 {
                     "submenu": "tt.highlight",
                     "group": "highlight"
+                },
+                {
+                    "command": "vscode-texttoolbox.DuplicateTab",
+                    "group": "tt.editorContext"
                 }
             ],
             "tt.highlight": [
