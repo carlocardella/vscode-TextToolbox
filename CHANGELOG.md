@@ -74,6 +74,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## Log
 
+## [2.2.1] - 2022-02-19
+
+### Fixed
+
+* `Align as table` and `Align as table with headers` now properly handle the selection and does not erroneously delete it
+
 ## [2.2.0] - 2022-02-11
 
 ### Added
