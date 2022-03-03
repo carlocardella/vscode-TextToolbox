@@ -111,7 +111,10 @@ export function getLinesFromSelection(editor: TextEditor, selection?: Selection)
     if (selection) {
         selections.push(selection);
     } else {
-        selections = editor?.selections;
+        // The type 'readonly Selection[]' is 'readonly' and cannot be assigned to the mutable type 'Selection[]'.
+        // https://stackoverflow.com/a/53416703
+        // selection = editor?.selections;
+        selections = editor.selections.map((s) => s);
         if (!selections) {
             return;
         }
@@ -242,7 +245,7 @@ export async function getLinesFromString(line: string): Promise<string[]> {
  * @return {*}  {Promise<Selection[]>}
  * @async
  */
-export async function getSelections(editor: TextEditor): Promise<Selection[]> {
+export async function getSelections(editor: TextEditor): Promise<readonly Selection[]> {
     if (editor.selections.length >= 1 && !editor.selection.isEmpty) {
         return Promise.resolve(editor.selections);
     } else {
