@@ -49,6 +49,7 @@
         "*"
     ],
     "main": "./dist/extension",
+    "browser": "./dist/web/extension",
     "preview": false,
     "badges": [],
     "icon": "text_icon_reverse.png",
@@ -787,11 +788,14 @@
         ]
     },
     "scripts": {
-        "vscode:prepublish": "webpack --mode production",
         "webpack": "webpack --mode development",
         "webpack-dev": "webpack --mode development --watch",
         "test-compile": "tsc -p ./",
-        "unit-tests": "tsc -w -p ./"
+        "unit-tests": "tsc -w -p ./",
+        "vscode:prepublish": "npm run package-web",
+        "compile-web": "webpack",
+        "watch-web": "webpack --watch",
+        "package-web": "webpack --mode production --devtool hidden-source-map"
     },
     "devDependencies": {
         "@types/assert": "^1.5.6",
