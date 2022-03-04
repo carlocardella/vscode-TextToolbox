@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ## Unreleased
 
 * Text manipulation
+  * Invert (replace) quotes: since quotes in the selection get replaced with double quotes and vice versa
+  * Fix quotes: badly closed quotes (e.g. 'test")
   * remove empty lines (end of file)
   * duplicate string (ask user how many times)
   * convert number, dec to hex and vice versa
