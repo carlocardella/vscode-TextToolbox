@@ -321,6 +321,11 @@
                 "command": "vscode-texttoolbox.DuplicateTab",
                 "title": "Duplicate tab",
                 "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.SelectTextBetweenQuotes",
+                "title": "Select text between quotes",
+                "category": "Text Toolbox"
             }
         ],
         "menus": {
@@ -593,6 +598,12 @@
                     "group": "tt.path",
                     "command": "vscode-texttoolbox.TransformPathToWin32"
                 }
+            ],
+            "tt.selections": [
+                {
+                    "group": "tt.selections",
+                    "command": "vscode-texttoolbox.SelectTextBetweenQuotes"
+                }
             ]
         },
         "submenus": [
@@ -631,6 +642,10 @@
             {
                 "id": "tt.highlight",
                 "label": "Highlight"
+            },
+            {
+                "id": "tt.selections",
+                "label": "Selections"
             }
         ],
         "configuration": [

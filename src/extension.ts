@@ -10,6 +10,7 @@ import * as TextManipulation from "./modules/textManipulation";
 import * as Json from "./modules/json";
 import * as AlignText from "./modules/alignText";
 import TTDecorations from "./modules/decorations";
+import * as QuotesAndParentheses from "./modules/QuotesAndParentheses";
 
 export function activate(context: ExtensionContext) {
     console.log("vscode-texttoolbox is active");
@@ -181,6 +182,13 @@ export function activate(context: ExtensionContext) {
     context.subscriptions.push(
         commands.registerTextEditorCommand("vscode-texttoolbox.SplitSelectionOpenInNewEditor", () => {
             TextManipulation.splitSelection(true);
+        })
+    );
+
+    // selections
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.SelectTextBetweenQuotes", () => {
+            QuotesAndParentheses.selectTextBetweenQuotes();
         })
     );
 

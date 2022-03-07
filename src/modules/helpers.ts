@@ -1,4 +1,4 @@
-import { commands, Range, Selection, TextEditor, window, workspace, TextLine } from "vscode";
+import { commands, Range, Selection, TextEditor, window, workspace, TextLine, DocumentHighlight, Position } from "vscode";
 import * as os from "os";
 
 /**
@@ -270,4 +270,27 @@ export function getRegExpObject(regex: string): RegExp {
     const regExpObject = new RegExp(regExpString, regExpFlags);
 
     return new RegExp(regExpObject);
+}
+
+/**
+ * Adds a new selection to the active editor; replaces any existing selections
+ *
+ * @export
+ * @param {Position} positionStart The start position of the selection
+ * @param {Position} positionEnd The end position of the selection
+ * @return {*} 
+ */
+export function addSelection(positionStart: Position, positionEnd: Position) {
+    let editor = getActiveEditor();
+    if (!editor) {
+        return;
+    }
+
+    let document = editor.document;
+    if (!document) {
+        return;
+    }
+
+    let newSelection = new Selection(positionStart, positionEnd);
+    editor.selections = [newSelection];
 }
