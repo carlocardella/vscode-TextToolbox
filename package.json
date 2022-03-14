@@ -326,6 +326,11 @@
                 "command": "vscode-texttoolbox.SelectTextBetweenQuotes",
                 "title": "Select text between quotes",
                 "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.SelectTextBetweenParenthesis",
+                "title": "Select text between parenthesis",
+                "category": "Text Toolbox"
             }
         ],
         "menus": {
@@ -603,6 +608,10 @@
                 {
                     "group": "tt.selections",
                     "command": "vscode-texttoolbox.SelectTextBetweenQuotes"
+                },
+                {
+                    "group": "tt.selections",
+                    "command": "vscode-texttoolbox.SelectTextBetweenParenthesis"
                 }
             ]
         },
