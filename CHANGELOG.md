@@ -73,6 +73,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
   * Url
 * Status bar
   * allow to update position without reloading the entire window
+* JSON
+  * Sort elements
+    * By length
+    * Alphanumeric
+    * Reverse
+    * By property value
+    * By property length
 
 ## Log
 
