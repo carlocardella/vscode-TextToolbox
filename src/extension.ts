@@ -192,8 +192,8 @@ export function activate(context: ExtensionContext) {
         })
     );
     context.subscriptions.push(
-        commands.registerTextEditorCommand("vscode-texttoolbox.SelectTextBetweenParenthesis", () => {
-            QuotesAndParentheses.selectTextBetweenParenthesis();
+        commands.registerTextEditorCommand("vscode-texttoolbox.SelectTextBetweenParentheses", () => {
+            QuotesAndParentheses.selectTextBetweenParentheses();
         })
     );
 

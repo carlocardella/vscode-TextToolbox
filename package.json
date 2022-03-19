@@ -328,8 +328,8 @@
                 "category": "Text Toolbox"
             },
             {
-                "command": "vscode-texttoolbox.SelectTextBetweenParenthesis",
-                "title": "Select text between parenthesis",
+                "command": "vscode-texttoolbox.SelectTextBetweenParentheses",
+                "title": "Select text between parentheses",
                 "category": "Text Toolbox"
             }
         ],
@@ -611,7 +611,7 @@
                 },
                 {
                     "group": "tt.selections",
-                    "command": "vscode-texttoolbox.SelectTextBetweenParenthesis"
+                    "command": "vscode-texttoolbox.SelectTextBetweenParentheses"
                 }
             ]
         },

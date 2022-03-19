@@ -1,6 +1,29 @@
 import { addSelection, getActiveEditor, getDocumentTextOrSelection, getTextFromSelection } from "./helpers";
 import { TextEditor, Position, Selection, Range } from "vscode";
 
+enum quotes {
+    single = "'",
+    double = '"',
+    backtick = "`",
+}
+
+enum parentheses {
+    // https://en.wikipedia.org/wiki/Bracket#Parentheses_.28_.29
+    openRound = "(",
+    closeRound = ")",
+    openSquare = "[",
+    closeSquare = "]",
+    openCurly = "{",
+    closeCurly = "}",
+    openChevron = "<",
+    closeChevron = ">",
+}
+
+let quotesArray = ["'", '"', "`"];
+let parenthesesArray = ["(", ")", "[", "]", "{", "}", "<", ">"];
+let openParenthesesArray = ["(", "[", "{", "<"];
+let closeParenthesesArray = [")", "]", "}", ">"];
+
 /**
  * Select the string within quotes (single or double or backtick)
  * @param {string} text The text to filter
@@ -31,7 +54,7 @@ export function selectTextBetweenQuotes(text?: string) {
         // if the selection already includes the starting and ending quotes,
         // expand the selection only including the text up to the next pair of quotes but not the quotes themselves
         let selectedText = getTextFromSelection(editor, editor.selection);
-        if (['"', "'", "`"].includes(selectedText![0]) && ['"', "'", "`"].includes(selectedText![selectedText!.length - 1])) {
+        if (quotesArray.includes(selectedText![0]) && quotesArray.includes(selectedText![selectedText!.length - 1])) {
             selectionIncludeQuotes = true;
         }
     }
@@ -52,11 +75,11 @@ export function selectTextBetweenQuotes(text?: string) {
 }
 
 /**
- * Select the string within parenthesis (single or double or backtick)
+ * Select the string within parentheses (single or double or backtick)
  * @param {string} text The text to filter
  * @return {*}  {(string | undefined)}
  */
-export function selectTextBetweenParenthesis(text?: string) {
+export function selectTextBetweenParentheses(text?: string) {
     const editor = getActiveEditor();
     if (!editor) {
         return "";
@@ -70,7 +93,7 @@ export function selectTextBetweenParenthesis(text?: string) {
 
     // if there is a selection and the cursor is within the selection, expand the selection
     let expandSelection = false;
-    let selectionIncludeParenthesis = false;
+    let selectionIncludeParentheses = false;
     let selectionStartPosition = cursorPosition;
     let selectionEndPosition = cursorPosition;
     if (!editor.selection.isEmpty) {
@@ -78,22 +101,22 @@ export function selectTextBetweenParenthesis(text?: string) {
         selectionStartPosition = editor.selection.start;
         selectionEndPosition = editor.selection.end;
 
-        // if the selection already includes the starting and ending parenthesis,
-        // expand the selection only including the text up to the next pair of parenthesis but not the parenthesis themselves
+        // if the selection already includes the starting and ending parentheses,
+        // expand the selection only including the text up to the next pair of parentheses but not the parentheses themselves
         let selectedText = getTextFromSelection(editor, editor.selection);
-        if (["(", "[", "{"].includes(selectedText![0]) && [")", "]", "}"].includes(selectedText![selectedText!.length - 1])) {
-            selectionIncludeParenthesis = true;
+        if (openParenthesesArray.includes(selectedText![0]) && closeParenthesesArray.includes(selectedText![selectedText!.length - 1])) {
+            selectionIncludeParentheses = true;
         }
     }
 
     let regexTextBeforeSelection: any;
     let regexTextAfterSelection: any;
-    if (expandSelection && !selectionIncludeParenthesis) {
-        regexTextBeforeSelection = new RegExp("[\\[{(][^\\[{(]*?$", "g");
-        regexTextAfterSelection = new RegExp("[^\\]})]*[\\]})]", "g");
+    if (expandSelection && !selectionIncludeParentheses) {
+        regexTextBeforeSelection = new RegExp("[\\[{(<][^\\[{(<]*?$", "g");
+        regexTextAfterSelection = new RegExp("[^\\]})>]*[\\]})>]", "g");
     } else {
-        regexTextBeforeSelection = new RegExp("[^\\[{(]*?$", "g");
-        regexTextAfterSelection = new RegExp("[^\\]})]*", "g");
+        regexTextBeforeSelection = new RegExp("[^\\[{(<]*?$", "g");
+        regexTextAfterSelection = new RegExp("[^\\]})>]*", "g");
     }
 
     let activeDocument = editor.document;
@@ -167,6 +190,5 @@ export function getCursorPosition(editor: TextEditor): Position[] {
 // todo: remove quotes
 
 // @bug @investigate
-// use active language grammar: in the same line below, if the cursor is in "selectionOffset.start", expanding the parenthesis selection will eventually include the wrong pair
-// 
+// use active language grammar: in the same line below, if the cursor is in "selectionOffset.start", expanding the parentheses selection will eventually include the wrong pair
 // addSelection(activeDocument.positionAt(selectionOffset.start), activeDocument.positionAt(selectionOffset.end));
