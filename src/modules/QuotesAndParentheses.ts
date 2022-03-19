@@ -165,3 +165,8 @@ export function getCursorPosition(editor: TextEditor): Position[] {
 // todo: remove parentheses
 // todo: replaceQuotes
 // todo: remove quotes
+
+// @bug @investigate
+// use active language grammar: in the same line below, if the cursor is in "selectionOffset.start", expanding the parenthesis selection will eventually include the wrong pair
+// 
+// addSelection(activeDocument.positionAt(selectionOffset.start), activeDocument.positionAt(selectionOffset.end));
