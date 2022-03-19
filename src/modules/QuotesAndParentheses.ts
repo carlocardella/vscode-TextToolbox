@@ -28,7 +28,7 @@ export function selectTextBetweenQuotes(text?: string) {
         selectionStartPosition = editor.selection.start;
         selectionEndPosition = editor.selection.end;
 
-        // if the selection already includes the staring and ending quotes,
+        // if the selection already includes the starting and ending quotes,
         // expand the selection only including the text up to the next pair of quotes but not the quotes themselves
         let selectedText = getTextFromSelection(editor, editor.selection);
         if (['"', "'", "`"].includes(selectedText![0]) && ['"', "'", "`"].includes(selectedText![selectedText!.length - 1])) {
@@ -48,22 +48,8 @@ export function selectTextBetweenQuotes(text?: string) {
         regexTextAfterSelection = new RegExp("[^\"'` ]*", "g");
     }
 
-    // fix: this does not select properly
-    /**
-    "
-        111
-        222
-        333
-        '
-            aaa
-            sss
-            ddd
-        '
-    "
-     */
-
     let activeDocument = editor.document;
-    let selectionOffset = getSelectionOffsets(regexTextBeforeSelection, regexTextAfterSelection, selectionStartPosition, selectionEndPosition);
+    let selectionOffset = getSelectionOffsets(selectionStartPosition, regexTextBeforeSelection, selectionEndPosition, regexTextAfterSelection);
     addSelection(activeDocument.positionAt(selectionOffset.start), activeDocument.positionAt(selectionOffset.end));
 }
 
@@ -94,7 +80,7 @@ export function selectTextBetweenParenthesis(text?: string) {
         selectionStartPosition = editor.selection.start;
         selectionEndPosition = editor.selection.end;
 
-        // if the selection already includes the staring and ending parenthesis,
+        // if the selection already includes the starting and ending parenthesis,
         // expand the selection only including the text up to the next pair of parenthesis but not the parenthesis themselves
         let selectedText = getTextFromSelection(editor, editor.selection);
         if (["(", "[", "{"].includes(selectedText![0]) && ["(", "[", "{"].includes(selectedText![selectedText!.length - 1])) {
@@ -114,13 +100,13 @@ export function selectTextBetweenParenthesis(text?: string) {
     }
 
     let activeDocument = editor.document;
-    let selectionOffset = getSelectionOffsets(regexTextBeforeSelection, regexTextAfterSelection, selectionStartPosition, selectionEndPosition);
+    let selectionOffset = getSelectionOffsets(selectionStartPosition, regexTextBeforeSelection, selectionEndPosition, regexTextAfterSelection);
     addSelection(activeDocument.positionAt(selectionOffset.start), activeDocument.positionAt(selectionOffset.end));
 }
 
-/** 
+/**
  * Type to describe the selection offsets
-*/
+ */
 type selectionOffset = {
     start: number;
     end: number;
@@ -130,17 +116,17 @@ type selectionOffset = {
  * Expand the selection and get the start and end offsets
  *
  * @export
- * @param {RegExp} regexTextBeforeSelection RegEx to find the text before the selection
- * @param {RegExp} regexTextAfterSelection Regex to find the text after the selection
  * @param {Position} selectionStartPosition Position where the current selection starts
+ * @param {RegExp} regexTextBeforeSelection RegEx to find the text before the selection
  * @param {Position} selectionEndPosition Position where the current selection ends
+ * @param {RegExp} regexTextAfterSelection Regex to find the text after the selection
  * @return {*}  {selectionOffset}
  */
 export function getSelectionOffsets(
-    regexTextBeforeSelection: RegExp,
-    regexTextAfterSelection: RegExp,
     selectionStartPosition: Position,
-    selectionEndPosition: Position
+    regexTextBeforeSelection: RegExp,
+    selectionEndPosition: Position,
+    regexTextAfterSelection: RegExp
 ): selectionOffset {
     let activeDocument = getActiveEditor()!.document;
     let selectionStartOffsetFromCursor = activeDocument.offsetAt(selectionStartPosition);
@@ -152,8 +138,8 @@ export function getSelectionOffsets(
     let beforeCursorRange = new Range(docStartPosition, activeDocument.positionAt(selectionStartOffsetFromCursor));
     let afterCursorRange = new Range(activeDocument.positionAt(selectionEndOffsetFromCursor), docEndPosition);
 
-    let textBeforeCursor = activeDocument.getText(beforeCursorRange).match(regexTextBeforeSelection)![0].trim();
-    let textAfterCursor = activeDocument.getText(afterCursorRange).match(regexTextAfterSelection)![0].trim();
+    let textBeforeCursor = activeDocument.getText(beforeCursorRange).match(regexTextBeforeSelection)![0];
+    let textAfterCursor = activeDocument.getText(afterCursorRange).match(regexTextAfterSelection)![0];
     let selectionStartOffset = selectionStartOffsetFromCursor - textBeforeCursor.length;
     let selectionEndOffset = selectionEndOffsetFromCursor + textAfterCursor.length;
 
