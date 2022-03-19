@@ -39,11 +39,9 @@ export function selectTextBetweenQuotes(text?: string) {
     let regexTextBeforeSelection: any;
     let regexTextAfterSelection: any;
     if (expandSelection && !selectionIncludeQuotes) {
-        // [\"'`][^\"'`]*?[\"'`]/gmi
         regexTextBeforeSelection = new RegExp("[\"'`][^\"'` ]*?$", "g");
         regexTextAfterSelection = new RegExp("[^\"'` ]*[\"'`]", "g");
     } else {
-        // [\"'`][^\"'`]*?[\"'`]/gmi
         regexTextBeforeSelection = new RegExp("[^\"'` ]*?$", "g");
         regexTextAfterSelection = new RegExp("[^\"'` ]*", "g");
     }
@@ -83,7 +81,7 @@ export function selectTextBetweenParenthesis(text?: string) {
         // if the selection already includes the starting and ending parenthesis,
         // expand the selection only including the text up to the next pair of parenthesis but not the parenthesis themselves
         let selectedText = getTextFromSelection(editor, editor.selection);
-        if (["(", "[", "{"].includes(selectedText![0]) && ["(", "[", "{"].includes(selectedText![selectedText!.length - 1])) {
+        if (["(", "[", "{"].includes(selectedText![0]) && [")", "]", "}"].includes(selectedText![selectedText!.length - 1])) {
             selectionIncludeParenthesis = true;
         }
     }
@@ -91,12 +89,11 @@ export function selectTextBetweenParenthesis(text?: string) {
     let regexTextBeforeSelection: any;
     let regexTextAfterSelection: any;
     if (expandSelection && !selectionIncludeParenthesis) {
-        regexTextBeforeSelection = new RegExp("[({[][^({[ ]*?$", "gmi");
-        regexTextAfterSelection = new RegExp("[^)}] ]*[)}]]", "gmi");
+        regexTextBeforeSelection = new RegExp("[\\[{(][^\\[{(]*?$", "g");
+        regexTextAfterSelection = new RegExp("[^\\]})]*[\\]})]", "g");
     } else {
-        // regexTextBeforeSelection = new RegExp("[^({[ ]*?$", "g");
-        regexTextBeforeSelection = new RegExp("[^{([]*?$", "gmi");
-        regexTextAfterSelection = new RegExp("[})]]*", "gmi");
+        regexTextBeforeSelection = new RegExp("[^\\[{(]*?$", "g");
+        regexTextAfterSelection = new RegExp("[^\\]})]*", "g");
     }
 
     let activeDocument = editor.document;
