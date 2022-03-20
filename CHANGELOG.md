@@ -72,6 +72,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
   * Html
   * Url
 * Status bar
+  * Show character offset (character position)
+  * Go to character offset (character position)
   * allow to update position without reloading the entire window
 * JSON
   * Sort elements
@@ -82,6 +84,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
     * By property length
 
 ## Log
+
+## [2.3.0] - 2022-03-20
+
+### Added
+
+* Show the cursor position (offset) on the Status Bar
+* Added `Invert lines` command: inverts lines in the active selection or the entire document, if there is no selection
+  * Does not support multiple selections
 
 ## [2.2.1] - 2022-02-19
 

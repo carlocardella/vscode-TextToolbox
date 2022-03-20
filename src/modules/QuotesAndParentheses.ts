@@ -1,4 +1,4 @@
-import { addSelection, getActiveEditor, getDocumentTextOrSelection, getTextFromSelection } from "./helpers";
+import { addSelection, getActiveEditor, getDocumentTextOrSelection, getTextFromSelection, getCursorPosition } from './helpers';
 import { TextEditor, Position, Range } from "vscode";
 import { before } from "mocha";
 
@@ -177,21 +177,6 @@ export function getSelectionOffsets(
         start: selectionStartOffset,
         end: selectionEndOffset,
     };
-}
-
-/**
- * Returns the Position of the cursor in the editor. Supports multicursor
- * @export
- * @param {TextEditor} editor The editor to get the cursor position from
- * @return {*}  {Position[]}
- */
-export function getCursorPosition(editor: TextEditor): Position[] {
-    let position: Position[] = [];
-    editor.selections.forEach((selection) => {
-        position.push(selection.active);
-    });
-
-    return position;
 }
 
 export function removeQuotesOrParentheses(delimiter: delimiterType) {

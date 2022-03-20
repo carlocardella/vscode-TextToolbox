@@ -58,6 +58,8 @@ export function selectAllText(): Thenable<unknown> {
 
 /**
  * Returns text from the Selection, or the entire document if there is no selection
+ * Does not support multiple selections
+ *
  * @returns {string | undefined}
  */
 export function getDocumentTextOrSelection(): string | undefined {
@@ -293,4 +295,19 @@ export function addSelection(positionStart: Position, positionEnd: Position) {
 
     let newSelection = new Selection(positionStart, positionEnd);
     editor.selections = [newSelection];
+}
+
+/**
+ * Returns the Position of the cursor in the editor. Supports multicursor
+ * @export
+ * @param {TextEditor} editor The editor to get the cursor position from
+ * @return {*}  {Position[]}
+ */
+export function getCursorPosition(editor: TextEditor): Position[] {
+    let position: Position[] = [];
+    editor.selections.forEach((selection) => {
+        position.push(selection.active);
+    });
+
+    return position;
 }
