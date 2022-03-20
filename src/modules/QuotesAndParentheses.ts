@@ -1,5 +1,5 @@
-import { addSelection, getActiveEditor, getDocumentTextOrSelection, getTextFromSelection, getCursorPosition } from './helpers';
-import { TextEditor, Position, Range } from "vscode";
+import { addSelection, getActiveEditor, getDocumentTextOrSelection, getTextFromSelection, getCursorPosition } from "./helpers";
+import { TextEditor, Position, Range, Selection } from "vscode";
 import { before } from "mocha";
 
 enum quotes {
@@ -33,12 +33,12 @@ export enum delimiterType {
 enum regexSelectionType {
     withParenthesesBefore = "[\\[{(<][^\\[{(<]*?$",
     withParenthesesAfter = "[^\\]})>]*[\\]})>]",
-    withoutParenthesesAfter = "[^\\[{(<]*?$",
-    withoutParenthesesBefore = "[^\\]})>]*",
+    withoutParenthesesBefore = "[^\\[{(<]*?$",
+    withoutParenthesesAfter = "[^\\]})>]*",
     withQuotesBefore = "[\"'`][^\"'` ]*?$",
     withQuotesAfter = "[^\"'` ]*[\"'`]",
-    withoutQuotesAfter = "[^\"'` ]*?$",
-    withoutQuotesBefore = "[^\"'` ]*",
+    withoutQuotesBefore = "[^\"'` ]*?$",
+    withoutQuotesAfter = "[^\"'` ]*",
 }
 
 /**
@@ -64,18 +64,19 @@ export function findTextBetweenDelimiters(
 
     let cursorPosition = getCursorPosition(editor)[0];
 
-    // if there is a selection and the cursor is within the selection, expand the selection
     let expandSelection = false;
     let selectionIncludeDelimiters = false;
     let selectionStartPosition = cursorPosition;
     let selectionEndPosition = cursorPosition;
+
+    // if there is a selection and the cursor is within the selection, expand the selection
     if (!editor.selection.isEmpty) {
         editor.selection.contains(cursorPosition) ? (expandSelection = true) : (expandSelection = false);
         selectionStartPosition = editor.selection.start;
         selectionEndPosition = editor.selection.end;
 
-        // if the selection already includes the starting and ending parentheses,
-        // expand the selection only including the text up to the next pair of parentheses but not the parentheses themselves
+        // if the selection already includes the starting and ending delimiter,
+        // expand the selection only including the text up to the next pair of delimiters but not the delimiters themselves
         let selectedText = getTextFromSelection(editor, editor.selection);
         if (delimiter === delimiterType.parentheses) {
             if (openParenthesesArray.includes(selectedText![0]) && closeParenthesesArray.includes(selectedText![selectedText!.length - 1])) {
@@ -89,15 +90,15 @@ export function findTextBetweenDelimiters(
         }
     }
 
-    // let regexTextBeforeSelection: any;
-    // let regexTextAfterSelection: any;
-
     if (!regexTextBeforeSelection && !regexTextAfterSelection) {
+        // use the built-in regex
         if (delimiter === delimiterType.parentheses) {
             if (expandSelection && !selectionIncludeDelimiters) {
+                // expand the selection to include the delimiters
                 regexTextBeforeSelection = new RegExp("[\\[{(<][^\\[{(<]*?$", "g");
                 regexTextAfterSelection = new RegExp("[^\\]})>]*[\\]})>]", "g");
             } else {
+                // expand the selection up to the next delimiters but not the delimiters themselves
                 regexTextBeforeSelection = new RegExp("[^\\[{(<]*?$", "g");
                 regexTextAfterSelection = new RegExp("[^\\]})>]*", "g");
             }
@@ -105,9 +106,11 @@ export function findTextBetweenDelimiters(
 
         if (delimiter === delimiterType.quotes) {
             if (expandSelection && !selectionIncludeDelimiters) {
+                // expand the selection to include the delimiters
                 regexTextBeforeSelection = new RegExp("[\"'`][^\"'` ]*?$", "g");
                 regexTextAfterSelection = new RegExp("[^\"'` ]*[\"'`]", "g");
             } else {
+                // expand the selection up to the next delimiters but not the delimiters themselves
                 regexTextBeforeSelection = new RegExp("[^\"'` ]*?$", "g");
                 regexTextAfterSelection = new RegExp("[^\"'` ]*", "g");
             }
@@ -187,9 +190,14 @@ export function removeQuotesOrParentheses(delimiter: delimiterType) {
         case delimiterType.parentheses:
             before = new RegExp(regexSelectionType.withParenthesesBefore, "g");
             after = new RegExp(regexSelectionType.withParenthesesAfter, "g");
+            break;
         case delimiterType.quotes:
             before = new RegExp(regexSelectionType.withQuotesBefore, "g");
             after = new RegExp(regexSelectionType.withQuotesAfter, "g");
+            break;
+        default:
+            console.log(`Invalid delimiter type: ${delimiter}`);
+            break;
     }
 
     let selectionOffset = findTextBetweenDelimiters(delimiter, before, after);
@@ -199,8 +207,10 @@ export function removeQuotesOrParentheses(delimiter: delimiterType) {
 
     let editor = getActiveEditor();
     editor?.edit((editBuilder) => {
-        editBuilder.replace(editor?.document.positionAt(selectionOffset!.start)!, "");
-        editBuilder.replace(editor?.document.positionAt(selectionOffset!.end)!, "");
+        let selectionStart = new Selection(editor?.document.positionAt(selectionOffset!.start)!, editor?.document.positionAt(selectionOffset!.start + 1)!);
+        let selectionEnd = new Selection(editor?.document.positionAt(selectionOffset!.end)!, editor?.document.positionAt(selectionOffset!.end - 1)!);
+        editBuilder.replace(selectionStart, "");
+        editBuilder.replace(selectionEnd, "");
     });
 }
 
