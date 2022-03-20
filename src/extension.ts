@@ -188,12 +188,12 @@ export function activate(context: ExtensionContext) {
     // selections
     context.subscriptions.push(
         commands.registerTextEditorCommand("vscode-texttoolbox.SelectTextBetweenQuotes", () => {
-            QuotesAndParentheses.selectTextBetweenQuotes();
+            QuotesAndParentheses.selectTextBetweenDelimiters(QuotesAndParentheses.delimiterType.quotes);
         })
     );
     context.subscriptions.push(
         commands.registerTextEditorCommand("vscode-texttoolbox.SelectTextBetweenParentheses", () => {
-            QuotesAndParentheses.selectTextBetweenParentheses();
+            QuotesAndParentheses.selectTextBetweenDelimiters(QuotesAndParentheses.delimiterType.parentheses);
         })
     );
 
