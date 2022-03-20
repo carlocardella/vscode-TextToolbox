@@ -178,6 +178,11 @@
                 "category": "Text Toolbox"
             },
             {
+                "command": "vscode-texttoolbox.InvertLines",
+                "title": "Invert lines",
+                "category": "Text Toolbox"
+            },
+            {
                 "command": "vscode-texttoolbox.OpenSelectionInNewEditor",
                 "title": "Open selection in new editor",
                 "category": "Text Toolbox"
@@ -582,6 +587,10 @@
                 {
                     "group": "tt.sort",
                     "command": "vscode-texttoolbox.SortLines"
+                },
+                {
+                    "group": "tt.sort",
+                    "command": "vscode-texttoolbox.InvertLines"
                 }
             ],
             "tt.path": [

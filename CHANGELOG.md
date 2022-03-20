@@ -78,6 +78,14 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## Log
 
+## [2.3.0] - 2022-03-20
+
+### Added
+
+* Show the cursor position (offset) on the Status Bar
+* Added `Invert lines` command: inverts lines in the active selection or the entire document, if there is no selection
+  * Does not support multiple selections
+
 ## [2.2.1] - 2022-02-19
 
 ### Fixed
