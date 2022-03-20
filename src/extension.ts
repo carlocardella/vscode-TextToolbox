@@ -11,6 +11,7 @@ import * as Json from "./modules/json";
 import * as AlignText from "./modules/alignText";
 import TTDecorations from "./modules/decorations";
 import * as QuotesAndParentheses from "./modules/QuotesAndParentheses";
+import { removeQuotesOrParentheses } from './modules/QuotesAndParentheses';
 
 export function activate(context: ExtensionContext) {
     console.log("vscode-texttoolbox is active");
@@ -185,7 +186,7 @@ export function activate(context: ExtensionContext) {
         })
     );
 
-    // selections
+    // delimiters
     context.subscriptions.push(
         commands.registerTextEditorCommand("vscode-texttoolbox.SelectTextBetweenQuotes", () => {
             QuotesAndParentheses.selectTextBetweenDelimiters(QuotesAndParentheses.delimiterType.quotes);
@@ -194,6 +195,16 @@ export function activate(context: ExtensionContext) {
     context.subscriptions.push(
         commands.registerTextEditorCommand("vscode-texttoolbox.SelectTextBetweenParentheses", () => {
             QuotesAndParentheses.selectTextBetweenDelimiters(QuotesAndParentheses.delimiterType.parentheses);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.RemoveQuotes", () => {
+            QuotesAndParentheses.removeQuotesOrParentheses(QuotesAndParentheses.delimiterType.quotes);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.RemoveParentheses", () => {
+            QuotesAndParentheses.removeQuotesOrParentheses(QuotesAndParentheses.delimiterType.parentheses);
         })
     );
 

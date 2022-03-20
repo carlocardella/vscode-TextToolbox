@@ -331,6 +331,16 @@
                 "command": "vscode-texttoolbox.SelectTextBetweenParentheses",
                 "title": "Select text between parentheses",
                 "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.RemoveQuotes",
+                "title": "Remove quotes",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.RemoveParentheses",
+                "title": "Remove parentheses",
+                "category": "Text Toolbox"
             }
         ],
         "menus": {
@@ -604,14 +614,22 @@
                     "command": "vscode-texttoolbox.TransformPathToWin32"
                 }
             ],
-            "tt.selections": [
+            "tt.delimiters": [
                 {
-                    "group": "tt.selections",
+                    "group": "tt.delimiters",
                     "command": "vscode-texttoolbox.SelectTextBetweenQuotes"
                 },
                 {
-                    "group": "tt.selections",
+                    "group": "tt.delimiters",
                     "command": "vscode-texttoolbox.SelectTextBetweenParentheses"
+                },
+                {
+                    "group": "tt.delimiters",
+                    "command": "vscode-texttoolbox.RemoveParentheses"
+                },
+                {
+                    "group": "tt.delimiters",
+                    "command": "vscode-texttoolbox.RemoveParentheses"
                 }
             ]
         },
@@ -653,7 +671,7 @@
                 "label": "Highlight"
             },
             {
-                "id": "tt.selections",
+                "id": "tt.delimiters",
                 "label": "Selections"
             }
         ],
