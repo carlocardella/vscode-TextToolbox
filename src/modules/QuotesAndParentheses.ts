@@ -1,13 +1,22 @@
 import { addSelection, getActiveEditor, getDocumentTextOrSelection, getTextFromSelection, getCursorPosition } from "./helpers";
-import { TextEditor, Position, Range, Selection } from "vscode";
-import { before } from "mocha";
+import { Position, Range, Selection } from "vscode";
 
+/**
+ * Enumerates the type of quotes
+ *
+ * @enum {string}
+ */
 enum quotes {
     single = "'",
     double = '"',
     backtick = "`",
 }
 
+/**
+ * Enumerates thetype of parentheses
+ *
+ * @enum {string}
+ */
 enum parentheses {
     // https://en.wikipedia.org/wiki/Bracket#Parentheses_.28_.29
     openRound = "(",
@@ -25,11 +34,22 @@ let parenthesesArray = ["(", ")", "[", "]", "{", "}", "<", ">"];
 let openParenthesesArray = ["(", "[", "{", "<"];
 let closeParenthesesArray = [")", "]", "}", ">"];
 
+/**
+ * Type of delimiters: quotes or parentheses
+ *
+ * @export
+ * @enum {string}
+ */
 export enum delimiterType {
     quotes = "quotes",
     parentheses = "parentheses",
 }
 
+/**
+ * Enumerates Regex strings to find the delimiter, based on type and before/after the cursor's active position
+ *
+ * @enum {string}
+ */
 enum regexSelectionType {
     withParenthesesBefore = "[\\[{(<][^\\[{(<]*?$",
     withParenthesesAfter = "[^\\]})>]*[\\]})>]",
@@ -42,17 +62,13 @@ enum regexSelectionType {
 }
 
 /**
- * Select the string within quotes (single or double or backtick)
+ * Returns the selection offset
  *
  * @param {delimiterType} delimiter Delimiter type, parethentheses or quotes
  * @param {string} text The text to filter
  * @return {*}  {(string | undefined)}
  */
-export function findTextBetweenDelimiters(
-    delimiter: delimiterType,
-    regexTextBeforeSelection?: RegExp,
-    regexTextAfterSelection?: RegExp
-): selectionOffset | undefined {
+export function getSelectionOffset(delimiter: delimiterType, regexTextBeforeSelection?: RegExp, regexTextAfterSelection?: RegExp): selectionOffset | undefined {
     const editor = getActiveEditor();
     if (!editor) {
         return;
@@ -117,7 +133,25 @@ export function findTextBetweenDelimiters(
         }
     }
 
-    return getSelectionOffsets(selectionStartPosition, regexTextBeforeSelection!, selectionEndPosition, regexTextAfterSelection!);
+    let activeDocument = getActiveEditor()!.document;
+    let selectionStartOffsetFromCursor = activeDocument.offsetAt(selectionStartPosition);
+    let selectionEndOffsetFromCursor = activeDocument.offsetAt(selectionEndPosition);
+    let docLinesCount = activeDocument.lineCount;
+    let docStartPosition = new Position(0, 0);
+    let docEndPosition = new Position(docLinesCount - 1, activeDocument.lineAt(docLinesCount - 1).text.length);
+    // note: the line where the cursor is, belongs to both ranges
+    let beforeCursorRange = new Range(docStartPosition, activeDocument.positionAt(selectionStartOffsetFromCursor));
+    let afterCursorRange = new Range(activeDocument.positionAt(selectionEndOffsetFromCursor), docEndPosition);
+
+    let textBeforeCursor = activeDocument.getText(beforeCursorRange).match(regexTextBeforeSelection!)![0];
+    let textAfterCursor = activeDocument.getText(afterCursorRange).match(regexTextAfterSelection!)![0];
+    let selectionStartOffset = selectionStartOffsetFromCursor - textBeforeCursor.length;
+    let selectionEndOffset = selectionEndOffsetFromCursor + textAfterCursor.length;
+
+    return {
+        start: selectionStartOffset,
+        end: selectionEndOffset,
+    };
 }
 
 /**
@@ -127,14 +161,16 @@ export function findTextBetweenDelimiters(
  * @param {selectionOffset} selectionOffset Offsets use to select the text
  */
 export function selectTextBetweenDelimiters(delimiter: delimiterType) {
-    let selectionOffset = findTextBetweenDelimiters(delimiter);
+    let selectionOffset = getSelectionOffset(delimiter);
     if (!selectionOffset) {
         return;
     }
 
-    let activeDocument = getActiveEditor()?.document;
+    if (validateDelimiters(delimiter)) {
+        let activeDocument = getActiveEditor()?.document;
 
-    addSelection(activeDocument!.positionAt(selectionOffset.start), activeDocument!.positionAt(selectionOffset.end));
+        addSelection(activeDocument!.positionAt(selectionOffset.start), activeDocument!.positionAt(selectionOffset.end));
+    }
 }
 
 /**
@@ -146,43 +182,13 @@ type selectionOffset = {
 };
 
 /**
- * Expand the selection and get the start and end offsets
+ * Remove the delimiters from the text
  *
  * @export
- * @param {Position} selectionStartPosition Position where the current selection starts
- * @param {RegExp} regexTextBeforeSelection RegEx to find the text before the selection
- * @param {Position} selectionEndPosition Position where the current selection ends
- * @param {RegExp} regexTextAfterSelection Regex to find the text after the selection
- * @return {*}  {selectionOffset}
+ * @param {delimiterType} delimiter The delimiter type to remove (parentheses or quotes)
+ * @return {*}
  */
-export function getSelectionOffsets(
-    selectionStartPosition: Position,
-    regexTextBeforeSelection: RegExp,
-    selectionEndPosition: Position,
-    regexTextAfterSelection: RegExp
-): selectionOffset {
-    let activeDocument = getActiveEditor()!.document;
-    let selectionStartOffsetFromCursor = activeDocument.offsetAt(selectionStartPosition);
-    let selectionEndOffsetFromCursor = activeDocument.offsetAt(selectionEndPosition);
-    let docLinesCount = activeDocument.lineCount;
-    let docStartPosition = new Position(0, 0);
-    let docEndPosition = new Position(docLinesCount - 1, activeDocument.lineAt(docLinesCount - 1).text.length);
-    // note: the line where the cursor is, belongs to both ranges
-    let beforeCursorRange = new Range(docStartPosition, activeDocument.positionAt(selectionStartOffsetFromCursor));
-    let afterCursorRange = new Range(activeDocument.positionAt(selectionEndOffsetFromCursor), docEndPosition);
-
-    let textBeforeCursor = activeDocument.getText(beforeCursorRange).match(regexTextBeforeSelection)![0];
-    let textAfterCursor = activeDocument.getText(afterCursorRange).match(regexTextAfterSelection)![0];
-    let selectionStartOffset = selectionStartOffsetFromCursor - textBeforeCursor.length;
-    let selectionEndOffset = selectionEndOffsetFromCursor + textAfterCursor.length;
-
-    return {
-        start: selectionStartOffset,
-        end: selectionEndOffset,
-    };
-}
-
-export function removeQuotesOrParentheses(delimiter: delimiterType) {
+export function removeDelimiters(delimiter: delimiterType) {
     let before: RegExp;
     let after: RegExp;
 
@@ -197,26 +203,100 @@ export function removeQuotesOrParentheses(delimiter: delimiterType) {
             break;
         default:
             console.log(`Invalid delimiter type: ${delimiter}`);
-            break;
+            return;
     }
 
-    let selectionOffset = findTextBetweenDelimiters(delimiter, before, after);
+    let selectionOffset = getSelectionOffset(delimiter, before!, after!);
     if (!selectionOffset) {
         return;
     }
 
-    let editor = getActiveEditor();
-    editor?.edit((editBuilder) => {
-        let selectionStart = new Selection(editor?.document.positionAt(selectionOffset!.start)!, editor?.document.positionAt(selectionOffset!.start + 1)!);
-        let selectionEnd = new Selection(editor?.document.positionAt(selectionOffset!.end)!, editor?.document.positionAt(selectionOffset!.end - 1)!);
-        editBuilder.replace(selectionStart, "");
-        editBuilder.replace(selectionEnd, "");
-    });
+    if (validateDelimiters(delimiter)) {
+        let editor = getActiveEditor();
+        editor?.edit((editBuilder) => {
+            const [selectionStart, selectionEnd] = findDelimiterPositions(selectionOffset!) as [Selection, Selection];
+            editBuilder.replace(selectionStart, "");
+            editBuilder.replace(selectionEnd, "");
+        });
+    }
+}
+
+/**
+ * Find the delimiter position
+ *
+ * @param {selectionOffset} selectionOffset Offsets to use to find the delimiter's position
+ * @return {*}  {readonly [Selection, Selection]}
+ */
+function findDelimiterPositions(selectionOffset: selectionOffset): readonly [Selection, Selection] | undefined {
+    const editor = getActiveEditor();
+    if (!editor) {
+        return;
+    }
+
+    let selectionStart = new Selection(editor?.document.positionAt(selectionOffset!.start)!, editor?.document.positionAt(selectionOffset!.start + 1)!);
+    let selectionEnd = new Selection(editor?.document.positionAt(selectionOffset!.end)!, editor?.document.positionAt(selectionOffset!.end - 1)!);
+
+    return [selectionStart, selectionEnd] as const;
+}
+
+enum delimiterPairs {
+    ")" = "(",
+    "]" = "[",
+    "}" = "{",
+    ">" = "<",
+    "'" = "'",
+    '"' = '"',
+    "`" = "`",
+}
+
+/**
+ * Validate that the start and end delimiters are the same
+ *
+ * @param {delimiterType} delimiterType
+ * @return {*}  {boolean}
+ */
+function validateDelimiters(delimiter: delimiterType): boolean {
+    let before: RegExp;
+    let after: RegExp;
+    switch (delimiter) {
+        case delimiterType.parentheses:
+            before = new RegExp(regexSelectionType.withParenthesesBefore, "g");
+            after = new RegExp(regexSelectionType.withParenthesesAfter, "g");
+            break;
+        case delimiterType.quotes:
+            before = new RegExp(regexSelectionType.withQuotesBefore, "g");
+            after = new RegExp(regexSelectionType.withQuotesAfter, "g");
+            break;
+        default:
+            console.log(`Invalid delimiter type: ${delimiter}`);
+            return false;
+    }
+
+    let selectionOffset = getSelectionOffset(delimiter, before!, after!);
+    if (!selectionOffset) {
+        return false;
+    }
+
+    const [selectionStart, selectionEnd] = findDelimiterPositions(selectionOffset) as [Selection, Selection];
+    const editor = getActiveEditor()!;
+
+    const startDelimiter = getTextFromSelection(editor, selectionStart);
+    // needed to avoit the error "Element implicitly has an 'any' type because expression of type 'string' can't be used to index type 'typeof delimiterPairs'"
+    type dp = keyof typeof delimiterPairs;
+    const endDelimiter = getTextFromSelection(editor, selectionEnd) as dp;
+
+    if (startDelimiter === delimiterPairs[endDelimiter!]) {
+        return true;
+    } else {
+        console.log(`Invalid delimiters pair: "${startDelimiter}" - "${endDelimiter}"`);
+        return false;
+    }
 }
 
 // todo: replaceParentheses
 // todo: replaceQuotes
 
-// @bug @investigate
+// @investigate
 // use active language grammar: in the same line below, if the cursor is in "selectionOffset.start", expanding the parentheses selection will eventually include the wrong pair
 // addSelection(activeDocument.positionAt(selectionOffset.start), activeDocument.positionAt(selectionOffset.end));
+// I use a workaround for now (see validateDelimiters function) but the language grammar may be better
