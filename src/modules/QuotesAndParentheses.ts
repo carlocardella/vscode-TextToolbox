@@ -1,5 +1,6 @@
 import { addSelection, getActiveEditor, getDocumentTextOrSelection, getTextFromSelection, getCursorPosition } from "./helpers";
 import { Position, Range, Selection } from "vscode";
+import { dir } from "console";
 
 /**
  * Enumerates the type of quotes
@@ -151,11 +152,14 @@ export function getSelectionOffset(delimiter: delimiterType, regexTextBeforeSele
     selectionStartOffset = selectionStartOffsetFromCursor - textBeforeCursor.length;
     if (selectionIncludeDelimiters) {
         let _text = activeDocument.getText(new Range(activeDocument.positionAt(selectionStartOffset), docEndPosition));
-        let n = findClosingDelimiter(_text);
+        let n = findClosingDelimiter(_text, selectionIncludeDelimiters);
         selectionEndOffset = selectionStartOffset + n;
     } else {
-        let textAfterCursor = activeDocument.getText(afterCursorRange).match(regexTextAfterSelection!)![0];
-        selectionEndOffset = selectionEndOffsetFromCursor + textAfterCursor.length;
+        let _text = activeDocument.getText(afterCursorRange);
+        let n = findClosingDelimiter(_text, selectionIncludeDelimiters);
+        selectionEndOffset = selectionStartOffset + n;
+        // let textAfterCursor = activeDocument.getText(afterCursorRange).match(regexTextAfterSelection!)![0];
+        // selectionEndOffset = selectionEndOffsetFromCursor + textAfterCursor.length;
     }
 
     return {
@@ -171,7 +175,7 @@ export function getSelectionOffset(delimiter: delimiterType, regexTextBeforeSele
  * @param {selectionOffset} selectionOffset Offsets use to select the text
  */
 export function selectTextBetweenDelimiters(delimiter: delimiterType) {
-    let selectionOffset = getSelectionOffset(delimiter); // fix: selectionOffset.end changes value inexplicably! :o)
+    let selectionOffset = getSelectionOffset(delimiter);
     if (!selectionOffset) {
         return;
     }
@@ -296,7 +300,7 @@ function validateDelimiters(delimiter: delimiterType): boolean {
     const endDelimiter = getTextFromSelection(editor, selectionEnd) as dp;
 
     if (startDelimiter === delimiterPairs[endDelimiter!]) {
-    return true;
+        return true;
     } else {
         console.log(`Invalid delimiters pair: "${startDelimiter}" - "${endDelimiter}"`);
         return false;
@@ -314,22 +318,66 @@ function validateDelimiters(delimiter: delimiterType): boolean {
 // addSelection(activeDocument.positionAt(selectionOffset.start), activeDocument.positionAt(selectionOffset.end));
 // I use a workaround for now (see validateDelimiters function) but the language grammar may be better
 
-function findClosingDelimiter(text: string): number {
+function findClosingDelimiter(text: string, selectionIncludeDelimiters: boolean): number {
     let position = 0,
         delimiters = 0;
     let openingDelimiterFound = false;
 
+    let dic = {
+        openRound: 0,
+        closeRound: 0,
+        openSquare: 0,
+        closeSquare: 0,
+        openCurly: 0,
+        closeCurly: 0,
+        openChevron: 0,
+        closeChevron: 0,
+    };
+
+    // if "text" does not include the delimiter, we need to find the first delimiter *backwards* so that we can select the correct pair
+    if (!selectionIncludeDelimiters) { 
+        
+    }
+
     for (position; position < text.length; position++) {
         let char = text.charAt(position);
-        if (char === "(") {
-            delimiters++;
-            openingDelimiterFound = true;
+
+        switch (char) {
+            case "(":
+                dic.openRound++;
+                openingDelimiterFound = true;
+                break;
+            case ")":
+                dic.openRound--;
+                break;
+            case "[":
+                dic.openSquare++;
+                openingDelimiterFound = true;
+                break;
+            case "]":
+                dic.openSquare--;
+                break;
+            case "{":
+                dic.openCurly++;
+                openingDelimiterFound = true;
+                break;
+            case "}":
+                dic.openCurly--;
+                break;
+            case "<":
+                dic.openChevron++;
+                openingDelimiterFound = true;
+                break;
+            case ">":
+                dic.openChevron--;
+                break;
+
+            default:
+                break;
         }
-        if (char === ")") {
-            delimiters--;
-        }
-        if (delimiters === -1 && openingDelimiterFound) {
-            // one too many closing delimiters found, we don't need it, return the previous position
+
+        if (dic.openCurly === -1 || dic.openChevron === -1 || dic.openRound === -1 || (dic.openSquare === -1 && openingDelimiterFound)) {
+            // one too many closing delimiters found, we don't need it, return the position
             return position;
         }
     }
