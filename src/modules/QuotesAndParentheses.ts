@@ -1,6 +1,5 @@
 import { addSelection, getActiveEditor, getDocumentTextOrSelection, getTextFromSelection, getCursorPosition } from "./helpers";
 import { Position, Range, Selection } from "vscode";
-import { dir } from "console";
 
 /**
  * Enumerates the type of quotes
@@ -14,7 +13,7 @@ enum quotes {
 }
 
 /**
- * Enumerates thetype of parentheses
+ * Enumerates the type of parentheses
  *
  * @enum {string}
  */
@@ -150,16 +149,20 @@ export function getSelectionOffset(delimiter: delimiterType, regexTextBeforeSele
     let selectionEndOffset: number;
     let selectionStartOffset: number;
     selectionStartOffset = selectionStartOffsetFromCursor - textBeforeCursor.length;
+
+    // find the opening delimiter, even if it should not be selected; this is to ensure we use the proper closing pair
+    let openingDelimiter = findOpeningDelimiter(
+        getTextFromSelection(editor, new Selection(docStartPosition, activeDocument.positionAt(selectionStartOffset)))!
+    );
+
     if (selectionIncludeDelimiters) {
-        let _text = activeDocument.getText(new Range(activeDocument.positionAt(selectionStartOffset), docEndPosition));
-        let n = findClosingDelimiter(_text, selectionIncludeDelimiters);
+        let text = activeDocument.getText(new Range(activeDocument.positionAt(selectionStartOffset), docEndPosition));
+        let n = findClosingDelimiter(text, openingDelimiter.char!);
         selectionEndOffset = selectionStartOffset + n;
     } else {
-        let _text = activeDocument.getText(afterCursorRange);
-        let n = findClosingDelimiter(_text, selectionIncludeDelimiters);
-        selectionEndOffset = selectionStartOffset + n;
-        // let textAfterCursor = activeDocument.getText(afterCursorRange).match(regexTextAfterSelection!)![0];
-        // selectionEndOffset = selectionEndOffsetFromCursor + textAfterCursor.length;
+        let text = activeDocument.getText(afterCursorRange);
+        let n = findClosingDelimiter(text, openingDelimiter.char!);
+        selectionEndOffset = selectionStartOffset + textBeforeCursor.length + n - 1;
     }
 
     return {
@@ -318,9 +321,8 @@ function validateDelimiters(delimiter: delimiterType): boolean {
 // addSelection(activeDocument.positionAt(selectionOffset.start), activeDocument.positionAt(selectionOffset.end));
 // I use a workaround for now (see validateDelimiters function) but the language grammar may be better
 
-function findClosingDelimiter(text: string, selectionIncludeDelimiters: boolean): number {
-    let position = 0,
-        delimiters = 0;
+function findClosingDelimiter(text: string, openingDelimiter: string): number {
+    let position = 0;
     let openingDelimiterFound = false;
 
     let dic = {
@@ -334,15 +336,32 @@ function findClosingDelimiter(text: string, selectionIncludeDelimiters: boolean)
         closeChevron: 0,
     };
 
-    // if "text" does not include the delimiter, we need to find the first delimiter *backwards* so that we can select the correct pair
-    if (!selectionIncludeDelimiters) { 
-        
+    // increment the delimiter count for the opening delimiter so the count will be zero when we find the corresponding closing delimiter
+    switch (openingDelimiter) {
+        case "(":
+            dic.openRound++;
+            break;
+        case "{":
+            dic.openCurly++;
+            break;
+        case "[":
+            dic.openSquare++;
+            break;
+        case "<":
+            dic.openChevron++;
+            break;
+
+        default:
+            break;
     }
 
-    for (position; position < text.length; position++) {
-        let char = text.charAt(position);
+    // look for more delimiter pairs or for the closing delimiter
+    while (dic.openChevron > 0 || dic.openCurly > 0 || dic.openRound > 0 || dic.openSquare > 0) {
+        if (position >= text.length) {
+            return -1;
+        }
 
-        switch (char) {
+        switch (text[position]) {
             case "(":
                 dic.openRound++;
                 openingDelimiterFound = true;
@@ -376,11 +395,37 @@ function findClosingDelimiter(text: string, selectionIncludeDelimiters: boolean)
                 break;
         }
 
-        if (dic.openCurly === -1 || dic.openChevron === -1 || dic.openRound === -1 || (dic.openSquare === -1 && openingDelimiterFound)) {
-            // one too many closing delimiters found, we don't need it, return the position
-            return position;
-        }
+        position++;
+    }
+
+    if (dic.openCurly === 0 || dic.openChevron === 0 || dic.openRound === 0 || dic.openSquare === 0) {
+        // one too many closing delimiters found, we don't need it, return the position
+        return position;
     }
 
     return 0;
+}
+
+type delimiterPositionType = {
+    char: string;
+    position: number;
+};
+
+function findOpeningDelimiter(text: string): delimiterPositionType {
+    let delimiter: delimiterPositionType = {"char": "", "position": 0};
+    if (text.length <= 0) {
+        return delimiter;
+    }
+
+
+    let position = text.length - 1;
+    for (position; position >= 0; position--) {
+        if (openParenthesesArray.includes(text[position])) {
+            delimiter.char = text[position];
+            delimiter.position = position;
+            return delimiter;
+        }
+    };
+
+    return delimiter;
 }
