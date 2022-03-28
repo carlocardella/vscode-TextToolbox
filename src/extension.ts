@@ -11,7 +11,7 @@ import * as Json from "./modules/json";
 import * as AlignText from "./modules/alignText";
 import TTDecorations from "./modules/decorations";
 import * as QuotesAndParentheses from "./modules/QuotesAndParentheses";
-import { removeDelimiters } from './modules/QuotesAndParentheses';
+import * as Delimiters from "./modules/delimiters";
 
 export function activate(context: ExtensionContext) {
     console.log("vscode-texttoolbox is active");
@@ -194,22 +194,26 @@ export function activate(context: ExtensionContext) {
     // delimiters
     context.subscriptions.push(
         commands.registerTextEditorCommand("vscode-texttoolbox.SelectTextBetweenQuotes", () => {
-            QuotesAndParentheses.selectTextBetweenDelimiters(QuotesAndParentheses.delimiterType.quotes);
+            // QuotesAndParentheses.selectTextBetweenDelimiters(QuotesAndParentheses.delimiterType.quotes);
+            Delimiters.selectTextBetweenDelimiters(Delimiters.delimiterTypes.quote);
         })
     );
     context.subscriptions.push(
         commands.registerTextEditorCommand("vscode-texttoolbox.SelectTextBetweenParentheses", () => {
-            QuotesAndParentheses.selectTextBetweenDelimiters(QuotesAndParentheses.delimiterType.parentheses);
+            // QuotesAndParentheses.selectTextBetweenDelimiters(QuotesAndParentheses.delimiterType.parentheses);
+            Delimiters.selectTextBetweenDelimiters(Delimiters.delimiterTypes.parenthesis);
         })
     );
     context.subscriptions.push(
         commands.registerTextEditorCommand("vscode-texttoolbox.RemoveQuotes", () => {
-            QuotesAndParentheses.removeDelimiters(QuotesAndParentheses.delimiterType.quotes);
+            // QuotesAndParentheses.removeDelimiters(QuotesAndParentheses.delimiterType.quotes);
+            window.showErrorMessage("Not implemented yet");
         })
     );
     context.subscriptions.push(
         commands.registerTextEditorCommand("vscode-texttoolbox.RemoveParentheses", () => {
-            QuotesAndParentheses.removeDelimiters(QuotesAndParentheses.delimiterType.parentheses);
+            // QuotesAndParentheses.removeDelimiters(QuotesAndParentheses.delimiterType.parentheses);
+            window.showErrorMessage("Not implemented yet");
         })
     );
 
