@@ -138,8 +138,8 @@ type textSpitAtSelectionStart = {
     textAfterSelectionStart: string;
 };
 
-const openDelimiters = delimiters.filter((delimiter) => delimiter.direction === "open").map((delimiter) => delimiter.char);
-const closeDelimiters = delimiters.filter((delimiter) => delimiter.direction === "close").map((delimiter) => delimiter.char);
+const openDelimiters = delimiters.filter((delimiter) => delimiter.direction === "open"); //.map((delimiter) => delimiter.char);
+const closeDelimiters = delimiters.filter((delimiter) => delimiter.direction === "close"); //.map((delimiter) => delimiter.char);
 
 function getSelectionOffset(): selectionOffset | undefined {
     const editor = getActiveEditor();
@@ -147,19 +147,6 @@ function getSelectionOffset(): selectionOffset | undefined {
         return;
     }
 
-    // if (editor.selection.isEmpty) {
-    //     // there is no selection, return the current cursor position
-    //     return {
-    //         start: editor.selection.active.character,
-    //         end: editor.selection.active.character,
-    //     };
-    // } else {
-    //     // there is a selection, return the start and end of the selection
-    //     return {
-    //         start: editor.selection.start.character,
-    //         end: editor.selection.end.character,
-    //     };
-    // }
     return {
         start: editor.document.offsetAt(editor.selection.start),
         end: editor.document.offsetAt(editor.selection.end),
@@ -188,31 +175,6 @@ function getTextSplitAtSelectionStart(): textSpitAtSelectionStart | undefined {
     };
 }
 
-function expandSelection(delimiterType: delimiterTypes) {
-    const editor = getActiveEditor();
-    if (!editor) {
-        return;
-    }
-
-    let text = getTextFromSelection(editor, editor.selection);
-    if (!text) {
-        return;
-    }
-
-    const textSplitAsSelectionStart = getTextSplitAtSelectionStart();
-
-    let openingDelimiter = findOpeningDelimiter(textSplitAsSelectionStart!.textBeforeSelectionStart, delimiterType);
-    if (!openingDelimiter) {
-        return;
-    }
-    let closingDelimiter = findClosingDelimiter(textSplitAsSelectionStart!.textAfterSelectionStart, openingDelimiter, openingDelimiter.offset!);
-    if (!closingDelimiter) {
-        return;
-    }
-
-    addSelection(editor.document.positionAt(openingDelimiter.offset!), editor.document.positionAt(closingDelimiter.offset!));
-}
-
 function shouldExpandSelection(): boolean {
     let shouldExpandSelection = false;
     const editor = getActiveEditor();
@@ -231,7 +193,7 @@ function shouldExpandSelection(): boolean {
     return shouldExpandSelection;
 }
 
-function selectionIncludesDelimiters(text: string): boolean {
+function selectionIncludesDelimiters(text: string, delimiterType: delimiterTypes): boolean {
     if (!text) {
         return false;
     }
@@ -239,8 +201,12 @@ function selectionIncludesDelimiters(text: string): boolean {
     let includesOpeningDelimiter: boolean;
     let includesClosingDelimiter: boolean;
 
-    openDelimiters.includes(text[0]) ? (includesOpeningDelimiter = true) : (includesOpeningDelimiter = false);
-    closeDelimiters.includes(text[text.length - 1]) ? (includesClosingDelimiter = true) : (includesClosingDelimiter = false);
+    openDelimiters.filter((delimiter) => delimiter.type === delimiterType).find((delimiter) => delimiter.char === text[0])
+        ? (includesOpeningDelimiter = true)
+        : (includesOpeningDelimiter = false);
+    closeDelimiters.filter((delimiter) => delimiter.type === delimiterType).find((delimiter) => delimiter.char === text[text.length - 1])
+        ? (includesClosingDelimiter = true)
+        : (includesClosingDelimiter = false);
 
     if (includesClosingDelimiter && includesOpeningDelimiter) {
         return true;
@@ -256,11 +222,11 @@ function findOpeningDelimiter(text: string, delimiterType: delimiterTypes): deli
 
     let position = text.length - 1;
     for (position; position >= 0; position--) {
-        if (openDelimiters.includes(text[position])) {
+        if (openDelimiters.filter((delimiter) => delimiter.type === delimiterType).find((delimiter) => delimiter.char === text[position])) {
             return {
                 name: delimiters.filter((delimiter) => delimiter.char === text[position])[0].name,
                 char: text[position],
-                pairedChar: closeDelimiters.filter((pairedChar) => pairedChar === text[position])[0],
+                pairedChar: delimiters.filter((delimiter) => delimiter.char === text[position])[0].pairedChar,
                 offset: position,
                 pairedOffset: undefined, // update
                 type: delimiterType,
@@ -381,25 +347,35 @@ export function selectTextBetweenDelimiters(delimiterType: delimiterTypes) {
     let newSelectionOffsetStart: number = 0;
     let newSelectionOffsetEnd: number = 0;
 
-    if (shouldExpandSelection()) {
-        expandSelection(delimiterType);
-    } else {
-        let textSplitAtSelectionStart = getTextSplitAtSelectionStart();
-        if (!textSplitAtSelectionStart) {
-            return;
-        }
-        let openingDelimiter = findOpeningDelimiter(textSplitAtSelectionStart.textBeforeSelectionStart, delimiterType);
-        if (!openingDelimiter) {
-            return;
-        }
-        let closingDelimiter = findClosingDelimiter(textSplitAtSelectionStart.textAfterSelectionStart, openingDelimiter, selectionOffset.start);
-        if (!closingDelimiter) {
-            return;
-        }
+    let textSplitAtSelectionStart = getTextSplitAtSelectionStart();
+    if (!textSplitAtSelectionStart) {
+        return;
+    }
+    let openingDelimiter = findOpeningDelimiter(textSplitAtSelectionStart.textBeforeSelectionStart, delimiterType);
+    if (!openingDelimiter) {
+        return;
+    }
+    let closingDelimiter = findClosingDelimiter(textSplitAtSelectionStart.textAfterSelectionStart, openingDelimiter, selectionOffset.start);
+    if (!closingDelimiter) {
+        return;
+    }
 
-        newSelectionOffsetStart = openingDelimiter.offset!;
-        newSelectionOffsetEnd = closingDelimiter.offset!;
+    newSelectionOffsetStart = openingDelimiter.offset!;
+    newSelectionOffsetEnd = closingDelimiter.offset!;
+
+    let currentSelection = getTextFromSelection(editor, editor.selection);
+    if (selectionIncludesDelimiters(currentSelection!, delimiterType) || !currentSelection) {
+        // the current selection already includes the delimiters, so the new selection should not
+        newSelectionOffsetStart++;
+        newSelectionOffsetEnd--;
     }
 
     addSelection(activeDocument.positionAt(newSelectionOffsetStart), activeDocument.positionAt(newSelectionOffsetEnd));
 }
+
+// fix: if the cursor is at the dash (-) position, it will not select the text. The reason may be because the first opening bracket is { but does not have a proper closing
+// console.log(`some text: "${startDelimiter}" - "${endDelimiter}"`);
+
+// textAfterCursor: " "${endDelimiter}"`); <== two open { but only one closed, so findClosingDelimiter returns undefined
+//
+// (pippo)"
