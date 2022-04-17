@@ -49,7 +49,7 @@
         "onStartupFinished"
     ],
     "main": "./dist/extension",
-    "browser": "./dist/web/extension",
+    "browser": "./dist/web/extens`ion",
     "preview": false,
     "badges": [],
     "icon": "assets/text_icon_reverse.png",
