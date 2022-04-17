@@ -1,4 +1,5 @@
 import { window, ExtensionContext, workspace, StatusBarAlignment, Selection, StatusBarItem } from "vscode";
+import { getActiveEditor, getCursorPosition } from "./helpers";
 
 let statusBarItem: StatusBarItem;
 
@@ -92,7 +93,8 @@ function countWords(): number {
 }
 
 /**
- * Updates the StatusBar item with the number of lines and workds in the active editor
+ * Updates the StatusBar item with the number of lines and words in the active editor or selections.
+ * Also add the cursor position (offset)
  */
 function updateStatusBar() {
     const selections = window.activeTextEditor?.selections;
@@ -103,8 +105,13 @@ function updateStatusBar() {
 
     let wordCount = countWords();
 
+    let editor = getActiveEditor();
+    let cursorPosition = getCursorPosition(editor!)[0];
+    let offset = editor!.document.offsetAt(cursorPosition);
+    // investigate: support multicursor offsets?
+
     if (lineCount > 0 || wordCount > 0) {
-        statusBarItem.text = `Lns: ${lineCount}, Wds: ${wordCount}`;
+        statusBarItem.text = `Lns: ${lineCount}, Wds: ${wordCount}, Pos: ${offset}`;
         statusBarItem.show();
     } else {
         statusBarItem.hide();

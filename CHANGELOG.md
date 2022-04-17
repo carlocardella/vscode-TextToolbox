@@ -8,6 +8,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ## Unreleased
 
 * Text manipulation
+  * Invert (replace) quotes: since quotes in the selection get replaced with double quotes and vice versa
+  * Fix quotes: badly closed quotes (e.g. 'test")
   * remove empty lines (end of file)
   * duplicate string (ask user how many times)
   * convert number, dec to hex and vice versa
@@ -18,6 +20,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
     * for all emoji
     * based on theme
     * all
+  * Dates
+	* Convert selected date to format (pick one of the formats offered by "Insert Date")
+	* Insert an arbitrary date
+	* Insert random date
 * Align
   * to cursor
   * to special characters (e.g. tabs)
@@ -70,9 +76,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
   * Html
   * Url
 * Status bar
+  * Show character offset (character position)
+  * Go to character offset (character position)
   * allow to update position without reloading the entire window
 
 ## Log
+
+## [2.3.0] - 2022-03-20
+
+### Added
+
+* Show the cursor position (offset) on the Status Bar
+* Added `Invert lines` command: inverts lines in the active selection or the entire document, if there is no selection
+  * Does not support multiple selections
 
 ## [2.2.1] - 2022-02-19
 

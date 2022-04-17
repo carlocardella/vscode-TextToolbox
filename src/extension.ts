@@ -166,6 +166,11 @@ export function activate(context: ExtensionContext) {
             SortLines.askForSortDirection();
         })
     );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.InvertLines", () => {
+            SortLines.invertLines();
+        })
+    );
 
     // text manipulations
     context.subscriptions.push(

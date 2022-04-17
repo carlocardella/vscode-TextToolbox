@@ -2,7 +2,7 @@
     "name": "vscode-texttoolbox",
     "displayName": "Text Toolbox",
     "description": "Collection of tools for text manipulation, filtering, sorting etc...",
-    "version": "2.2.1",
+    "version": "2.3.0",
     "publisher": "carlocardella",
     "author": {
         "name": "Carlo Cardella",
@@ -176,6 +176,11 @@
             {
                 "command": "vscode-texttoolbox.SortLines",
                 "title": "Sort lines",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.InvertLines",
+                "title": "Invert lines",
                 "category": "Text Toolbox"
             },
             {
@@ -583,6 +588,10 @@
                 {
                     "group": "tt.sort",
                     "command": "vscode-texttoolbox.SortLines"
+                },
+                {
+                    "group": "tt.sort",
+                    "command": "vscode-texttoolbox.InvertLines"
                 }
             ],
             "tt.path": [

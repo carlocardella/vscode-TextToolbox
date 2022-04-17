@@ -1,4 +1,4 @@
-import { commands, Range, Selection, TextEditor, window, workspace, TextLine } from "vscode";
+import { commands, Range, Selection, TextEditor, window, workspace, TextLine, Position } from "vscode";
 import * as os from "os";
 
 /**
@@ -58,6 +58,8 @@ export function selectAllText(): Thenable<unknown> {
 
 /**
  * Returns text from the Selection, or the entire document if there is no selection
+ * Does not support multiple selections
+ *
  * @returns {string | undefined}
  */
 export function getDocumentTextOrSelection(): string | undefined {
@@ -270,4 +272,19 @@ export function getRegExpObject(regex: string): RegExp {
     const regExpObject = new RegExp(regExpString, regExpFlags);
 
     return new RegExp(regExpObject);
+}
+
+/**
+ * Returns the Position of the cursor in the editor. Supports multicursor
+ * @export
+ * @param {TextEditor} editor The editor to get the cursor position from
+ * @return {*}  {Position[]}
+ */
+export function getCursorPosition(editor: TextEditor): Position[] {
+    let position: Position[] = [];
+    editor.selections.forEach((selection) => {
+        position.push(selection.active);
+    });
+
+    return position;
 }

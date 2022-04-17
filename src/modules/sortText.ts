@@ -1,7 +1,6 @@
-import { createNewEditor, getDocumentTextOrSelection, getSelection, getLinesFromString, linesToLine, getActiveEditor } from './helpers';
-import * as os from 'os';
-import { window } from 'vscode';
-
+import { createNewEditor, getDocumentTextOrSelection, getSelection, getLinesFromString, linesToLine, getActiveEditor } from "./helpers";
+import * as os from "os";
+import { window } from "vscode";
 
 /**
  * Sorting direction: ascending | descending | reverse
@@ -18,7 +17,9 @@ export async function askForSortDirection(openInNewTextEditor?: boolean) {
         ignoreFocusOut: true,
         canPickMany: false,
     });
-    if (!direction) { return; }
+    if (!direction) {
+        return;
+    }
 
     sortLines(direction, openInNewTextEditor);
 }
@@ -32,8 +33,14 @@ export async function askForSortDirection(openInNewTextEditor?: boolean) {
  * @async
  */
 export async function sortLines(direction: string, openInNewTextEditor?: boolean): Promise<boolean> {
-    let newLines = getDocumentTextOrSelection()?.split(os.EOL).filter(el => { return el !== null && el !== ""; });
-    if (!newLines) { return Promise.reject("No lines to sort, all lines are null or empty"); }
+    let newLines = getDocumentTextOrSelection()
+        ?.split(os.EOL)
+        .filter((el) => {
+            return el !== null && el !== "";
+        });
+    if (!newLines) {
+        return Promise.reject("No lines to sort, all lines are null or empty");
+    }
 
     // newLines?.sort();
     let sortedLines: string[];
@@ -54,14 +61,32 @@ export async function sortLines(direction: string, openInNewTextEditor?: boolean
     if (openInNewTextEditor) {
         createNewEditor(sortedLines?.join(os.EOL));
         return Promise.resolve(true);
-    }
-    else {
+    } else {
         const editor = window.activeTextEditor;
         const selection = getSelection(editor!);
-        editor?.edit(editBuilder => {
+        editor?.edit((editBuilder) => {
             editBuilder.replace(selection!, sortedLines!.join(os.EOL));
         });
     }
 
     return Promise.resolve(true);
+}
+
+/**
+ * Inverts the selected lines or all the lines in the document, if there is no selection
+ * Does not support multiple selections
+ *
+ * @export
+ * @return {*}  {Promise<boolean>}
+ */
+export async function invertLines(): Promise<boolean> {
+    let lines = getDocumentTextOrSelection()?.split(os.EOL).reverse();
+
+    const editor = getActiveEditor();
+    editor?.edit((editBuilder) => {
+        editBuilder.replace(getSelection(editor)!, lines!.join(os.EOL));
+        return Promise.resolve(true);
+    });
+
+    return Promise.reject(false);
 }
