@@ -117,6 +117,11 @@ export function activate(context: ExtensionContext) {
             InsertText.insertCurrency();
         })
     );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.DuplicateTab", () => {
+            InsertText.duplicateTab();
+        })
+    );
 
     // filter text
     context.subscriptions.push(
@@ -159,6 +164,11 @@ export function activate(context: ExtensionContext) {
     context.subscriptions.push(
         commands.registerTextEditorCommand("vscode-texttoolbox.SortLines", () => {
             SortLines.askForSortDirection();
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.InvertLines", () => {
+            SortLines.invertLines();
         })
     );
 

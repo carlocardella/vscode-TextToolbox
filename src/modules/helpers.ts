@@ -1,4 +1,4 @@
-import { commands, Range, Selection, TextEditor, window, workspace, TextLine } from "vscode";
+import { commands, Range, Selection, TextEditor, window, workspace, TextLine, Position } from "vscode";
 import * as os from "os";
 
 /**
@@ -58,6 +58,8 @@ export function selectAllText(): Thenable<unknown> {
 
 /**
  * Returns text from the Selection, or the entire document if there is no selection
+ * Does not support multiple selections
+ *
  * @returns {string | undefined}
  */
 export function getDocumentTextOrSelection(): string | undefined {
@@ -111,7 +113,10 @@ export function getLinesFromSelection(editor: TextEditor, selection?: Selection)
     if (selection) {
         selections.push(selection);
     } else {
-        selections = editor?.selections;
+        // The type 'readonly Selection[]' is 'readonly' and cannot be assigned to the mutable type 'Selection[]'.
+        // https://stackoverflow.com/a/53416703
+        // selection = editor?.selections;
+        selections = editor.selections.map((s) => s);
         if (!selections) {
             return;
         }
@@ -242,7 +247,7 @@ export async function getLinesFromString(line: string): Promise<string[]> {
  * @return {*}  {Promise<Selection[]>}
  * @async
  */
-export async function getSelections(editor: TextEditor): Promise<Selection[]> {
+export async function getSelections(editor: TextEditor): Promise<readonly Selection[]> {
     if (editor.selections.length >= 1 && !editor.selection.isEmpty) {
         return Promise.resolve(editor.selections);
     } else {
@@ -267,4 +272,19 @@ export function getRegExpObject(regex: string): RegExp {
     const regExpObject = new RegExp(regExpString, regExpFlags);
 
     return new RegExp(regExpObject);
+}
+
+/**
+ * Returns the Position of the cursor in the editor. Supports multicursor
+ * @export
+ * @param {TextEditor} editor The editor to get the cursor position from
+ * @return {*}  {Position[]}
+ */
+export function getCursorPosition(editor: TextEditor): Position[] {
+    let position: Position[] = [];
+    editor.selections.forEach((selection) => {
+        position.push(selection.active);
+    });
+
+    return position;
 }
