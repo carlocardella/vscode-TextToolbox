@@ -843,12 +843,12 @@
         "eslint": "^8.9.0",
         "glob": "^7.2.0",
         "guid": "0.0.12",
-        "lorem-ipsum": "^2.0.4",
         "mocha": "^9.2.1",
         "mocha-explorer-launcher-scripts": "^0.4.0",
         "node-uuid": "^1.4.8",
         "nyc": "^15.1.0",
         "pad": "^3.2.0",
+        "path-browserify": "^1.0.1",
         "source-map-support": "^0.5.21",
         "ts-loader": "^9.2.6",
         "ts-node": "^10.5.0",
@@ -861,7 +861,10 @@
     "dependencies": {
         "chance": "^1.1.8",
         "jsonic": "^1.0.1",
+        "lorem-ipsum": "^2.0.4",
         "luxon": "^2.3.0",
-        "os": "^0.1.2"
+        "os": "^0.1.2",
+        "os-browserify": "^0.3.0",
+        "process": "^0.11.10"
     }
 }

@@ -24,6 +24,10 @@ Please open an issue to leave a comment, report a bug, request a feature etc... 
 
 The extension does not require any special permission, therefore is enabled to run in an [Untrusted Workspace](https://github.com/microsoft/vscode/issues/120251)
 
+## Visual Studio Code for the Web
+
+Text-Toolbox works in [Visual Studio Code for the Web](https://code.visualstudio.com/docs/editor/vscode-web) (https://github.dev and https://vscode.dev)
+
 ## Current list of commands
 
 Notable absents: `Convert to Uppercase` and `Convert to Lowercase` have been removed in favor of the built-in commands in VScode.

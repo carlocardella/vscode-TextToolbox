@@ -1,4 +1,4 @@
-<!-- markdownlint-disable MD024 -->
+<!-- markdownlint-disable-file -->
 # **Change Log**
 
 All notable changes to the "vscode-TextToolbox" extension will be documented in this file.
@@ -81,6 +81,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
   * allow to update position without reloading the entire window
 
 ## Log
+
+## [2.4.0] - 2022-04-17
+
+### Changed
+
+* Text-Toolbox now works in [Visual Studio Code for Web](https://code.visualstudio.com/docs/editor/vscode-web) (https://github.dev and https://vscode.dev)
 
 ## [2.3.0] - 2022-03-20
 
