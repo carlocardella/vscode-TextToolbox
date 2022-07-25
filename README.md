@@ -55,6 +55,8 @@ Likewise, `Convert to CapitalCase` has been removed in favor of the built-in VSC
   * Lorem Ipsum Dolor Sit Amet => lOREM iPSUM dOLOR sIT aMET
 * Convert path string to posix format
 * Convert path string to win32 format
+* Convert integer to hexadecimal
+* Convert hexadecimal to integer
 
 ### Insert text
 
@@ -155,6 +157,10 @@ Likewise, `Convert to CapitalCase` has been removed in favor of the built-in VSC
 ### Sort
 
 * Sort lines
+  * Ascending
+  * Descending
+  * Reverse
+* Sort lines by length
   * Ascending
   * Descending
   * Reverse

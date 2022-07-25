@@ -179,6 +179,16 @@
                 "category": "Text Toolbox"
             },
             {
+                "command": "vscode-texttoolbox.SortLinesByLengthResultInNewEditor",
+                "title": "Sort lines by length, result in new editor",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.SortLinesByLength",
+                "title": "Sort lines by length",
+                "category": "Text Toolbox"
+            },
+            {
                 "command": "vscode-texttoolbox.InvertLines",
                 "title": "Invert lines",
                 "category": "Text Toolbox"
@@ -221,6 +231,16 @@
             {
                 "command": "vscode-texttoolbox.SplitSelectionOpenInNewEditor",
                 "title": "Split Selection, result in new editor...",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.ConvertDecimalToHexadecimal",
+                "title": "Convert decimal to hexadecimal",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.ConvertHexadecimalToDecimal",
+                "title": "Convert hexadecimal to decimal",
                 "category": "Text Toolbox"
             },
             {
@@ -517,6 +537,14 @@
                 },
                 {
                     "group": "tt.transform",
+                    "command": "vscode-texttoolbox.ConvertDecimalToHexadecimal"
+                },
+                {
+                    "group": "tt.transform",
+                    "command": "vscode-texttoolbox.ConvertHexadecimalToDecimal"
+                },
+                {
+                    "group": "tt.transform",
                     "command": "vscode-texttoolbox.AlignToSeparator"
                 },
                 {
@@ -588,6 +616,14 @@
                 {
                     "group": "tt.sort",
                     "command": "vscode-texttoolbox.SortLines"
+                },
+                {
+                    "group": "tt.sort",
+                    "command": "vscode-texttoolbox.SortLinesByLengthResultInNewEditor"
+                },
+                {
+                    "group": "tt.sort",
+                    "command": "vscode-texttoolbox.SortLinesByLength"
                 },
                 {
                     "group": "tt.sort",

@@ -126,3 +126,65 @@ export async function transformPath(type: pathTransformationType): Promise<strin
         editBuilder.replace(selection, pathString!);
     });
 }
+
+/**
+ * Convert an integer to its hexadecimal representation
+ *
+ * @export
+ * @param {number} n The integer to convert
+ * @returns {(string | undefined)}
+ */
+export function convertDecimalToHexadecimal(n: number): string | undefined {
+    if (Number.isInteger(n)) {
+        return n.toString(16);
+    }
+}
+
+/**
+ * Convert an hexadecimal number to its decimal representation
+ *
+ * @export
+ * @param {string} hex The hexadecimal number to convert
+ * @returns {(number | undefined)}
+ */
+export function convertHexadecimalToDecimal(hex: string): number | undefined {
+    return parseInt(hex, 16);
+}
+
+export function convertHexDec(conversionType: hexConversionType) {
+    const editor = getActiveEditor();
+    if (!editor) {
+        return;
+    }
+
+    const selection = editor.selection;
+    if (!selection) {
+        return;
+    }
+
+    const selectionText = getTextFromSelection(editor, selection);
+    if (!selectionText) {
+        return;
+    }
+
+    let newText: string | number | undefined;
+
+    if (conversionType === hexConversionType.decToHex) {
+        newText = convertDecimalToHexadecimal(+selectionText);
+    }
+
+    if (conversionType === hexConversionType.hexToDec) {
+        newText = convertHexadecimalToDecimal(selectionText);
+    }
+
+    if (newText) {
+        editor.edit((editBuilder) => {
+            editBuilder.replace(selection, newText!.toString());
+        });
+    }
+}
+
+export enum hexConversionType {
+    "decToHex" = "decToHex",
+    "hexToDec" = "hexToDec"
+}

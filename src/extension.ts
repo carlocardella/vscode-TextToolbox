@@ -171,6 +171,16 @@ export function activate(context: ExtensionContext) {
             SortLines.invertLines();
         })
     );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.SortLinesByLengthResultInNewEditor", () => {
+            SortLines.askForSortDirection(true);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.SortLinesByLength", () => {
+            SortLines.askForSortDirection();
+        })
+    );
 
     // text manipulations
     context.subscriptions.push(
@@ -186,6 +196,16 @@ export function activate(context: ExtensionContext) {
     context.subscriptions.push(
         commands.registerTextEditorCommand("vscode-texttoolbox.SplitSelectionOpenInNewEditor", () => {
             TextManipulation.splitSelection(true);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.ConvertDecimalToHexadecimal", () => {
+            TextManipulation.convertHexDec(TextManipulation.hexConversionType.decToHex);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.ConvertHexadecimalToDecimal", () => {
+            TextManipulation.convertHexDec(TextManipulation.hexConversionType.hexToDec);
         })
     );
 
