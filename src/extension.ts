@@ -208,6 +208,16 @@ export function activate(context: ExtensionContext) {
             TextManipulation.convertHexDec(TextManipulation.hexConversionType.hexToDec);
         })
     );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.convertFromBase64", () => {
+            TextManipulation.convertAsciiBase64(TextManipulation.conversionType.fromBase64);
+        })
+        );
+        context.subscriptions.push(
+            commands.registerTextEditorCommand("vscode-texttoolbox.convertToBase64", () => {
+            TextManipulation.convertAsciiBase64(TextManipulation.conversionType.toBase64);
+        })
+    );
 
     // json
     context.subscriptions.push(

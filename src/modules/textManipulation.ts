@@ -1,4 +1,4 @@
-import { window } from "vscode";
+import { Selection, TextEditor, window } from "vscode";
 import { getActiveEditor, getLinesFromDocumentOrSelection, getTextFromSelection, createNewEditor } from "./helpers";
 import * as os from "os";
 import * as path from "path";
@@ -184,7 +184,77 @@ export function convertHexDec(conversionType: hexConversionType) {
     }
 }
 
+/**
+ * Decimal/Hexadecimal conversion type
+ *
+ * @export
+ * @enum {number}
+ */
 export enum hexConversionType {
     "decToHex" = "decToHex",
-    "hexToDec" = "hexToDec"
+    "hexToDec" = "hexToDec",
+}
+
+/**
+ * Convert the selected text to Base64
+ *
+ * @export
+ * @async
+ * @param {conversionType} conversion Conversion Type: toBase64 or fromBase64
+ * @returns {*}
+ */
+export async function convertAsciiBase64(conversion: conversionType) {
+    const editor = getActiveEditor();
+    if (!editor) {
+        return;
+    }
+
+    const selection = editor.selections;
+    if (!selection) {
+        return;
+    }
+
+    await convertSelectionInternal(editor, selection, conversion);
+}
+
+export enum conversionType {
+    /**
+     * Base64/ASCII conversion type
+     */
+    "toBase64" = "toBase64",
+    "fromBase64" = "fromBase64",
+}
+
+/**
+ * Convert the selected text to Base64 ro ASCII
+ *
+ * @export
+ * @async
+ * @param {TextEditor} editor The editor to convert the selection in
+ * @param {Selection} selection The Selection to convert
+ * @param {conversionType} conversion Conversion Type: toBase64 or fromBase64
+ * @returns {(Promise<string | undefined>)}
+ */
+export async function convertSelectionInternal(editor: TextEditor, selection: Selection[], conversion: conversionType): Promise<string | undefined> {
+    if (!editor) {
+        return Promise.reject();
+    }
+
+    editor.edit((editBuilder) => {
+        selection.forEach((s) => {
+            let textSelection = getTextFromSelection(editor, s);
+            let convertedText: string | undefined;
+
+            if (conversion === conversionType.toBase64) {
+                convertedText = Buffer.from(<string>textSelection, "binary").toString("base64");
+            }
+            if (conversion === conversionType.fromBase64) {
+                convertedText = Buffer.from(<string>textSelection, "base64").toString("binary");
+            }
+
+            if (convertedText) {
+                editBuilder.replace(s, convertedText!.toString());
+            }
+        });
+    });
 }
