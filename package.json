@@ -244,6 +244,16 @@
                 "category": "Text Toolbox"
             },
             {
+                "command": "vscode-texttoolbox.convertFromBase64",
+                "title": "Convert Base64 to ASCII",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.convertToBase64",
+                "title": "Convert ASCII to Base64",
+                "category": "Text Toolbox"
+            },
+            {
                 "command": "vscode-texttoolbox.FixJson",
                 "title": "Fix and Format Json",
                 "category": "Text Toolbox"
@@ -542,6 +552,14 @@
                 {
                     "group": "tt.transform",
                     "command": "vscode-texttoolbox.ConvertHexadecimalToDecimal"
+                },
+                {
+                    "group": "tt.transform",
+                    "command": "vscode-texttoolbox.convertFromBase64"
+                },
+                {
+                    "group": "tt.transform",
+                    "command": "vscode-texttoolbox.convertToBase64"
                 },
                 {
                     "group": "tt.transform",
