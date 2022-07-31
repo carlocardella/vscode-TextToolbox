@@ -254,6 +254,16 @@
                 "category": "Text Toolbox"
             },
             {
+                "command": "vscode-texttoolbox.toHTML",
+                "title": "Encode to HTML",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.fromHTML",
+                "title": "Decode from HTML",
+                "category": "Text Toolbox"
+            },
+            {
                 "command": "vscode-texttoolbox.FixJson",
                 "title": "Fix and Format Json",
                 "category": "Text Toolbox"
@@ -560,6 +570,14 @@
                 {
                     "group": "tt.transform",
                     "command": "vscode-texttoolbox.convertToBase64"
+                },
+                {
+                    "group": "tt.transform",
+                    "command": "vscode-texttoolbox.fromHTML"
+                },
+                {
+                    "group": "tt.transform",
+                    "command": "vscode-texttoolbox.toHTML"
                 },
                 {
                     "group": "tt.transform",

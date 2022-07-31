@@ -200,22 +200,32 @@ export function activate(context: ExtensionContext) {
     );
     context.subscriptions.push(
         commands.registerTextEditorCommand("vscode-texttoolbox.ConvertDecimalToHexadecimal", () => {
-            TextManipulation.convertHexDec(TextManipulation.hexConversionType.decToHex);
+            TextManipulation.convertSelection(TextManipulation.conversionType.decToHex);
         })
     );
     context.subscriptions.push(
         commands.registerTextEditorCommand("vscode-texttoolbox.ConvertHexadecimalToDecimal", () => {
-            TextManipulation.convertHexDec(TextManipulation.hexConversionType.hexToDec);
+            TextManipulation.convertSelection(TextManipulation.conversionType.hexToDec);
         })
     );
     context.subscriptions.push(
         commands.registerTextEditorCommand("vscode-texttoolbox.convertFromBase64", () => {
-            TextManipulation.convertAsciiBase64(TextManipulation.conversionType.fromBase64);
+            TextManipulation.convertSelection(TextManipulation.conversionType.fromBase64);
         })
-        );
-        context.subscriptions.push(
-            commands.registerTextEditorCommand("vscode-texttoolbox.convertToBase64", () => {
-            TextManipulation.convertAsciiBase64(TextManipulation.conversionType.toBase64);
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.convertToBase64", () => {
+            TextManipulation.convertSelection(TextManipulation.conversionType.toBase64);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.fromHTML", () => {
+            TextManipulation.convertSelection(TextManipulation.conversionType.fromHTML);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.toHTML", () => {
+            TextManipulation.convertSelection(TextManipulation.conversionType.toHTML);
         })
     );
 

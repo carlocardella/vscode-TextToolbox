@@ -151,46 +151,17 @@ export function convertHexadecimalToDecimal(hex: string): number | undefined {
     return parseInt(hex, 16);
 }
 
-export function convertHexDec(conversionType: hexConversionType) {
-    const editor = getActiveEditor();
-    if (!editor) {
-        return;
-    }
-
-    const selection = editor.selection;
-    if (!selection) {
-        return;
-    }
-
-    const selectionText = getTextFromSelection(editor, selection);
-    if (!selectionText) {
-        return;
-    }
-
-    let newText: string | number | undefined;
-
-    if (conversionType === hexConversionType.decToHex) {
-        newText = convertDecimalToHexadecimal(+selectionText);
-    }
-
-    if (conversionType === hexConversionType.hexToDec) {
-        newText = convertHexadecimalToDecimal(selectionText);
-    }
-
-    if (newText) {
-        editor.edit((editBuilder) => {
-            editBuilder.replace(selection, newText!.toString());
-        });
-    }
-}
-
 /**
- * Decimal/Hexadecimal conversion type
+ * Conversion type
  *
  * @export
  * @enum {number}
  */
-export enum hexConversionType {
+export enum conversionType {
+    "toBase64" = "toBase64",
+    "fromBase64" = "fromBase64",
+    "toHTML" = "toHTML",
+    "fromHTML" = "fromHTML",
     "decToHex" = "decToHex",
     "hexToDec" = "hexToDec",
 }
@@ -203,26 +174,18 @@ export enum hexConversionType {
  * @param {conversionType} conversion Conversion Type: toBase64 or fromBase64
  * @returns {*}
  */
-export async function convertAsciiBase64(conversion: conversionType) {
+export async function convertSelection(conversion: conversionType) {
     const editor = getActiveEditor();
     if (!editor) {
         return;
     }
 
-    const selection = editor.selections;
-    if (!selection) {
+    const selections: any = editor.selections;
+    if (!selections) {
         return;
     }
 
-    await convertSelectionInternal(editor, selection, conversion);
-}
-
-export enum conversionType {
-    /**
-     * Base64/ASCII conversion type
-     */
-    "toBase64" = "toBase64",
-    "fromBase64" = "fromBase64",
+    await convertSelectionInternal(editor, selections, conversion);
 }
 
 /**
@@ -243,13 +206,37 @@ export async function convertSelectionInternal(editor: TextEditor, selection: Se
     editor.edit((editBuilder) => {
         selection.forEach((s) => {
             let textSelection = getTextFromSelection(editor, s);
-            let convertedText: string | undefined;
+            let convertedText: string | number | undefined;
 
-            if (conversion === conversionType.toBase64) {
-                convertedText = Buffer.from(<string>textSelection, "binary").toString("base64");
-            }
-            if (conversion === conversionType.fromBase64) {
-                convertedText = Buffer.from(<string>textSelection, "base64").toString("binary");
+            switch (conversion) {
+                case conversionType.toBase64:
+                    convertedText = Buffer.from(<string>textSelection, "binary").toString("base64");
+                    break;
+                case conversionType.fromBase64:
+                    convertedText = Buffer.from(<string>textSelection, "base64").toString("binary");
+                    break;
+                case conversionType.toHTML:
+                    convertedText = Buffer.from(<string>textSelection, "binary")
+                        .toString("base64")
+                        .replace(/\+/g, "-")
+                        .replace(/\//g, "_")
+                        .replace(/=/g, "");
+                    break;
+                case conversionType.fromHTML:
+                    convertedText = Buffer.from(<string>textSelection, "base64")
+                        .toString("binary")
+                        .replace(/-/g, "+")
+                        .replace(/_/g, "/");
+                    break;
+                case conversionType.decToHex:
+                    convertedText = convertDecimalToHexadecimal(+!textSelection);
+                    break;
+                case conversionType.hexToDec:
+                    convertedText = convertHexadecimalToDecimal(<string>textSelection);
+                    break;
+
+                default:
+                    break;
             }
 
             if (convertedText) {
