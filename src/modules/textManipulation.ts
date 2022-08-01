@@ -2,6 +2,7 @@ import { Selection, TextEditor, window } from "vscode";
 import { getActiveEditor, getLinesFromDocumentOrSelection, getTextFromSelection, createNewEditor } from "./helpers";
 import * as os from "os";
 import * as path from "path";
+import jwt_decode from "jwt-decode";
 
 /**
  * Trim whitespaces from the active selection(s) or from the entire document
@@ -164,6 +165,9 @@ export enum conversionType {
     "fromHTML" = "fromHTML",
     "decToHex" = "decToHex",
     "hexToDec" = "hexToDec",
+    "encodeUri" = "encodeUri",
+    "decodeUri" = "decodeUri",
+    "JWTDecode" = "JWTDecode",
 }
 
 /**
@@ -206,33 +210,38 @@ export async function convertSelectionInternal(editor: TextEditor, selection: Se
     editor.edit((editBuilder) => {
         selection.forEach((s) => {
             let textSelection = getTextFromSelection(editor, s);
+            if (!textSelection) {
+                return;
+            }
             let convertedText: string | number | undefined;
 
             switch (conversion) {
                 case conversionType.toBase64:
-                    convertedText = Buffer.from(<string>textSelection, "binary").toString("base64");
+                    convertedText = convertToBase64(textSelection);
                     break;
                 case conversionType.fromBase64:
-                    convertedText = Buffer.from(<string>textSelection, "base64").toString("binary");
+                    convertedText = convertFromBase64(textSelection);
                     break;
                 case conversionType.toHTML:
-                    convertedText = Buffer.from(<string>textSelection, "binary")
-                        .toString("base64")
-                        .replace(/\+/g, "-")
-                        .replace(/\//g, "_")
-                        .replace(/=/g, "");
+                    convertedText = convertToHTML(textSelection);
                     break;
                 case conversionType.fromHTML:
-                    convertedText = Buffer.from(<string>textSelection, "base64")
-                        .toString("binary")
-                        .replace(/-/g, "+")
-                        .replace(/_/g, "/");
+                    convertedText = convertFromHTML(textSelection);
                     break;
                 case conversionType.decToHex:
-                    convertedText = convertDecimalToHexadecimal(+!textSelection);
+                    convertedText = convertDecimalToHexadecimal(+textSelection);
                     break;
                 case conversionType.hexToDec:
                     convertedText = convertHexadecimalToDecimal(<string>textSelection);
+                    break;
+                case conversionType.encodeUri:
+                    convertedText = encodeUri(textSelection);
+                    break;
+                case conversionType.decodeUri:
+                    convertedText = decodeUri(textSelection);
+                    break;
+                case conversionType.JWTDecode:
+                    convertedText = decodeJWTToken(textSelection);
                     break;
 
                 default:
@@ -245,3 +254,56 @@ export async function convertSelectionInternal(editor: TextEditor, selection: Se
         });
     });
 }
+
+export function convertToBase64(text: string): string {
+    return Buffer.from(text, "binary").toString("base64");
+}
+export function convertFromBase64(text: string): string {
+    return Buffer.from(text, "base64").toString("binary");
+}
+
+export function convertToHTML(text: string): string {
+    return text.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/'/g, "&#39;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+export function convertFromHTML(text: string): string {
+    return text
+        .replace(/&quot;/g, '"')
+        .replace(/&#39;/g, "'")
+        .replace(/&lt;/g, "<")
+        .replace(/&gt;/g, ">")
+        .replace(/&amp;/g, "&");
+}
+
+export function encodeUri(text: string): string {
+    return encodeURIComponent(text);
+}
+
+export function decodeUri(text: string): string {
+    return decodeURIComponent(text);
+}
+
+export function decodeJWTToken(token: string): string {
+    let decodedToken: jwtToken = {
+        token: token,
+        header: {
+            ...jwt_decode(token, { header: true }),
+        },
+        payload: {
+            ...jwt_decode(token),
+        },
+    };
+
+    return JSON.stringify(decodedToken, null, 4);
+}
+
+type jwtToken = {
+    token: string;
+    header: {
+        alg: string;
+        typ: string;
+    };
+    payload: {
+        [key: string]: string;
+    };
+};

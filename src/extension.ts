@@ -228,6 +228,21 @@ export function activate(context: ExtensionContext) {
             TextManipulation.convertSelection(TextManipulation.conversionType.toHTML);
         })
     );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.encodeUri", () => {
+            TextManipulation.convertSelection(TextManipulation.conversionType.encodeUri);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.decodeUri", () => {
+            TextManipulation.convertSelection(TextManipulation.conversionType.decodeUri);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.decodeJWTToken", () => {
+            TextManipulation.convertSelection(TextManipulation.conversionType.JWTDecode);
+        })
+    );
 
     // json
     context.subscriptions.push(

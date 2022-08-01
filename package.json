@@ -245,12 +245,27 @@
             },
             {
                 "command": "vscode-texttoolbox.convertFromBase64",
-                "title": "Convert Base64 to ASCII",
+                "title": "Decode Base64 to text",
                 "category": "Text Toolbox"
             },
             {
                 "command": "vscode-texttoolbox.convertToBase64",
-                "title": "Convert ASCII to Base64",
+                "title": "Encode text to Base64",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.encodeUri",
+                "title": "Encode Uri",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.decodeUri",
+                "title": "Decode Uri",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.decodeJWTToken",
+                "title": "Decode JWT Token",
                 "category": "Text Toolbox"
             },
             {
@@ -570,6 +585,18 @@
                 {
                     "group": "tt.transform",
                     "command": "vscode-texttoolbox.convertToBase64"
+                },
+                {
+                    "group": "tt.transform",
+                    "command": "vscode-texttoolbox.encodeUri"
+                },
+                {
+                    "group": "tt.transform",
+                    "command": "vscode-texttoolbox.decodeUri"
+                },
+                {
+                    "group": "tt.transform",
+                    "command": "vscode-texttoolbox.decodeJWTToken"
                 },
                 {
                     "group": "tt.transform",
@@ -933,6 +960,7 @@
     "dependencies": {
         "chance": "^1.1.8",
         "jsonic": "^1.0.1",
+        "jwt-decode": "^3.1.2",
         "lorem-ipsum": "^2.0.4",
         "luxon": "^2.3.0",
         "os": "^0.1.2",
