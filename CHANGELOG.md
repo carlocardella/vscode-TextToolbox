@@ -73,11 +73,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
   * Html
   * Url
 * Status bar
-  * Show character offset (character position)
   * Go to character offset (character position)
-  * allow to update position without reloading the entire window
+  * Allow to update position without reloading the entire window
 
 ## Log
+
+## [2.6.0] - 2022-07-31
+
+### Added
+
+* Decoded JWT token
+* Convert to and from Base64
+* HTML encode/decode
+* Uri encode/decode
 
 ## [2.5.0] - 2022-07-24
 

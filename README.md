@@ -57,6 +57,9 @@ Likewise, `Convert to CapitalCase` has been removed in favor of the built-in VSC
 * Convert path string to win32 format
 * Convert integer to hexadecimal
 * Convert hexadecimal to integer
+* HTML encode/decide
+* Uri encode/decode
+* Decode JWT token
 
 ### Insert text
 
