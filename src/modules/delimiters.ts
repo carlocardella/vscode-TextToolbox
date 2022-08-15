@@ -253,6 +253,9 @@ function findClosingDelimiter(text: string, openingDelimiter: delimiter, startOf
         closeCurly: 0,
         openChevron: 0,
         closeChevron: 0,
+        singleQuote: 0,
+        doubleQuote: 0,
+        backtick: 0,
     };
 
     // increment the delimiter count for the opening delimiter so the count will be zero when we find the corresponding closing delimiter
@@ -269,12 +272,29 @@ function findClosingDelimiter(text: string, openingDelimiter: delimiter, startOf
         case "<":
             dic.openChevron++;
             break;
+        case "'":
+            dic.singleQuote++;
+            break;
+        case '"':
+            dic.doubleQuote++;
+            break;
+        case "`":
+            dic.backtick++;
+            break;
 
         default:
             break;
     }
 
-    while (dic.openChevron > 0 || dic.openCurly > 0 || dic.openRound > 0 || dic.openSquare > 0) {
+    while (
+        dic.openChevron > 0 ||
+        dic.openCurly > 0 ||
+        dic.openRound > 0 ||
+        dic.openSquare > 0 ||
+        dic.singleQuote > 0 ||
+        dic.doubleQuote > 0 ||
+        dic.backtick > 0
+    ) {
         if (position >= text.length) {
             return undefined;
         }
@@ -304,6 +324,15 @@ function findClosingDelimiter(text: string, openingDelimiter: delimiter, startOf
             case ">":
                 dic.openChevron--;
                 break;
+            case "'":
+                dic.singleQuote--;
+                break;
+            case '"':
+                dic.doubleQuote--;
+                break;
+            case "`":
+                dic.backtick--;
+                break;
 
             default:
                 break;
@@ -312,7 +341,15 @@ function findClosingDelimiter(text: string, openingDelimiter: delimiter, startOf
         position++;
     }
 
-    if (dic.openCurly === 0 || dic.openChevron === 0 || dic.openRound === 0 || dic.openSquare === 0) {
+    if (
+        dic.openCurly === 0 ||
+        dic.openChevron === 0 ||
+        dic.openRound === 0 ||
+        dic.openSquare === 0 ||
+        dic.singleQuote === 0 ||
+        dic.doubleQuote === 0 ||
+        dic.backtick === 0
+    ) {
         // one too many closing delimiters found, we don't need it, return the position
         return {
             name: delimiters.filter((delimiter) => delimiter.direction === "close").filter((delimiter) => delimiter.char === text[position - 1])[0].name,
@@ -357,6 +394,7 @@ export function selectTextBetweenDelimiters(delimiterType: delimiterTypes) {
     }
     let closingDelimiter = findClosingDelimiter(textSplitAtSelectionStart.textAfterSelectionStart, openingDelimiter, selectionOffset.start);
     if (!closingDelimiter) {
+        // closing delimiter not found, let's try to expand the selection but only for one iteration to avoid infinite loops @todo
         return;
     }
 
@@ -377,5 +415,3 @@ export function selectTextBetweenDelimiters(delimiterType: delimiterTypes) {
 // console.log(`some text: "${startDelimiter}" - "${endDelimiter}"`);
 
 // textAfterCursor: " "${endDelimiter}"`); <== two open { but only one closed, so findClosingDelimiter returns undefined
-//
-// (pippo)"
