@@ -173,6 +173,16 @@ export function activate(context: ExtensionContext) {
             SortLines.invertLines();
         })
     );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.SortLinesByLengthResultInNewEditor", () => {
+            SortLines.askForSortDirection(true);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.SortLinesByLength", () => {
+            SortLines.askForSortDirection();
+        })
+    );
 
     // text manipulations
     context.subscriptions.push(
@@ -188,6 +198,51 @@ export function activate(context: ExtensionContext) {
     context.subscriptions.push(
         commands.registerTextEditorCommand("vscode-texttoolbox.SplitSelectionOpenInNewEditor", () => {
             TextManipulation.splitSelection(true);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.ConvertDecimalToHexadecimal", () => {
+            TextManipulation.convertSelection(TextManipulation.conversionType.decToHex);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.ConvertHexadecimalToDecimal", () => {
+            TextManipulation.convertSelection(TextManipulation.conversionType.hexToDec);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.convertFromBase64", () => {
+            TextManipulation.convertSelection(TextManipulation.conversionType.fromBase64);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.convertToBase64", () => {
+            TextManipulation.convertSelection(TextManipulation.conversionType.toBase64);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.fromHTML", () => {
+            TextManipulation.convertSelection(TextManipulation.conversionType.fromHTML);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.toHTML", () => {
+            TextManipulation.convertSelection(TextManipulation.conversionType.toHTML);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.encodeUri", () => {
+            TextManipulation.convertSelection(TextManipulation.conversionType.encodeUri);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.decodeUri", () => {
+            TextManipulation.convertSelection(TextManipulation.conversionType.decodeUri);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.decodeJWTToken", () => {
+            TextManipulation.convertSelection(TextManipulation.conversionType.JWTDecode);
         })
     );
 

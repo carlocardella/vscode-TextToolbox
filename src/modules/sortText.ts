@@ -42,7 +42,6 @@ export async function sortLines(direction: string, openInNewTextEditor?: boolean
         return Promise.reject("No lines to sort, all lines are null or empty");
     }
 
-    // newLines?.sort();
     let sortedLines: string[];
     switch (direction) {
         case "ascending":
@@ -89,4 +88,53 @@ export async function invertLines(): Promise<boolean> {
     });
 
     return Promise.reject(false);
+}
+
+/**
+ * Sort by line length the selected lines or all the lines in the document, if there is no selection.
+ * Optionally opens the sorted lines in a new editor.
+ *
+ * @export
+ * @async
+ * @param {string} direction Sort direction: ascending, descending or reverse
+ * @param {?boolean} [openInNewTextEditor] Optionally open the sorted lines in a new editor
+ * @returns {Promise<boolean>}
+ */
+export async function sortLinesByLength(direction: string, openInNewTextEditor?: boolean): Promise<boolean> {
+    let newLines = getDocumentTextOrSelection()
+        ?.split(os.EOL)
+        .filter((el) => {
+            return el !== null && el !== "";
+        });
+    if (!newLines) {
+        return Promise.reject("No lines to sort, all lines are null or empty");
+    }
+
+    let sortedLines: string[];
+    switch (direction) {
+        case "ascending":
+            sortedLines = newLines.sort((a, b) => a.length - b.length);
+            break;
+        case "descending":
+            sortedLines = newLines.sort((a, b) => b.length - a.length);
+            break;
+        case "reverse":
+            sortedLines = newLines.reverse();
+            break;
+        default:
+            return Promise.reject("Sort direction is invalid");
+    }
+
+    if (openInNewTextEditor) {
+        createNewEditor(sortedLines?.join(os.EOL));
+        return Promise.resolve(true);
+    } else {
+        const editor = window.activeTextEditor;
+        const selection = getSelection(editor!);
+        editor?.edit((editBuilder) => {
+            editBuilder.replace(selection!, sortedLines!.join(os.EOL));
+        });
+    }
+
+    return Promise.resolve(true);
 }

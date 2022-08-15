@@ -9,7 +9,7 @@
         "@typescript-eslint"
     ],
     "rules": {
-        // Commend out next line due to https://github.com/typescript-eslint/typescript-eslint/issues/2054
+        // // Commend out next line due to https://github.com/typescript-eslint/typescript-eslint/issues/2054
         // "@typescript-eslint/class-na me-casing": "warn",
         "@typescript-eslint/semi": "warn",
         "curly": "warn",

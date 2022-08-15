@@ -1,4 +1,4 @@
-<!-- markdownlint-disable MD024 -->
+<!-- markdownlint-disable-file -->
 # **Change Log**
 
 All notable changes to the "vscode-TextToolbox" extension will be documented in this file.
@@ -11,15 +11,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
   * Invert (replace) quotes: since quotes in the selection get replaced with double quotes and vice versa
   * Fix quotes: badly closed quotes (e.g. 'test")
   * remove empty lines (end of file)
-  * duplicate string (ask user how many times)
-  * convert number, dec to hex and vice versa
   * Randomize selection (words in a selection)
-  * Reverse selection (lines or words in selection)
-  * Sort lines by length
+  * Reverse selection (words in selection)
   * Explore disabling italic (suggestion from [Stop rendering pseudo-italic fonts when italic is not available](https://github.com/microsoft/vscode/issues/25895#issuecomment-890614837))
     * for all emoji
     * based on theme
     * all
+  * Dates
+	* Convert selected date to format (pick one of the formats offered by "Insert Date")
+	* Insert an arbitrary date
+	* Insert random date
 * Align
   * to cursor
   * to special characters (e.g. tabs)
@@ -72,18 +73,33 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
   * Html
   * Url
 * Status bar
-  * Show character offset (character position)
   * Go to character offset (character position)
-  * allow to update position without reloading the entire window
-* JSON
-  * Sort elements
-    * By length
-    * Alphanumeric
-    * Reverse
-    * By property value
-    * By property length
+  * Allow to update position without reloading the entire window
 
 ## Log
+
+## [2.6.0] - 2022-07-31
+
+### Added
+
+* Decoded JWT token
+* Convert to and from Base64
+* HTML encode/decode
+* Uri encode/decode
+
+## [2.5.0] - 2022-07-24
+
+### Added
+
+* Sort lines by length
+* Convert integer to hexadecimal
+* Convert hexadecimal to integer
+
+## [2.4.0] - 2022-04-17
+
+### Changed
+
+* Text-Toolbox now works in [Visual Studio Code for Web](https://code.visualstudio.com/docs/editor/vscode-web) (https://github.dev and https://vscode.dev)
 
 ## [2.3.0] - 2022-03-20
 
