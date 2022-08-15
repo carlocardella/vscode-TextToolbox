@@ -1,5 +1,5 @@
 import { Position, Selection } from "vscode";
-import { addSelection, getActiveEditor, getCursorPosition, getTextFromSelection } from "./helpers";
+import { addSelection, getActiveEditor, getTextFromSelection } from "./helpers";
 
 export enum delimiterTypes {
     parenthesis = "parenthesis",
@@ -159,39 +159,20 @@ function getTextSplitAtSelectionStart(): textSpitAtSelectionStart | undefined {
         return;
     }
 
-    let selectionStartPosition = getSelectionOffset()?.start;
-    if (!selectionStartPosition) {
+    let selectionOffset = getSelectionOffset();
+    if (!selectionOffset) {
         return;
     }
-
     let documentStartPosition = new Position(0, 0);
     let documentEndPosition = new Position(editor.document.lineCount - 1, editor.document.lineAt(editor.document.lineCount - 1).range.end.character);
-    let textBeforeSelectionStart = getTextFromSelection(editor, new Selection(documentStartPosition, editor.document.positionAt(selectionStartPosition)))!;
-    let textAfterSelectionStart = getTextFromSelection(editor, new Selection(editor.document.positionAt(selectionStartPosition), documentEndPosition))!;
+    let textBeforeSelectionStart = getTextFromSelection(editor, new Selection(documentStartPosition, editor.document.positionAt(selectionOffset.start)))!;
+    let textAfterSelectionStart = getTextFromSelection(editor, new Selection(editor.document.positionAt(selectionOffset.end), documentEndPosition))!;
 
     return {
         textBeforeSelectionStart,
         textAfterSelectionStart,
     };
 }
-
-// function shouldExpandSelection(): boolean {
-//     let shouldExpandSelection = false;
-//     const editor = getActiveEditor();
-//     if (!editor) {
-//         return shouldExpandSelection;
-//     }
-
-//     const cursorPosition = getCursorPosition(editor)[0];
-//     let selectionContainsCursor = false;
-//     editor.selection.contains(cursorPosition) ? (selectionContainsCursor = true) : (selectionContainsCursor = false);
-
-//     if (selectionContainsCursor && !editor.selection.isEmpty) {
-//         shouldExpandSelection = true;
-//     }
-
-//     return shouldExpandSelection;
-// }
 
 function selectionIncludesDelimiters(text: string, delimiterType: delimiterTypes): boolean {
     if (!text) {
@@ -255,7 +236,7 @@ function findClosingDelimiter(text: string, openingDelimiter: delimiter, startOf
         closeChevron: 0,
         singleQuote: 0,
         doubleQuote: 0,
-        backtick: 0
+        backtick: 0,
     };
 
     // increment the delimiter count for the opening delimiter so the count will be zero when we find the corresponding closing delimiter
@@ -392,7 +373,7 @@ export function selectTextBetweenDelimiters(delimiterType: delimiterTypes) {
     if (!openingDelimiter) {
         return;
     }
-    let closingDelimiter = findClosingDelimiter(textSplitAtSelectionStart.textAfterSelectionStart, openingDelimiter, selectionOffset.start);
+    let closingDelimiter = findClosingDelimiter(textSplitAtSelectionStart.textAfterSelectionStart, openingDelimiter, selectionOffset.end);
     if (!closingDelimiter) {
         // closing delimiter not found, let's try to expand the selection but only for one iteration to avoid infinite loops @todo
         return;
