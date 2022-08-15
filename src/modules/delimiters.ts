@@ -175,23 +175,23 @@ function getTextSplitAtSelectionStart(): textSpitAtSelectionStart | undefined {
     };
 }
 
-function shouldExpandSelection(): boolean {
-    let shouldExpandSelection = false;
-    const editor = getActiveEditor();
-    if (!editor) {
-        return shouldExpandSelection;
-    }
+// function shouldExpandSelection(): boolean {
+//     let shouldExpandSelection = false;
+//     const editor = getActiveEditor();
+//     if (!editor) {
+//         return shouldExpandSelection;
+//     }
 
-    const cursorPosition = getCursorPosition(editor)[0];
-    let selectionContainsCursor = false;
-    editor.selection.contains(cursorPosition) ? (selectionContainsCursor = true) : (selectionContainsCursor = false);
+//     const cursorPosition = getCursorPosition(editor)[0];
+//     let selectionContainsCursor = false;
+//     editor.selection.contains(cursorPosition) ? (selectionContainsCursor = true) : (selectionContainsCursor = false);
 
-    if (selectionContainsCursor && !editor.selection.isEmpty) {
-        shouldExpandSelection = true;
-    }
+//     if (selectionContainsCursor && !editor.selection.isEmpty) {
+//         shouldExpandSelection = true;
+//     }
 
-    return shouldExpandSelection;
-}
+//     return shouldExpandSelection;
+// }
 
 function selectionIncludesDelimiters(text: string, delimiterType: delimiterTypes): boolean {
     if (!text) {
@@ -255,7 +255,7 @@ function findClosingDelimiter(text: string, openingDelimiter: delimiter, startOf
         closeChevron: 0,
         singleQuote: 0,
         doubleQuote: 0,
-        backtick: 0,
+        backtick: 0
     };
 
     // increment the delimiter count for the opening delimiter so the count will be zero when we find the corresponding closing delimiter
