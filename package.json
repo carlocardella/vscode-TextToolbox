@@ -970,6 +970,18 @@
                 "key": "ctrl+shift+alt+q",
                 "mac": "ctrl+shift+cmd+q",
                 "when": "editorTextFocus"
+            },
+            {
+                "command": "vscode-texttoolbox.RemoveQuotes",
+                "key": "ctrl+shift+alt+'",
+                "mac": "ctrl+shift+cmd+'",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "vscode-texttoolbox.RemoveBrackets",
+                "key": "ctrl+shift+alt+;",
+                "mac": "ctrl+shift+cmd+;",
+                "when": "editorTextFocus"
             }
         ]
     },

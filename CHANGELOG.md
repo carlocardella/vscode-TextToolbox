@@ -90,8 +90,10 @@ This is a **pre-release** version
   * Default keybinding: `ctrl+shift+alt+f`
 * `Remove brackets`
   * Removes the brackets _around_ the current selection or cursor position
+  * Default keybinding: `ctrl+shift+alt+;`
 * `Remove quotes`
   * Removes the quotes _around_ the current selection or cursor position
+  * Default keybinding: `ctrl+shift+alt+'`
 
 Quotes include single (`'`), double (`"`) and backtick (`` ` ``)
 
