@@ -9,7 +9,7 @@
         "url": "https://cloudnotes.io"
     },
     "engines": {
-        "vscode": "^1.45.0"
+        "vscode": "^1.63.0"
     },
     "categories": [
         "Other"
@@ -392,8 +392,8 @@
                 "category": "Text Toolbox"
             },
             {
-                "command": "vscode-texttoolbox.SelectTextBetweenParentheses",
-                "title": "Select text between parentheses",
+                "command": "vscode-texttoolbox.SelectTextBetweenBrackets",
+                "title": "Select text between brackets",
                 "category": "Text Toolbox"
             },
             {
@@ -402,8 +402,8 @@
                 "category": "Text Toolbox"
             },
             {
-                "command": "vscode-texttoolbox.RemoveParentheses",
-                "title": "Remove parentheses",
+                "command": "vscode-texttoolbox.RemoveBrackets",
+                "title": "Remove brackets",
                 "category": "Text Toolbox"
             }
         ],
@@ -452,6 +452,10 @@
                 {
                     "submenu": "tt.highlight",
                     "group": "highlight"
+                },
+                {
+                    "submenu": "tt.delimiters",
+                    "group": "delimiters"
                 },
                 {
                     "command": "vscode-texttoolbox.DuplicateTab",
@@ -733,7 +737,7 @@
                 },
                 {
                     "group": "tt.delimiters",
-                    "command": "vscode-texttoolbox.SelectTextBetweenParentheses"
+                    "command": "vscode-texttoolbox.SelectTextBetweenBrackets"
                 },
                 {
                     "group": "tt.delimiters",
@@ -741,7 +745,7 @@
                 },
                 {
                     "group": "tt.delimiters",
-                    "command": "vscode-texttoolbox.RemoveParentheses"
+                    "command": "vscode-texttoolbox.RemoveBrackets"
                 }
             ]
         },
@@ -784,7 +788,7 @@
             },
             {
                 "id": "tt.delimiters",
-                "label": "Selections"
+                "label": "Delimiters"
             }
         ],
         "configuration": [
@@ -952,6 +956,20 @@
                         ]
                     }
                 }
+            }
+        ],
+        "keybindings": [
+            {
+                "command": "vscode-texttoolbox.SelectTextBetweenBrackets",
+                "key": "ctrl+shift+alt+b",
+                "mac": "ctrl+shift+cmd+b",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "vscode-texttoolbox.SelectTextBetweenQuotes",
+                "key": "ctrl+shift+alt+q",
+                "mac": "ctrl+shift+cmd+q",
+                "when": "editorTextFocus"
             }
         ]
     },

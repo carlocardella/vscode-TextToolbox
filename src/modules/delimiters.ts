@@ -1,16 +1,33 @@
 import { Position, Selection } from "vscode";
 import { addSelection, getActiveEditor, getTextFromSelection } from "./helpers";
+// import { delimiterType } from './QuotesAndParentheses';
 
+/**
+ * Delimiter types to use for selections
+ *
+ * @export
+ * @enum {number}
+ */
 export enum delimiterTypes {
-    parenthesis = "parenthesis",
+    bracket = "bracket",
     quote = "quote",
 }
 
-enum typeDirection {
+/**
+ * Delimiter type, can be open or close
+ *
+ * @enum {number}
+ */
+enum delimiterTypeDirection {
     open = "open",
     close = "close",
 }
 
+/**
+ * Delimiter type
+ *
+ * @typedef {delimiter}
+ */
 type delimiter = {
     name: string;
     char: string;
@@ -18,129 +35,167 @@ type delimiter = {
     offset: number | undefined;
     pairedOffset: number | undefined;
     type: delimiterTypes;
-    direction: typeDirection;
+    direction: delimiterTypeDirection;
 };
 
+/**
+ * Delimiters to use for selections
+ *
+ * @type {{
+    name: string;
+    char: string;
+    pairedChar: string;
+    type: delimiterTypes;
+    direction: delimiterTypeDirection;
+}[]}
+ */
 const delimiters: {
     name: string;
     char: string;
     pairedChar: string;
     type: delimiterTypes;
-    direction: typeDirection;
+    direction: delimiterTypeDirection;
 }[] = [
     {
         name: "openRound",
         char: "(",
         pairedChar: ")",
-        type: delimiterTypes.parenthesis,
-        direction: typeDirection.open,
+        type: delimiterTypes.bracket,
+        direction: delimiterTypeDirection.open,
     },
     {
         name: "openSquare",
         char: "[",
         pairedChar: "]",
-        type: delimiterTypes.parenthesis,
-        direction: typeDirection.open,
+        type: delimiterTypes.bracket,
+        direction: delimiterTypeDirection.open,
     },
     {
         name: "openCurly",
         char: "{",
         pairedChar: "}",
-        type: delimiterTypes.parenthesis,
-        direction: typeDirection.open,
+        type: delimiterTypes.bracket,
+        direction: delimiterTypeDirection.open,
     },
     {
-        name: "openChevron",
+        name: "openAngle",
         char: "<",
         pairedChar: ">",
-        type: delimiterTypes.parenthesis,
-        direction: typeDirection.open,
+        type: delimiterTypes.bracket,
+        direction: delimiterTypeDirection.open,
     },
     {
         name: "openSingleQuote",
         char: "'",
         pairedChar: "'",
         type: delimiterTypes.quote,
-        direction: typeDirection.open,
+        direction: delimiterTypeDirection.open,
     },
     {
         name: "openDoubleQuote",
         char: '"',
         pairedChar: '"',
         type: delimiterTypes.quote,
-        direction: typeDirection.open,
+        direction: delimiterTypeDirection.open,
     },
     {
         name: "openBacktick",
         char: "`",
         pairedChar: "`",
         type: delimiterTypes.quote,
-        direction: typeDirection.open,
+        direction: delimiterTypeDirection.open,
     },
     {
         name: "closeRound",
         char: ")",
         pairedChar: "(",
-        type: delimiterTypes.parenthesis,
-        direction: typeDirection.close,
+        type: delimiterTypes.bracket,
+        direction: delimiterTypeDirection.close,
     },
     {
         name: "closeSquare",
         char: "]",
         pairedChar: "[",
-        type: delimiterTypes.parenthesis,
-        direction: typeDirection.close,
+        type: delimiterTypes.bracket,
+        direction: delimiterTypeDirection.close,
     },
     {
         name: "closeCurly",
         char: "}",
         pairedChar: "{",
-        type: delimiterTypes.parenthesis,
-        direction: typeDirection.close,
+        type: delimiterTypes.bracket,
+        direction: delimiterTypeDirection.close,
     },
     {
-        name: "closeChevron",
+        name: "closeAngle",
         char: ">",
         pairedChar: "<",
-        type: delimiterTypes.parenthesis,
-        direction: typeDirection.close,
+        type: delimiterTypes.bracket,
+        direction: delimiterTypeDirection.close,
     },
     {
         name: "closeSingleQuote",
         char: "'",
         pairedChar: "'",
         type: delimiterTypes.quote,
-        direction: typeDirection.close,
+        direction: delimiterTypeDirection.close,
     },
     {
         name: "closeDoubleQuote",
         char: '"',
         pairedChar: '"',
         type: delimiterTypes.quote,
-        direction: typeDirection.close,
+        direction: delimiterTypeDirection.close,
     },
     {
         name: "closeBacktick",
         char: "`",
         pairedChar: "`",
         type: delimiterTypes.quote,
-        direction: typeDirection.close,
+        direction: delimiterTypeDirection.close,
     },
 ];
 
+/**
+ * Selection offset object, used to get the start and end offsets of the selection
+ *
+ * @typedef {selectionOffset}
+ */
 type selectionOffset = {
     start: number;
     end: number;
 };
 
-type textSpitAtSelectionStart = {
+/**
+ * Text split at selection.
+ * NOTE: The object returned does not include the selection text (if any).
+ *
+ * @typedef {textSpitAtSelection}
+ */
+type textSpitAtSelection = {
     textBeforeSelectionStart: string;
     textAfterSelectionStart: string;
 };
 
+/**
+ * List of open delimiters
+ *
+ * @type {*}
+ */
 const openDelimiters = delimiters.filter((delimiter) => delimiter.direction === "open"); //.map((delimiter) => delimiter.char);
+
+/**
+ * List of close delimiters
+ *
+ * @type {*}
+ */
 const closeDelimiters = delimiters.filter((delimiter) => delimiter.direction === "close"); //.map((delimiter) => delimiter.char);
 
+/**
+ * Returns the current selection offset
+ *
+ * @returns {(selectionOffset | undefined)}
+ */
 function getSelectionOffset(): selectionOffset | undefined {
     const editor = getActiveEditor();
     if (!editor) {
@@ -153,7 +208,12 @@ function getSelectionOffset(): selectionOffset | undefined {
     };
 }
 
-function getTextSplitAtSelectionStart(): textSpitAtSelectionStart | undefined {
+/**
+ * Returns the text before and after the selection, but not the selected text
+ *
+ * @returns {(textSpitAtSelection | undefined)}
+ */
+function getTextSplitAtSelection(): textSpitAtSelection | undefined {
     let editor = getActiveEditor();
     if (!editor) {
         return;
@@ -174,6 +234,13 @@ function getTextSplitAtSelectionStart(): textSpitAtSelectionStart | undefined {
     };
 }
 
+/**
+ * Determines if the current selection already includes delimiters
+ *
+ * @param {string} text
+ * @param {delimiterTypes} delimiterType
+ * @returns {boolean}
+ */
 function selectionIncludesDelimiters(text: string, delimiterType: delimiterTypes): boolean {
     if (!text) {
         return false;
@@ -196,6 +263,13 @@ function selectionIncludesDelimiters(text: string, delimiterType: delimiterTypes
     return false;
 }
 
+/**
+ * Finds the opening delimiter walking backwards from the selection start
+ *
+ * @param {string} text
+ * @param {delimiterTypes} delimiterType
+ * @returns {(delimiter | undefined)}
+ */
 function findOpeningDelimiter(text: string, delimiterType: delimiterTypes): delimiter | undefined {
     if (!text) {
         return undefined;
@@ -211,7 +285,7 @@ function findOpeningDelimiter(text: string, delimiterType: delimiterTypes): deli
                 offset: position,
                 pairedOffset: undefined, // update
                 type: delimiterType,
-                direction: typeDirection.open,
+                direction: delimiterTypeDirection.open,
             };
         }
     }
@@ -219,6 +293,14 @@ function findOpeningDelimiter(text: string, delimiterType: delimiterTypes): deli
     return undefined;
 }
 
+/**
+ * Finds the closing delimiter walking forward from the selection end
+ *
+ * @param {string} text
+ * @param {delimiter} openingDelimiter
+ * @param {number} startOffset
+ * @returns {(delimiter | undefined)}
+ */
 function findClosingDelimiter(text: string, openingDelimiter: delimiter, startOffset: number): delimiter | undefined {
     if (!text) {
         return undefined;
@@ -232,8 +314,8 @@ function findClosingDelimiter(text: string, openingDelimiter: delimiter, startOf
         closeSquare: 0,
         openCurly: 0,
         closeCurly: 0,
-        openChevron: 0,
-        closeChevron: 0,
+        openAngle: 0,
+        closeAngle: 0,
         singleQuote: 0,
         doubleQuote: 0,
         backtick: 0,
@@ -251,7 +333,7 @@ function findClosingDelimiter(text: string, openingDelimiter: delimiter, startOf
             dic.openSquare++;
             break;
         case "<":
-            dic.openChevron++;
+            dic.openAngle++;
             break;
         case "'":
             dic.singleQuote++;
@@ -268,7 +350,7 @@ function findClosingDelimiter(text: string, openingDelimiter: delimiter, startOf
     }
 
     while (
-        dic.openChevron > 0 ||
+        dic.openAngle > 0 ||
         dic.openCurly > 0 ||
         dic.openRound > 0 ||
         dic.openSquare > 0 ||
@@ -300,10 +382,10 @@ function findClosingDelimiter(text: string, openingDelimiter: delimiter, startOf
                 dic.openCurly--;
                 break;
             case "<":
-                dic.openChevron++;
+                dic.openAngle++;
                 break;
             case ">":
-                dic.openChevron--;
+                dic.openAngle--;
                 break;
             case "'":
                 dic.singleQuote--;
@@ -324,7 +406,7 @@ function findClosingDelimiter(text: string, openingDelimiter: delimiter, startOf
 
     if (
         dic.openCurly === 0 ||
-        dic.openChevron === 0 ||
+        dic.openAngle === 0 ||
         dic.openRound === 0 ||
         dic.openSquare === 0 ||
         dic.singleQuote === 0 ||
@@ -339,13 +421,19 @@ function findClosingDelimiter(text: string, openingDelimiter: delimiter, startOf
             offset: startOffset + position,
             pairedOffset: undefined, // update
             type: openingDelimiter.type,
-            direction: typeDirection.close,
+            direction: delimiterTypeDirection.close,
         };
     }
 
     return undefined;
 }
 
+/**
+ * Select text between delimiters, based on the cursor position or the existing selection
+ *
+ * @export
+ * @param {delimiterTypes} delimiterType
+ */
 export function selectTextBetweenDelimiters(delimiterType: delimiterTypes) {
     const editor = getActiveEditor();
     if (!editor) {
@@ -362,10 +450,7 @@ export function selectTextBetweenDelimiters(delimiterType: delimiterTypes) {
         return;
     }
 
-    let newSelectionOffsetStart: number = 0;
-    let newSelectionOffsetEnd: number = 0;
-
-    let textSplitAtSelectionStart = getTextSplitAtSelectionStart();
+    let textSplitAtSelectionStart = getTextSplitAtSelection();
     if (!textSplitAtSelectionStart) {
         return;
     }
@@ -375,12 +460,12 @@ export function selectTextBetweenDelimiters(delimiterType: delimiterTypes) {
     }
     let closingDelimiter = findClosingDelimiter(textSplitAtSelectionStart.textAfterSelectionStart, openingDelimiter, selectionOffset.end);
     if (!closingDelimiter) {
-        // closing delimiter not found, let's try to expand the selection but only for one iteration to avoid infinite loops @todo
+        // closing delimiter not found
         return;
     }
 
-    newSelectionOffsetStart = openingDelimiter.offset!;
-    newSelectionOffsetEnd = closingDelimiter.offset!;
+    let newSelectionOffsetStart = openingDelimiter.offset!;
+    let newSelectionOffsetEnd = closingDelimiter.offset!;
 
     let currentSelection = getTextFromSelection(editor, editor.selection);
     if (selectionIncludesDelimiters(currentSelection!, delimiterType) || !currentSelection) {
@@ -392,7 +477,57 @@ export function selectTextBetweenDelimiters(delimiterType: delimiterTypes) {
     addSelection(activeDocument.positionAt(newSelectionOffsetStart), activeDocument.positionAt(newSelectionOffsetEnd));
 }
 
-// fix: if the cursor is at the dash (-) position, it will not select the text. The reason may be because the first opening bracket is { but does not have a proper closing
-// console.log(`some text: "${startDelimiter}" - "${endDelimiter}"`);
+/**
+ * Remove delimiters, based on the cursor position or the existing selection
+ *
+ * @export
+ * @param {delimiterTypes} delimiterType
+ */
+export function removeDelimiters(delimiterType: delimiterTypes) {
+    const editor = getActiveEditor();
+    if (!editor) {
+        return;
+    }
 
-// textAfterCursor: " "${endDelimiter}"`); <== two open { but only one closed, so findClosingDelimiter returns undefined
+    const activeDocument = editor.document;
+    if (!activeDocument) {
+        return;
+    }
+
+    let selectionOffset = getSelectionOffset();
+    if (!selectionOffset) {
+        return;
+    }
+
+    let textSplitAtSelectionStart = getTextSplitAtSelection();
+    if (!textSplitAtSelectionStart) {
+        return;
+    }
+    let openingDelimiter = findOpeningDelimiter(textSplitAtSelectionStart.textBeforeSelectionStart, delimiterType);
+    if (!openingDelimiter) {
+        return;
+    }
+    let closingDelimiter = findClosingDelimiter(textSplitAtSelectionStart.textAfterSelectionStart, openingDelimiter, selectionOffset.end);
+    if (!closingDelimiter) {
+        // closing delimiter not found
+        return;
+    }
+
+    let newSelectionOffsetStart = openingDelimiter.offset!;
+    let newSelectionOffsetEnd = closingDelimiter.offset!;
+    let correctOffset = 1;
+
+    editor.edit((editBuilder) => {
+        // remove end delimiter
+        editBuilder.replace(
+            new Selection(activeDocument.positionAt(newSelectionOffsetEnd), activeDocument.positionAt(newSelectionOffsetEnd - correctOffset)),
+            ""
+        );
+
+        // remove start delimiter
+        editBuilder.replace(
+            new Selection(activeDocument.positionAt(newSelectionOffsetStart), activeDocument.positionAt(newSelectionOffsetStart + correctOffset)),
+            ""
+        );
+    });
+}

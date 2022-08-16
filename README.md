@@ -156,6 +156,8 @@ Likewise, `Convert to CapitalCase` has been removed in favor of the built-in VSC
   * remove all redundant empty lines from the current document: reduces multiple empty lines to one
 * Remove duplicate lines
 * Remove duplicate lines, result in new Editor
+* Remove brackets
+* Remove quotes
 
 ### Sort
 
@@ -215,18 +217,21 @@ _Note_: In this release, highlights and decorations are persisted as long as the
 
 * Open selection(s) in new editor
 * Duplicate tab (open the current document's text in a new unsaved document)
+* Select brackets content
+* Select quotes content
 
 ### Thanks to
 
 Text Toolbox is freely inspired by these fine extensions:
 
-* [gurayyarar DummyTextGenerator](https://github.com/gurayyarar/DummyTextGenerator)
-* [qcz vscode-text-power-tools](https://github.com/qcz/vscode-text-power-tools)
-* [tomoki1207 selectline-statusbar](https://github.com/tomoki1207/selectline-statusbar)
-* [adamwalzer string-converter](https://github.com/adamwalzer/string-converter)
-* [Tyriar vscode-sort-lines](https://github.com/Tyriar/vscode-sort-lines)
-* [rpeshkov vscode-text-tables](https://github.com/rpeshkov/vscode-text-tables)
+* [gurayyarar DummyTextGenerator](https://marketplace.visualstudio.com/items?itemName=gurayyarar.dummytextgenerator)
+* [qcz vscode-text-power-tools](https://marketplace.visualstudio.com/items?itemName=qcz.text-power-tools)
+* [tomoki1207 selectline-statusbar](https://marketplace.visualstudio.com/items?itemName=tomoki1207.selectline-statusbar)
+* [adamwalzer string-converter](https://marketplace.visualstudio.com/items?itemName=adamwalzer.string-converter)
+* [Tyriar vscode-sort-lines](https://marketplace.visualstudio.com/items?itemName=Tyriar.sort-lines)
+* [rpeshkov vscode-text-tables](https://marketplace.visualstudio.com/items?itemName=RomanPeshkov.vscode-text-tables)
 * [wmaurer vscode-change-case](https://github.com/wmaurer/vscode-change-case)
-* [volkerdobler insertnums](https://github.com/volkerdobler/insertnums)
-* [WengerK vscode-highlight-bad-chars](https://github.com/WengerK/vscode-highlight-bad-chars)
-* [nhoizey vscode-gremlins](https://github.com/nhoizey/vscode-gremlins)
+* [volkerdobler insertnums](https://marketplace.visualstudio.com/items?itemName=volkerdobler.insertnums)
+* [WengerK vscode-highlight-bad-chars](https://marketplace.visualstudio.com/items?itemName=wengerk.highlight-bad-chars#overview)
+* [nhoizey vscode-gremlins](https://marketplace.visualstudio.com/items?itemName=nhoizey.gremlins)
+* [Pustelto Bracketeer](https://marketplace.visualstudio.com/items?itemName=pustelto.bracketeer)

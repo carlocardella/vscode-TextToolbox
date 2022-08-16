@@ -31,7 +31,7 @@
 			"args": [
 				"--extensionDevelopmentPath=${workspaceFolder}",
 				"--disable-extensions",
-				"-a C:/Temp"
+				"C:/Temp"
 			],
 			"outFiles": [
 				"${workspaceFolder}/dist/**/*.js"
