@@ -174,6 +174,7 @@ function padToSeparator(columns: ColumnElement[], separator: string): string {
                 if (ii === c.length - 1) {
                     paddedElement = `${c[ii].Text}`.padEnd(c[ii].Length + 1, " ");
                 } else {
+                    separator = separator === "\\s" || separator === "\\t" ? " " : separator; // @hack
                     paddedElement = `${c[ii].Text}${separator}`.padEnd(c[ii].Length + 2, " ");
                 }
             } else {
@@ -248,7 +249,8 @@ class LineElement {
     constructor(line: TextLine, separator: string) {
         this.LineNumber = line.lineNumber;
         this.Text = line;
-        this.Elements = line.text.split(separator);
+        separator = separator === "\\t" ? "\\s" : separator; // @hack: fix tab separator
+        this.Elements = line.text.split(new RegExp(separator)).filter((e) => e);
     }
 }
 
