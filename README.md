@@ -213,6 +213,8 @@ _Note_: In this release, highlights and decorations are persisted as long as the
   * Uses the first line in the CSV selection as table headers, markdown style
 * Align to separator
 
+Align commands can use RegExp to identify the separator; for example you can use `\s` for space and `\t` for tabs
+
 ### Others
 
 * Open selection(s) in new editor
