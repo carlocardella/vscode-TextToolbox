@@ -78,6 +78,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## Log
 
+## [2.7.2] - 2022-08-31
+
+### Changed
+
+* Updated the StatusBar item, if the active editor has a selection, show its word count rather than the count for tho whole document
+
 ## [2.7.1] - 2022-08-24
 
 ### Changed

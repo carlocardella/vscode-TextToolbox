@@ -222,6 +222,12 @@ Align commands can use RegExp to identify the separator; for example you can use
 * Select brackets content
 * Select quotes content
 
+### Status Bar
+
+* Show the number of lines in a selection
+* Show the number of words in a selection or the number of words in the document if there is no selection
+* Show the cursor position (active offset)
+
 ### Thanks to
 
 Text Toolbox is freely inspired by these fine extensions:
