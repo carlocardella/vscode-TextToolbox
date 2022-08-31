@@ -1,5 +1,5 @@
 import { window, ExtensionContext, workspace, StatusBarAlignment, Selection, StatusBarItem } from "vscode";
-import { getActiveEditor, getCursorPosition } from "./helpers";
+import { getActiveEditor, getCursorPosition, getTextFromSelection } from "./helpers";
 
 let statusBarItem: StatusBarItem;
 
@@ -76,7 +76,9 @@ function countSelectedLines(selection: Selection): number {
  * @returns {number}
  */
 function countWords(): number {
-    let text = window.activeTextEditor?.document.getText();
+    let text = window.activeTextEditor?.selection
+        ? getTextFromSelection(window.activeTextEditor, window.activeTextEditor.selection)
+        : window.activeTextEditor?.document.getText();
     if (!text) {
         return 0;
     }
