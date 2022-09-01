@@ -78,6 +78,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## Log
 
+## [2.7.4] - 2022-09-01
+
+### Fixed
+
+* Re-publish preview package
+
 ## [2.7.3] - 2022-08-31
 
 ### Fixed
