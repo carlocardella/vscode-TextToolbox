@@ -76,9 +76,9 @@ function countSelectedLines(selection: Selection): number {
  * @returns {number}
  */
 function countWords(): number {
-    let text = window.activeTextEditor?.selection
-        ? getTextFromSelection(window.activeTextEditor, window.activeTextEditor.selection)
-        : window.activeTextEditor?.document.getText();
+    let text = window.activeTextEditor?.selection.isEmpty
+        ? window.activeTextEditor?.document.getText()
+        : getTextFromSelection(window.activeTextEditor!, window.activeTextEditor!.selection);
     if (!text) {
         return 0;
     }
