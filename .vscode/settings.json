@@ -33,5 +33,6 @@
     // MOCHA EXPLORER
     "mochaExplorer.require": "ts-node/register",
     "mochaExplorer.files": "src/test/**/*.ts",
-    "mochaExplorer.logpanel": true
+    "mochaExplorer.logpanel": true,
+    "task.allowAutomaticTasks": "on"
 }
