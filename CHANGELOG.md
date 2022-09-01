@@ -78,6 +78,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## Log
 
+## [2.7.3] - 2022-08-31
+
+### Fixed
+
+* Ensure the Status Bar item is shown even if the active editor has no selection
+
 ## [2.7.2] - 2022-08-31
 
 ### Changed
