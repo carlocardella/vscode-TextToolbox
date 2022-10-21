@@ -385,9 +385,20 @@
                 "command": "vscode-texttoolbox.DuplicateTab",
                 "title": "Duplicate tab",
                 "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.TabOut",
+                "title": "tabOut",
+                "category": "Text Toolbox"
             }
         ],
         "menus": {
+            "commandPalette": [
+                {
+                    "command": "vscode-texttoolbox.TabOut",
+                    "when": "false"
+                }
+            ],
             "editor/context": [
                 {
                     "submenu": "tt.editorContext",
@@ -794,16 +805,16 @@
                         }
                     },
                     "TextToolbox.replaceControlCharactersWith": {
+                        "description": "Replace control characters (Remove Control Characters) in the active document with this string",
                         "type": "string",
                         "default": "",
-                        "scope": "window",
-                        "description": "Replace control characters (Remove Control Characters) in the active document with this string"
+                        "scope": "window"
                     },
                     "TextToolbox.alignTextDefaultSeparator": {
+                        "description": "Align text default separator (Align Text)",
                         "type": "string",
                         "default": ",",
-                        "scope": "window",
-                        "description": "Align text default separator (Align Text)"
+                        "scope": "window"
                     },
                     "TextToolbox.decorationDefaults": {
                         "default": [
@@ -908,8 +919,56 @@
                                 }
                             }
                         ]
+                    },
+                    "TextToolbox.tabOut.enabled": {
+                        "description": "Tab out of brackets, quotes, etc.",
+                        "type": "boolean",
+                        "default": true,
+                        "scope": "window"
+                    },
+                    "TextToolbox.tabOut.characters": {
+                        "description": "Characters to tab out of",
+                        "type": "array",
+                        "default": [
+                            "[",
+                            "]",
+                            "{",
+                            "}",
+                            "(",
+                            ")",
+                            "\\",
+                            "/",
+                            "'",
+                            ":",
+                            "=",
+                            ">",
+                            "<",
+                            ".",
+                            "`",
+                            ";"
+                        ],
+                        "scope": "window"
+                    },
+                    "TextToolbox.tabOut.languageTypeToInclude": {
+                        "description": "Use tab out in these language types",
+                        "type": "array",
+                        "default": [
+                            "*"
+                        ]
+                    },
+                    "TextToolbox.tabOut.languageTypeToExclude": {
+                        "description": "Do not use tab out in these language types",
+                        "type": "array",
+                        "default": []
                     }
                 }
+            }
+        ],
+        "keybindings": [
+            {
+                "command": "vscode-texttoolbox.TabOut",
+                "key": "tab",
+                "when": "editorTextFocus && !suggestWidgetVisible && !inlineSuggestionVisible && !inSnippetMode && !editorHasMultipleSelections"
             }
         ]
     },

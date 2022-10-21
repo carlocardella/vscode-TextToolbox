@@ -77,6 +77,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 * Status bar
   * Go to character offset (character position)
   * Allow to update position without reloading the entire window
+* TabOut
+  * Similar to 
 
 ## Log
 

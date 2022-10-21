@@ -10,6 +10,7 @@ import * as TextManipulation from "./modules/textManipulation";
 import * as Json from "./modules/json";
 import * as AlignText from "./modules/alignText";
 import TTDecorations from "./modules/decorations";
+import { tabOut } from "./modules/tabOut";
 
 export function activate(context: ExtensionContext) {
     console.log("vscode-texttoolbox is active");
@@ -375,6 +376,13 @@ export function activate(context: ExtensionContext) {
                 decorations = new TTDecorations();
             }
             decorations.RemoveHighlight(false);
+        })
+    );
+
+    // tabOut
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.TabOut", () => { 
+            tabOut();
         })
     );
 
