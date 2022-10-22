@@ -78,24 +78,82 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
   * Go to character offset (character position)
   * Allow to update position without reloading the entire window
 
+## [2.8.0] - 2022-10-21
+
+### Added
+
+* Added the ability to tab out of brackets, quotes and other some punctuation, inspired by [TabOut](https://marketplace.visualstudio.com/items?itemName=albert.TabOut)
+  * You can choose to enable or disable the feature entires, or to enable it for selected language types only
+
 ## Log
+
+## [2.7.4] - 2022-09-01
+
+### Fixed
+
+* Re-publish preview package
+
+## [2.7.3] - 2022-08-31
+
+### Fixed
+
+* Ensure the Status Bar item is shown even if the active editor has no selection
+
+## [2.7.2] - 2022-08-31
+
+### Changed
+
+* Updated the StatusBar item, if the active editor has a selection, show its word count rather than the count for tho whole document
+
+## [2.7.1] - 2022-08-24
+
+### Changed
+
+* Selection align commands (`Align as table` and `Align to separator`) can use RegExp for space (`s`) and tab (`\t`) as separator
+
+## [2.7.0] - 2022-08-15
+
+This is a **pre-release** version
+
+### Added
+
+* `Select text between brackets`
+  * Default keybinding: `ctrl+shift+alt+b`
+* `Select text between quotes`
+  * Default keybinding: `ctrl+shift+alt+f`
+* `Remove brackets`
+  * Removes the brackets _around_ the current selection or cursor position
+  * Default keybinding: `ctrl+shift+alt+;`
+* `Remove quotes`
+  * Removes the quotes _around_ the current selection or cursor position
+  * Default keybinding: `ctrl+shift+alt+'`
+
+Quotes include single (`'`), double (`"`) and backtick (`` ` ``)
+
+Brackets include round (`()`), square (`[]`), curly (`{}`) and angle (`<>`)
+
+**Note**: These commands are in preview, they may still be a bit rough around the edges (there may be bugs in certain edge cases), please double-check the selected text before taking any destructive actions.
+
+### Changed
+
+* Increased VSCode minimum version to `1.63`, needed to support pre-release extension versions.
 
 ## [2.6.0] - 2022-07-31
 
 ### Added
 
-* Decoded JWT token
-* Convert to and from Base64
-* HTML encode/decode
-* Uri encode/decode
+* `Decode JWT token`
+* `Convert to and from Base64`
+* `HTML encode/decode`
+* `Uri encode/decode`
 
 ## [2.5.0] - 2022-07-24
 
 ### Added
 
-* Sort lines by length
-* Convert integer to hexadecimal
-* Convert hexadecimal to integer
+* `Sort lines by length`
+* `Convert integer to hexadecimal`
+* `Convert hexadecimal to integer`
 
 ## [2.4.0] - 2022-04-17
 

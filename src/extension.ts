@@ -10,6 +10,8 @@ import * as TextManipulation from "./modules/textManipulation";
 import * as Json from "./modules/json";
 import * as AlignText from "./modules/alignText";
 import TTDecorations from "./modules/decorations";
+import { tabOut } from "./modules/tabOut";
+import * as Delimiters from "./modules/delimiters";
 
 export function activate(context: ExtensionContext) {
     console.log("vscode-texttoolbox is active");
@@ -244,6 +246,30 @@ export function activate(context: ExtensionContext) {
         })
     );
 
+    // delimiters
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.SelectTextBetweenQuotes", () => {
+            // QuotesAndBrackets.selectTextBetweenDelimiters(QuotesAndBrackets.delimiterType.quotes);
+            Delimiters.selectTextBetweenDelimiters(Delimiters.delimiterTypes.quote);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.SelectTextBetweenBrackets", () => {
+            // QuotesAndBrackets.selectTextBetweenDelimiters(QuotesAndBrackets.delimiterType.brackets);
+            Delimiters.selectTextBetweenDelimiters(Delimiters.delimiterTypes.bracket);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.RemoveQuotes", () => {
+            Delimiters.removeDelimiters(Delimiters.delimiterTypes.quote);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.RemoveBrackets", () => {
+            Delimiters.removeDelimiters(Delimiters.delimiterTypes.bracket);
+        })
+    );
+
     // json
     context.subscriptions.push(
         commands.registerTextEditorCommand("vscode-texttoolbox.StringifyJson", () => {
@@ -375,6 +401,13 @@ export function activate(context: ExtensionContext) {
                 decorations = new TTDecorations();
             }
             decorations.RemoveHighlight(false);
+        })
+    );
+
+    // tabOut
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.TabOut", () => { 
+            tabOut();
         })
     );
 

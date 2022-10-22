@@ -9,7 +9,8 @@
         "@typescript-eslint"
     ],
     "rules": {
-        // "@typescript-eslint/class-name-casing": "warn",
+        // // Commend out next line due to https://github.com/typescript-eslint/typescript-eslint/issues/2054
+        // "@typescript-eslint/class-na me-casing": "warn",
         "@typescript-eslint/semi": "warn",
         "curly": "warn",
         "eqeqeq": "warn",
