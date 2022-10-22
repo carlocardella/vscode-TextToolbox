@@ -387,6 +387,11 @@
                 "category": "Text Toolbox"
             },
             {
+                "command": "vscode-texttoolbox.TabOut",
+                "title": "tabOut",
+                "category": "Text Toolbox"
+            },
+            {
                 "command": "vscode-texttoolbox.SelectTextBetweenQuotes",
                 "title": "Select text between quotes",
                 "category": "Text Toolbox"
@@ -408,6 +413,12 @@
             }
         ],
         "menus": {
+            "commandPalette": [
+                {
+                    "command": "vscode-texttoolbox.TabOut",
+                    "when": "false"
+                }
+            ],
             "editor/context": [
                 {
                     "submenu": "tt.editorContext",
@@ -840,16 +851,16 @@
                         }
                     },
                     "TextToolbox.replaceControlCharactersWith": {
+                        "description": "Replace control characters (Remove Control Characters) in the active document with this string",
                         "type": "string",
                         "default": "",
-                        "scope": "window",
-                        "description": "Replace control characters (Remove Control Characters) in the active document with this string"
+                        "scope": "window"
                     },
                     "TextToolbox.alignTextDefaultSeparator": {
+                        "description": "Align text default separator (Align Text)",
                         "type": "string",
                         "default": ",",
-                        "scope": "window",
-                        "description": "Align text default separator (Align Text)"
+                        "scope": "window"
                     },
                     "TextToolbox.decorationDefaults": {
                         "default": [
@@ -954,11 +965,63 @@
                                 }
                             }
                         ]
+                    },
+                    "TextToolbox.tabOut.enabled": {
+                        "description": "Tab out of brackets, quotes, etc.",
+                        "type": "boolean",
+                        "default": true,
+                        "scope": "window"
+                    },
+                    "TextToolbox.tabOut.showInStatusBar": {
+                        "description": "Show a message in the status bar when tab out is enabled",
+                        "type": "boolean",
+                        "default": true,
+                        "scope": "window"
+                    },
+                    "TextToolbox.tabOut.characters": {
+                        "description": "Characters to tab out of",
+                        "type": "array",
+                        "default": [
+                            "[",
+                            "]",
+                            "{",
+                            "}",
+                            "(",
+                            ")",
+                            "\\",
+                            "/",
+                            "'",
+                            ":",
+                            "=",
+                            ">",
+                            "<",
+                            ".",
+                            "`",
+                            ";"
+                        ],
+                        "scope": "window"
+                    },
+                    "TextToolbox.tabOut.enabledLanguages": {
+                        "description": "Use tab out in these language types",
+                        "type": "array",
+                        "default": [
+                            "*"
+                        ]
+                    },
+                    "TextToolbox.tabOut.disableLanguages": {
+                        "description": "Do not use tab out in these language types",
+                        "type": "array",
+                        "default": []
                     }
                 }
             }
         ],
         "keybindings": [
+            {
+                "command": "vscode-texttoolbox.TabOut",
+                "key": "tab",
+                "when": "editorTextFocus && !suggestWidgetVisible && !inlineSuggestionVisible && !inSnippetMode && !editorHasMultipleSelections"
+            },
             {
                 "command": "vscode-texttoolbox.SelectTextBetweenBrackets",
                 "key": "ctrl+shift+alt+b",

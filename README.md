@@ -10,7 +10,7 @@
 [![Twitter](https://img.shields.io/twitter/url/https/github.com/carlocardella/vscode-TextToolbox.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Fcarlocardella%2Fvscode-TextToolbox)
 <!-- [![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/carlocardella/vscode-texttoolbox) -->
 
-[Download for VS Code](https://marketplace.visualstudio.com/items?itemName=CarloCardella.vscode-texttoolbox) 
+[Download for VS Code](https://marketplace.visualstudio.com/items?itemName=CarloCardella.vscode-texttoolbox)
 
 [Download for VS Codium](https://open-vsx.org/extension/carlocardella/vscode-texttoolbox)
 
@@ -26,7 +26,7 @@ The extension does not require any special permission, therefore is enabled to r
 
 ## Visual Studio Code for the Web
 
-Text-Toolbox works in [Visual Studio Code for the Web](https://code.visualstudio.com/docs/editor/vscode-web) (https://github.dev and https://vscode.dev)
+Text-Toolbox works in [Visual Studio Code for the Web](https://code.visualstudio.com/docs/editor/vscode-web) (<https://github.dev> and <https://vscode.dev>)
 
 ## Current list of commands
 
@@ -104,7 +104,7 @@ Likewise, `Convert to CapitalCase` has been removed in favor of the built-in VSC
     * hex => #4461ae
     * rgb => rgb(87,199,246)
   * TWITTER => @zatbiini
-  * URL => http://fuk.si/ek
+  * URL => <http://fuk.si/ek>
   * CITY => Ecicezjev
   * ADDRESS => 1784 Kaolo Grove
   * COUNTRY => IT
@@ -213,6 +213,24 @@ _Note_: In this release, highlights and decorations are persisted as long as the
   * Uses the first line in the CSV selection as table headers, markdown style
 * Align to separator
 
+### Tab Out
+
+* Tab Out of brackets, quotes and some punctuation
+  * _Note_: Tab Out is always disabled it the cursor is at the beginning of a line (position 0) to allow to indent its text
+* Enable or disable the feature for all languages with `TextToolbox.tabOut.enabled`: default `true`
+* Show or hide a message in the Status Bar when Tab Out is enabled with `TextToolbox.tabOut.showInStatusBar`: default `true`
+* Control which characters (brackets, quotes etc.) can be _tabbed out_ of
+* Choose for which language types Tab Out is enabled, with `TextToolbox.tabOut.enabledLanguages`: default `*` (enabled for all languages)
+* Choose for which language types Tab Out is disabled, with `TextToolbox.tabOut.disableLanguages`: default empty, meaning Tab Out is not explicitly disabled for any language
+  * You can combine `TextToolbox.tabOut.disableLanguages` and `TextToolbox.tabOut.enableLanguages` to fine-tune how Tab Out should work: for example you can enable Tab Out for all language types except `plaintext` with:
+  
+  ```json
+  {
+    "TextToolbox.tabOut.enableLanguages": ["*"],
+    "TextToolbox.tabOut.disableLanguages": ["plaintext"]
+  }
+  ```
+
 ### Others
 
 * Open selection(s) in new editor
@@ -235,3 +253,4 @@ Text Toolbox is freely inspired by these fine extensions:
 * [WengerK vscode-highlight-bad-chars](https://marketplace.visualstudio.com/items?itemName=wengerk.highlight-bad-chars#overview)
 * [nhoizey vscode-gremlins](https://marketplace.visualstudio.com/items?itemName=nhoizey.gremlins)
 * [Pustelto Bracketeer](https://marketplace.visualstudio.com/items?itemName=pustelto.bracketeer)
+* [albertromkes tabout](https://github.com/albertromkes/tabout)
