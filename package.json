@@ -46,7 +46,9 @@
         "text",
         "tools",
         "utilities",
-        "word count"
+        "word count",
+        "tabout",
+        "tab out"
     ],
     "activationEvents": [
         "onStartupFinished"
@@ -388,7 +390,12 @@
             },
             {
                 "command": "vscode-texttoolbox.TabOut",
-                "title": "tabOut",
+                "title": "Tab Out",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.ToggleTabOut",
+                "title": "Toggle Tab Out",
                 "category": "Text Toolbox"
             },
             {
@@ -991,6 +998,7 @@
                             "\\",
                             "/",
                             "'",
+                            "\"",
                             ":",
                             "=",
                             ">",

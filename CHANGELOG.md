@@ -78,14 +78,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
   * Go to character offset (character position)
   * Allow to update position without reloading the entire window
 
+## Log
+
+## [2.8.1] - 2022-10-22
+
+### Added
+
+* Added `Toggle Tab Out` command to easily enable/disable TabOut for all language types
+
+### Changed
+
+* The "TabOut" label on the Status Bar is updated right after `TextToolbox.tabOut.enabled` is updated, or after running `Toggle Tab Out`
+
 ## [2.8.0] - 2022-10-21
 
 ### Added
 
 * Added the ability to tab out of brackets, quotes and other some punctuation, inspired by [TabOut](https://marketplace.visualstudio.com/items?itemName=albert.TabOut)
   * You can choose to enable or disable the feature entires, or to enable it for selected language types only
-
-## Log
 
 ## [2.7.4] - 2022-09-01
 

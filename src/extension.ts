@@ -10,7 +10,7 @@ import * as TextManipulation from "./modules/textManipulation";
 import * as Json from "./modules/json";
 import * as AlignText from "./modules/alignText";
 import TTDecorations from "./modules/decorations";
-import { tabOut } from "./modules/tabOut";
+import { tabOut, toggleTabOut } from "./modules/tabOut";
 import * as Delimiters from "./modules/delimiters";
 
 export function activate(context: ExtensionContext) {
@@ -408,6 +408,11 @@ export function activate(context: ExtensionContext) {
     context.subscriptions.push(
         commands.registerTextEditorCommand("vscode-texttoolbox.TabOut", () => { 
             tabOut();
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.ToggleTabOut", () => { 
+            toggleTabOut();
         })
     );
 

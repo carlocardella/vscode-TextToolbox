@@ -87,3 +87,13 @@ export function tabOut() {
     let newSelection = new Selection(newPosition, newPosition);
     return (window.activeTextEditor!.selection = newSelection);
 }
+
+/**
+ * Toggle tabOut enabled
+ *
+ * @export
+ */
+export function toggleTabOut() { 
+    const tabOutEnabled = workspace.getConfiguration("TextToolbox.tabOut");
+    tabOutEnabled.update("enabled", !tabOutEnabled.get("enabled"), true);
+}

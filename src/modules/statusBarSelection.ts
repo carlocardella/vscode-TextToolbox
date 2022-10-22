@@ -20,6 +20,10 @@ export function createStatusBarItem(context: ExtensionContext) {
             if (e.affectsConfiguration("TextToolbox.enableStatusBarWordLineCount") || e.affectsConfiguration("TextToolbox.statusBarPriority")) {
                 window.showInformationMessage("Please reload the window for the change to take effect");
             }
+
+            if (e.affectsConfiguration("TextToolbox.tabOut.enabled")) {
+                updateStatusBar();
+            }
         })
     );
 }

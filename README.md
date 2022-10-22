@@ -217,6 +217,7 @@ Align commands can use RegExp to identify the separator; for example you can use
 
 ### Tab Out
 
+* Toggle Tab Out
 * Tab Out of brackets, quotes and some punctuation
   * _Note_: Tab Out is always disabled it the cursor is at the beginning of a line (position 0) to allow to indent its text
 * Enable or disable the feature for all languages with `TextToolbox.tabOut.enabled`: default `true`
