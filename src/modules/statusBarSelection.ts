@@ -1,5 +1,5 @@
 import { window, ExtensionContext, workspace, StatusBarAlignment, Selection, StatusBarItem } from "vscode";
-import { getActiveEditor, getCursorPosition } from "./helpers";
+import { getActiveEditor, getCursorPosition, getTextFromSelection } from "./helpers";
 
 let statusBarItem: StatusBarItem;
 
@@ -76,7 +76,9 @@ function countSelectedLines(selection: Selection): number {
  * @returns {number}
  */
 function countWords(): number {
-    let text = window.activeTextEditor?.document.getText();
+    let text = window.activeTextEditor?.selection.isEmpty
+        ? window.activeTextEditor?.document.getText()
+        : getTextFromSelection(window.activeTextEditor!, window.activeTextEditor!.selection);
     if (!text) {
         return 0;
     }
@@ -110,8 +112,14 @@ function updateStatusBar() {
     let offset = editor!.document.offsetAt(cursorPosition);
     // investigate: support multicursor offsets?
 
+    let tabOutText =
+        workspace.getConfiguration().get<boolean>("TextToolbox.tabOut.enabled") &&
+        workspace.getConfiguration().get<boolean>("TextToolbox.tabOut.showInStatusBar")
+            ? ", TabOut"
+            : "";
+
     if (lineCount > 0 || wordCount > 0) {
-        statusBarItem.text = `Lns: ${lineCount}, Wds: ${wordCount}, Pos: ${offset}`;
+        statusBarItem.text = `Lns: ${lineCount}, Wds: ${wordCount}, Pos: ${offset}${tabOutText}`;
         statusBarItem.show();
     } else {
         statusBarItem.hide();

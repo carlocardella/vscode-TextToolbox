@@ -21,6 +21,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 	* Convert selected date to format (pick one of the formats offered by "Insert Date")
 	* Insert an arbitrary date
 	* Insert random date
+* JSON
+  * Sort Json objects and properties
 * Align
   * to cursor
   * to special characters (e.g. tabs)
@@ -75,6 +77,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 * Status bar
   * Go to character offset (character position)
   * Allow to update position without reloading the entire window
+
+## [2.8.0] - 2022-10-21
+
+### Added
+
+* Added the ability to tab out of brackets, quotes and other some punctuation, inspired by [TabOut](https://marketplace.visualstudio.com/items?itemName=albert.TabOut)
+  * You can choose to enable or disable the feature entires, or to enable it for selected language types only
 
 ## Log
 
