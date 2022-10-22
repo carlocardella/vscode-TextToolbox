@@ -213,6 +213,8 @@ _Note_: In this release, highlights and decorations are persisted as long as the
   * Uses the first line in the CSV selection as table headers, markdown style
 * Align to separator
 
+Align commands can use RegExp to identify the separator; for example you can use `\s` for space and `\t` for tabs
+
 ### Tab Out
 
 * Tab Out of brackets, quotes and some punctuation
@@ -237,6 +239,13 @@ _Note_: In this release, highlights and decorations are persisted as long as the
 * Duplicate tab (open the current document's text in a new unsaved document)
 * Select brackets content
 * Select quotes content
+
+### Status Bar
+
+* Show the number of lines in a selection
+* Show the number of words in a selection or the number of words in the document if there is no selection
+* Show the cursor position (active offset)
+* Show if Tab Out is enabled for the document
 
 ### Thanks to
 
