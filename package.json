@@ -926,6 +926,12 @@
                         "default": true,
                         "scope": "window"
                     },
+                    "TextToolbox.tabOut.showInStatusBar": {
+                        "description": "Show a message in the status bar when tab out is enabled",
+                        "type": "boolean",
+                        "default": true,
+                        "scope": "window"
+                    },
                     "TextToolbox.tabOut.characters": {
                         "description": "Characters to tab out of",
                         "type": "array",
@@ -949,14 +955,14 @@
                         ],
                         "scope": "window"
                     },
-                    "TextToolbox.tabOut.languageTypeToInclude": {
+                    "TextToolbox.tabOut.enabledLanguages": {
                         "description": "Use tab out in these language types",
                         "type": "array",
                         "default": [
                             "*"
                         ]
                     },
-                    "TextToolbox.tabOut.languageTypeToExclude": {
+                    "TextToolbox.tabOut.disableLanguages": {
                         "description": "Do not use tab out in these language types",
                         "type": "array",
                         "default": []

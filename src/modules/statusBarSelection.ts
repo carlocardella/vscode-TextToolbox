@@ -112,8 +112,14 @@ function updateStatusBar() {
     let offset = editor!.document.offsetAt(cursorPosition);
     // investigate: support multicursor offsets?
 
+    let tabOutText =
+        workspace.getConfiguration().get<boolean>("TextToolbox.tabOut.enabled") &&
+        workspace.getConfiguration().get<boolean>("TextToolbox.tabOut.showInStatusBar")
+            ? ", TabOut"
+            : "";
+
     if (lineCount > 0 || wordCount > 0) {
-        statusBarItem.text = `Lns: ${lineCount}, Wds: ${wordCount}, Pos: ${offset}`;
+        statusBarItem.text = `Lns: ${lineCount}, Wds: ${wordCount}, Pos: ${offset}${tabOutText}`;
         statusBarItem.show();
     } else {
         statusBarItem.hide();

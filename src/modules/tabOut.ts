@@ -1,6 +1,11 @@
 import { commands, Selection, window, workspace } from "vscode";
 import { getActiveEditor, getCursorPosition } from "./helpers";
 
+/**
+ * Check if tabOut is enabled; this includes if tabOut is allowed for the active document's language type
+ *
+ * @returns {boolean}
+ */
 function isTabOutEnabled(): boolean {
     // is tabOut enabled?
     if (!workspace.getConfiguration().get<boolean>("TextToolbox.tabOut.enabled")) {
@@ -8,14 +13,14 @@ function isTabOutEnabled(): boolean {
     }
 
     // is the current language type excluded?
-    const excludedLanguages = workspace.getConfiguration().get<string[]>("TextToolbox.tabOut.languageTypeToExclude");
+    const excludedLanguages = workspace.getConfiguration().get<string[]>("TextToolbox.tabOut.disableLanguages");
     const currentLanguage = getActiveEditor()?.document.languageId;
     if (excludedLanguages?.includes(currentLanguage!)) {
         return false;
     }
 
     // is the current language type included?
-    const includedLanguages = workspace.getConfiguration().get<string[]>("TextToolbox.tabOut.languageTypeToInclude");
+    const includedLanguages = workspace.getConfiguration().get<string[]>("TextToolbox.tabOut.enabledLanguages");
     if (!includedLanguages?.includes(currentLanguage!) && !includedLanguages?.includes("*")) {
         return false;
     }
@@ -23,6 +28,11 @@ function isTabOutEnabled(): boolean {
     return true;
 }
 
+/**
+ * Check if we should tabOut
+ *
+ * @returns {boolean}
+ */
 function shouldTabOut(): boolean {
     if (!isTabOutEnabled()) {
         return false;
@@ -49,8 +59,14 @@ function shouldTabOut(): boolean {
     return true;
 }
 
+/**
+ * Tab Out
+ *
+ * @export
+ * @returns {*}
+ */
 export function tabOut() {
-        if (!isTabOutEnabled()) {
+    if (!isTabOutEnabled()) {
         commands.executeCommand("tab");
         return;
     }
@@ -69,5 +85,5 @@ export function tabOut() {
     let cursorPosition = getCursorPosition(editor);
     let newPosition = cursorPosition[0].with(cursorPosition[0].line, cursorPosition[0].character + 1);
     let newSelection = new Selection(newPosition, newPosition);
-    return window.activeTextEditor!.selection = newSelection;
+    return (window.activeTextEditor!.selection = newSelection);
 }
