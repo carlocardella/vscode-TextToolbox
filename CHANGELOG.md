@@ -85,6 +85,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ### Added
 
 * Added `Toggle Tab Out` command to easily enable/disable TabOut for all language types
+* Added double quotes (`"`) as character to tab out from
 
 ### Changed
 
