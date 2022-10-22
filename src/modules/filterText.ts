@@ -52,7 +52,7 @@ export async function removeEmptyLinesInternal(text: string, redundantOnly: bool
 }
 
 /**
- * Removes duplicate lines from the active selection or document and optionally open the resul in a new editor
+ * Removes duplicate lines from the active selection or document and optionally open the result in a new editor
  * @param {boolean} openInNewTextEditor Open the resulting text in a new editor
  * @async
  */
