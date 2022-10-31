@@ -60,6 +60,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
   * randomSampleFromInput
   * randomIban
   * insert multicursor should insert different strings, not the same repeated one
+  * Natural language dates (today, tomorrow, last month etc.)
 * Copy text
   * Copy without formatting
   * Copy with line numbers
