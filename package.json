@@ -57,7 +57,7 @@
     "browser": "./dist/extension-web.js",
     "preview": false,
     "badges": [],
-    "icon": "assets/text_icon_reverse.png",
+    "icon": "assets/extension_icon.png",
     "repository": {
         "type": "git",
         "url": "https://github.com/carlocardella/vscode-TextToolbox.git"

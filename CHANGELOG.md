@@ -83,6 +83,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## Log
 
+## [2.8.2] - 2022-11-06
+
+### Changed
+
+* New icon! 😄
+
 ## [2.8.1] - 2022-10-22
 
 ### Added
