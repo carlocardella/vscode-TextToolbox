@@ -23,6 +23,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 	* Insert random date
 * JSON
   * Sort Json objects and properties
+  * Escape json
+  * Unescape json
 * Align
   * to cursor
   * to special characters (e.g. tabs)
@@ -58,6 +60,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
   * randomSampleFromInput
   * randomIban
   * insert multicursor should insert different strings, not the same repeated one
+  * Natural language dates (today, tomorrow, last month etc.)
 * Copy text
   * Copy without formatting
   * Copy with line numbers
@@ -80,11 +83,18 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## Log
 
+## [2.8.2] - 2022-11-06
+
+### Changed
+
+* New icon! 😄
+
 ## [2.8.1] - 2022-10-22
 
 ### Added
 
 * Added `Toggle Tab Out` command to easily enable/disable TabOut for all language types
+* Added double quotes (`"`) as character to tab out from
 
 ### Changed
 
