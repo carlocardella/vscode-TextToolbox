@@ -60,7 +60,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
   * randomSampleFromInput
   * randomIban
   * insert multicursor should insert different strings, not the same repeated one
-  * Natural language dates (today, tomorrow, last month etc.)
+  * Natural language dates:
+    * Customizable format through settings
+    * Explore insert as snipped or autocomplete (with a trigger character)
+    * Dates:
+      * Today
+      * Yesterday
+      * Last week
+      * Last month
+      * Last year
+      * Tomorrow
+      * Next week
+      * Next month
+      * Next year
 * Copy text
   * Copy without formatting
   * Copy with line numbers
