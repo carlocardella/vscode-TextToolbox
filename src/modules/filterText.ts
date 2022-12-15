@@ -1,6 +1,6 @@
 import { getActiveEditor, getDocumentTextOrSelection, createNewEditor, getSelection, linesToLine, getLinesFromString, getTextFromSelection } from "./helpers";
 import * as os from "os";
-import { window, workspace } from "vscode";
+import { window, workspace, TextEditor, Selection, Uri } from "vscode";
 
 /**
  * Removes empty lines from the active document or selection; optionally removes only duplicate empty lines.
@@ -192,4 +192,24 @@ export async function openSelectionInNewEditor(): Promise<boolean> {
 
     await createNewEditor(text!.join(os.EOL));
     return Promise.resolve(true);
+}
+
+export function getUrlUnderCursor(editor: TextEditor, url?: string): string | undefined {
+    const document = editor.document;
+    if (!document) {
+        return;
+    }
+
+    let range = document.getWordRangeAtPosition(
+        editor.selection.active,
+        /http(s)?:\/\/?|(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()!@:%_\+.~#?&\/\/=]*)/
+    );
+    if (!range) {
+        return;
+    }
+
+    url = getTextFromSelection(editor, new Selection(range!.start, range!.end));
+    if (url) {
+        return url;
+    }
 }

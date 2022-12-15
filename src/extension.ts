@@ -1,4 +1,4 @@
-import { commands, ExtensionContext, window, workspace } from "vscode";
+import { commands, ExtensionContext, window, workspace, env, Uri } from "vscode";
 import * as CaseConversion from "./modules/caseConversion";
 import * as InsertText from "./modules/insertText";
 import * as StatusBarSelection from "./modules/statusBarSelection";
@@ -154,6 +154,22 @@ export function activate(context: ExtensionContext) {
     context.subscriptions.push(
         commands.registerTextEditorCommand("vscode-texttoolbox.OpenSelectionInNewEditor", () => {
             FilterText.openSelectionInNewEditor();
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.OpenUrlUnderCursor", () => {
+            const editor = Helpers.getActiveEditor();
+            if (!editor) {
+                return;
+            }
+
+            let url = FilterText.getUrlUnderCursor(editor);
+            if (url) {
+                if (!url.startsWith("http")) { 
+                    url = "https://" + url;
+                }
+                env.openExternal(Uri.parse(url));
+            }
         })
     );
 
@@ -406,12 +422,12 @@ export function activate(context: ExtensionContext) {
 
     // tabOut
     context.subscriptions.push(
-        commands.registerTextEditorCommand("vscode-texttoolbox.TabOut", () => { 
+        commands.registerTextEditorCommand("vscode-texttoolbox.TabOut", () => {
             tabOut();
         })
     );
     context.subscriptions.push(
-        commands.registerTextEditorCommand("vscode-texttoolbox.ToggleTabOut", () => { 
+        commands.registerTextEditorCommand("vscode-texttoolbox.ToggleTabOut", () => {
             toggleTabOut();
         })
     );

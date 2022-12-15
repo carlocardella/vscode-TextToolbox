@@ -417,6 +417,11 @@
                 "command": "vscode-texttoolbox.RemoveBrackets",
                 "title": "Remove brackets",
                 "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.OpenUrlUnderCursor",
+                "title": "Open Url under cursor in default browser",
+                "category": "Text Toolbox"
             }
         ],
         "menus": {
@@ -696,6 +701,10 @@
                 {
                     "group": "tt.filter",
                     "command": "vscode-texttoolbox.OpenSelectionInNewEditor"
+                },
+                {
+                    "group": "tt.filter",
+                    "command": "vscode-texttoolbox.OpenUrlUnderCursor"
                 }
             ],
             "tt.json": [
