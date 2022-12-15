@@ -141,7 +141,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ### Changed
 
-* Selection align commands (`Align as table` and `Align to separator`) can use RegExp for space (`s`) and tab (`\t`) as separator
+* Selection align commands (`Align as table` and `Align to separator`) can use RegExp for space (`\s`) and tab (`\t`) as separator
 
 ## [2.7.0] - 2022-08-15
 
