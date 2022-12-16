@@ -7,7 +7,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## Unreleased
 
-* Text manipulation
+See the [list of open enhancements on GitHub](https://github.com/carlocardella/vscode-TextToolbox/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3Aenhancement)
+
+<!-- * Text manipulation
   * Invert (replace) quotes: since quotes in the selection get replaced with double quotes and vice versa
   * Fix quotes: badly closed quotes (e.g. 'test")
   * remove empty lines (end of file)
@@ -91,9 +93,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
   * Url
 * Status bar
   * Go to character offset (character position)
-  * Allow to update position without reloading the entire window
+  * Allow to update position without reloading the entire window -->
 
 ## Log
+
+## [2.9.0] - 2022-12-16
+
+### Added
+
+* `Open under cursor`
+  * Position the cursor on a file path and open it in a new editor
+  * Open URLs in your default browser
+  * Open a new email in your default email client
+  * Default keybinding: 
+    * `alt+o` on Windows
+    * `cmd+o` on Mac
 
 ## [2.8.2] - 2022-11-06
 

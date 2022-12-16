@@ -148,6 +148,11 @@ Likewise, `Convert to CapitalCase` has been removed in favor of the built-in VSC
     * `/\d.*/gm`
   * string match allows to find all lines containing the string you are looking for, the string must match exactly
 
+### Open
+
+* Open under cursor
+  * Position the cursor on a file path, URL or email address and open it with `alt+o` on Windows (`cmd+o` on Mac)
+
 ### Remove
 
 * Remove all empty lines

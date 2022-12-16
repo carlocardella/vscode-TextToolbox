@@ -12,6 +12,8 @@ import * as AlignText from "./modules/alignText";
 import TTDecorations from "./modules/decorations";
 import { tabOut, toggleTabOut } from "./modules/tabOut";
 import * as Delimiters from "./modules/delimiters";
+import * as path from "path";
+import { REGEX_VALIDATE_EMAIL } from "./modules/filterText";
 
 export function activate(context: ExtensionContext) {
     console.log("vscode-texttoolbox is active");
@@ -156,19 +158,51 @@ export function activate(context: ExtensionContext) {
             FilterText.openSelectionInNewEditor();
         })
     );
+
     context.subscriptions.push(
-        commands.registerTextEditorCommand("vscode-texttoolbox.OpenUrlUnderCursor", () => {
+        commands.registerTextEditorCommand("vscode-texttoolbox.OpenPathOrUrlUnderCursor", async () => {
             const editor = Helpers.getActiveEditor();
             if (!editor) {
                 return;
             }
 
-            let url = FilterText.getUrlUnderCursor(editor);
-            if (url) {
-                if (!url.startsWith("http")) { 
-                    url = "https://" + url;
+            let textBetweenSpaces = FilterText.getTextBetweenSpaces(editor);
+            if (textBetweenSpaces) {
+                // URL
+                if (textBetweenSpaces.startsWith("http") || textBetweenSpaces.startsWith("www.")) {
+                    if (!textBetweenSpaces.startsWith("http")) {
+                        textBetweenSpaces = "https://" + textBetweenSpaces;
+                    }
+                    env.openExternal(Uri.parse(textBetweenSpaces));
+                    return;
                 }
-                env.openExternal(Uri.parse(url));
+
+                // Email
+                if (textBetweenSpaces.match(REGEX_VALIDATE_EMAIL)) {
+                    if (!textBetweenSpaces.startsWith("http")) {
+                        textBetweenSpaces = "mailto://" + textBetweenSpaces;
+                    }
+                    env.openExternal(Uri.parse(textBetweenSpaces));
+                    return;
+                }
+
+                // File system path
+                let userPathUri = Uri.file(textBetweenSpaces);
+                await workspace.fs.stat(userPathUri).then(
+                    (stat) => {
+                        commands.executeCommand("vscode.open", userPathUri);
+                    },
+                    (err) => {
+                        // if the path does not exist, check if it is a path relative to the open document
+                        let folder = path.dirname(editor.document.uri.fsPath);
+                        if (folder) {
+                            userPathUri = Uri.joinPath(Uri.file(folder), textBetweenSpaces!);
+                            workspace.fs.stat(userPathUri).then((stat) => {
+                                commands.executeCommand("vscode.open", userPathUri);
+                            });
+                        }
+                    }
+                );
             }
         })
     );

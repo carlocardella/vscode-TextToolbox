@@ -2,6 +2,9 @@ import { getActiveEditor, getDocumentTextOrSelection, createNewEditor, getSelect
 import * as os from "os";
 import { window, workspace, TextEditor, Selection, Uri } from "vscode";
 
+export const REGEX_TEXT_BETWEEN_SPACES = /([^\s"'`{}()[\]])+/;
+export const REGEX_VALIDATE_EMAIL = /[\w-]+@[\w-]+\.\w+/;
+
 /**
  * Removes empty lines from the active document or selection; optionally removes only duplicate empty lines.
  * This function is called by the TextEditorCommands `RemoveAllEmptyLines` and `RemoveRedundantEmptyLines` and is a wrapper for `removeEmptyLinesInternal`
@@ -194,22 +197,31 @@ export async function openSelectionInNewEditor(): Promise<boolean> {
     return Promise.resolve(true);
 }
 
-export function getUrlUnderCursor(editor: TextEditor, url?: string): string | undefined {
+/**
+ * Returns the string between two spaces, starting at the current cursor position
+ *
+ * @export
+ * @param {TextEditor} editor The current editor
+ * @param {?string} [text] The text to search in
+ * @returns {(string | undefined)}
+ */
+export function getTextBetweenSpaces(editor: TextEditor, text?: string): string | undefined {
     const document = editor.document;
     if (!document) {
         return;
     }
 
+    // prettier-ignore
     let range = document.getWordRangeAtPosition(
         editor.selection.active,
-        /http(s)?:\/\/?|(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()!@:%_\+.~#?&\/\/=]*)/
+        REGEX_TEXT_BETWEEN_SPACES
     );
     if (!range) {
         return;
     }
 
-    url = getTextFromSelection(editor, new Selection(range!.start, range!.end));
-    if (url) {
-        return url;
+    text = getTextFromSelection(editor, new Selection(range!.start, range!.end));
+    if (text) {
+        return text;
     }
 }
