@@ -11,6 +11,18 @@ See the [list of open enhancements on GitHub](https://github.com/carlocardella/v
 
 ## Log
 
+## [2.9.0] - 2022-12-16
+
+### Added
+
+* `Open under cursor`
+  * Position the cursor on a file path and open it in a new editor
+  * Open URLs in your default browser
+  * Open a new email in your default email client
+  * Default keybinding: 
+    * `alt+o` on Windows
+    * `cmd+o` on Mac
+
 ## [2.8.2] - 2022-11-06
 
 ### Changed
@@ -57,7 +69,7 @@ See the [list of open enhancements on GitHub](https://github.com/carlocardella/v
 
 ### Changed
 
-* Selection align commands (`Align as table` and `Align to separator`) can use RegExp for space (`s`) and tab (`\t`) as separator
+* Selection align commands (`Align as table` and `Align to separator`) can use RegExp for space (`\s`) and tab (`\t`) as separator
 
 ## [2.7.0] - 2022-08-15
 

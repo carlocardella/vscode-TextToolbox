@@ -417,6 +417,11 @@
                 "command": "vscode-texttoolbox.RemoveBrackets",
                 "title": "Remove brackets",
                 "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.OpenPathOrUrlUnderCursor",
+                "title": "Open under cursor",
+                "category": "Text Toolbox"
             }
         ],
         "menus": {
@@ -696,6 +701,10 @@
                 {
                     "group": "tt.filter",
                     "command": "vscode-texttoolbox.OpenSelectionInNewEditor"
+                },
+                {
+                    "group": "tt.filter",
+                    "command": "vscode-texttoolbox.OpenPathOrUrlUnderCursor"
                 }
             ],
             "tt.json": [
@@ -1054,6 +1063,12 @@
                 "command": "vscode-texttoolbox.RemoveBrackets",
                 "key": "ctrl+shift+alt+;",
                 "mac": "ctrl+shift+cmd+;",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "vscode-texttoolbox.OpenPathOrUrlUnderCursor",
+                "key": "alt+o",
+                "mac": "cmd+o",
                 "when": "editorTextFocus"
             }
         ]

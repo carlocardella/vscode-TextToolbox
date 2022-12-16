@@ -1,6 +1,9 @@
 import { getActiveEditor, getDocumentTextOrSelection, createNewEditor, getSelection, linesToLine, getLinesFromString, getTextFromSelection } from "./helpers";
 import * as os from "os";
-import { window, workspace } from "vscode";
+import { window, workspace, TextEditor, Selection, Uri } from "vscode";
+
+export const REGEX_TEXT_BETWEEN_SPACES = /([^\s"'`{}()[\]])+/;
+export const REGEX_VALIDATE_EMAIL = /[\w-]+@[\w-]+\.\w+/;
 
 /**
  * Removes empty lines from the active document or selection; optionally removes only duplicate empty lines.
@@ -192,4 +195,33 @@ export async function openSelectionInNewEditor(): Promise<boolean> {
 
     await createNewEditor(text!.join(os.EOL));
     return Promise.resolve(true);
+}
+
+/**
+ * Returns the string between two spaces, starting at the current cursor position
+ *
+ * @export
+ * @param {TextEditor} editor The current editor
+ * @param {?string} [text] The text to search in
+ * @returns {(string | undefined)}
+ */
+export function getTextBetweenSpaces(editor: TextEditor, text?: string): string | undefined {
+    const document = editor.document;
+    if (!document) {
+        return;
+    }
+
+    // prettier-ignore
+    let range = document.getWordRangeAtPosition(
+        editor.selection.active,
+        REGEX_TEXT_BETWEEN_SPACES
+    );
+    if (!range) {
+        return;
+    }
+
+    text = getTextFromSelection(editor, new Selection(range!.start, range!.end));
+    if (text) {
+        return text;
+    }
 }
