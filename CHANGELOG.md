@@ -11,6 +11,12 @@ See the [list of open enhancements on GitHub](https://github.com/carlocardella/v
 
 ## Log
 
+## [2.10.0] - 2022-12-26
+
+### Changed
+
+* Removed edit commands from the context menu for readonly editors
+
 ## [2.9.0] - 2022-12-16
 
 ### Added

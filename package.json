@@ -446,7 +446,8 @@
             "tt.editorContext": [
                 {
                     "submenu": "tt.caseConversion",
-                    "group": "caseConversion"
+                    "group": "caseConversion",
+                    "when": "!editorReadonly"
                 },
                 {
                     "submenu": "tt.filter",
@@ -454,23 +455,28 @@
                 },
                 {
                     "submenu": "tt.insert",
-                    "group": "insert"
+                    "group": "insert",
+                    "when": "!editorReadonly"
                 },
                 {
                     "submenu": "tt.transform",
-                    "group": "filter"
+                    "group": "filter",
+                    "when": "!editorReadonly"
                 },
                 {
                     "submenu": "tt.json",
-                    "group": "json"
+                    "group": "json",
+                    "when": "!editorReadonly"
                 },
                 {
                     "submenu": "tt.sort",
-                    "group": "filter"
+                    "group": "filter",
+                    "when": "!editorReadonly"
                 },
                 {
                     "submenu": "tt.path",
-                    "group": "path"
+                    "group": "path",
+                    "when": "!editorReadonly"
                 },
                 {
                     "submenu": "tt.highlight",
@@ -478,7 +484,8 @@
                 },
                 {
                     "submenu": "tt.delimiters",
-                    "group": "delimiters"
+                    "group": "delimiters",
+                    "when": "!editorReadonly"
                 },
                 {
                     "command": "vscode-texttoolbox.DuplicateTab",
@@ -680,19 +687,23 @@
             "tt.filter": [
                 {
                     "group": "tt.filter",
-                    "command": "vscode-texttoolbox.RemoveAllEmptyLines"
+                    "command": "vscode-texttoolbox.RemoveAllEmptyLines",
+                    "when": "!editorReadonly"
                 },
                 {
                     "group": "tt.filter",
-                    "command": "vscode-texttoolbox.RemoveRedundantEmptyLines"
+                    "command": "vscode-texttoolbox.RemoveRedundantEmptyLines",
+                    "when": "!editorReadonly"
                 },
                 {
                     "group": "tt.filter",
-                    "command": "vscode-texttoolbox.RemoveDuplicateLines"
+                    "command": "vscode-texttoolbox.RemoveDuplicateLines",
+                    "when": "!editorReadonly"
                 },
                 {
                     "group": "tt.filter",
-                    "command": "vscode-texttoolbox.RemoveDuplicateLinesResultInNewEditor"
+                    "command": "vscode-texttoolbox.RemoveDuplicateLinesResultInNewEditor",
+                    "when": "!editorReadonly"
                 },
                 {
                     "group": "tt.filter",
