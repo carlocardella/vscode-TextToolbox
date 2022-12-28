@@ -11,6 +11,12 @@ See the [list of open enhancements on GitHub](https://github.com/carlocardella/v
 
 ## Log
 
+## [2.10.1] - 2022-12-28
+
+### Fixed
+
+* [#21 Uncaught errors thrown when frontmost file changes](https://github.com/carlocardella/vscode-TextToolbox/issues/21)
+
 ## [2.10.0] - 2022-12-26
 
 ### Changed
