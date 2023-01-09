@@ -1,4 +1,4 @@
-import { getActiveEditor, getDocumentTextOrSelection, createNewEditor, getSelection, linesToLine, getLinesFromString, getTextFromSelection } from "./helpers";
+import { getActiveEditor, getDocumentTextOrSelection, createNewEditor, getSelection, linesToLine, getLinesFromString, getTextFromSelection, getDocumentEOL } from "./helpers";
 import * as os from "os";
 import { window, workspace, TextEditor, Selection, Uri } from "vscode";
 
@@ -42,7 +42,7 @@ export async function removeEmptyLines(redundantOnly: boolean) {
  * @returns {Promise<string>}
  */
 export async function removeEmptyLinesInternal(text: string, redundantOnly: boolean): Promise<string> {
-    const eol = os.EOL;
+    const eol = getDocumentEOL(getActiveEditor());
     let r;
     let rr: string;
     // /^\n{2,}/gm ==> two or more empty lines
@@ -61,8 +61,10 @@ export async function removeEmptyLinesInternal(text: string, redundantOnly: bool
  */
 export async function removeDuplicateLines(openInNewTextEditor: boolean) {
     let text = getDocumentTextOrSelection();
+    const eol = getDocumentEOL(getActiveEditor());
+
     const o = os;
-    let lines = text?.split(os.EOL);
+    let lines = text?.split(eol);
     if (!lines) {
         return;
     }
@@ -189,11 +191,13 @@ export async function openSelectionInNewEditor(): Promise<boolean> {
 
     let selections = editor.selections;
     let text: string[] = [];
+    const eol = getDocumentEOL(getActiveEditor());
+
     selections.forEach((s) => {
-        text.push(getTextFromSelection(editor, s)! + os.EOL);
+        text.push(getTextFromSelection(editor, s)! + eol);
     });
 
-    await createNewEditor(text!.join(os.EOL));
+    await createNewEditor(text!.join(eol));
     return Promise.resolve(true);
 }
 

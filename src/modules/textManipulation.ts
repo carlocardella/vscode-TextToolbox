@@ -1,5 +1,5 @@
 import { Selection, TextEditor, window } from "vscode";
-import { getActiveEditor, getLinesFromDocumentOrSelection, getTextFromSelection, createNewEditor } from "./helpers";
+import { getActiveEditor, getLinesFromDocumentOrSelection, getTextFromSelection, createNewEditor, getDocumentEOL } from "./helpers";
 import * as os from "os";
 import * as path from "path";
 import jwt_decode from "jwt-decode";
@@ -53,18 +53,20 @@ export async function splitSelectionInternal(delimiter: string, openInNewEditor:
         return Promise.resolve(false);
     }
 
+    const eol = getDocumentEOL(getActiveEditor());
+
     if (openInNewEditor) {
         let newEditorText: string = "";
 
         editor.selections.forEach((s) => {
-            newEditorText += getTextFromSelection(editor, s)?.split(delimiter).join(os.EOL) + os.EOL;
+            newEditorText += getTextFromSelection(editor, s)?.split(delimiter).join(eol) + eol;
         });
 
         await createNewEditor(newEditorText);
     } else {
         editor.edit((editBuilder) => {
             editor.selections.forEach((s) => {
-                editBuilder.replace(s, getTextFromSelection(editor, s)?.split(delimiter).join(os.EOL)!);
+                editBuilder.replace(s, getTextFromSelection(editor, s)?.split(delimiter).join(eol)!);
             });
         });
     }

@@ -1,6 +1,6 @@
-import { createNewEditor, getDocumentTextOrSelection, getSelection, getLinesFromString, linesToLine, getActiveEditor } from "./helpers";
+import { createNewEditor, getDocumentTextOrSelection, getSelection, getLinesFromString, linesToLine, getActiveEditor, getDocumentEOL } from "./helpers";
 import * as os from "os";
-import { window } from "vscode";
+import { EndOfLine, window } from "vscode";
 
 /**
  * Sorting direction: ascending | descending | reverse
@@ -33,8 +33,10 @@ export async function askForSortDirection(openInNewTextEditor?: boolean) {
  * @async
  */
 export async function sortLines(direction: string, openInNewTextEditor?: boolean): Promise<boolean> {
+    const eol = getDocumentEOL(getActiveEditor());
+
     let newLines = getDocumentTextOrSelection()
-        ?.split(os.EOL)
+        ?.split(eol)
         .filter((el) => {
             return el !== null && el !== "";
         });
@@ -58,13 +60,13 @@ export async function sortLines(direction: string, openInNewTextEditor?: boolean
     }
 
     if (openInNewTextEditor) {
-        createNewEditor(sortedLines?.join(os.EOL));
+        createNewEditor(sortedLines?.join(eol));
         return Promise.resolve(true);
     } else {
         const editor = window.activeTextEditor;
         const selection = getSelection(editor!);
         editor?.edit((editBuilder) => {
-            editBuilder.replace(selection!, sortedLines!.join(os.EOL));
+            editBuilder.replace(selection!, sortedLines!.join(eol));
         });
     }
 
@@ -79,11 +81,13 @@ export async function sortLines(direction: string, openInNewTextEditor?: boolean
  * @return {*}  {Promise<boolean>}
  */
 export async function invertLines(): Promise<boolean> {
-    let lines = getDocumentTextOrSelection()?.split(os.EOL).reverse();
+    const eol = getDocumentEOL(getActiveEditor());
+
+    let lines = getDocumentTextOrSelection()?.split(eol).reverse();
 
     const editor = getActiveEditor();
     editor?.edit((editBuilder) => {
-        editBuilder.replace(getSelection(editor)!, lines!.join(os.EOL));
+        editBuilder.replace(getSelection(editor)!, lines!.join(eol));
         return Promise.resolve(true);
     });
 
@@ -101,8 +105,10 @@ export async function invertLines(): Promise<boolean> {
  * @returns {Promise<boolean>}
  */
 export async function sortLinesByLength(direction: string, openInNewTextEditor?: boolean): Promise<boolean> {
+    const eol = getDocumentEOL(getActiveEditor());
+
     let newLines = getDocumentTextOrSelection()
-        ?.split(os.EOL)
+        ?.split(eol)
         .filter((el) => {
             return el !== null && el !== "";
         });
@@ -126,13 +132,13 @@ export async function sortLinesByLength(direction: string, openInNewTextEditor?:
     }
 
     if (openInNewTextEditor) {
-        createNewEditor(sortedLines?.join(os.EOL));
+        createNewEditor(sortedLines?.join(eol));
         return Promise.resolve(true);
     } else {
         const editor = window.activeTextEditor;
         const selection = getSelection(editor!);
         editor?.edit((editBuilder) => {
-            editBuilder.replace(selection!, sortedLines!.join(os.EOL));
+            editBuilder.replace(selection!, sortedLines!.join(eol));
         });
     }
 
