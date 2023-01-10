@@ -11,6 +11,15 @@ See the [list of open enhancements on GitHub](https://github.com/carlocardella/v
 
 ## Log
 
+## [2.10.2] - 2023-01-09
+
+**This is a pre-release version**
+
+### Fixed
+
+* [#26 Line ending handling with sort functions](https://github.com/carlocardella/vscode-TextToolbox/issues/26)
+* [#27 LF line endings break sort options on Windows](https://github.com/carlocardella/vscode-TextToolbox/issues/27)
+
 ## [2.10.1] - 2022-12-28
 
 ### Fixed
