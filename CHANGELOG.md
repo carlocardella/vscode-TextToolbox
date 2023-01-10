@@ -11,6 +11,14 @@ See the [list of open enhancements on GitHub](https://github.com/carlocardella/v
 
 ## Log
 
+## [2.10.3] - 2023-01-10
+
+**This is a pre-release version**
+
+### Removed
+
+* Removed redundant `Invert lines` command, use `Sort lines` => `reverse` instead
+
 ## [2.10.2] - 2023-01-09
 
 **This is a pre-release version**
