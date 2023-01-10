@@ -1,6 +1,15 @@
-import { createNewEditor, getDocumentTextOrSelection, getSelection, getLinesFromString, linesToLine, getActiveEditor, getDocumentEOL } from "./helpers";
+import {
+    createNewEditor,
+    getDocumentTextOrSelection,
+    getSelection,
+    getLinesFromString,
+    linesToLine,
+    getActiveEditor,
+    getDocumentEOL,
+    getLinesFromSelection,
+} from "./helpers";
 import * as os from "os";
-import { EndOfLine, window } from "vscode";
+import { EndOfLine, Selection, TextLine, window } from "vscode";
 
 /**
  * Sorting direction: ascending | descending | reverse
@@ -35,38 +44,51 @@ export async function askForSortDirection(openInNewTextEditor?: boolean) {
 export async function sortLines(direction: string, openInNewTextEditor?: boolean): Promise<boolean> {
     const eol = getDocumentEOL(getActiveEditor());
 
-    let newLines = getDocumentTextOrSelection()
-        ?.split(eol)
-        .filter((el) => {
-            return el !== null && el !== "";
-        });
-    if (!newLines) {
+    let editor = getActiveEditor();
+    if (!editor) {
+        return Promise.reject("No active editor");
+    }
+    let selectedLines = getLinesFromSelection(editor)?.filter((el) => {
+        return el !== null && el.text !== "";
+    });
+
+    if (!selectedLines) {
         return Promise.reject("No lines to sort, all lines are null or empty");
     }
 
-    let sortedLines: string[];
+    let sortedLines: TextLine[];
+    let selectionStartLineNumber = selectedLines[0].lineNumber;
+    let selectionEndLineNumber = selectedLines.at(-1)!.lineNumber;
     switch (direction) {
         case "ascending":
-            sortedLines = newLines.sort((a, b) => 0 - (a > b ? -1 : 1));
+            sortedLines = selectedLines.sort((a, b) => 0 - (a.text > b.text ? -1 : 1));
             break;
         case "descending":
-            sortedLines = newLines.sort((a, b) => 0 - (a > b ? 1 : -1));
+            sortedLines = selectedLines.sort((a, b) => 0 - (a.text > b.text ? 1 : -1));
             break;
         case "reverse":
-            sortedLines = newLines.reverse();
+            sortedLines = selectedLines.reverse();
             break;
         default:
             return Promise.reject("Sort direction is invalid");
     }
 
+    let newText = sortedLines.map((line) => line.text).join(eol);
     if (openInNewTextEditor) {
-        createNewEditor(sortedLines?.join(eol));
+        createNewEditor(newText);
         return Promise.resolve(true);
     } else {
         const editor = window.activeTextEditor;
-        const selection = getSelection(editor!);
+        // prettier-ignore
+        const selection = new Selection(
+            selectionStartLineNumber,
+            0,
+            selectionEndLineNumber,
+            editor!.document.lineAt(selectionEndLineNumber).text.length
+        );
+
         editor?.edit((editBuilder) => {
-            editBuilder.replace(selection!, sortedLines!.join(eol));
+            editBuilder.replace(selection, newText);
         });
     }
 

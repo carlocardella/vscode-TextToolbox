@@ -62,14 +62,18 @@ export function selectAllText(): Thenable<unknown> {
  *
  * @returns {string | undefined}
  */
-export function getDocumentTextOrSelection(): string | undefined {
+export function getDocumentTextOrSelection(fullLineOnly?: boolean): string | undefined {
     const editor = getActiveEditor()!;
     const selection = editor!.selection;
 
     if (selection.isEmpty) {
         return editor.document.getText();
     } else {
-        return getTextFromSelection(editor, selection);
+        if (fullLineOnly) {
+            
+        } else {
+            return getTextFromSelection(editor, selection);
+        }
     }
 }
 
