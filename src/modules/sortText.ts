@@ -96,27 +96,6 @@ export async function sortLines(direction: string, openInNewTextEditor?: boolean
 }
 
 /**
- * Inverts the selected lines or all the lines in the document, if there is no selection
- * Does not support multiple selections
- *
- * @export
- * @return {*}  {Promise<boolean>}
- */
-export async function invertLines(): Promise<boolean> {
-    const eol = getDocumentEOL(getActiveEditor());
-
-    let lines = getDocumentTextOrSelection()?.split(eol).reverse();
-
-    const editor = getActiveEditor();
-    editor?.edit((editBuilder) => {
-        editBuilder.replace(getSelection(editor)!, lines!.join(eol));
-        return Promise.resolve(true);
-    });
-
-    return Promise.reject(false);
-}
-
-/**
  * Sort by line length the selected lines or all the lines in the document, if there is no selection.
  * Optionally opens the sorted lines in a new editor.
  *

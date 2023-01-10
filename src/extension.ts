@@ -219,11 +219,6 @@ export function activate(context: ExtensionContext) {
         })
     );
     context.subscriptions.push(
-        commands.registerTextEditorCommand("vscode-texttoolbox.InvertLines", () => {
-            SortLines.invertLines();
-        })
-    );
-    context.subscriptions.push(
         commands.registerTextEditorCommand("vscode-texttoolbox.SortLinesByLengthResultInNewEditor", () => {
             SortLines.askForSortDirection(true);
         })
