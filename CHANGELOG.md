@@ -11,6 +11,12 @@ See the [list of open enhancements on GitHub](https://github.com/carlocardella/v
 
 ## Log
 
+## [2.10.5] - 2023-01-11
+
+### Fixed
+
+* [#28 Treatment of blank lines in Sort/Invert options](https://github.com/carlocardella/vscode-TextToolbox/issues/28)
+
 ## [2.10.4] - 2023-01-11
 
 **This is a pre-release version**
