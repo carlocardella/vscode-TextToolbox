@@ -70,7 +70,6 @@ export function getDocumentTextOrSelection(fullLineOnly?: boolean): string | und
         return editor.document.getText();
     } else {
         if (fullLineOnly) {
-            
         } else {
             return getTextFromSelection(editor, selection);
         }
@@ -131,7 +130,19 @@ export function getLinesFromSelection(editor: TextEditor, selection?: Selection)
         let selectionEndLine = s.end.line;
 
         for (let i = selectionStartLine; i <= selectionEndLine; i++) {
-            lines.push(editor?.document.lineAt(i));
+            if (i === selectionStartLine) {
+                if (s.start.character < editor.document.lineAt(selectionStartLine).text.length) {
+                    lines.push(editor?.document.lineAt(i));
+                }
+            }
+            if (i > selectionStartLine && i < selectionEndLine) {
+                lines.push(editor?.document.lineAt(i));
+            }
+            if (i === selectionEndLine) {
+                if (s.end.character > 0) {
+                    lines.push(editor?.document.lineAt(i));
+                }
+            }
         }
     });
 
