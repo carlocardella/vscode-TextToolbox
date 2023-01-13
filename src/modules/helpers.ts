@@ -1,4 +1,4 @@
-import { commands, Range, Selection, TextEditor, window, workspace, TextLine, DocumentHighlight, Position } from "vscode";
+import { commands, Range, Selection, TextEditor, window, workspace, TextLine, DocumentHighlight, Position, EndOfLine } from "vscode";
 import * as os from "os";
 
 /**
@@ -62,14 +62,17 @@ export function selectAllText(): Thenable<unknown> {
  *
  * @returns {string | undefined}
  */
-export function getDocumentTextOrSelection(): string | undefined {
+export function getDocumentTextOrSelection(fullLineOnly?: boolean): string | undefined {
     const editor = getActiveEditor()!;
     const selection = editor!.selection;
 
     if (selection.isEmpty) {
         return editor.document.getText();
     } else {
-        return getTextFromSelection(editor, selection);
+        if (fullLineOnly) {
+        } else {
+            return getTextFromSelection(editor, selection);
+        }
     }
 }
 
@@ -127,7 +130,19 @@ export function getLinesFromSelection(editor: TextEditor, selection?: Selection)
         let selectionEndLine = s.end.line;
 
         for (let i = selectionStartLine; i <= selectionEndLine; i++) {
-            lines.push(editor?.document.lineAt(i));
+            if (i === selectionStartLine) {
+                if (s.start.character < editor.document.lineAt(selectionStartLine).text.length) {
+                    lines.push(editor?.document.lineAt(i));
+                }
+            }
+            if (i > selectionStartLine && i < selectionEndLine) {
+                lines.push(editor?.document.lineAt(i));
+            }
+            if (i === selectionEndLine) {
+                if (s.end.character > 0) {
+                    lines.push(editor?.document.lineAt(i));
+                }
+            }
         }
     });
 
@@ -222,23 +237,27 @@ export function closeTextEditor(closeAll?: boolean): Promise<void> {
 }
 
 /**
- * Join an array of lines using the OS EOL and returns the resulting string
+ * Join an array of lines using the document EOL and returns the resulting string
  * @param {string[]} lines The array of lines (text) to convert into a single line
  * @returns {Promise<string>}
  * @async
  */
 export async function linesToLine(lines: string[]): Promise<string> {
-    return Promise.resolve(lines.join(os.EOL));
+    const eol = getDocumentEOL(getActiveEditor());
+
+    return Promise.resolve(lines.join(eol));
 }
 
 /**
- * Split a string based on the OS EOL and returns the resulting array of strings (lines)
+ * Split a string based on the document EOL and returns the resulting array of strings (lines)
  * @param {string} line The line to convert into an array of strings
  * @returns {*} {Promise<string[]>}
  * @async
  */
 export async function getLinesFromString(line: string): Promise<string[]> {
-    return Promise.resolve(line.split(os.EOL));
+    const eol = getDocumentEOL(getActiveEditor());
+
+    return Promise.resolve(line.split(eol));
 }
 
 /**
@@ -280,7 +299,7 @@ export function getRegExpObject(regex: string): RegExp {
  * @export
  * @param {Position} positionStart The start position of the selection
  * @param {Position} positionEnd The end position of the selection
- * @return {*} 
+ * @return {*}
  */
 export function addSelection(positionStart: Position, positionEnd: Position) {
     let editor = getActiveEditor();
@@ -310,4 +329,29 @@ export function getCursorPosition(editor: TextEditor): Position[] {
     });
 
     return position;
+}
+
+/**
+ * Returns the end of line sequence that is predominately used in this document.
+ * If the document contains mixed line endings, it returns the OS default.
+ *
+ * @export
+ * @param {?TextEditor} [editor] The editor to get the EOL from
+ * @returns {string}
+ */
+export function getDocumentEOL(editor?: TextEditor): string {
+    if (!editor) {
+        editor = getActiveEditor();
+    }
+    if (!editor) {
+        return os.EOL;
+    }
+
+    if (editor.document.eol === EndOfLine.CRLF) {
+        return "\r\n";
+    } else if (editor.document.eol === EndOfLine.LF) {
+        return "\n";
+    }
+
+    return os.EOL;
 }

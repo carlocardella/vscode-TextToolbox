@@ -1,9 +1,10 @@
 import { QuickPickItem, window } from "vscode";
 import { DateTime } from "luxon";
 import { Chance } from "chance";
-import { createNewEditor, getActiveEditor, getLinesFromSelection } from "./helpers";
+import { createNewEditor, getActiveEditor, getDocumentEOL, getLinesFromSelection } from "./helpers";
 import { EOL } from "os";
 import { LoremIpsum } from "lorem-ipsum";
+import * as os from "os";
 
 /**
  * Insert a random GUID, or a neutral GUID made of all zeros
@@ -534,6 +535,7 @@ export async function insertSequenceInternal(type: sequenceType, startFrom: stri
     const alphabetUppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     let i: number;
     type === "Letters" ? (i = alphabetLowercase.indexOf(startFrom)) : (i = Number(startFrom));
+    const eol = getDocumentEOL(getActiveEditor());
 
     editor.edit((editBuilder) => {
         let position = editor.selection.active;
@@ -548,7 +550,7 @@ export async function insertSequenceInternal(type: sequenceType, startFrom: stri
                 newText = String(i);
             }
             editBuilder.insert(position, newText);
-            editBuilder.insert(position.translate({ characterDelta: 1 }), EOL);
+            editBuilder.insert(position.translate({ characterDelta: 1 }), eol);
             position = position.translate(1, 0);
         }
     });
@@ -721,9 +723,7 @@ export async function insertCurrencyInternal(currency: string): Promise<boolean 
     editor.edit((editBuilder) => {
         editor.selections.forEach((s) => {
             const userChoice = getCurrencyQuickPickItemDescription(currency);
-            s.isEmpty
-                ? editBuilder.insert(s.active, userChoice)
-                : editBuilder.replace(s, userChoice);
+            s.isEmpty ? editBuilder.insert(s.active, userChoice) : editBuilder.replace(s, userChoice);
         });
     });
 

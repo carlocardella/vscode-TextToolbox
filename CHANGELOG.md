@@ -11,6 +11,71 @@ See the [list of open enhancements on GitHub](https://github.com/carlocardella/v
 
 ## Log
 
+## [2.11.0] - 2023-01-12
+
+### Fixed
+
+* Move to a stable release the previous pre-release fixes:
+  * [#26 Line ending handling with sort functions](https://github.com/carlocardella/vscode-TextToolbox/issues/26)
+  * [#27 LF line endings break sort options on Windows](https://github.com/carlocardella/vscode-TextToolbox/issues/27)
+  * [#28 Treatment of blank lines in Sort/Invert options](https://github.com/carlocardella/vscode-TextToolbox/issues/28)
+
+## [2.10.5] - 2023-01-11
+
+### Fixed
+
+* [#28 Treatment of blank lines in Sort/Invert options](https://github.com/carlocardella/vscode-TextToolbox/issues/28)
+
+## [2.10.4] - 2023-01-11
+
+**This is a pre-release version**
+
+### Fixed
+
+* Fix another scenario that falls under [#26 Line ending handling with sort functions](https://github.com/carlocardella/vscode-TextToolbox/issues/26)
+
+## [2.10.3] - 2023-01-10
+
+**This is a pre-release version**
+
+### Removed
+
+* Removed redundant `Invert lines` command, use `Sort lines` => `reverse` instead
+
+## [2.10.2] - 2023-01-09
+
+**This is a pre-release version**
+
+### Fixed
+
+* [#26 Line ending handling with sort functions](https://github.com/carlocardella/vscode-TextToolbox/issues/26)
+* [#27 LF line endings break sort options on Windows](https://github.com/carlocardella/vscode-TextToolbox/issues/27)
+
+## [2.10.4] - 2023-01-11
+
+**This is a pre-release version**
+
+### Fixed
+
+* Fix another scenario that falls under [#26 Line ending handling with sort functions](https://github.com/carlocardella/vscode-TextToolbox/issues/26)
+
+## [2.10.3] - 2023-01-10
+
+**This is a pre-release version**
+
+### Removed
+
+* Removed redundant `Invert lines` command, use `Sort lines` => `reverse` instead
+
+## [2.10.2] - 2023-01-09
+
+**This is a pre-release version**
+
+### Fixed
+
+* [#26 Line ending handling with sort functions](https://github.com/carlocardella/vscode-TextToolbox/issues/26)
+* [#27 LF line endings break sort options on Windows](https://github.com/carlocardella/vscode-TextToolbox/issues/27)
+
 ## [2.10.1] - 2022-12-28
 
 ### Fixed
