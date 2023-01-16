@@ -310,13 +310,13 @@ function findOpeningDelimiter(text: string, startOffset: number): delimiter | un
                 dic.openAngle--;
                 break;
             case "'":
-                dic.singleQuote--;
+                dic.singleQuote++;
                 break;
             case '"':
-                dic.doubleQuote--;
+                dic.doubleQuote++;
                 break;
             case "`":
-                dic.backtick--;
+                dic.backtick++;
                 break;
 
             default:
@@ -336,7 +336,7 @@ function findOpeningDelimiter(text: string, startOffset: number): delimiter | un
             position: position + 1,
             pairedOffset: undefined, // update
             type: delimiter.type,
-            direction: delimiterTypeDirection.close,
+            direction: delimiterTypeDirection.open,
             offset: startOffset,
         };
     }
