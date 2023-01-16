@@ -358,12 +358,12 @@ function findOpeningDelimiter(text: string, delimiterType: delimiterTypes, start
  * @param {number} startOffset
  * @returns {(delimiter | undefined)}
  */
-function findClosingDelimiter(text: string, openingDelimiter: delimiter, startOffset: number): delimiter | undefined {
+function findClosingDelimiter(text: string, openingDelimiter: delimiter, startOffset: number, position: number = 0): delimiter | undefined {
     if (!text) {
         return undefined;
     }
 
-    let position = 0;
+    // let position = 0;
     let dic = {
         openRound: 0,
         closeRound: 0,
@@ -530,6 +530,11 @@ export function selectTextBetweenDelimiters(delimiterType: delimiterTypes) {
         // the current selection already includes the delimiters, so the new selection should not
         newSelectionOffsetStart++;
         newSelectionOffsetEnd--;
+    }
+
+    // consecutive opening delimiters need special treatment
+    if (selectionIncludesDelimiters(currentSelection!, delimiterType)) {
+        let closingDelimiter = findClosingDelimiter(textSplitAtSelectionStart.textAfterSelectionStart, openingDelimiter, selectionOffset.end, openingDelimiter.position);
     }
 
     addSelection(activeDocument.positionAt(newSelectionOffsetStart), activeDocument.positionAt(newSelectionOffsetEnd));
