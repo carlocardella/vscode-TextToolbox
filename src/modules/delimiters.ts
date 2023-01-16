@@ -259,7 +259,7 @@ function selectionIncludesDelimiters(text: string, delimiterType: delimiterTypes
     return false;
 }
 
-function findOpeningDelimiter(text: string, startOffset: number): delimiter | undefined {
+function findOpeningDelimiter(text: string, delimiterType: delimiterTypes, startOffset: number): delimiter | undefined {
     if (!text) {
         return undefined;
     }
@@ -284,43 +284,49 @@ function findOpeningDelimiter(text: string, startOffset: number): delimiter | un
             return undefined;
         }
 
-        switch (text.at(position)) {
-            case "(":
-                dic.openRound++;
-                break;
-            case ")":
-                dic.openRound--;
-                break;
-            case "[":
-                dic.openSquare++;
-                break;
-            case "]":
-                dic.openSquare--;
-                break;
-            case "{":
-                dic.openCurly++;
-                break;
-            case "}":
-                dic.openCurly--;
-                break;
-            case "<":
-                dic.openAngle++;
-                break;
-            case ">":
-                dic.openAngle--;
-                break;
-            case "'":
-                dic.singleQuote++;
-                break;
-            case '"':
-                dic.doubleQuote++;
-                break;
-            case "`":
-                dic.backtick++;
-                break;
-
-            default:
-                break;
+        if (delimiterType === delimiterTypes.bracket) {
+            switch (text.at(position)) {
+                case "(":
+                    dic.openRound++;
+                    break;
+                case ")":
+                    dic.openRound--;
+                    break;
+                case "[":
+                    dic.openSquare++;
+                    break;
+                case "]":
+                    dic.openSquare--;
+                    break;
+                case "{":
+                    dic.openCurly++;
+                    break;
+                case "}":
+                    dic.openCurly--;
+                    break;
+                case "<":
+                    dic.openAngle++;
+                    break;
+                case ">":
+                    dic.openAngle--;
+                    break;
+                default:
+                    break;
+            }
+        } else if (delimiterType === delimiterTypes.quote) {
+            switch (text.at(position)) {
+                case "'":
+                    dic.singleQuote++;
+                    break;
+                case '"':
+                    dic.doubleQuote++;
+                    break;
+                case "`":
+                    dic.backtick++;
+                    break;
+                default:
+                    break;
+            }
         }
 
         position--;
@@ -506,7 +512,7 @@ export function selectTextBetweenDelimiters(delimiterType: delimiterTypes) {
     if (!textSplitAtSelectionStart) {
         return;
     }
-    let openingDelimiter = findOpeningDelimiter(textSplitAtSelectionStart.textBeforeSelectionStart, selectionOffset.start);
+    let openingDelimiter = findOpeningDelimiter(textSplitAtSelectionStart.textBeforeSelectionStart, delimiterType, selectionOffset.start);
     if (!openingDelimiter) {
         return;
     }
@@ -555,7 +561,7 @@ export function removeDelimiters(delimiterType: delimiterTypes) {
     if (!textSplitAtSelectionStart) {
         return;
     }
-    let openingDelimiter = findOpeningDelimiter(textSplitAtSelectionStart.textBeforeSelectionStart, selectionOffset.start);
+    let openingDelimiter = findOpeningDelimiter(textSplitAtSelectionStart.textBeforeSelectionStart, delimiterType, selectionOffset.start);
     if (!openingDelimiter) {
         return;
     }
