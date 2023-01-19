@@ -11,6 +11,16 @@ See the [list of open enhancements on GitHub](https://github.com/carlocardella/v
 
 ## Log
 
+## [2.12.0] - 2023-01-19
+
+### Fixed
+
+* [#34 Incorrect transformation to kebab](https://github.com/carlocardella/vscode-TextToolbox/issues/34)
+
+### Changed
+
+* Updated all transformation commands to handle mode case combinations
+
 ## [2.11.0] - 2023-01-12
 
 ### Fixed

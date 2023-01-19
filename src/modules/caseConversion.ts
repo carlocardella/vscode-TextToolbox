@@ -17,7 +17,7 @@ export const enum caseConversions {
     snakeCase = "snakeCase",
     invertCase = "invertCase",
     capitalCase = "capitalCase",
-    titleCase = "titleCase",
+    // titleCase = "titleCase",
 }
 
 /**
@@ -64,9 +64,9 @@ export function convertSelection(conversion: caseConversions) {
                 case caseConversions.capitalCase:
                     editBuilder.replace(selection, ConvertCase.toCapitalCase(editor.document.getText(new Range(selection.start, selection.end))));
                     break;
-                case caseConversions.titleCase:
-                    editBuilder.replace(selection, ConvertCase.toTitleCase(editor.document.getText(new Range(selection.start, selection.end))));
-                    break;
+                // case caseConversions.titleCase:
+                //     editBuilder.replace(selection, ConvertCase.toTitleCase(editor.document.getText(new Range(selection.start, selection.end))));
+                //     break;
             }
         });
     });
@@ -75,66 +75,84 @@ export function convertSelection(conversion: caseConversions) {
 class ConvertCase {
     static toPascalCase(text: string): string {
         return text
+            .replace(/(?<=[a-z])[A-Z]/gm, (match) => match.replace(match, ` ${match}`))
             .toLowerCase()
-            .replace(/\b\w|[ \t]./g, (_) => _.toUpperCase())
+            .replace(/\b\w|[ \t]./g, (match) => match.toUpperCase())
             .split(" ")
             .join("");
     }
 
     static toCamelCase(text: string): string {
-        return text.toLowerCase().replace(/[ \t]([^A-Z])/g, (match, group1) => group1.toUpperCase());
+        return text
+            .replace(/(?<=[a-z])[A-Z]/gm, (match) => match.replace(match, ` ${match}`))
+            .toLowerCase()
+            .replace(/[ \t]([^A-Z])/g, (match, group1) => group1.toUpperCase());
     }
 
     static toSnakeCase(text: string): string {
-        // fix: if the line begins with a space do not prepend it with an underscore
-        return text.replace(/.*[^ \t]/g, (match) => match.toLowerCase().split(/[ \t]/g).join("_"));
+        return text
+            .replace(/(?<=[a-z])[A-Z]/gm, (match) => match.replace(match, `_${match}`))
+            .replace(/(?<!^)\s/gm, "_")
+            .toLowerCase();
     }
 
     static toKebabCase(text: string): string {
-        return text.replace(/.*[^ \t]/g, (match) => match.toLowerCase().split(/[ \t]/g).join("-"));
+        return text
+            .replace(/(?<=[a-z])[A-Z]/gm, (match) => match.replace(match, `-${match}`))
+            .replace(/(?<!^)\s/gm, "-")
+            .toLowerCase();
     }
 
     static toConstantCase(text: string): string {
-        return text.replace(/.*[^ \t]/g, (match) => match.toUpperCase().split(/[ \t]/g).join("_"));
+        return this.toSnakeCase(text).toUpperCase();
     }
 
     static toDotCase(text: string): string {
-        return text.replace(/.*[^ \t]/g, (match) => match.toLowerCase().split(/[ \t]/g).join("."));
+        // prettier-ignore
+        return text
+            .replace(/(?<=[a-z])[A-Z]/gm, (match) => match.replace(match, `.${match}`))
+            .replace(/(?<!^)\s/gm, ".");
     }
 
     static toPathCase(text: string): string {
-        return text.replace(/.*[^ \t]/g, (match) => match.toLowerCase().split(/[ \t]/g).join(os.EOL)); // todo: this could be controlled by a settings variable
+        return text
+            .replace(/(?<=[a-z])[A-Z]/gm, (match) => match.replace(match, `/${match}`))
+            .replace(/(?<!^)\s/gm, "/")
+            .toLowerCase();
     }
 
     static toHeaderCase(text: string): string {
-        return text.replace(/.*[^ \t]/g, (match) => match.toUpperCase().split(/[ \t]/g).join("-"));
+        return this.toKebabCase(text).toUpperCase();
     }
 
     static toSentenceCase(text: string): string {
         // return text.replace(/(\b[a-zA-Z])/g, (match, group1) => group1.toUpperCase());
-        return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+        return text
+            .replace(/(?<=[a-z])[A-Z]/gm, (match) => match.replace(match, ` ${match}`))
+            .toLowerCase()
+            .replace(/^./, (match) => match.toUpperCase());
     }
 
     static toCapitalCase(text: string): string {
         return text.replace(/\b\w/g, (_) => _.toUpperCase());
     }
 
-    static toTitleCase(text: string): string {
-        const exclusions = ["in", "to", "and", "but", "for", "nor", "the", "a", "an", "as", "it"];
-        const theLastWord = text.split(" ").length - 1;
-        return text
-            .split(" ")
-            .map((word, index) => {
-                if (index === theLastWord) {
-                    return word.charAt(0).toUpperCase() + word.slice(1);
-                } else if (exclusions.indexOf(word) > -1) {
-                    return word.toLowerCase();
-                } else {
-                    return word.charAt(0).toUpperCase() + word.slice(1);
-                }
-            })
-            .join(" ");
-    }
+    // static toTitleCase(text: string): string {
+    //     const exclusions = ["in", "to", "and", "but", "for", "nor", "the", "a", "an", "as", "it"];
+    //     const theLastWord = text.split(" ").length - 1;
+    //     return text
+    //         .split(" ")
+    //         .map((word, index) => {
+    //             if (index === theLastWord) {
+    //                 return word.charAt(0).toUpperCase() + word.slice(1);
+    //             } else if (exclusions.indexOf(word) > -1) {
+    //                 return word.toLowerCase();
+    //             } else {
+    //                 return word.charAt(0).toUpperCase() + word.slice(1);
+    //             }
+    //         })
+    //         .join(" ");
+    // }
 
     /**
      * Invert the case of the selected text
