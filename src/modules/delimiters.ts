@@ -264,226 +264,86 @@ function findOpeningDelimiter(text: string, delimiterType: delimiterTypes, start
         return undefined;
     }
 
-    let position = startOffset;
-    let dic = {
-        openRound: 1,
-        closeRound: 1,
-        openSquare: 1,
-        closeSquare: 1,
-        openCurly: 1,
-        closeCurly: 1,
-        openAngle: 1,
-        closeAngle: 1,
-        singleQuote: 1,
-        doubleQuote: 1,
-        backtick: 1,
-    };
-
-    do {
-        if (position === 0) {
-            return undefined;
-        }
-
-        if (delimiterType === delimiterTypes.bracket) {
-            switch (text.at(position)) {
-                case "(":
-                    dic.openRound++;
-                    break;
-                case ")":
-                    dic.openRound--;
-                    break;
-                case "[":
-                    dic.openSquare++;
-                    break;
-                case "]":
-                    dic.openSquare--;
-                    break;
-                case "{":
-                    dic.openCurly++;
-                    break;
-                case "}":
-                    dic.openCurly--;
-                    break;
-                case "<":
-                    dic.openAngle++;
-                    break;
-                case ">":
-                    dic.openAngle--;
-                    break;
-                default:
-                    break;
-            }
-        } else if (delimiterType === delimiterTypes.quote) {
-            switch (text.at(position)) {
-                case "'":
-                    dic.singleQuote++;
-                    break;
-                case '"':
-                    dic.doubleQuote++;
-                    break;
-                case "`":
-                    dic.backtick++;
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        position--;
-    } while (Object.values(dic).every((value) => value <= 1));
-
-    if (dic.openCurly > 1 || dic.openAngle > 1 || dic.openRound > 1 || dic.openSquare > 1 || dic.singleQuote > 1 || dic.doubleQuote > 1 || dic.backtick > 1) {
-        // one too many closing delimiters found, we don't need it, return the position
-        let delimiter = delimiters.filter((delimiter) => delimiter.direction === "open").filter((delimiter) => delimiter.char === text.at(position + 1))[0];
-        return {
-            name: delimiter.name,
-            char: text.at(position + 1)!,
-            pairedChar: delimiter.char,
-            position: position + 1,
-            pairedOffset: undefined, // update
-            type: delimiter.type,
-            direction: delimiterTypeDirection.open,
-            offset: startOffset,
-        };
-    }
-
-    return;
-}
-
-/**
- * Finds the closing delimiter walking forward from the selection end
- *
- * @param {string} text
- * @param {delimiter} openingDelimiter
- * @param {number} startOffset
- * @returns {(delimiter | undefined)}
- */
-function findClosingDelimiter(text: string, openingDelimiter: delimiter, startOffset: number, position: number = 0): delimiter | undefined {
-    if (!text) {
-        return undefined;
-    }
-
-    // let position = 0;
-    let dic = {
-        openRound: 0,
+    let position = text.length - 1;
+    let closedDelimiters = {
         closeRound: 0,
-        openSquare: 0,
         closeSquare: 0,
-        openCurly: 0,
         closeCurly: 0,
-        openAngle: 0,
         closeAngle: 0,
         singleQuote: 0,
         doubleQuote: 0,
         backtick: 0,
     };
+    type closeDelimitersKey = keyof typeof closedDelimiters;
 
-    // increment the delimiter count for the opening delimiter so the count will be zero when we find the corresponding closing delimiter
-    switch (openingDelimiter.char) {
-        case "(":
-            dic.openRound++;
-            break;
-        case "{":
-            dic.openCurly++;
-            break;
-        case "[":
-            dic.openSquare++;
-            break;
-        case "<":
-            dic.openAngle++;
-            break;
-        case "'":
-            dic.singleQuote++;
-            break;
-        case '"':
-            dic.doubleQuote++;
-            break;
-        case "`":
-            dic.backtick++;
-            break;
+    let openingDelimiters = delimiters.filter((delimiter) => delimiter.direction === "open" && delimiter.type === delimiterType);
 
-        default:
-            break;
-    }
-
-    while (
-        dic.openAngle > 0 ||
-        dic.openCurly > 0 ||
-        dic.openRound > 0 ||
-        dic.openSquare > 0 ||
-        dic.singleQuote > 0 ||
-        dic.doubleQuote > 0 ||
-        dic.backtick > 0
-    ) {
-        if (position >= text.length) {
-            return undefined;
+    while (position >= 0) {
+        let closingDelimiter = Object.values(openingDelimiters).find((delimiter) => delimiter.pairedChar === text.at(position)) ?? undefined;
+        if (closingDelimiter) {
+            closedDelimiters[closingDelimiter!.name as closeDelimitersKey]++;
         }
 
-        switch (text[position]) {
-            case "(":
-                dic.openRound++;
-                break;
-            case ")":
-                dic.openRound--;
-                break;
-            case "[":
-                dic.openSquare++;
-                break;
-            case "]":
-                dic.openSquare--;
-                break;
-            case "{":
-                dic.openCurly++;
-                break;
-            case "}":
-                dic.openCurly--;
-                break;
-            case "<":
-                dic.openAngle++;
-                break;
-            case ">":
-                dic.openAngle--;
-                break;
-            case "'":
-                dic.singleQuote--;
-                break;
-            case '"':
-                dic.doubleQuote--;
-                break;
-            case "`":
-                dic.backtick--;
-                break;
+        let openingDelimiter = Object.values(openingDelimiters).find((delimiter) => delimiter.char === text.at(position)) ?? undefined;
+        if (openingDelimiter) {
+            // found opening delimiter, let's check if it is paired with a closing delimiter we already found
+            let closingDelimiter = Object.values(delimiters).find((d) => d.char === openingDelimiter!.pairedChar);
+            closedDelimiters[closingDelimiter?.name as closeDelimitersKey]--;
 
-            default:
-                break;
+            if (Object.values(closedDelimiters).every((value) => value <= 0)) {
+                return {
+                    name: openingDelimiter.name,
+                    char: text.at(position)!,
+                    pairedChar: openingDelimiter.pairedChar,
+                    position: position,
+                    pairedOffset: undefined, // update
+                    type: openingDelimiter.type,
+                    direction: openingDelimiter.direction,
+                    offset: startOffset,
+                } as delimiter;
+            }
+        }
+
+        position--;
+    }
+
+    return;
+}
+
+function findClosingDelimiter(text: string, openingDelimiter: delimiter, startOffset: number, position: number = 0): delimiter | undefined {
+    if (!text) {
+        return undefined;
+    }
+
+    // keep track of the number of opening delimiters found
+    let openingDelimiterCount = 0;
+
+    while (position < text.length) {
+        if (text.at(position) === openingDelimiter.char) {
+            openingDelimiterCount++;
+        }
+
+        if (text.at(position) === openingDelimiter.pairedChar) {
+            if (openingDelimiterCount === 0) {
+                return {
+                    name: delimiters.filter((delimiter) => delimiter.direction === "close").filter((delimiter) => delimiter.char === text.at(position))[0].name,
+                    char: text.at(position)!,
+                    pairedChar: openingDelimiter.char,
+                    position: startOffset + position + 1,
+                    pairedOffset: undefined, // update
+                    type: openingDelimiter.type,
+                    direction: delimiterTypeDirection.close,
+                    offset: startOffset,
+                } as delimiter;
+            } else {
+                openingDelimiterCount--;
+            }
         }
 
         position++;
     }
 
-    if (
-        dic.openCurly === 0 ||
-        dic.openAngle === 0 ||
-        dic.openRound === 0 ||
-        dic.openSquare === 0 ||
-        dic.singleQuote === 0 ||
-        dic.doubleQuote === 0 ||
-        dic.backtick === 0
-    ) {
-        // one too many closing delimiters found, we don't need it, return the position
-        return {
-            name: delimiters.filter((delimiter) => delimiter.direction === "close").filter((delimiter) => delimiter.char === text[position - 1])[0].name,
-            char: text[position - 1],
-            pairedChar: openingDelimiter.char,
-            position: startOffset + position,
-            pairedOffset: undefined, // update
-            type: openingDelimiter.type,
-            direction: delimiterTypeDirection.close,
-            offset: startOffset,
-        };
-    }
-
-    return undefined;
+    return;
 }
 
 /**
@@ -534,7 +394,12 @@ export function selectTextBetweenDelimiters(delimiterType: delimiterTypes) {
 
     // consecutive opening delimiters need special treatment
     if (selectionIncludesDelimiters(currentSelection!, delimiterType)) {
-        let closingDelimiter = findClosingDelimiter(textSplitAtSelectionStart.textAfterSelectionStart, openingDelimiter, selectionOffset.end, openingDelimiter.position);
+        let closingDelimiter = findClosingDelimiter(
+            textSplitAtSelectionStart.textAfterSelectionStart,
+            openingDelimiter,
+            selectionOffset.end,
+            openingDelimiter.position
+        );
     }
 
     addSelection(activeDocument.positionAt(newSelectionOffsetStart), activeDocument.positionAt(newSelectionOffsetEnd));
