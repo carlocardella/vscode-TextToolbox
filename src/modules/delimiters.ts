@@ -279,7 +279,12 @@ function findOpeningDelimiter(text: string, delimiterType: delimiterTypes, start
     let openingDelimiters = delimiters.filter((delimiter) => delimiter.direction === "open" && delimiter.type === delimiterType);
 
     while (position >= 0) {
-        let closingDelimiter = Object.values(openingDelimiters).find((delimiter) => delimiter.pairedChar === text.at(position)) ?? undefined;
+        // let closingDelimiter = Object.values(delimiters).find((delimiter) => delimiter.char === text.at(position)) ?? undefined;
+        let closingDelimiter =
+            Object.values(delimiters)
+                .filter((delimiter) => delimiter.direction === delimiterTypeDirection.close)
+                .find((delimiter) => delimiter.char === text.at(position)) ?? undefined;
+
         if (closingDelimiter) {
             closedDelimiters[closingDelimiter!.name as closeDelimitersKey]++;
         }
@@ -288,19 +293,21 @@ function findOpeningDelimiter(text: string, delimiterType: delimiterTypes, start
         if (openingDelimiter) {
             // found opening delimiter, let's check if it is paired with a closing delimiter we already found
             let closingDelimiter = Object.values(delimiters).find((d) => d.char === openingDelimiter!.pairedChar);
-            closedDelimiters[closingDelimiter?.name as closeDelimitersKey]--;
-
-            if (Object.values(closedDelimiters).every((value) => value <= 0)) {
-                return {
-                    name: openingDelimiter.name,
-                    char: text.at(position)!,
-                    pairedChar: openingDelimiter.pairedChar,
-                    position: position,
-                    pairedOffset: undefined, // update
-                    type: openingDelimiter.type,
-                    direction: openingDelimiter.direction,
-                    offset: startOffset,
-                } as delimiter;
+            if (closedDelimiters[closingDelimiter?.name as closeDelimitersKey] > 0) {
+                closedDelimiters[closingDelimiter?.name as closeDelimitersKey]--;
+            } else {
+                if (Object.values(closedDelimiters).every((value) => value <= 0)) {
+                    return {
+                        name: openingDelimiter.name,
+                        char: text.at(position)!,
+                        pairedChar: openingDelimiter.pairedChar,
+                        position: position,
+                        pairedOffset: undefined, // update
+                        type: openingDelimiter.type,
+                        direction: openingDelimiter.direction,
+                        offset: startOffset,
+                    } as delimiter;
+                }
             }
         }
 
@@ -326,7 +333,7 @@ function findClosingDelimiter(text: string, openingDelimiter: delimiter, startOf
         if (text.at(position) === openingDelimiter.pairedChar) {
             if (openingDelimiterCount === 0) {
                 return {
-                    name: delimiters.filter((delimiter) => delimiter.direction === "close").filter((delimiter) => delimiter.char === text.at(position))[0].name,
+                    name: delimiters.filter((delimiter) => delimiter.char === text.at(position))[0].name,
                     char: text.at(position)!,
                     pairedChar: openingDelimiter.char,
                     position: startOffset + position + 1,
@@ -390,16 +397,15 @@ export function selectTextBetweenDelimiters(delimiterType: delimiterTypes) {
         // the current selection already includes the delimiters, so the new selection should not
         newSelectionOffsetStart++;
         newSelectionOffsetEnd--;
-    }
 
-    // consecutive opening delimiters need special treatment
-    if (selectionIncludesDelimiters(currentSelection!, delimiterType)) {
-        let closingDelimiter = findClosingDelimiter(
-            textSplitAtSelectionStart.textAfterSelectionStart,
-            openingDelimiter,
-            selectionOffset.end,
-            openingDelimiter.position
-        );
+        // consecutive opening delimiters need special treatment
+        // let isConsecutiveOpeningDelimiter = Object.values(delimiters).find((d) => d.char === editor.document.getText()[newSelectionOffsetStart + 1]);
+        // let isConsecutiveClosingDelimiter = Object.values(delimiters).find((d) => d.pairedChar === editor.document.getText()[newSelectionOffsetEnd + 1]);
+        // if (!isConsecutiveOpeningDelimiter && !isConsecutiveClosingDelimiter) {
+        // if (!isConsecutiveOpeningDelimiter) {
+        //     newSelectionOffsetStart--;
+        //     newSelectionOffsetEnd++;
+        // }
     }
 
     addSelection(activeDocument.positionAt(newSelectionOffsetStart), activeDocument.positionAt(newSelectionOffsetEnd));
