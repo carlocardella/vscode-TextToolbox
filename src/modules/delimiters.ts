@@ -279,7 +279,6 @@ function findOpeningDelimiter(text: string, delimiterType: delimiterTypes, start
     let openingDelimiters = delimiters.filter((delimiter) => delimiter.direction === "open" && delimiter.type === delimiterType);
 
     while (position >= 0) {
-        // let closingDelimiter = Object.values(delimiters).find((delimiter) => delimiter.char === text.at(position)) ?? undefined;
         let closingDelimiter =
             Object.values(delimiters)
                 .filter((delimiter) => delimiter.type === delimiterType)
@@ -389,7 +388,6 @@ export function selectTextBetweenDelimiters(delimiterType: delimiterTypes) {
     }
     let closingDelimiter = findClosingDelimiter(textSplitAtSelectionStart.textAfterSelectionStart, openingDelimiter, selectionOffset.end);
     if (!closingDelimiter) {
-        // closing delimiter not found
         return;
     }
 
@@ -398,15 +396,12 @@ export function selectTextBetweenDelimiters(delimiterType: delimiterTypes) {
 
     let currentSelection = getTextFromSelection(editor, editor.selection);
     if (selectionIncludesDelimiters(currentSelection!, delimiterType) || !currentSelection) {
-        // the current selection already includes the delimiters, so the new selection should not
-        // newSelectionOffsetStart++;
-        // newSelectionOffsetEnd--;
-
+        // the current selection already includes the delimiters, so the new selection should not, unless:
+        // - the current selection is empty
+        // - the new selection needs to include consecutive delimiters
         if ((selectionOffset.start !== newSelectionOffsetStart + 1 && selectionOffset.end !== newSelectionOffsetEnd - 1) || currentSelection!.length === 0) {
             newSelectionOffsetStart++;
             newSelectionOffsetEnd--;
-            // newSelectionOffsetStart--;
-            // newSelectionOffsetEnd++;
         }
     }
 
