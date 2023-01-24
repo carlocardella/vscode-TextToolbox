@@ -286,7 +286,10 @@ function findOpeningDelimiter(text: string, delimiterType: delimiterTypes, start
                 .find((delimiter) => delimiter.char === text.at(position)) ?? undefined;
 
         if (closingDelimiter) {
-            closedDelimiters[closingDelimiter!.name as closeDelimitersKey]++;
+            // do not count arrow functions as delimiters
+            if (text.at(position - 1) !== "=") {
+                closedDelimiters[closingDelimiter!.name as closeDelimitersKey]++;
+            }
         }
 
         let openingDelimiter = Object.values(openingDelimiters).find((delimiter) => delimiter.char === text.at(position)) ?? undefined;
