@@ -444,8 +444,8 @@ export function removeDelimiters(delimiterType: delimiterTypes) {
         return;
     }
 
-    let newSelectionOffsetStart = openingDelimiter.offset!;
-    let newSelectionOffsetEnd = closingDelimiter.offset!;
+    let newSelectionOffsetStart = openingDelimiter.position!;
+    let newSelectionOffsetEnd = closingDelimiter.position!;
     let correctOffset = 1;
 
     editor.edit((editBuilder) => {
