@@ -398,17 +398,15 @@ export function selectTextBetweenDelimiters(delimiterType: delimiterTypes) {
     let currentSelection = getTextFromSelection(editor, editor.selection);
     if (selectionIncludesDelimiters(currentSelection!, delimiterType) || !currentSelection) {
         // the current selection already includes the delimiters, so the new selection should not
-        newSelectionOffsetStart++;
-        newSelectionOffsetEnd--;
+        // newSelectionOffsetStart++;
+        // newSelectionOffsetEnd--;
 
-        // consecutive opening delimiters need special treatment
-        // let isConsecutiveOpeningDelimiter = Object.values(delimiters).find((d) => d.char === editor.document.getText()[newSelectionOffsetStart + 1]);
-        // let isConsecutiveClosingDelimiter = Object.values(delimiters).find((d) => d.pairedChar === editor.document.getText()[newSelectionOffsetEnd + 1]);
-        // if (!isConsecutiveOpeningDelimiter && !isConsecutiveClosingDelimiter) {
-        // if (!isConsecutiveOpeningDelimiter) {
-        //     newSelectionOffsetStart--;
-        //     newSelectionOffsetEnd++;
-        // }
+        if ((selectionOffset.start !== newSelectionOffsetStart + 1 && selectionOffset.end !== newSelectionOffsetEnd - 1) || currentSelection!.length === 0) {
+            newSelectionOffsetStart++;
+            newSelectionOffsetEnd--;
+            // newSelectionOffsetStart--;
+            // newSelectionOffsetEnd++;
+        }
     }
 
     addSelection(activeDocument.positionAt(newSelectionOffsetStart), activeDocument.positionAt(newSelectionOffsetEnd));
