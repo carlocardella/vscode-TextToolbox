@@ -11,6 +11,12 @@ See the [list of open enhancements on GitHub](https://github.com/carlocardella/v
 
 ## Log
 
+## [2.13.0] - 2023-01-24
+
+### Fixed
+
+* [#33 Improve "Select text between..." commands](https://github.com/carlocardella/vscode-TextToolbox/issues/33)
+
 ## [2.12.0] - 2023-01-19
 
 ### Fixed
