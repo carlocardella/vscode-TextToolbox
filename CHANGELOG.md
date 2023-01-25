@@ -11,6 +11,12 @@ See the [list of open enhancements on GitHub](https://github.com/carlocardella/v
 
 ## Log
 
+## [2.13.1] - 2023-01-25
+
+### Fixed
+
+* [#38 Unexpected behavior when no text is selected with JSON options](https://github.com/carlocardella/vscode-TextToolbox/issues/38)
+
 ## [2.13.0] - 2023-01-24
 
 ### Fixed

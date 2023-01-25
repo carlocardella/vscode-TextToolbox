@@ -1,5 +1,6 @@
 import { getActiveEditor, getTextFromSelection } from "./helpers";
 import * as jsonic from "jsonic";
+import { Selection } from "vscode";
 
 /**
  * Transforms a text string into proper JSON format, optionally can fix syntax errors.
@@ -13,7 +14,15 @@ export async function stringifyJson(fixJson: boolean): Promise<void> {
     }
 
     editor.edit((editBuilder) => {
-        editor.selections.forEach((s) => {
+        let selections: Selection[] = [];
+
+        if (editor.selection.isEmpty) {
+            selections.push(new Selection(0, 0, editor.document.lineCount, editor.document.lineAt(editor.document.lineCount - 1).text.length));
+        } else {
+            selections = editor.selections.map((s) => s);
+        }
+
+        selections.forEach((s) => {
             let newJson: string = "";
             let selectionText = getTextFromSelection(editor, s);
             if (fixJson) {
@@ -40,7 +49,15 @@ export async function minifyJson(): Promise<void> {
     }
 
     editor.edit((editBuilder) => {
-        editor.selections.forEach((s) => {
+        let selections: Selection[] = [];
+
+        if (editor.selection.isEmpty) {
+            selections.push(new Selection(0, 0, editor.document.lineCount, editor.document.lineAt(editor.document.lineCount - 1).text.length));
+        } else {
+            selections = editor.selections.map((s) => s);
+        }
+
+        selections.forEach((s) => {
             let selectionText = getTextFromSelection(editor, s);
             let newJson = JSON.stringify(jsonic(selectionText!));
 
@@ -57,13 +74,15 @@ export function escapeWin32PathInJson() {
         return;
     }
 
-    editor.edit((editBuilder) => {
-        editor.selections.forEach((selection) => {
-            const text = getTextFromSelection(editor, selection);
-            const newText = text!.replace(/\\/g, "\\\\");
-            editBuilder.replace(selection, newText);
+    if (!editor.selection.isEmpty) {
+        editor.edit((editBuilder) => {
+            editor.selections.forEach((selection) => {
+                const text = getTextFromSelection(editor, selection);
+                const newText = text!.replace(/\\/g, "\\\\");
+                editBuilder.replace(selection, newText);
+            });
         });
-    });
+    }
 
     return;
 }
