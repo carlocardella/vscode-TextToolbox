@@ -237,7 +237,7 @@ function getTextSplitAtSelection(): textSpitAtSelection | undefined {
  * @param {delimiterTypes} delimiterType
  * @returns {boolean}
  */
-function selectionIncludesDelimiters(text: string, delimiterType: delimiterTypes): boolean {
+function selectionIncludesBrackets(text: string, delimiterType: delimiterTypes): boolean {
     if (!text) {
         return false;
     }
@@ -259,7 +259,7 @@ function selectionIncludesDelimiters(text: string, delimiterType: delimiterTypes
     return false;
 }
 
-function findOpeningDelimiter(text: string, delimiterType: delimiterTypes, startOffset: number): delimiter | undefined {
+function findOpeningBracket(text: string, delimiterType: delimiterTypes, startOffset: number): delimiter | undefined {
     if (!text) {
         return undefined;
     }
@@ -270,9 +270,6 @@ function findOpeningDelimiter(text: string, delimiterType: delimiterTypes, start
         closeSquare: 0,
         closeCurly: 0,
         closeAngle: 0,
-        singleQuote: 0,
-        doubleQuote: 0,
-        backtick: 0,
     };
     type closeDelimitersKey = keyof typeof closedDelimiters;
 
@@ -320,7 +317,7 @@ function findOpeningDelimiter(text: string, delimiterType: delimiterTypes, start
     return;
 }
 
-function findClosingDelimiter(text: string, openingDelimiter: delimiter, startOffset: number, position: number = 0): delimiter | undefined {
+function findClosingBracket(text: string, openingDelimiter: delimiter, startOffset: number, position: number = 0): delimiter | undefined {
     if (!text) {
         return undefined;
     }
@@ -382,11 +379,19 @@ export function selectTextBetweenDelimiters(delimiterType: delimiterTypes) {
     if (!textSplitAtSelectionStart) {
         return;
     }
-    let openingDelimiter = findOpeningDelimiter(textSplitAtSelectionStart.textBeforeSelectionStart, delimiterType, selectionOffset.start);
+
+    let openingDelimiter =
+        delimiterType === delimiterTypes.bracket
+            ? findOpeningBracket(textSplitAtSelectionStart.textBeforeSelectionStart, delimiterType, selectionOffset.start)
+            : findOpeningQuote(textSplitAtSelectionStart.textBeforeSelectionStart, delimiterType, selectionOffset.start);
     if (!openingDelimiter) {
         return;
     }
-    let closingDelimiter = findClosingDelimiter(textSplitAtSelectionStart.textAfterSelectionStart, openingDelimiter, selectionOffset.end);
+
+    let closingDelimiter =
+        delimiterType === delimiterTypes.bracket
+            ? findClosingBracket(textSplitAtSelectionStart.textAfterSelectionStart, openingDelimiter, selectionOffset.end)
+            : findClosingQuote(textSplitAtSelectionStart.textAfterSelectionStart, openingDelimiter, selectionOffset.end);
     if (!closingDelimiter) {
         return;
     }
@@ -395,7 +400,7 @@ export function selectTextBetweenDelimiters(delimiterType: delimiterTypes) {
     let newSelectionOffsetEnd = closingDelimiter.position;
 
     let currentSelection = getTextFromSelection(editor, editor.selection);
-    if (selectionIncludesDelimiters(currentSelection!, delimiterType) || !currentSelection) {
+    if (selectionIncludesBrackets(currentSelection!, delimiterType) || !currentSelection) {
         // the current selection already includes the delimiters, so the new selection should not, unless:
         // - the current selection is empty
         // - the new selection needs to include consecutive delimiters
@@ -418,7 +423,7 @@ export function selectTextBetweenDelimiters(delimiterType: delimiterTypes) {
  * @export
  * @param {delimiterTypes} delimiterType
  */
-export function removeDelimiters(delimiterType: delimiterTypes) {
+export function removeBrackets(delimiterType: delimiterTypes) {
     const editor = getActiveEditor();
     if (!editor) {
         return;
@@ -429,7 +434,7 @@ export function removeDelimiters(delimiterType: delimiterTypes) {
         return;
     }
 
-    let [newSelectionOffsetStart, newSelectionOffsetEnd] = getDelimitersOffset(delimiterType);
+    let [newSelectionOffsetStart, newSelectionOffsetEnd] = getBracketsOffset(delimiterType);
     if (!newSelectionOffsetStart || !newSelectionOffsetEnd) {
         return;
     }
@@ -450,7 +455,7 @@ export function removeDelimiters(delimiterType: delimiterTypes) {
     });
 }
 
-function getDelimitersOffset(delimiterType: delimiterTypes): [number | undefined, number | undefined] {
+function getBracketsOffset(delimiterType: delimiterTypes): [number | undefined, number | undefined] {
     const editor = getActiveEditor();
     if (!editor) {
         return [undefined, undefined];
@@ -470,11 +475,73 @@ function getDelimitersOffset(delimiterType: delimiterTypes): [number | undefined
     if (!textSplitAtSelectionStart) {
         return [undefined, undefined];
     }
-    let openingDelimiter = findOpeningDelimiter(textSplitAtSelectionStart.textBeforeSelectionStart, delimiterType, selectionOffset.start);
+    
+    let openingDelimiter = delimiterType === delimiterTypes.bracket
+        ? findOpeningBracket(textSplitAtSelectionStart.textBeforeSelectionStart, delimiterType, selectionOffset.start)
+        : findOpeningQuote(textSplitAtSelectionStart.textBeforeSelectionStart, delimiterType, selectionOffset.start);
     if (!openingDelimiter) {
         return [undefined, undefined];
     }
-    let closingDelimiter = findClosingDelimiter(textSplitAtSelectionStart.textAfterSelectionStart, openingDelimiter, selectionOffset.end);
+    
+    let closingDelimiter = delimiterType === delimiterTypes.bracket
+        ? findClosingBracket(textSplitAtSelectionStart.textAfterSelectionStart, openingDelimiter, selectionOffset.end)
+        : findClosingQuote(textSplitAtSelectionStart.textAfterSelectionStart, openingDelimiter, selectionOffset.end);
 
     return [openingDelimiter?.position, closingDelimiter?.position];
+}
+
+function findOpeningQuote(text: string, delimiterType: delimiterTypes, startOffset: number): delimiter | undefined {
+    if (!text) {
+        return undefined;
+    }
+
+    let position = text.length - 1;
+
+    let openingDelimiters = delimiters.filter((delimiter) => delimiter.direction === "open" && delimiter.type === delimiterType);
+
+    while (position >= 0) {
+        let openingDelimiter = Object.values(openingDelimiters).find((delimiter) => delimiter.char === text.at(position)) ?? undefined;
+
+        if (openingDelimiter) {
+            return {
+                name: openingDelimiter.name,
+                char: text.at(position)!,
+                pairedChar: openingDelimiter.pairedChar,
+                position: position,
+                pairedOffset: undefined, // update
+                type: openingDelimiter.type,
+                direction: openingDelimiter.direction,
+                offset: startOffset,
+            } as delimiter;
+        }
+
+        position--;
+    }
+
+    return;
+}
+
+function findClosingQuote(text: string, openingDelimiter: delimiter, startOffset: number, position: number = 0): delimiter | undefined {
+    if (!text) {
+        return undefined;
+    }
+
+    while (position < text.length) {
+        if (text.at(position) === openingDelimiter.pairedChar) {
+            return {
+                name: delimiters.filter((delimiter) => delimiter.char === text.at(position))[0].name,
+                char: text.at(position)!,
+                pairedChar: openingDelimiter.char,
+                position: startOffset + position + 1,
+                pairedOffset: undefined, // update
+                type: openingDelimiter.type,
+                direction: delimiterTypeDirection.close,
+                offset: startOffset,
+            } as delimiter;
+        }
+
+        position++;
+    }
+
+    return;
 }

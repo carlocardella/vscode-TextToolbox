@@ -305,13 +305,13 @@ export function activate(context: ExtensionContext) {
         })
     );
     context.subscriptions.push(
-        commands.registerTextEditorCommand("vscode-texttoolbox.RemoveQuotes", () => {
-            Delimiters.removeDelimiters(Delimiters.delimiterTypes.quote);
+        commands.registerTextEditorCommand("vscode-texttoolbox.RemoveBrackets", () => {
+            Delimiters.removeBrackets(Delimiters.delimiterTypes.bracket);
         })
     );
     context.subscriptions.push(
-        commands.registerTextEditorCommand("vscode-texttoolbox.RemoveBrackets", () => {
-            Delimiters.removeDelimiters(Delimiters.delimiterTypes.bracket);
+        commands.registerTextEditorCommand("vscode-texttoolbox.RemoveQuotes", () => {
+            Delimiters.removeBrackets(Delimiters.delimiterTypes.quote);
         })
     );
 
