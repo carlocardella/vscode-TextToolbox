@@ -403,6 +403,10 @@ export function selectTextBetweenDelimiters(delimiterType: delimiterTypes) {
             newSelectionOffsetStart++;
             newSelectionOffsetEnd--;
         }
+        if (selectionOffset.start === newSelectionOffsetStart + 1 && selectionOffset.end !== newSelectionOffsetEnd - 1) {
+            newSelectionOffsetStart++;
+            newSelectionOffsetEnd--;
+        }
     }
 
     addSelection(activeDocument.positionAt(newSelectionOffsetStart), activeDocument.positionAt(newSelectionOffsetEnd));
@@ -425,40 +429,52 @@ export function removeDelimiters(delimiterType: delimiterTypes) {
         return;
     }
 
-    let selectionOffset = getSelectionOffset(editor);
-    if (!selectionOffset) {
+    let [newSelectionOffsetStart, newSelectionOffsetEnd] = getDelimitersOffset(delimiterType);
+    if (!newSelectionOffsetStart || !newSelectionOffsetEnd) {
         return;
     }
-
-    let textSplitAtSelectionStart = getTextSplitAtSelection();
-    if (!textSplitAtSelectionStart) {
-        return;
-    }
-    let openingDelimiter = findOpeningDelimiter(textSplitAtSelectionStart.textBeforeSelectionStart, delimiterType, selectionOffset.start);
-    if (!openingDelimiter) {
-        return;
-    }
-    let closingDelimiter = findClosingDelimiter(textSplitAtSelectionStart.textAfterSelectionStart, openingDelimiter, selectionOffset.end);
-    if (!closingDelimiter) {
-        // closing delimiter not found
-        return;
-    }
-
-    let newSelectionOffsetStart = openingDelimiter.position!;
-    let newSelectionOffsetEnd = closingDelimiter.position!;
     let correctOffset = 1;
 
     editor.edit((editBuilder) => {
         // remove end delimiter
         editBuilder.replace(
-            new Selection(activeDocument.positionAt(newSelectionOffsetEnd), activeDocument.positionAt(newSelectionOffsetEnd - correctOffset)),
+            new Selection(activeDocument.positionAt(newSelectionOffsetEnd!), activeDocument.positionAt(newSelectionOffsetEnd! - correctOffset)),
             ""
         );
 
         // remove start delimiter
         editBuilder.replace(
-            new Selection(activeDocument.positionAt(newSelectionOffsetStart), activeDocument.positionAt(newSelectionOffsetStart + correctOffset)),
+            new Selection(activeDocument.positionAt(newSelectionOffsetStart!), activeDocument.positionAt(newSelectionOffsetStart! + correctOffset)),
             ""
         );
     });
+}
+
+function getDelimitersOffset(delimiterType: delimiterTypes): [number | undefined, number | undefined] {
+    const editor = getActiveEditor();
+    if (!editor) {
+        return [undefined, undefined];
+    }
+
+    const activeDocument = editor.document;
+    if (!activeDocument) {
+        return [undefined, undefined];
+    }
+
+    let selectionOffset = getSelectionOffset(editor);
+    if (!selectionOffset) {
+        return [undefined, undefined];
+    }
+
+    let textSplitAtSelectionStart = getTextSplitAtSelection();
+    if (!textSplitAtSelectionStart) {
+        return [undefined, undefined];
+    }
+    let openingDelimiter = findOpeningDelimiter(textSplitAtSelectionStart.textBeforeSelectionStart, delimiterType, selectionOffset.start);
+    if (!openingDelimiter) {
+        return [undefined, undefined];
+    }
+    let closingDelimiter = findClosingDelimiter(textSplitAtSelectionStart.textAfterSelectionStart, openingDelimiter, selectionOffset.end);
+
+    return [openingDelimiter?.position, closingDelimiter?.position];
 }
