@@ -1,1135 +1,1145 @@
 {
-  "name": "vscode-texttoolbox",
-  "displayName": "Text Toolbox",
-  "description": "Collection of tools for text manipulation, filtering, sorting etc...",
-  "version": "2.13.0",
-  "publisher": "carlocardella",
-  "author": {
-    "name": "Carlo Cardella",
-    "url": "https://cloudnotes.io"
-  },
-  "engines": {
-    "vscode": "^1.63.0"
-  },
-  "categories": [
-    "Other"
-  ],
-  "capabilities": {
-    "untrustedWorkspaces": {
-      "supported": true
-    }
-  },
-  "keywords": [
-    "case conversion",
-    "case",
-    "converter",
-    "converting",
-    "decode",
-    "duplicates",
-    "encode",
-    "filter lines",
-    "filter text",
-    "filter",
-    "grep",
-    "insert date",
-    "ipsum",
-    "jwt",
-    "lines count",
-    "Lorem Ipsum",
-    "lorem",
-    "random",
-    "random",
-    "sort lines",
-    "sort text",
-    "sort",
-    "split",
-    "text",
-    "tools",
-    "utilities",
-    "word count",
-    "tabout",
-    "tab out"
-  ],
-  "activationEvents": [
-    "onStartupFinished"
-  ],
-  "main": "./dist/extension-node.js",
-  "browser": "./dist/extension-web.js",
-  "preview": false,
-  "badges": [],
-  "icon": "assets/extension_icon.png",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/carlocardella/vscode-TextToolbox.git"
-  },
-  "bugs": {
-    "url": "https://github.com/carlocardella/vscode-TextToolbox/issues"
-  },
-  "license": "MIT",
-  "contributes": {
-    "commands": [
-      {
-        "command": "vscode-texttoolbox.PascalCase",
-        "title": "PascalCase",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.CamelCase",
-        "title": "camel Case",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.ConstantCase",
-        "title": "CONSTANT_CASE",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.DotCase",
-        "title": "dot.case",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.KebabCase",
-        "title": "kebab-case",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.SentenceCase",
-        "title": "Sentence case",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.SnakeCase",
-        "title": "snake_case",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.HeaderCase",
-        "title": "HEADER-CASE",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.InvertCase",
-        "title": "invert case",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.PathCase",
-        "title": "path/case",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.InsertGUID",
-        "title": "Insert GUID",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.InsertGuidAllZeros",
-        "title": "Insert GUID all zeros",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.InsertDate",
-        "title": "Insert Date",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.PickRandom",
-        "title": "Insert Random",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.PadSelectionRight",
-        "title": "Pad Selection Right...",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.PadSelectionLeft",
-        "title": "Pad Selection Left...",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.RemoveAllEmptyLines",
-        "title": "Remove all empty lines",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.RemoveRedundantEmptyLines",
-        "title": "Remove redundant empty lines",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.RemoveDuplicateLines",
-        "title": "Remove duplicate lines",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.RemoveDuplicateLinesResultInNewEditor",
-        "title": "Remove duplicate lines, result in new Editor",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.FilterLinesUsingRegExpOrString",
-        "title": "Filter lines, result in new Editor...",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.SortLinesResultInNewEditor",
-        "title": "Sort lines, result in new editor",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.SortLines",
-        "title": "Sort lines",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.SortLinesByLengthResultInNewEditor",
-        "title": "Sort lines by length, result in new editor",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.SortLinesByLength",
-        "title": "Sort lines by length",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.OpenSelectionInNewEditor",
-        "title": "Open selection in new editor",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.InsertLineNumbers",
-        "title": "Insert line numbers",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.InsertSequenceNumbers",
-        "title": "Insert numbers sequence",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.RemoveControlCharacters",
-        "title": "Remove control characters",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.TrimLineOrSelection",
-        "title": "Trim",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.InsertCurrency",
-        "title": "Insert Currency...",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.SplitSelection",
-        "title": "Split Selection...",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.SplitSelectionOpenInNewEditor",
-        "title": "Split Selection, result in new editor...",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.ConvertDecimalToHexadecimal",
-        "title": "Convert decimal to hexadecimal",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.ConvertHexadecimalToDecimal",
-        "title": "Convert hexadecimal to decimal",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.convertFromBase64",
-        "title": "Decode Base64 to text",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.convertToBase64",
-        "title": "Encode text to Base64",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.encodeUri",
-        "title": "Encode Uri",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.decodeUri",
-        "title": "Decode Uri",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.decodeJWTToken",
-        "title": "Decode JWT Token",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.toHTML",
-        "title": "Encode to HTML",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.fromHTML",
-        "title": "Decode from HTML",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.FixJson",
-        "title": "Fix and Format Json",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.StringifyJson",
-        "title": "Stringify Json",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.MinifyJson",
-        "title": "Minify Json",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.TransformPathToPosix",
-        "title": "Transform path to Posix",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.TransformPathToWin32",
-        "title": "Transform path to Win32",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.InsertLoremIpsum",
-        "title": "Insert Lorem Ipsum",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.AlignToSeparator",
-        "title": "Align to separator",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.AlignAsTable",
-        "title": "Align as table",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.AlignAsTableWithHeaders",
-        "title": "Align as table with headers",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.EscapeWin32PathInJson",
-        "title": "Fix Win32 path in Json",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.HighlightText",
-        "title": "Highlight",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.HighlightTextWithColor",
-        "title": "Highlight with color...",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.HighlightAllMatchesCaseSensitive",
-        "title": "Highlight all matches, case sensitive",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.HighlightAllMatchesCaseInsensitive",
-        "title": "Highlight all matches, case insensitive",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.HighlightAllMatchesCaseSensitiveWithColor",
-        "title": "Highlight all matches, case sensitive, with color...",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.HighlightAllMatchesCaseInsensitiveWithColor",
-        "title": "Highlight all matches, case insensitive, with color...",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.HighlightWithRegExp",
-        "title": "Highlight with RegExp",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.HighlightWithRegExpWithColor",
-        "title": "Highlight with RegExp with color...",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.RemoveAllHighlights",
-        "title": "Remove all highlights",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.RemoveHighlight",
-        "title": "Remove highlight",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.DuplicateTab",
-        "title": "Duplicate tab",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.TabOut",
-        "title": "Tab Out",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.ToggleTabOut",
-        "title": "Toggle Tab Out",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.SelectTextBetweenQuotes",
-        "title": "Select text between quotes",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.SelectTextBetweenBrackets",
-        "title": "Select text between brackets",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.RemoveQuotes",
-        "title": "Remove quotes",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.RemoveBrackets",
-        "title": "Remove brackets",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.OpenPathOrUrlUnderCursor",
-        "title": "Open under cursor",
-        "category": "Text Toolbox"
-      }
-    ],
-    "menus": {
-      "commandPalette": [
-        {
-          "command": "vscode-texttoolbox.TabOut",
-          "when": "false"
-        }
-      ],
-      "editor/context": [
-        {
-          "submenu": "tt.editorContext",
-          "group": "textToolbox"
-        }
-      ],
-      "editor/title/context": [
-        {
-          "command": "vscode-texttoolbox.DuplicateTab",
-          "group": "tt.editorTitleContext"
-        }
-      ],
-      "tt.editorContext": [
-        {
-          "submenu": "tt.caseConversion",
-          "group": "caseConversion",
-          "when": "!editorReadonly"
-        },
-        {
-          "submenu": "tt.filter",
-          "group": "filter"
-        },
-        {
-          "submenu": "tt.insert",
-          "group": "insert",
-          "when": "!editorReadonly"
-        },
-        {
-          "submenu": "tt.transform",
-          "group": "filter",
-          "when": "!editorReadonly"
-        },
-        {
-          "submenu": "tt.json",
-          "group": "json",
-          "when": "!editorReadonly"
-        },
-        {
-          "submenu": "tt.sort",
-          "group": "filter",
-          "when": "!editorReadonly"
-        },
-        {
-          "submenu": "tt.path",
-          "group": "path",
-          "when": "!editorReadonly"
-        },
-        {
-          "submenu": "tt.highlight",
-          "group": "highlight"
-        },
-        {
-          "submenu": "tt.delimiters",
-          "group": "delimiters",
-          "when": "!editorReadonly"
-        },
-        {
-          "command": "vscode-texttoolbox.DuplicateTab",
-          "group": "tt.editorContext"
-        }
-      ],
-      "tt.highlight": [
-        {
-          "group": "tt.highlight.add",
-          "command": "vscode-texttoolbox.HighlightText"
-        },
-        {
-          "group": "tt.highlight.add",
-          "command": "vscode-texttoolbox.HighlightTextWithColor"
-        },
-        {
-          "group": "tt.highlight.addall",
-          "command": "vscode-texttoolbox.HighlightAllMatchesCaseSensitive"
-        },
-        {
-          "group": "tt.highlight.addall",
-          "command": "vscode-texttoolbox.HighlightAllMatchesCaseInsensitive"
-        },
-        {
-          "group": "tt.highlight.addall",
-          "command": "vscode-texttoolbox.HighlightAllMatchesCaseSensitiveWithColor"
-        },
-        {
-          "group": "tt.highlight.addall",
-          "command": "vscode-texttoolbox.HighlightAllMatchesCaseInsensitiveWithColor"
-        },
-        {
-          "group": "tt.highlight.addregexp",
-          "command": "vscode-texttoolbox.HighlightWithRegExp"
-        },
-        {
-          "group": "tt.highlight.addregexp",
-          "command": "vscode-texttoolbox.HighlightWithRegExpWithColor"
-        },
-        {
-          "group": "tt.highlight.remove",
-          "command": "vscode-texttoolbox.RemoveHighlight"
-        },
-        {
-          "group": "tt.highlight.remove",
-          "command": "vscode-texttoolbox.RemoveAllHighlights"
-        }
-      ],
-      "tt.caseConversion": [
-        {
-          "group": "caseConversion",
-          "command": "vscode-texttoolbox.PascalCase"
-        },
-        {
-          "group": "caseConversion",
-          "command": "vscode-texttoolbox.CamelCase"
-        },
-        {
-          "group": "caseConversion",
-          "command": "vscode-texttoolbox.ConstantCase"
-        },
-        {
-          "group": "caseConversion",
-          "command": "vscode-texttoolbox.DotCase"
-        },
-        {
-          "group": "caseConversion",
-          "command": "vscode-texttoolbox.HeaderCase"
-        },
-        {
-          "group": "caseConversion",
-          "command": "vscode-texttoolbox.KebabCase"
-        },
-        {
-          "group": "caseConversion",
-          "command": "vscode-texttoolbox.SentenceCase"
-        },
-        {
-          "group": "caseConversion",
-          "command": "vscode-texttoolbox.SnakeCase"
-        },
-        {
-          "group": "caseConversion",
-          "command": "vscode-texttoolbox.InvertCase"
-        },
-        {
-          "group": "caseConversion",
-          "command": "vscode-texttoolbox.PathCase"
-        }
-      ],
-      "tt.insert": [
-        {
-          "group": "tt.insert",
-          "command": "vscode-texttoolbox.InsertGUID"
-        },
-        {
-          "group": "tt.insert",
-          "command": "vscode-texttoolbox.InsertGuidAllZeros"
-        },
-        {
-          "group": "tt.insert",
-          "command": "vscode-texttoolbox.InsertDate"
-        },
-        {
-          "group": "tt.insert",
-          "command": "vscode-texttoolbox.PickRandom"
-        },
-        {
-          "group": "tt.insert",
-          "command": "vscode-texttoolbox.PadSelectionRight"
-        },
-        {
-          "group": "tt.insert",
-          "command": "vscode-texttoolbox.PadSelectionLeft"
-        },
-        {
-          "group": "tt.insert",
-          "command": "vscode-texttoolbox.InsertLineNumbers"
-        },
-        {
-          "group": "tt.insert",
-          "command": "vscode-texttoolbox.InsertSequenceNumbers"
-        },
-        {
-          "group": "tt.insert",
-          "command": "vscode-texttoolbox.InsertLoremIpsum"
-        },
-        {
-          "group": "tt.insert",
-          "command": "vscode-texttoolbox.InsertCurrency"
-        }
-      ],
-      "tt.transform": [
-        {
-          "group": "tt.transform",
-          "command": "vscode-texttoolbox.SplitSelection"
-        },
-        {
-          "group": "tt.transform",
-          "command": "vscode-texttoolbox.SplitSelectionOpenInNewEditor"
-        },
-        {
-          "group": "tt.transform",
-          "command": "vscode-texttoolbox.ConvertDecimalToHexadecimal"
-        },
-        {
-          "group": "tt.transform",
-          "command": "vscode-texttoolbox.ConvertHexadecimalToDecimal"
-        },
-        {
-          "group": "tt.transform",
-          "command": "vscode-texttoolbox.convertFromBase64"
-        },
-        {
-          "group": "tt.transform",
-          "command": "vscode-texttoolbox.convertToBase64"
-        },
-        {
-          "group": "tt.transform",
-          "command": "vscode-texttoolbox.encodeUri"
-        },
-        {
-          "group": "tt.transform",
-          "command": "vscode-texttoolbox.decodeUri"
-        },
-        {
-          "group": "tt.transform",
-          "command": "vscode-texttoolbox.decodeJWTToken"
-        },
-        {
-          "group": "tt.transform",
-          "command": "vscode-texttoolbox.fromHTML"
-        },
-        {
-          "group": "tt.transform",
-          "command": "vscode-texttoolbox.toHTML"
-        },
-        {
-          "group": "tt.transform",
-          "command": "vscode-texttoolbox.AlignToSeparator"
-        },
-        {
-          "group": "tt.transform",
-          "command": "vscode-texttoolbox.AlignAsTable"
-        },
-        {
-          "group": "tt.transform",
-          "command": "vscode-texttoolbox.AlignAsTableWithHeaders"
-        },
-        {
-          "group": "tt.transform",
-          "command": "vscode-texttoolbox.RemoveControlCharacters"
-        },
-        {
-          "group": "tt.transform",
-          "command": "vscode-texttoolbox.TrimLineOrSelection"
-        }
-      ],
-      "tt.filter": [
-        {
-          "group": "tt.filter",
-          "command": "vscode-texttoolbox.RemoveAllEmptyLines",
-          "when": "!editorReadonly"
-        },
-        {
-          "group": "tt.filter",
-          "command": "vscode-texttoolbox.RemoveRedundantEmptyLines",
-          "when": "!editorReadonly"
-        },
-        {
-          "group": "tt.filter",
-          "command": "vscode-texttoolbox.RemoveDuplicateLines",
-          "when": "!editorReadonly"
-        },
-        {
-          "group": "tt.filter",
-          "command": "vscode-texttoolbox.RemoveDuplicateLinesResultInNewEditor",
-          "when": "!editorReadonly"
-        },
-        {
-          "group": "tt.filter",
-          "command": "vscode-texttoolbox.FilterLinesUsingRegExpOrString"
-        },
-        {
-          "group": "tt.filter",
-          "command": "vscode-texttoolbox.OpenSelectionInNewEditor"
-        },
-        {
-          "group": "tt.filter",
-          "command": "vscode-texttoolbox.OpenPathOrUrlUnderCursor"
-        }
-      ],
-      "tt.json": [
-        {
-          "group": "tt.json",
-          "command": "vscode-texttoolbox.StringifyJson"
-        },
-        {
-          "group": "tt.json",
-          "command": "vscode-texttoolbox.FixJson"
-        },
-        {
-          "group": "tt.json",
-          "command": "vscode-texttoolbox.MinifyJson"
-        },
-        {
-          "group": "tt.json",
-          "command": "vscode-texttoolbox.EscapeWin32PathInJson"
-        }
-      ],
-      "tt.sort": [
-        {
-          "group": "tt.sort",
-          "command": "vscode-texttoolbox.SortLinesResultInNewEditor"
-        },
-        {
-          "group": "tt.sort",
-          "command": "vscode-texttoolbox.SortLines"
-        },
-        {
-          "group": "tt.sort",
-          "command": "vscode-texttoolbox.SortLinesByLengthResultInNewEditor"
-        },
-        {
-          "group": "tt.sort",
-          "command": "vscode-texttoolbox.SortLinesByLength"
-        }
-      ],
-      "tt.path": [
-        {
-          "group": "tt.path",
-          "command": "vscode-texttoolbox.TransformPathToPosix"
-        },
-        {
-          "group": "tt.path",
-          "command": "vscode-texttoolbox.TransformPathToWin32"
-        }
-      ],
-      "tt.delimiters": [
-        {
-          "group": "tt.delimiters",
-          "command": "vscode-texttoolbox.SelectTextBetweenQuotes"
-        },
-        {
-          "group": "tt.delimiters",
-          "command": "vscode-texttoolbox.SelectTextBetweenBrackets"
-        },
-        {
-          "group": "tt.delimiters",
-          "command": "vscode-texttoolbox.RemoveQuotes"
-        },
-        {
-          "group": "tt.delimiters",
-          "command": "vscode-texttoolbox.RemoveBrackets"
-        }
-      ]
+    "name": "vscode-texttoolbox",
+    "displayName": "Text Toolbox",
+    "description": "Collection of tools for text manipulation, filtering, sorting etc...",
+    "version": "2.13.0",
+    "publisher": "carlocardella",
+    "author": {
+        "name": "Carlo Cardella",
+        "url": "https://cloudnotes.io"
     },
-    "submenus": [
-      {
-        "id": "tt.editorContext",
-        "label": "Text Toolbox"
-      },
-      {
-        "id": "tt.caseConversion",
-        "label": "Convert case"
-      },
-      {
-        "id": "tt.filter",
-        "label": "Filter, Extract"
-      },
-      {
-        "id": "tt.insert",
-        "label": "Insert"
-      },
-      {
-        "id": "tt.transform",
-        "label": "Transform"
-      },
-      {
-        "id": "tt.json",
-        "label": "Json"
-      },
-      {
-        "id": "tt.sort",
-        "label": "Sort"
-      },
-      {
-        "id": "tt.path",
-        "label": "Path"
-      },
-      {
-        "id": "tt.highlight",
-        "label": "Highlight"
-      },
-      {
-        "id": "tt.delimiters",
-        "label": "Delimiters"
-      }
+    "engines": {
+        "vscode": "^1.63.0"
+    },
+    "categories": [
+        "Other"
     ],
-    "configuration": [
-      {
-        "title": "Text Toolbox",
-        "properties": {
-          "TextToolbox.statusBarAlignment": {
-            "type": "string",
-            "enum": [
-              "Left",
-              "Right"
-            ],
-            "default": "Right",
-            "scope": "window",
-            "description": "Text Toolbox word and selected lines count alignment in the StatusBar"
-          },
-          "TextToolbox.statusBarPriority": {
-            "type": "number",
-            "default": 100,
-            "scope": "window",
-            "description": "Text Toolbox word and selected lines count StatusBar priority"
-          },
-          "TextToolbox.enableStatusBarWordLineCount": {
-            "type": "boolean",
-            "default": true,
-            "scope": "window",
-            "description": "Enable or disable the StatusBar Text Toolbox word and selected lines count"
-          },
-          "TextToolbox.ignoreWhitespaceInLineFilters": {
-            "type": "boolean",
-            "default": true,
-            "scope": "window",
-            "description": "Ignore leading and trailing whitespaces when filtering lines: this can impact how duplicate lines are removed"
-          },
-          "TextToolbox.filtersUseRegularExpressions": {
-            "type": "boolean",
-            "default": true,
-            "scope": "window",
-            "description": "Filter use Regular Expression rather than simple text match"
-          },
-          "TextToolbox.decorateControlCharacters": {
-            "type": "object",
-            "description": "Control characters decoration appearance",
-            "default": {
-              "borderWidth": "1px",
-              "borderStyle": "solid",
-              "overviewRulerColor": "red",
-              "borderColor": "red"
-            }
-          },
-          "TextToolbox.replaceControlCharactersWith": {
-            "description": "Replace control characters (Remove Control Characters) in the active document with this string",
-            "type": "string",
-            "default": "",
-            "scope": "window"
-          },
-          "TextToolbox.alignTextDefaultSeparator": {
-            "description": "Align text default separator (Align Text)",
-            "type": "string",
-            "default": ",",
-            "scope": "window"
-          },
-          "TextToolbox.decorationDefaults": {
-            "default": [
-              {
-                "light": {
-                  "backgroundColor": "darkred",
-                  "color": "white"
-                },
-                "dark": {
-                  "backgroundColor": "red",
-                  "color": "white"
-                }
-              },
-              {
-                "light": {
-                  "backgroundColor": "darkgreen",
-                  "color": "white"
-                },
-                "dark": {
-                  "backgroundColor": "green",
-                  "color": "white"
-                }
-              },
-              {
-                "light": {
-                  "backgroundColor": "darkblue",
-                  "color": "white"
-                },
-                "dark": {
-                  "backgroundColor": "blue",
-                  "color": "white"
-                }
-              },
-              {
-                "light": {
-                  "backgroundColor": "darkcyan",
-                  "color": "white"
-                },
-                "dark": {
-                  "backgroundColor": "cyan",
-                  "color": "black"
-                }
-              },
-              {
-                "light": {
-                  "backgroundColor": "darkmagenta",
-                  "color": "white"
-                },
-                "dark": {
-                  "backgroundColor": "magenta",
-                  "color": "white"
-                }
-              },
-              {
-                "light": {
-                  "backgroundColor": "darkyellow",
-                  "color": "black"
-                },
-                "dark": {
-                  "backgroundColor": "yellow",
-                  "color": "black"
-                }
-              },
-              {
-                "light": {
-                  "backgroundColor": "darkgray",
-                  "color": "white"
-                },
-                "dark": {
-                  "backgroundColor": "gray",
-                  "color": "black"
-                }
-              },
-              {
-                "light": {
-                  "backgroundColor": "darkorange",
-                  "color": "black"
-                },
-                "dark": {
-                  "backgroundColor": "orange",
-                  "color": "black"
-                }
-              },
-              {
-                "light": {
-                  "backgroundColor": "darkpurple",
-                  "color": "white"
-                },
-                "dark": {
-                  "backgroundColor": "purple",
-                  "color": "white"
-                }
-              },
-              {
-                "light": {
-                  "backgroundColor": "darkbrown",
-                  "color": "white"
-                },
-                "dark": {
-                  "backgroundColor": "brown",
-                  "color": "white"
-                }
-              }
-            ]
-          },
-          "TextToolbox.tabOut.enabled": {
-            "description": "Tab out of brackets, quotes, etc.",
-            "type": "boolean",
-            "default": true,
-            "scope": "window"
-          },
-          "TextToolbox.tabOut.showInStatusBar": {
-            "description": "Show a message in the status bar when tab out is enabled",
-            "type": "boolean",
-            "default": true,
-            "scope": "window"
-          },
-          "TextToolbox.tabOut.characters": {
-            "description": "Characters to tab out of",
-            "type": "array",
-            "default": [
-              "[",
-              "]",
-              "{",
-              "}",
-              "(",
-              ")",
-              "\\",
-              "/",
-              "'",
-              "\"",
-              ":",
-              "=",
-              ">",
-              "<",
-              ".",
-              "`",
-              ";",
-              ",",
-              "|"
-            ],
-            "scope": "window"
-          },
-          "TextToolbox.tabOut.enabledLanguages": {
-            "description": "Use tab out in these language types",
-            "type": "array",
-            "default": [
-              "*"
-            ]
-          },
-          "TextToolbox.tabOut.disableLanguages": {
-            "description": "Do not use tab out in these language types",
-            "type": "array",
-            "default": []
-          }
+    "capabilities": {
+        "untrustedWorkspaces": {
+            "supported": true
         }
-      }
+    },
+    "keywords": [
+        "case conversion",
+        "case",
+        "converter",
+        "converting",
+        "decode",
+        "duplicates",
+        "encode",
+        "filter lines",
+        "filter text",
+        "filter",
+        "grep",
+        "insert date",
+        "ipsum",
+        "jwt",
+        "lines count",
+        "Lorem Ipsum",
+        "lorem",
+        "random",
+        "random",
+        "sort lines",
+        "sort text",
+        "sort",
+        "split",
+        "text",
+        "tools",
+        "utilities",
+        "word count",
+        "tabout",
+        "tab out"
     ],
-    "keybindings": [
-      {
-        "command": "vscode-texttoolbox.TabOut",
-        "key": "tab",
-        "when": "editorTextFocus && !suggestWidgetVisible && !inlineSuggestionVisible && !inSnippetMode && !editorHasMultipleSelections"
-      },
-      {
-        "command": "vscode-texttoolbox.SelectTextBetweenBrackets",
-        "key": "ctrl+shift+alt+b",
-        "mac": "ctrl+shift+cmd+b",
-        "when": "editorTextFocus"
-      },
-      {
-        "command": "vscode-texttoolbox.SelectTextBetweenQuotes",
-        "key": "ctrl+shift+alt+q",
-        "mac": "ctrl+shift+cmd+q",
-        "when": "editorTextFocus"
-      },
-      {
-        "command": "vscode-texttoolbox.RemoveQuotes",
-        "key": "ctrl+shift+alt+'",
-        "mac": "ctrl+shift+cmd+'",
-        "when": "editorTextFocus"
-      },
-      {
-        "command": "vscode-texttoolbox.RemoveBrackets",
-        "key": "ctrl+shift+alt+;",
-        "mac": "ctrl+shift+cmd+;",
-        "when": "editorTextFocus"
-      },
-      {
-        "command": "vscode-texttoolbox.OpenPathOrUrlUnderCursor",
-        "key": "alt+o",
-        "mac": "cmd+o",
-        "when": "editorTextFocus"
-      }
-    ]
-  },
-  "scripts": {
-    "webpack": "webpack --mode development",
-    "webpack-dev": "webpack --mode development --watch",
-    "test-compile": "tsc -p ./",
-    "unit-tests": "tsc -w -p ./",
-    "vscode:prepublish": "npm run package-web",
-    "compile-web": "webpack",
-    "watch-web": "webpack --watch",
-    "package-web": "webpack --mode production --devtool hidden-source-map"
-  },
-  "devDependencies": {
-    "@types/assert": "^1.5.6",
-    "@types/chance": "^1.1.3",
-    "@types/date-and-time": "^0.13.0",
-    "@types/dateformat": "^5.0.0",
-    "@types/glob": "^8.0.0",
-    "@types/guid": "^1.0.0",
-    "@types/jsonic": "^0.3.1",
-    "@types/luxon": "^3.2.0",
-    "@types/mocha": "^9.1.1",
-    "@types/node": "^18.11.18",
-    "@types/node-uuid": "0.0.28",
-    "@types/pad": "^2.1.0",
-    "@types/vscode": "^1.45.0",
-    "@typescript-eslint/eslint-plugin": "^5.48.0",
-    "@typescript-eslint/parser": "^5.48.0",
-    "@vscode/test-electron": "^2.2.1",
-    "assert": "^2.0.0",
-    "copy-to-clipboard": "^3.3.3",
-    "eslint": "^8.31.0",
-    "glob": "^7.2.3",
-    "guid": "0.0.12",
-    "lorem-ipsum": "^2.0.8",
-    "mocha": "^9.2.2",
-    "mocha-explorer-launcher-scripts": "^0.4.0",
-    "node-uuid": "^1.4.8",
-    "nyc": "^15.1.0",
-    "pad": "^3.2.0",
-    "path-browserify": "^1.0.1",
-    "source-map-support": "^0.5.21",
-    "ts-loader": "^9.4.2",
-    "ts-node": "^10.9.1",
-    "typescript": "^4.9.4",
-    "uuid-lib": "0.0.6",
-    "vsce": "^2.15.0",
-    "webpack": "^5.75.0",
-    "webpack-cli": "^5.0.1"
-  },
-  "dependencies": {
-    "chance": "^1.1.9",
-    "jsonic": "^1.0.1",
-    "jwt-decode": "^3.1.2",
-    "luxon": "^3.2.1",
-    "os": "^0.1.2",
-    "os-browserify": "^0.3.0",
-    "process": "^0.11.10"
-  }
+    "activationEvents": [
+        "onStartupFinished"
+    ],
+    "main": "./dist/extension-node.js",
+    "browser": "./dist/extension-web.js",
+    "preview": false,
+    "badges": [],
+    "icon": "assets/extension_icon.png",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/carlocardella/vscode-TextToolbox.git"
+    },
+    "bugs": {
+        "url": "https://github.com/carlocardella/vscode-TextToolbox/issues"
+    },
+    "license": "MIT",
+    "contributes": {
+        "commands": [
+            {
+                "command": "vscode-texttoolbox.PascalCase",
+                "title": "PascalCase",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.CamelCase",
+                "title": "camel Case",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.ConstantCase",
+                "title": "CONSTANT_CASE",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.DotCase",
+                "title": "dot.case",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.KebabCase",
+                "title": "kebab-case",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.SentenceCase",
+                "title": "Sentence case",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.SnakeCase",
+                "title": "snake_case",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.HeaderCase",
+                "title": "HEADER-CASE",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.InvertCase",
+                "title": "invert case",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.PathCase",
+                "title": "path/case",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.InsertGUID",
+                "title": "Insert GUID",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.InsertGuidAllZeros",
+                "title": "Insert GUID all zeros",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.InsertDate",
+                "title": "Insert Date",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.PickRandom",
+                "title": "Insert Random",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.PadSelectionRight",
+                "title": "Pad Selection Right...",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.PadSelectionLeft",
+                "title": "Pad Selection Left...",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.RemoveAllEmptyLines",
+                "title": "Remove all empty lines",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.RemoveRedundantEmptyLines",
+                "title": "Remove redundant empty lines",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.RemoveDuplicateLines",
+                "title": "Remove duplicate lines",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.RemoveDuplicateLinesResultInNewEditor",
+                "title": "Remove duplicate lines, result in new Editor",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.FilterLinesUsingRegExpOrString",
+                "title": "Filter lines, result in new Editor...",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.SortLinesResultInNewEditor",
+                "title": "Sort lines, result in new editor",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.SortLines",
+                "title": "Sort lines",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.SortLinesByLengthResultInNewEditor",
+                "title": "Sort lines by length, result in new editor",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.SortLinesByLength",
+                "title": "Sort lines by length",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.OpenSelectionInNewEditor",
+                "title": "Open selection in new editor",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.InsertLineNumbers",
+                "title": "Insert line numbers",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.InsertSequenceNumbers",
+                "title": "Insert numbers sequence",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.RemoveControlCharacters",
+                "title": "Remove control characters",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.TrimLineOrSelection",
+                "title": "Trim",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.InsertCurrency",
+                "title": "Insert Currency...",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.SplitSelection",
+                "title": "Split Selection...",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.SplitSelectionOpenInNewEditor",
+                "title": "Split Selection, result in new editor...",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.ConvertDecimalToHexadecimal",
+                "title": "Convert decimal to hexadecimal",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.ConvertHexadecimalToDecimal",
+                "title": "Convert hexadecimal to decimal",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.convertFromBase64",
+                "title": "Decode Base64 to text",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.convertToBase64",
+                "title": "Encode text to Base64",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.encodeUri",
+                "title": "Encode Uri",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.decodeUri",
+                "title": "Decode Uri",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.decodeJWTToken",
+                "title": "Decode JWT Token",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.toHTML",
+                "title": "Encode to HTML",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.fromHTML",
+                "title": "Decode from HTML",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.FixJson",
+                "title": "Fix and Format Json",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.StringifyJson",
+                "title": "Stringify Json",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.MinifyJson",
+                "title": "Minify Json",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.TransformPathToPosix",
+                "title": "Transform path to Posix",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.TransformPathToWin32",
+                "title": "Transform path to Win32",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.InsertLoremIpsum",
+                "title": "Insert Lorem Ipsum",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.AlignToSeparator",
+                "title": "Align to separator",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.AlignAsTable",
+                "title": "Align as table",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.AlignAsTableWithHeaders",
+                "title": "Align as table with headers",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.EscapeWin32PathInJson",
+                "title": "Fix Win32 path in Json",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.HighlightText",
+                "title": "Highlight",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.HighlightTextWithColor",
+                "title": "Highlight with color...",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.HighlightAllMatchesCaseSensitive",
+                "title": "Highlight all matches, case sensitive",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.HighlightAllMatchesCaseInsensitive",
+                "title": "Highlight all matches, case insensitive",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.HighlightAllMatchesCaseSensitiveWithColor",
+                "title": "Highlight all matches, case sensitive, with color...",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.HighlightAllMatchesCaseInsensitiveWithColor",
+                "title": "Highlight all matches, case insensitive, with color...",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.HighlightWithRegExp",
+                "title": "Highlight with RegExp",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.HighlightWithRegExpWithColor",
+                "title": "Highlight with RegExp with color...",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.RemoveAllHighlights",
+                "title": "Remove all highlights",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.RemoveHighlight",
+                "title": "Remove highlight",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.DuplicateTab",
+                "title": "Duplicate tab",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.TabOut",
+                "title": "Tab Out",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.ToggleTabOut",
+                "title": "Toggle Tab Out",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.SelectTextBetweenQuotes",
+                "title": "Select text between quotes",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.SelectTextBetweenBrackets",
+                "title": "Select text between brackets",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.RemoveQuotes",
+                "title": "Remove quotes",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.RemoveBrackets",
+                "title": "Remove brackets",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.OpenPathOrUrlUnderCursor",
+                "title": "Open under cursor",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.indentUsingTwoSpaces",
+                "title": "Indent using 2 spaces",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.indentUsingFourSpaces",
+                "title": "Indent using 4 spaces",
+                "category": "Text Toolbox"
+            }
+        ],
+        "menus": {
+            "commandPalette": [
+                {
+                    "command": "vscode-texttoolbox.TabOut",
+                    "when": "false"
+                }
+            ],
+            "editor/context": [
+                {
+                    "submenu": "tt.editorContext",
+                    "group": "textToolbox"
+                }
+            ],
+            "editor/title/context": [
+                {
+                    "command": "vscode-texttoolbox.DuplicateTab",
+                    "group": "tt.editorTitleContext"
+                }
+            ],
+            "tt.editorContext": [
+                {
+                    "submenu": "tt.caseConversion",
+                    "group": "caseConversion",
+                    "when": "!editorReadonly"
+                },
+                {
+                    "submenu": "tt.filter",
+                    "group": "filter"
+                },
+                {
+                    "submenu": "tt.insert",
+                    "group": "insert",
+                    "when": "!editorReadonly"
+                },
+                {
+                    "submenu": "tt.transform",
+                    "group": "filter",
+                    "when": "!editorReadonly"
+                },
+                {
+                    "submenu": "tt.json",
+                    "group": "json",
+                    "when": "!editorReadonly"
+                },
+                {
+                    "submenu": "tt.sort",
+                    "group": "filter",
+                    "when": "!editorReadonly"
+                },
+                {
+                    "submenu": "tt.path",
+                    "group": "path",
+                    "when": "!editorReadonly"
+                },
+                {
+                    "submenu": "tt.highlight",
+                    "group": "highlight"
+                },
+                {
+                    "submenu": "tt.delimiters",
+                    "group": "delimiters",
+                    "when": "!editorReadonly"
+                },
+                {
+                    "command": "vscode-texttoolbox.DuplicateTab",
+                    "group": "tt.editorContext"
+                }
+            ],
+            "tt.highlight": [
+                {
+                    "group": "tt.highlight.add",
+                    "command": "vscode-texttoolbox.HighlightText"
+                },
+                {
+                    "group": "tt.highlight.add",
+                    "command": "vscode-texttoolbox.HighlightTextWithColor"
+                },
+                {
+                    "group": "tt.highlight.addall",
+                    "command": "vscode-texttoolbox.HighlightAllMatchesCaseSensitive"
+                },
+                {
+                    "group": "tt.highlight.addall",
+                    "command": "vscode-texttoolbox.HighlightAllMatchesCaseInsensitive"
+                },
+                {
+                    "group": "tt.highlight.addall",
+                    "command": "vscode-texttoolbox.HighlightAllMatchesCaseSensitiveWithColor"
+                },
+                {
+                    "group": "tt.highlight.addall",
+                    "command": "vscode-texttoolbox.HighlightAllMatchesCaseInsensitiveWithColor"
+                },
+                {
+                    "group": "tt.highlight.addregexp",
+                    "command": "vscode-texttoolbox.HighlightWithRegExp"
+                },
+                {
+                    "group": "tt.highlight.addregexp",
+                    "command": "vscode-texttoolbox.HighlightWithRegExpWithColor"
+                },
+                {
+                    "group": "tt.highlight.remove",
+                    "command": "vscode-texttoolbox.RemoveHighlight"
+                },
+                {
+                    "group": "tt.highlight.remove",
+                    "command": "vscode-texttoolbox.RemoveAllHighlights"
+                }
+            ],
+            "tt.caseConversion": [
+                {
+                    "group": "caseConversion",
+                    "command": "vscode-texttoolbox.PascalCase"
+                },
+                {
+                    "group": "caseConversion",
+                    "command": "vscode-texttoolbox.CamelCase"
+                },
+                {
+                    "group": "caseConversion",
+                    "command": "vscode-texttoolbox.ConstantCase"
+                },
+                {
+                    "group": "caseConversion",
+                    "command": "vscode-texttoolbox.DotCase"
+                },
+                {
+                    "group": "caseConversion",
+                    "command": "vscode-texttoolbox.HeaderCase"
+                },
+                {
+                    "group": "caseConversion",
+                    "command": "vscode-texttoolbox.KebabCase"
+                },
+                {
+                    "group": "caseConversion",
+                    "command": "vscode-texttoolbox.SentenceCase"
+                },
+                {
+                    "group": "caseConversion",
+                    "command": "vscode-texttoolbox.SnakeCase"
+                },
+                {
+                    "group": "caseConversion",
+                    "command": "vscode-texttoolbox.InvertCase"
+                },
+                {
+                    "group": "caseConversion",
+                    "command": "vscode-texttoolbox.PathCase"
+                }
+            ],
+            "tt.insert": [
+                {
+                    "group": "tt.insert",
+                    "command": "vscode-texttoolbox.InsertGUID"
+                },
+                {
+                    "group": "tt.insert",
+                    "command": "vscode-texttoolbox.InsertGuidAllZeros"
+                },
+                {
+                    "group": "tt.insert",
+                    "command": "vscode-texttoolbox.InsertDate"
+                },
+                {
+                    "group": "tt.insert",
+                    "command": "vscode-texttoolbox.PickRandom"
+                },
+                {
+                    "group": "tt.insert",
+                    "command": "vscode-texttoolbox.PadSelectionRight"
+                },
+                {
+                    "group": "tt.insert",
+                    "command": "vscode-texttoolbox.PadSelectionLeft"
+                },
+                {
+                    "group": "tt.insert",
+                    "command": "vscode-texttoolbox.InsertLineNumbers"
+                },
+                {
+                    "group": "tt.insert",
+                    "command": "vscode-texttoolbox.InsertSequenceNumbers"
+                },
+                {
+                    "group": "tt.insert",
+                    "command": "vscode-texttoolbox.InsertLoremIpsum"
+                },
+                {
+                    "group": "tt.insert",
+                    "command": "vscode-texttoolbox.InsertCurrency"
+                }
+            ],
+            "tt.transform": [
+                {
+                    "group": "tt.transform",
+                    "command": "vscode-texttoolbox.SplitSelection"
+                },
+                {
+                    "group": "tt.transform",
+                    "command": "vscode-texttoolbox.SplitSelectionOpenInNewEditor"
+                },
+                {
+                    "group": "tt.transform",
+                    "command": "vscode-texttoolbox.ConvertDecimalToHexadecimal"
+                },
+                {
+                    "group": "tt.transform",
+                    "command": "vscode-texttoolbox.ConvertHexadecimalToDecimal"
+                },
+                {
+                    "group": "tt.transform",
+                    "command": "vscode-texttoolbox.convertFromBase64"
+                },
+                {
+                    "group": "tt.transform",
+                    "command": "vscode-texttoolbox.convertToBase64"
+                },
+                {
+                    "group": "tt.transform",
+                    "command": "vscode-texttoolbox.encodeUri"
+                },
+                {
+                    "group": "tt.transform",
+                    "command": "vscode-texttoolbox.decodeUri"
+                },
+                {
+                    "group": "tt.transform",
+                    "command": "vscode-texttoolbox.decodeJWTToken"
+                },
+                {
+                    "group": "tt.transform",
+                    "command": "vscode-texttoolbox.fromHTML"
+                },
+                {
+                    "group": "tt.transform",
+                    "command": "vscode-texttoolbox.toHTML"
+                },
+                {
+                    "group": "tt.transform",
+                    "command": "vscode-texttoolbox.AlignToSeparator"
+                },
+                {
+                    "group": "tt.transform",
+                    "command": "vscode-texttoolbox.AlignAsTable"
+                },
+                {
+                    "group": "tt.transform",
+                    "command": "vscode-texttoolbox.AlignAsTableWithHeaders"
+                },
+                {
+                    "group": "tt.transform",
+                    "command": "vscode-texttoolbox.RemoveControlCharacters"
+                },
+                {
+                    "group": "tt.transform",
+                    "command": "vscode-texttoolbox.TrimLineOrSelection"
+                }
+            ],
+            "tt.filter": [
+                {
+                    "group": "tt.filter",
+                    "command": "vscode-texttoolbox.RemoveAllEmptyLines",
+                    "when": "!editorReadonly"
+                },
+                {
+                    "group": "tt.filter",
+                    "command": "vscode-texttoolbox.RemoveRedundantEmptyLines",
+                    "when": "!editorReadonly"
+                },
+                {
+                    "group": "tt.filter",
+                    "command": "vscode-texttoolbox.RemoveDuplicateLines",
+                    "when": "!editorReadonly"
+                },
+                {
+                    "group": "tt.filter",
+                    "command": "vscode-texttoolbox.RemoveDuplicateLinesResultInNewEditor",
+                    "when": "!editorReadonly"
+                },
+                {
+                    "group": "tt.filter",
+                    "command": "vscode-texttoolbox.FilterLinesUsingRegExpOrString"
+                },
+                {
+                    "group": "tt.filter",
+                    "command": "vscode-texttoolbox.OpenSelectionInNewEditor"
+                },
+                {
+                    "group": "tt.filter",
+                    "command": "vscode-texttoolbox.OpenPathOrUrlUnderCursor"
+                }
+            ],
+            "tt.json": [
+                {
+                    "group": "tt.json",
+                    "command": "vscode-texttoolbox.StringifyJson"
+                },
+                {
+                    "group": "tt.json",
+                    "command": "vscode-texttoolbox.FixJson"
+                },
+                {
+                    "group": "tt.json",
+                    "command": "vscode-texttoolbox.MinifyJson"
+                },
+                {
+                    "group": "tt.json",
+                    "command": "vscode-texttoolbox.EscapeWin32PathInJson"
+                }
+            ],
+            "tt.sort": [
+                {
+                    "group": "tt.sort",
+                    "command": "vscode-texttoolbox.SortLinesResultInNewEditor"
+                },
+                {
+                    "group": "tt.sort",
+                    "command": "vscode-texttoolbox.SortLines"
+                },
+                {
+                    "group": "tt.sort",
+                    "command": "vscode-texttoolbox.SortLinesByLengthResultInNewEditor"
+                },
+                {
+                    "group": "tt.sort",
+                    "command": "vscode-texttoolbox.SortLinesByLength"
+                }
+            ],
+            "tt.path": [
+                {
+                    "group": "tt.path",
+                    "command": "vscode-texttoolbox.TransformPathToPosix"
+                },
+                {
+                    "group": "tt.path",
+                    "command": "vscode-texttoolbox.TransformPathToWin32"
+                }
+            ],
+            "tt.delimiters": [
+                {
+                    "group": "tt.delimiters",
+                    "command": "vscode-texttoolbox.SelectTextBetweenQuotes"
+                },
+                {
+                    "group": "tt.delimiters",
+                    "command": "vscode-texttoolbox.SelectTextBetweenBrackets"
+                },
+                {
+                    "group": "tt.delimiters",
+                    "command": "vscode-texttoolbox.RemoveQuotes"
+                },
+                {
+                    "group": "tt.delimiters",
+                    "command": "vscode-texttoolbox.RemoveBrackets"
+                }
+            ]
+        },
+        "submenus": [
+            {
+                "id": "tt.editorContext",
+                "label": "Text Toolbox"
+            },
+            {
+                "id": "tt.caseConversion",
+                "label": "Convert case"
+            },
+            {
+                "id": "tt.filter",
+                "label": "Filter, Extract"
+            },
+            {
+                "id": "tt.insert",
+                "label": "Insert"
+            },
+            {
+                "id": "tt.transform",
+                "label": "Transform"
+            },
+            {
+                "id": "tt.json",
+                "label": "Json"
+            },
+            {
+                "id": "tt.sort",
+                "label": "Sort"
+            },
+            {
+                "id": "tt.path",
+                "label": "Path"
+            },
+            {
+                "id": "tt.highlight",
+                "label": "Highlight"
+            },
+            {
+                "id": "tt.delimiters",
+                "label": "Delimiters"
+            }
+        ],
+        "configuration": [
+            {
+                "title": "Text Toolbox",
+                "properties": {
+                    "TextToolbox.statusBarAlignment": {
+                        "type": "string",
+                        "enum": [
+                            "Left",
+                            "Right"
+                        ],
+                        "default": "Right",
+                        "scope": "window",
+                        "description": "Text Toolbox word and selected lines count alignment in the StatusBar"
+                    },
+                    "TextToolbox.statusBarPriority": {
+                        "type": "number",
+                        "default": 100,
+                        "scope": "window",
+                        "description": "Text Toolbox word and selected lines count StatusBar priority"
+                    },
+                    "TextToolbox.enableStatusBarWordLineCount": {
+                        "type": "boolean",
+                        "default": true,
+                        "scope": "window",
+                        "description": "Enable or disable the StatusBar Text Toolbox word and selected lines count"
+                    },
+                    "TextToolbox.ignoreWhitespaceInLineFilters": {
+                        "type": "boolean",
+                        "default": true,
+                        "scope": "window",
+                        "description": "Ignore leading and trailing whitespaces when filtering lines: this can impact how duplicate lines are removed"
+                    },
+                    "TextToolbox.filtersUseRegularExpressions": {
+                        "type": "boolean",
+                        "default": true,
+                        "scope": "window",
+                        "description": "Filter use Regular Expression rather than simple text match"
+                    },
+                    "TextToolbox.decorateControlCharacters": {
+                        "type": "object",
+                        "description": "Control characters decoration appearance",
+                        "default": {
+                            "borderWidth": "1px",
+                            "borderStyle": "solid",
+                            "overviewRulerColor": "red",
+                            "borderColor": "red"
+                        }
+                    },
+                    "TextToolbox.replaceControlCharactersWith": {
+                        "description": "Replace control characters (Remove Control Characters) in the active document with this string",
+                        "type": "string",
+                        "default": "",
+                        "scope": "window"
+                    },
+                    "TextToolbox.alignTextDefaultSeparator": {
+                        "description": "Align text default separator (Align Text)",
+                        "type": "string",
+                        "default": ",",
+                        "scope": "window"
+                    },
+                    "TextToolbox.decorationDefaults": {
+                        "default": [
+                            {
+                                "light": {
+                                    "backgroundColor": "darkred",
+                                    "color": "white"
+                                },
+                                "dark": {
+                                    "backgroundColor": "red",
+                                    "color": "white"
+                                }
+                            },
+                            {
+                                "light": {
+                                    "backgroundColor": "darkgreen",
+                                    "color": "white"
+                                },
+                                "dark": {
+                                    "backgroundColor": "green",
+                                    "color": "white"
+                                }
+                            },
+                            {
+                                "light": {
+                                    "backgroundColor": "darkblue",
+                                    "color": "white"
+                                },
+                                "dark": {
+                                    "backgroundColor": "blue",
+                                    "color": "white"
+                                }
+                            },
+                            {
+                                "light": {
+                                    "backgroundColor": "darkcyan",
+                                    "color": "white"
+                                },
+                                "dark": {
+                                    "backgroundColor": "cyan",
+                                    "color": "black"
+                                }
+                            },
+                            {
+                                "light": {
+                                    "backgroundColor": "darkmagenta",
+                                    "color": "white"
+                                },
+                                "dark": {
+                                    "backgroundColor": "magenta",
+                                    "color": "white"
+                                }
+                            },
+                            {
+                                "light": {
+                                    "backgroundColor": "darkyellow",
+                                    "color": "black"
+                                },
+                                "dark": {
+                                    "backgroundColor": "yellow",
+                                    "color": "black"
+                                }
+                            },
+                            {
+                                "light": {
+                                    "backgroundColor": "darkgray",
+                                    "color": "white"
+                                },
+                                "dark": {
+                                    "backgroundColor": "gray",
+                                    "color": "black"
+                                }
+                            },
+                            {
+                                "light": {
+                                    "backgroundColor": "darkorange",
+                                    "color": "black"
+                                },
+                                "dark": {
+                                    "backgroundColor": "orange",
+                                    "color": "black"
+                                }
+                            },
+                            {
+                                "light": {
+                                    "backgroundColor": "darkpurple",
+                                    "color": "white"
+                                },
+                                "dark": {
+                                    "backgroundColor": "purple",
+                                    "color": "white"
+                                }
+                            },
+                            {
+                                "light": {
+                                    "backgroundColor": "darkbrown",
+                                    "color": "white"
+                                },
+                                "dark": {
+                                    "backgroundColor": "brown",
+                                    "color": "white"
+                                }
+                            }
+                        ]
+                    },
+                    "TextToolbox.tabOut.enabled": {
+                        "description": "Tab out of brackets, quotes, etc.",
+                        "type": "boolean",
+                        "default": true,
+                        "scope": "window"
+                    },
+                    "TextToolbox.tabOut.showInStatusBar": {
+                        "description": "Show a message in the status bar when tab out is enabled",
+                        "type": "boolean",
+                        "default": true,
+                        "scope": "window"
+                    },
+                    "TextToolbox.tabOut.characters": {
+                        "description": "Characters to tab out of",
+                        "type": "array",
+                        "default": [
+                            "[",
+                            "]",
+                            "{",
+                            "}",
+                            "(",
+                            ")",
+                            "\\",
+                            "/",
+                            "'",
+                            "\"",
+                            ":",
+                            "=",
+                            ">",
+                            "<",
+                            ".",
+                            "`",
+                            ";",
+                            ",",
+                            "|"
+                        ],
+                        "scope": "window"
+                    },
+                    "TextToolbox.tabOut.enabledLanguages": {
+                        "description": "Use tab out in these language types",
+                        "type": "array",
+                        "default": [
+                            "*"
+                        ]
+                    },
+                    "TextToolbox.tabOut.disableLanguages": {
+                        "description": "Do not use tab out in these language types",
+                        "type": "array",
+                        "default": []
+                    }
+                }
+            }
+        ],
+        "keybindings": [
+            {
+                "command": "vscode-texttoolbox.TabOut",
+                "key": "tab",
+                "when": "editorTextFocus && !suggestWidgetVisible && !inlineSuggestionVisible && !inSnippetMode && !editorHasMultipleSelections"
+            },
+            {
+                "command": "vscode-texttoolbox.SelectTextBetweenBrackets",
+                "key": "ctrl+shift+alt+b",
+                "mac": "ctrl+shift+cmd+b",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "vscode-texttoolbox.SelectTextBetweenQuotes",
+                "key": "ctrl+shift+alt+q",
+                "mac": "ctrl+shift+cmd+q",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "vscode-texttoolbox.RemoveQuotes",
+                "key": "ctrl+shift+alt+'",
+                "mac": "ctrl+shift+cmd+'",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "vscode-texttoolbox.RemoveBrackets",
+                "key": "ctrl+shift+alt+;",
+                "mac": "ctrl+shift+cmd+;",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "vscode-texttoolbox.OpenPathOrUrlUnderCursor",
+                "key": "alt+o",
+                "mac": "cmd+o",
+                "when": "editorTextFocus"
+            }
+        ]
+    },
+    "scripts": {
+        "webpack": "webpack --mode development",
+        "webpack-dev": "webpack --mode development --watch",
+        "test-compile": "tsc -p ./",
+        "unit-tests": "tsc -w -p ./",
+        "vscode:prepublish": "npm run package-web",
+        "compile-web": "webpack",
+        "watch-web": "webpack --watch",
+        "package-web": "webpack --mode production --devtool hidden-source-map"
+    },
+    "devDependencies": {
+        "@types/assert": "^1.5.6",
+        "@types/chance": "^1.1.3",
+        "@types/date-and-time": "^0.13.0",
+        "@types/dateformat": "^5.0.0",
+        "@types/glob": "^8.0.0",
+        "@types/guid": "^1.0.0",
+        "@types/jsonic": "^0.3.1",
+        "@types/luxon": "^3.2.0",
+        "@types/mocha": "^9.1.1",
+        "@types/node": "^18.11.18",
+        "@types/node-uuid": "0.0.28",
+        "@types/pad": "^2.1.0",
+        "@types/vscode": "^1.45.0",
+        "@typescript-eslint/eslint-plugin": "^5.48.0",
+        "@typescript-eslint/parser": "^5.48.0",
+        "@vscode/test-electron": "^2.2.1",
+        "assert": "^2.0.0",
+        "copy-to-clipboard": "^3.3.3",
+        "eslint": "^8.31.0",
+        "glob": "^7.2.3",
+        "guid": "0.0.12",
+        "lorem-ipsum": "^2.0.8",
+        "mocha": "^9.2.2",
+        "mocha-explorer-launcher-scripts": "^0.4.0",
+        "node-uuid": "^1.4.8",
+        "nyc": "^15.1.0",
+        "pad": "^3.2.0",
+        "path-browserify": "^1.0.1",
+        "source-map-support": "^0.5.21",
+        "ts-loader": "^9.4.2",
+        "ts-node": "^10.9.1",
+        "typescript": "^4.9.4",
+        "uuid-lib": "0.0.6",
+        "vsce": "^2.15.0",
+        "webpack": "^5.75.0",
+        "webpack-cli": "^5.0.1"
+    },
+    "dependencies": {
+        "chance": "^1.1.9",
+        "jsonic": "^1.0.1",
+        "jwt-decode": "^3.1.2",
+        "luxon": "^3.2.1",
+        "os": "^0.1.2",
+        "os-browserify": "^0.3.0",
+        "process": "^0.11.10"
+    }
 }
