@@ -127,9 +127,10 @@ function updateStatusBar() {
         workspace.getConfiguration().get<boolean>("TextToolbox.tabOut.showInStatusBar")
             ? ", TabOut"
             : "";
+    let lineCloudText = lineCount > 0 ? `Lns: ${lineCount}, ` : "";
 
-    if (lineCount > 0 || wordCount > 0) {
-        statusBarItem.text = `Lns: ${lineCount}, Wds: ${wordCount}, Pos: ${offset}${tabOutText}`;
+    if (wordCount > 0) {
+        statusBarItem.text = `${lineCloudText}Wds: ${wordCount}, Pos: ${offset}${tabOutText}`;
         statusBarItem.show();
     } else {
         statusBarItem.hide();
