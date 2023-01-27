@@ -11,6 +11,17 @@ See the [list of open enhancements on GitHub](https://github.com/carlocardella/v
 
 ## Log
 
+## [2.14.0] - 2023-01-27
+
+### Added
+
+* `Indent using 2 spaces`: change document indentation from 4 spaces or tabs to 2 spaces
+* `Indent using 4 spaces`: change document intentation from 2 spaces or tabs to 4 spaces
+
+### Changed
+
+* Update the status bar behavior, `Lns: <number>` appears only when test has been selected in the editor
+
 ## [2.13.1] - 2023-01-25
 
 ### Fixed
