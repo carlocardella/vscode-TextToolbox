@@ -14,6 +14,8 @@ import { tabOut, toggleTabOut } from "./modules/tabOut";
 import * as Delimiters from "./modules/delimiters";
 import * as path from "path";
 import { REGEX_VALIDATE_EMAIL } from "./modules/filterText";
+import * as Indentation from "./modules/indentation";
+import { getActiveEditor } from "./modules/helpers";
 
 export function activate(context: ExtensionContext) {
     console.log("vscode-texttoolbox is active");
@@ -290,6 +292,26 @@ export function activate(context: ExtensionContext) {
             TextManipulation.convertSelection(TextManipulation.conversionType.JWTDecode);
         })
     );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.indentUsingTwoSpaces", () => {
+            // prettier-ignore
+            Indentation.updateIndentation(
+                getActiveEditor()!,
+                Indentation.IndentationType.Spaces,
+                2
+            );
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.indentUsingFourSpaces", () => {
+            // prettier-ignore
+            Indentation.updateIndentation(
+                getActiveEditor()!,
+                Indentation.IndentationType.Spaces,
+                4
+            );
+        })
+    );
 
     // delimiters
     context.subscriptions.push(
@@ -484,6 +506,11 @@ export function activate(context: ExtensionContext) {
             if (decorations) {
                 decorations.RefreshHighlights();
             }
+
+            // set context values for indentation commands
+            commands.executeCommand("setContext", "tt.tabSize", activeEditor!.options.tabSize);
+            commands.executeCommand("setContext", "tt.insertSpaces", activeEditor!.options.insertSpaces);
+            commands.executeCommand("setContext", "tt.insertSpaces", activeEditor!.options.insertSpaces);
 
             // todo: https://github.com/Microsoft/vscode/issues/30066
             // if (workspace.getConfiguration().get('TextToolbox.removeControlCharactersOnPaste')) {

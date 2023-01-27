@@ -239,6 +239,11 @@ Align commands can use RegExp to identify the separator; for example you can use
   }
   ```
 
+### Indentation
+
+* Indent using 2 spaces
+* Indent using 4 spaces
+
 ### Others
 
 * Open selection(s) in new editor
@@ -279,3 +284,4 @@ Text Toolbox is freely inspired by these fine extensions:
 * [nhoizey vscode-gremlins](https://marketplace.visualstudio.com/items?itemName=nhoizey.gremlins)
 * [Pustelto Bracketeer](https://marketplace.visualstudio.com/items?itemName=pustelto.bracketeer)
 * [albertromkes tabout](https://github.com/albertromkes/tabout)
+* [Compulim indent4to2](https://marketplace.visualstudio.com/items?itemName=Compulim.indent4to2)
