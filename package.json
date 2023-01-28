@@ -394,6 +394,16 @@
                 "category": "Text Toolbox"
             },
             {
+                "command": "vscode-texttoolbox.CycleQuotes",
+                "title": "Cycle quotes",
+                "category": "Text Toolbox"
+            },
+            {
+                "command": "vscode-texttoolbox.CycleBrackets",
+                "title": "Cycle brackets",
+                "category": "Text Toolbox"
+            },
+            {
                 "command": "vscode-texttoolbox.OpenPathOrUrlUnderCursor",
                 "title": "Open under cursor",
                 "category": "Text Toolbox"
@@ -1045,6 +1055,18 @@
                 "command": "vscode-texttoolbox.RemoveBrackets",
                 "key": "ctrl+shift+alt+;",
                 "mac": "ctrl+shift+cmd+;",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "vscode-texttoolbox.CycleQuotes",
+                "key": "ctrl+shift+alt+,",
+                "mac": "ctrl+shift+cmd+,",
+                "when": "editorTextFocus"
+            },
+            {
+                "command": "vscode-texttoolbox.CycleBrackets",
+                "key": "ctrl+shift+alt+/",
+                "mac": "ctrl+shift+cmd+/",
                 "when": "editorTextFocus"
             },
             {

@@ -237,7 +237,7 @@ function getTextSplitAtSelection(): textSpitAtSelection | undefined {
  * @param {delimiterTypes} delimiterType
  * @returns {boolean}
  */
-function selectionIncludesBrackets(text: string, delimiterType: delimiterTypes): boolean {
+function selectionIncludesDelimiters(text: string, delimiterType: delimiterTypes): boolean {
     if (!text) {
         return false;
     }
@@ -259,6 +259,14 @@ function selectionIncludesBrackets(text: string, delimiterType: delimiterTypes):
     return false;
 }
 
+/**
+ * Find the opening bracket starting from the cursor position or active selection
+ *
+ * @param {string} text The text to search
+ * @param {delimiterTypes} delimiterType The delimiter type to search for
+ * @param {number} startOffset The offset to start searching from
+ * @returns {(delimiter | undefined)}
+ */
 function findOpeningBracket(text: string, delimiterType: delimiterTypes, startOffset: number): delimiter | undefined {
     if (!text) {
         return undefined;
@@ -400,7 +408,7 @@ export function selectTextBetweenDelimiters(delimiterType: delimiterTypes) {
     let newSelectionOffsetEnd = closingDelimiter.position;
 
     let currentSelection = getTextFromSelection(editor, editor.selection);
-    if (selectionIncludesBrackets(currentSelection!, delimiterType) || !currentSelection) {
+    if (selectionIncludesDelimiters(currentSelection!, delimiterType) || !currentSelection) {
         // the current selection already includes the delimiters, so the new selection should not, unless:
         // - the current selection is empty
         // - the new selection needs to include consecutive delimiters
@@ -423,7 +431,7 @@ export function selectTextBetweenDelimiters(delimiterType: delimiterTypes) {
  * @export
  * @param {delimiterTypes} delimiterType
  */
-export function removeBrackets(delimiterType: delimiterTypes) {
+export function removeDelimiters(delimiterType: delimiterTypes) {
     const editor = getActiveEditor();
     if (!editor) {
         return;
@@ -434,7 +442,7 @@ export function removeBrackets(delimiterType: delimiterTypes) {
         return;
     }
 
-    let [newSelectionOffsetStart, newSelectionOffsetEnd] = getBracketsOffset(delimiterType);
+    let [newSelectionOffsetStart, newSelectionOffsetEnd] = getDelimitersOffset(delimiterType);
     if (!newSelectionOffsetStart || !newSelectionOffsetEnd) {
         return;
     }
@@ -455,7 +463,13 @@ export function removeBrackets(delimiterType: delimiterTypes) {
     });
 }
 
-function getBracketsOffset(delimiterType: delimiterTypes): [number | undefined, number | undefined] {
+/**
+ * Find the offset of the delimiter
+ *
+ * @param {delimiterTypes} delimiterType The type of delimiter to find
+ * @returns {([number | undefined, number | undefined])}
+ */
+function getDelimitersOffset(delimiterType: delimiterTypes): [number | undefined, number | undefined] {
     const editor = getActiveEditor();
     if (!editor) {
         return [undefined, undefined];
@@ -475,21 +489,31 @@ function getBracketsOffset(delimiterType: delimiterTypes): [number | undefined, 
     if (!textSplitAtSelectionStart) {
         return [undefined, undefined];
     }
-    
-    let openingDelimiter = delimiterType === delimiterTypes.bracket
-        ? findOpeningBracket(textSplitAtSelectionStart.textBeforeSelectionStart, delimiterType, selectionOffset.start)
-        : findOpeningQuote(textSplitAtSelectionStart.textBeforeSelectionStart, delimiterType, selectionOffset.start);
+
+    let openingDelimiter =
+        delimiterType === delimiterTypes.bracket
+            ? findOpeningBracket(textSplitAtSelectionStart.textBeforeSelectionStart, delimiterType, selectionOffset.start)
+            : findOpeningQuote(textSplitAtSelectionStart.textBeforeSelectionStart, delimiterType, selectionOffset.start);
     if (!openingDelimiter) {
         return [undefined, undefined];
     }
-    
-    let closingDelimiter = delimiterType === delimiterTypes.bracket
-        ? findClosingBracket(textSplitAtSelectionStart.textAfterSelectionStart, openingDelimiter, selectionOffset.end)
-        : findClosingQuote(textSplitAtSelectionStart.textAfterSelectionStart, openingDelimiter, selectionOffset.end);
+
+    let closingDelimiter =
+        delimiterType === delimiterTypes.bracket
+            ? findClosingBracket(textSplitAtSelectionStart.textAfterSelectionStart, openingDelimiter, selectionOffset.end)
+            : findClosingQuote(textSplitAtSelectionStart.textAfterSelectionStart, openingDelimiter, selectionOffset.end);
 
     return [openingDelimiter?.position, closingDelimiter?.position];
 }
 
+/**
+ * Find the opening quote starting from the cursor position or active selection
+ *
+ * @param {string} text
+ * @param {delimiterTypes} delimiterType
+ * @param {number} startOffset
+ * @returns {(delimiter | undefined)}
+ */
 function findOpeningQuote(text: string, delimiterType: delimiterTypes, startOffset: number): delimiter | undefined {
     if (!text) {
         return undefined;
@@ -521,6 +545,15 @@ function findOpeningQuote(text: string, delimiterType: delimiterTypes, startOffs
     return;
 }
 
+/**
+ * Find the closing quote starting from the cursor position or active selection
+ *
+ * @param {string} text The text to search in
+ * @param {delimiter} openingDelimiter The opening delimiter
+ * @param {number} startOffset The offset to start the search from
+ * @param {number} [position=0] The position to start the search from
+ * @returns {(delimiter | undefined)}
+ */
 function findClosingQuote(text: string, openingDelimiter: delimiter, startOffset: number, position: number = 0): delimiter | undefined {
     if (!text) {
         return undefined;
@@ -544,4 +577,58 @@ function findClosingQuote(text: string, openingDelimiter: delimiter, startOffset
     }
 
     return;
+}
+
+/**
+ * Cycle between delimiter types
+ *
+ * @export
+ * @param {delimiterTypes} delimiterType
+ */
+export function cycleDelimiters(delimiterType: delimiterTypes) {
+    const editor = getActiveEditor();
+    if (!editor) {
+        return;
+    }
+
+    const activeDocument = editor.document;
+    if (!activeDocument) {
+        return;
+    }
+
+    let [newSelectionOffsetStart, newSelectionOffsetEnd] = getDelimitersOffset(delimiterType);
+    if (!newSelectionOffsetStart || !newSelectionOffsetEnd) {
+        return;
+    }
+    const delimiters = getDelimiters(delimiterType, delimiterTypeDirection.open);
+    const currentDelimiter = delimiters.find((delimiter) => delimiter.char === activeDocument.getText()[newSelectionOffsetStart!]);
+    const currentDelimiterIndex = delimiters.indexOf(currentDelimiter!);
+    const nextDelimiter = delimiters[(currentDelimiterIndex + 1) % delimiters.length];
+
+    const correctOffset = 1;
+
+    editor.edit((editBuilder) => {
+        // replace start delimiter
+        editBuilder.replace(
+            new Selection(activeDocument.positionAt(newSelectionOffsetStart!), activeDocument.positionAt(newSelectionOffsetStart! + correctOffset)),
+            nextDelimiter.char
+        );
+
+        // replace end delimiter
+        editBuilder.replace(
+            new Selection(activeDocument.positionAt(newSelectionOffsetEnd!), activeDocument.positionAt(newSelectionOffsetEnd! - correctOffset)),
+            nextDelimiter.pairedChar
+        );
+    });
+}
+
+/**
+ * Returns the delimiters for the given type and direction
+ *
+ * @param {delimiterTypes} delimiterType The type of delimiter to return
+ * @param {delimiterTypeDirection} delimiterDirection The direction of the delimiter to return
+ * @returns {delimiter[]}
+ */
+function getDelimiters(delimiterType: delimiterTypes, delimiterDirection: delimiterTypeDirection): delimiter[] {
+    return Object.values(delimiters).filter((delimiter) => delimiter.type === delimiterType && delimiter.direction === delimiterDirection) as delimiter[];
 }

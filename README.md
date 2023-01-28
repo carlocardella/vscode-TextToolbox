@@ -163,6 +163,8 @@ Likewise, `Convert to CapitalCase` has been removed in favor of the built-in VSC
 * Remove duplicate lines, result in new Editor
 * Remove brackets
 * Remove quotes
+* Cycle brackets
+* Cycle quotes
 
 ### Sort
 

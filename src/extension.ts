@@ -16,6 +16,7 @@ import * as path from "path";
 import { REGEX_VALIDATE_EMAIL } from "./modules/filterText";
 import * as Indentation from "./modules/indentation";
 import { getActiveEditor } from "./modules/helpers";
+import { delimiterTypes } from "./modules/delimiters";
 
 export function activate(context: ExtensionContext) {
     console.log("vscode-texttoolbox is active");
@@ -316,24 +317,32 @@ export function activate(context: ExtensionContext) {
     // delimiters
     context.subscriptions.push(
         commands.registerTextEditorCommand("vscode-texttoolbox.SelectTextBetweenQuotes", () => {
-            // QuotesAndBrackets.selectTextBetweenDelimiters(QuotesAndBrackets.delimiterType.quotes);
             Delimiters.selectTextBetweenDelimiters(Delimiters.delimiterTypes.quote);
         })
     );
     context.subscriptions.push(
         commands.registerTextEditorCommand("vscode-texttoolbox.SelectTextBetweenBrackets", () => {
-            // QuotesAndBrackets.selectTextBetweenDelimiters(QuotesAndBrackets.delimiterType.brackets);
             Delimiters.selectTextBetweenDelimiters(Delimiters.delimiterTypes.bracket);
         })
     );
     context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.CycleBrackets", () => {
+            Delimiters.cycleDelimiters(delimiterTypes.bracket);
+        })
+    );
+    context.subscriptions.push(
         commands.registerTextEditorCommand("vscode-texttoolbox.RemoveBrackets", () => {
-            Delimiters.removeBrackets(Delimiters.delimiterTypes.bracket);
+            Delimiters.removeDelimiters(Delimiters.delimiterTypes.bracket);
         })
     );
     context.subscriptions.push(
         commands.registerTextEditorCommand("vscode-texttoolbox.RemoveQuotes", () => {
-            Delimiters.removeBrackets(Delimiters.delimiterTypes.quote);
+            Delimiters.removeDelimiters(Delimiters.delimiterTypes.quote);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.CycleQuotes", () => {
+            Delimiters.cycleDelimiters(Delimiters.delimiterTypes.quote);
         })
     );
 

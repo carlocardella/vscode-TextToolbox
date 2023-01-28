@@ -11,6 +11,24 @@ See the [list of open enhancements on GitHub](https://github.com/carlocardella/v
 
 ## Log
 
+## [2.15.0] - 2023-01-27
+
+### Added
+
+* `Cycle quotes`
+  * If the cursor is positioned between quotes, replace those quotes cycling through other quote types:
+    1. Double quotes: `" "`
+    2. Single quotes: `' '`
+    3. Backtick: `` ` ` ``
+  * Default keybinding: `ctrl+shift+alt+,`
+* `Cycle brackets`
+  * If the cursor is positioned between brackets, replaces those brackets cycling through other bracket types:
+    1. Round brackets: `( )`
+    2. Square brackets: `[ ]`
+    3. Curly brackets: `{ }`
+    4. Angle brackets: `< >`
+  * Default keybinding: `ctrl+shift+alt+/`
+
 ## [2.14.0] - 2023-01-27
 
 ### Added

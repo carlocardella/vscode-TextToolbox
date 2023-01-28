@@ -1,4 +1,4 @@
-import { commands, Range, Selection, TextEditor, window, workspace, TextLine, DocumentHighlight, Position, EndOfLine } from "vscode";
+import { commands, Range, Selection, TextEditor, window, workspace, TextLine, DocumentHighlight, Position, EndOfLine, TextDocument } from "vscode";
 import * as os from "os";
 
 /**
@@ -7,6 +7,16 @@ import * as os from "os";
  */
 export function getActiveEditor(): TextEditor | undefined {
     return window.activeTextEditor;
+}
+
+/**
+ * Returns the active document
+ *
+ * @export
+ * @returns {(TextDocument | undefined)}
+ */
+export function getActiveDocument(): TextDocument | undefined {
+    return getActiveEditor()?.document;
 }
 
 /**
