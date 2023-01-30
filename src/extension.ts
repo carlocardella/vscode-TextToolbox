@@ -75,13 +75,29 @@ export function activate(context: ExtensionContext) {
 
     // insert text
     context.subscriptions.push(
-        commands.registerTextEditorCommand("vscode-texttoolbox.InsertGUID", () => {
-            InsertText.insertGUID();
+        commands.registerTextEditorCommand("vscode-texttoolbox.InsertGUID", async () => {
+            const editor = getActiveEditor();
+            if (!editor) {
+                return;
+            }
+
+            const selections = editor.selections;
+            let uniqueValues: string | undefined = "";
+            if (selections.length > 1) {
+                uniqueValues = await window.showQuickPick(["Yes", "No"], {
+                    canPickMany: false,
+                    ignoreFocusOut: true,
+                    title: `Insert unique GUIDs at each cursor position?`,
+                });
+            }
+            const uniqueRandomValues = uniqueValues === "Yes" ? true : false;
+
+            InsertText.insertGUID(uniqueRandomValues, false);
         })
     );
     context.subscriptions.push(
         commands.registerTextEditorCommand("vscode-texttoolbox.InsertGuidAllZeros", () => {
-            InsertText.insertGUID(true);
+            InsertText.insertGUID(false, true);
         })
     );
     context.subscriptions.push(
@@ -90,8 +106,45 @@ export function activate(context: ExtensionContext) {
         })
     );
     context.subscriptions.push(
-        commands.registerTextEditorCommand("vscode-texttoolbox.PickRandom", () => {
-            InsertText.pickRandom();
+        commands.registerTextEditorCommand("vscode-texttoolbox.PickRandom", async () => {
+            const pick = await InsertText.pickRandom();
+
+            let length: string | undefined = "0";
+            if (pick === InsertText.randomTypes.PARAGRAPH) {
+                length = await window.showInputBox({
+                    ignoreFocusOut: true,
+                    title: "How many paragraphs do you want to insert?",
+                    value: "5",
+                    prompt: "Insert the number of paragraphs",
+                });
+            }
+            if (pick === InsertText.randomTypes.HASH) {
+                length = await window.showInputBox({
+                    ignoreFocusOut: true,
+                    title: "Insert the hash length",
+                    value: "32",
+                    prompt: "Hash length",
+                });
+            }
+            if (pick) {
+                const editor = getActiveEditor();
+                if (!editor) {
+                    return;
+                }
+
+                const selections = editor.selections;
+                let uniqueValues: string | undefined = "";
+                if (selections.length > 1) {
+                    uniqueValues = await window.showQuickPick(["Yes", "No"], {
+                        canPickMany: false,
+                        ignoreFocusOut: true,
+                        title: `Insert unique ${pick} at each cursor position?`,
+                    });
+                }
+                const uniqueRandomValues = uniqueValues === "Yes" ? true : false;
+
+                await InsertText.insertRandom(pick, parseInt(length!), uniqueRandomValues);
+            }
         })
     );
     context.subscriptions.push(

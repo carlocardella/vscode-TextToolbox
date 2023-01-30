@@ -289,7 +289,7 @@ suite("insertText", () => {
             currencies.forEach((c) => {
                 test(`Insert ${c.currency}`, async () => {
                     await createNewEditor();
-                    await insertCurrencyInternal(c.currency);
+                    await insertCurrencyInternal(c.currency, true);
                     await sleep(500);
 
                     const newText = getDocumentTextOrSelection();

@@ -2,39 +2,36 @@ import { QuickPickItem, window } from "vscode";
 import { DateTime } from "luxon";
 import { Chance } from "chance";
 import { createNewEditor, getActiveEditor, getDocumentEOL, getLinesFromSelection } from "./helpers";
-import { EOL } from "os";
 import { LoremIpsum } from "lorem-ipsum";
-import * as os from "os";
 
 /**
  * Insert a random GUID, or a neutral GUID made of all zeros
+ *
+ * @export
+ * @param {?boolean} [uniqueRandomValues] If true, each selection will have a unique GUID (unless the GUID is all zeros). If false, all selections will have the same GUID.
+ * @param {?boolean} [allZeros] If true, all GUIDs will be all zeros. If false, GUIDs will be random.
  */
-export function insertGUID(allZeros?: boolean) {
+export function insertGUID(uniqueRandomValues?: boolean, allZeros?: boolean) {
     const chance = new Chance();
     const editor = getActiveEditor();
+    let guid = allZeros ? "00000000-0000-0000-0000-000000000000" : chance.guid();
 
     editor?.edit((editBuilder) => {
         editor.selections.forEach(async (s) => {
-            if (s.isEmpty) {
-                if (allZeros) {
-                    editBuilder.insert(s.active, "00000000-0000-0000-0000-000000000000");
-                } else {
-                    editBuilder.insert(s.active, chance.guid());
-                }
-            } else {
-                if (allZeros) {
-                    editBuilder.replace(s, "00000000-0000-0000-0000-000000000000");
-                } else {
-                    editBuilder.replace(s, chance.guid());
-                }
+            if (uniqueRandomValues) {
+                guid = chance.guid();
             }
+            s.isEmpty ? editBuilder.insert(s.active, guid) : editBuilder.replace(s, guid);
         });
     });
 }
 
 /**
  * Asks the user which DateTime format to insert
+ *
+ * @export
  * @async
+ * @returns {*}
  */
 export async function pickDateTime() {
     const dateTimeFormats = [
@@ -178,206 +175,199 @@ export async function insertDateTimeInternal(selectedFormat: string, testDate?: 
 }
 
 /**
- * Aks the user which random string type to insert
+ * Pick a random type of string to insert at the cursor's position
+ *
+ * @export
  * @async
+ * @returns {(Promise<string | undefined>)}
  */
-export async function pickRandom() {
-    const randomTypeToInsert = [
-        "IPV4",
-        "IPV6",
-        "NUMBER",
-        "PERSON_NAME",
-        "SSN",
-        "PROFESSION",
-        "ANIMAL",
-        "COMPANY",
-        "DOMAIN",
-        "EMAIL",
-        "COLOR",
-        "TWITTER",
-        "URL",
-        "CITY",
-        "ADDRESS",
-        "COUNTRY",
-        "COUNTRY_FULL_NAME",
-        "PHONE",
-        "ZIP_CODE",
-        "STATE",
-        "STATE_FULL_NAME",
-        "STREET",
-        "TIMEZONE",
-        "PARAGRAPH",
-        "HASH",
-    ];
-
+export async function pickRandom(): Promise<string | undefined> {
     let quickPickItems: QuickPickItem[] = [];
-    randomTypeToInsert.forEach(async (item) => {
+    Object.values(randomTypes).forEach(async (item) => {
         let qp: QuickPickItem = {
             label: item,
-            description: await getRandomQuickPickItemDescription(item, true),
+            description: getRandom(item, 10),
         };
         quickPickItems.push(qp);
     });
 
-    const selectedRandomType = await window.showQuickPick(quickPickItems, { ignoreFocusOut: true });
-    if (selectedRandomType) {
-        insertRandomInternal(selectedRandomType.label);
-    }
+    const pick = await window.showQuickPick(quickPickItems, {
+        canPickMany: false,
+        title: "Pick a random item to insert",
+        ignoreFocusOut: true,
+        matchOnDetail: true,
+    });
+
+    return Promise.resolve(pick?.label);
 }
 
 /**
- * Inserts a random string, based on the type passed as `selectRandomType`
- * @param {string | undefined} selectedRandomType User selected choice of random string to insert
+ * Insert a random string at the cursor's position
+ *
+ * @export
  * @async
+ * @param {string} randomType Type of random string to insert
+ * @param {(number | undefined)} length Length of random string to insert
+ * @param {boolean} uniqueRandomValues If true, each random string will be unique
+ * @returns {*}
  */
-export async function getRandomQuickPickItemDescription(selectedRandomType: string, picker?: boolean): Promise<string> {
+export async function insertRandom(randomType: string, length: number | undefined, uniqueRandomValues: boolean) {
+    let text = getRandom(randomType, length);
+    const editor = getActiveEditor();
+
+    editor?.edit((editBuilder) => {
+        editor?.selections.forEach(async (s) => {
+            if (uniqueRandomValues) {
+                text = getRandom(randomType, length);
+            }
+            s.isEmpty ? editBuilder.insert(s.active, text) : editBuilder.replace(s, text);
+        });
+    });
+}
+
+/**
+ * Random type sto insert
+ *
+ * @export
+ * @enum {number}
+ */
+export enum randomTypes {
+    "IPV4" = "IPv4",
+    "IPV6" = "IPv6",
+    "NUMBER" = "Number",
+    "MALE_NAME" = "Male name",
+    "FEMALE_NAME" = "Female name",
+    "RANDOM_NAME" = "Random name",
+    "SSN" = "Social Security Number",
+    "PROFESSION" = "Profession",
+    "ANIMAL" = "Animal",
+    "COMPANY" = "Company",
+    "DOMAIN" = "Domain",
+    "EMAIL" = "Email",
+    "HEX_COLOR" = "Hex color",
+    "RGB_COLOR" = "Rgb color",
+    "TWITTER" = "Twitter handle",
+    "URL" = "Url",
+    "CITY" = "City",
+    "ADDRESS" = "Address",
+    "COUNTRY" = "Country",
+    "COUNTRY_FULL_NAME" = "Country full name",
+    "PHONE" = "Phone number",
+    "ZIP_CODE" = "Zip code",
+    "STATE" = "State",
+    "STATE_FULL_NAME" = "State full name",
+    "STREET" = "Street address",
+    "TIMEZONE" = "Timezone",
+    "PARAGRAPH" = "Paragraph...",
+    "HASH" = "Hash...",
+}
+
+/**
+ * Get a random string based on the type of random string to insert
+ *
+ * @param {string} randomType Type of random string to insert
+ * @param {(number | undefined)} length Length of random string to insert
+ * @returns {string}
+ */
+function getRandom(randomType: string, length: number | undefined): string {
     const chance = new Chance();
-    let text: string = "";
+    let text: string;
 
-    // calls to showQuickPick or showInputBox cannot happen inside editor.selections.forEach.
-    // I get a "Promised not resolved within 1 second" error on editBuilder.insert()
-    // https://github.com/microsoft/vscode/issues/87871
-    let gender: string | undefined;
-    let numberOfSentences: string | undefined;
-    let hashLength: string | undefined;
-    let colorType: string | undefined;
-    if (selectedRandomType === "PERSON_NAME") {
-        if (picker) {
-            gender = "random";
-        } else {
-            gender = await window.showQuickPick(["random", "male", "female"], { ignoreFocusOut: true });
-        }
-    }
-    if (selectedRandomType === "COLOR") {
-        if (picker) {
-            colorType = "hex";
-        } else {
-            colorType = await window.showQuickPick(["hex", "rgb"], { ignoreFocusOut: true });
-        }
-    }
-    if (selectedRandomType === "PARAGRAPH") {
-        if (picker) {
-            numberOfSentences = "1";
-        } else {
-            numberOfSentences = await window.showInputBox({ prompt: "How many sentences?", value: "5", ignoreFocusOut: true });
-        }
-    }
-    if (selectedRandomType === "HASH") {
-        if (picker) {
-            hashLength = "32";
-        } else {
-            hashLength = await window.showInputBox({ prompt: "Enter length", value: "32", ignoreFocusOut: true });
-        }
-    }
-
-    switch (selectedRandomType) {
-        case "IPV4":
+    switch (randomType) {
+        case randomTypes.IPV4:
             text = chance.ip();
             break;
-        case "IPV6":
+        case randomTypes.IPV6:
             text = chance.ipv6();
             break;
-        case "NUMBER":
+        case randomTypes.NUMBER:
             text = chance.natural().toString();
             break;
-        case "PERSON_NAME":
+        case randomTypes.MALE_NAME:
             // TODO: add optional nationality
             // TODO: add optional middle name
             // TODO: add optional title
-            if (gender === "male") {
-                text = chance.name({ gender: "male" });
-            } else if (gender === "female") {
-                text = chance.name({ gender: "female" });
-            } else if (gender === "random") {
-                text = chance.name();
-            }
+            text = chance.name({ gender: "male" });
             break;
-        case "SSN":
+        case randomTypes.FEMALE_NAME:
+            text = chance.name({ gender: "female" });
+            break;
+        case randomTypes.RANDOM_NAME:
+            text = chance.name();
+            break;
+        case randomTypes.SSN:
             text = chance.ssn();
             break;
-        case "PROFESSION":
+        case randomTypes.PROFESSION:
             text = chance.profession({ rank: true });
             break;
-        case "ANIMAL":
+        case randomTypes.ANIMAL:
             // Allowed types are: ocean, desert, grassland, forest, farm, pet, and zoo
             text = chance.animal();
             break;
-        case "COMPANY":
+        case randomTypes.COMPANY:
             text = chance.company();
             break;
-        case "DOMAIN":
+        case randomTypes.DOMAIN:
             text = chance.domain();
             break;
-        case "EMAIL":
+        case randomTypes.EMAIL:
             text = chance.email();
             break;
-        case "COLOR":
-            text = chance.color({ format: colorType });
+        case randomTypes.HEX_COLOR:
+            text = chance.color({ format: "hex" });
             break;
-        case "TWITTER":
+        case randomTypes.RGB_COLOR:
+            text = chance.color({ format: "rgb" });
+            break;
+        case randomTypes.TWITTER:
             text = chance.twitter();
             break;
-        case "URL":
+        case randomTypes.URL:
             text = chance.url();
             break;
-        case "CITY":
+        case randomTypes.CITY:
             text = chance.city();
             break;
-        case "ADDRESS":
+        case randomTypes.ADDRESS:
             text = chance.address();
             break;
-        case "COUNTRY":
+        case randomTypes.COUNTRY:
             text = chance.country();
             break;
-        case "COUNTRY_FULL_NAME":
+        case randomTypes.COUNTRY_FULL_NAME:
             text = chance.country({ full: true });
             break;
-        case "PHONE":
+        case randomTypes.PHONE:
             text = chance.phone();
             break;
-        case "ZIP_CODE":
+        case randomTypes.ZIP_CODE:
             text = chance.zip();
             break;
-        case "STATE":
+        case randomTypes.STATE:
             text = chance.state();
             break;
-        case "STATE_FULL_NAME":
+        case randomTypes.STATE_FULL_NAME:
             text = chance.state({ full: true });
             break;
-        case "STREET":
+        case randomTypes.STREET:
             // INVESTIGATE: return the whole object?
             text = chance.street();
             break;
-        case "TIMEZONE":
+        case randomTypes.TIMEZONE:
             text = chance.timezone().name;
             break;
-        case "PARAGRAPH":
-            text = chance.paragraph({ sentences: numberOfSentences });
+        case randomTypes.PARAGRAPH:
+            text = chance.paragraph({ sentences: length });
             break;
-        case "HASH":
-            text = chance.hash({ length: hashLength });
+        case randomTypes.HASH:
+            text = chance.hash({ length: length });
             break;
         default:
             break;
     }
 
-    return Promise.resolve(text);
-}
-
-/**
- * Insert a Random string based on user's selection
- * @param {string} randomType
- */
-export async function insertRandomInternal(randomType: string) {
-    const editor = getActiveEditor();
-
-    await getRandomQuickPickItemDescription(randomType).then((selection) => {
-        editor?.edit(async (editBuilder) => {
-            editor.selections.forEach((s) => {
-                s.isEmpty ? editBuilder.insert(s.active, selection) : editBuilder.replace(s, selection);
-            });
-        });
-    });
+    return text!;
 }
 
 /**
@@ -652,8 +642,19 @@ export async function insertCurrency() {
 
     const selectedFormat = await window.showQuickPick(quickPickItems, { ignoreFocusOut: true });
 
+    const selections = editor.selections;
+    let uniqueValues: string | undefined = "";
+    if (selections.length > 1) {
+        uniqueValues = await window.showQuickPick(["Yes", "No"], {
+            canPickMany: false,
+            ignoreFocusOut: true,
+            title: `Insert unique ${selectedFormat?.label} at each cursor position?`,
+        });
+    }
+    const uniqueRandomValues = uniqueValues === "Yes" ? true : false;
+
     if (selectedFormat) {
-        await insertCurrencyInternal(selectedFormat.label);
+        await insertCurrencyInternal(selectedFormat.label, uniqueRandomValues);
     }
 }
 
@@ -714,15 +715,18 @@ export function getCurrencyQuickPickItemDescription(item: string): string {
  * @param {string} currency The currency to insert
  * @return {*}  {(Promise<boolean | undefined>)}
  */
-export async function insertCurrencyInternal(currency: string): Promise<boolean | undefined> {
+export async function insertCurrencyInternal(currency: string, uniqueRandomValues: boolean): Promise<boolean | undefined> {
     const editor = getActiveEditor();
     if (!editor) {
         return;
     }
+    let userChoice = getCurrencyQuickPickItemDescription(currency);
 
     editor.edit((editBuilder) => {
         editor.selections.forEach((s) => {
-            const userChoice = getCurrencyQuickPickItemDescription(currency);
+            if (uniqueRandomValues) {
+                userChoice = getCurrencyQuickPickItemDescription(currency);
+            }
             s.isEmpty ? editBuilder.insert(s.active, userChoice) : editBuilder.replace(s, userChoice);
         });
     });
