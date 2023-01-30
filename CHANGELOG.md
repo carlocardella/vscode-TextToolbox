@@ -11,6 +11,17 @@ See the [list of open enhancements on GitHub](https://github.com/carlocardella/v
 
 ## Log
 
+## [2.16.0] - 2023-01-29
+
+### Fixed
+
+* [#39 Insert random with multi-line editing](https://github.com/carlocardella/vscode-TextToolbox/issues/39)
+
+### Changed
+
+* Updated `Insert GUID`, `Insert GUID all zeros`, `Insert currency...` commands to match the behavior of `Insert Random...`:
+  * If multiple cursors are active, ask the user if to insert the same random value or unique random values at each cursor's position
+
 ## [2.15.0] - 2023-01-27
 
 ### Added

@@ -140,6 +140,8 @@ Likewise, `Convert to CapitalCase` has been removed in favor of the built-in VSC
 * Pad Selection Right
 * Pad Selection Left
 
+_Note_: If multiple cursors are active, ask the user if to insert the same random value or unique random values at each cursor's position
+
 ### Filter
 
 * Filter lines, result in new Editor
