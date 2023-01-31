@@ -309,3 +309,62 @@ type jwtToken = {
         [key: string]: string;
     };
 };
+
+export enum orderedListTypes {
+    "1. " = "1. ",
+    "1) " = "1) ",
+    // "a. " = "a. ",
+    // "a) " = "a) ",
+    // "A. " = "A. ",
+    // "A) " = "A) ",
+    // "i. " = "i. ",
+    // "i) " = "i) ",
+    // "I. " = "I. ",
+    // "I) " = "I) ",
+}
+
+export async function transformToOrderedList() {
+    const editor = getActiveEditor();
+    if (!editor) {
+        return;
+    }
+    const selection = editor.selection;
+    const text = getTextFromSelection(editor, selection);
+    if (!text) {
+        return;
+    }
+
+    const listType = await window.showQuickPick(
+        Object.values(orderedListTypes).map((listType) => listType),
+        {
+            placeHolder: "Select the list type",
+            canPickMany: false,
+            ignoreFocusOut: true,
+            matchOnDescription: true,
+            matchOnDetail: true,
+        }
+    );
+    if (!listType) {
+        return;
+    }
+
+    let updatedText = transformToOrderedListInternal(text, listType as orderedListTypes);
+    editor.edit((editBuilder) => {
+        editBuilder.replace(selection, updatedText);
+    });
+
+    Promise.resolve();
+}
+
+export function transformToOrderedListInternal(text: string, listType: orderedListTypes): string {
+    let lines = text.split(/\r?\n/);
+    let result = "";
+    let [index, separator] = [parseInt(listType[0]), `${listType[1]}${listType[2]}`];
+
+    lines.forEach((line) => {
+        result += `${index}${separator}${line}\n`;
+        index++;
+    });
+
+    return result;
+}

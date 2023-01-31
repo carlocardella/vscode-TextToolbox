@@ -366,6 +366,11 @@ export function activate(context: ExtensionContext) {
             );
         })
     );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.transformToOrderedList", async () => {
+            await TextManipulation.transformToOrderedList();
+        })
+    );
 
     // delimiters
     context.subscriptions.push(
