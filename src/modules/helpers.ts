@@ -365,3 +365,51 @@ export function getDocumentEOL(editor?: TextEditor): string {
 
     return os.EOL;
 }
+
+export function isNumber(str: string): boolean {
+    // credit: https://bobbyhadz.com/blog/typescript-check-if-string-is-valid-number
+    if (typeof str !== "string") {
+        return false;
+    }
+
+    if (str.trim() === "") {
+        return false;
+    }
+
+    return !Number.isNaN(Number(str));
+}
+
+export function incrementString(value: string) {
+    // credit: https://stackoverflow.com/a/55952917/9335336
+    let carry = 1;
+    let res = "";
+
+    for (let i = value.length - 1; i >= 0; i--) {
+        let char = value.charCodeAt(i);
+
+        char += carry;
+
+        if (char > 90 && char < 97) {
+            char = 65;
+            carry = 1;
+        } else if (char > 122) {
+            char = 97;
+            carry = 1;
+        } else {
+            carry = 0;
+        }
+
+        res = String.fromCharCode(char) + res;
+
+        if (!carry) {
+            res = value.substring(0, i) + res;
+            break;
+        }
+    }
+
+    if (carry) {
+        res = value[0] + res;
+    }
+
+    return res;
+}

@@ -1,5 +1,5 @@
 import { Selection, TextEditor, window } from "vscode";
-import { getActiveEditor, getLinesFromDocumentOrSelection, getTextFromSelection, createNewEditor, getDocumentEOL } from "./helpers";
+import { getActiveEditor, getLinesFromDocumentOrSelection, getTextFromSelection, createNewEditor, getDocumentEOL, isNumber, incrementString } from "./helpers";
 import * as os from "os";
 import * as path from "path";
 import jwt_decode from "jwt-decode";
@@ -313,10 +313,10 @@ type jwtToken = {
 export enum orderedListTypes {
     "1. " = "1. ",
     "1) " = "1) ",
-    // "a. " = "a. ",
-    // "a) " = "a) ",
-    // "A. " = "A. ",
-    // "A) " = "A) ",
+    "a. " = "a. ",
+    "a) " = "a) ",
+    "A. " = "A. ",
+    "A) " = "A) ",
     // "i. " = "i. ",
     // "i) " = "i) ",
     // "I. " = "I. ",
@@ -359,12 +359,29 @@ export async function transformToOrderedList() {
 export function transformToOrderedListInternal(text: string, listType: orderedListTypes): string {
     let lines = text.split(/\r?\n/);
     let result = "";
-    let [index, separator] = [parseInt(listType[0]), `${listType[1]}${listType[2]}`];
+    let [index, separator] = [listType[0], `${listType[1]}${listType[2]}`];
 
-    lines.forEach((line) => {
-        result += `${index}${separator}${line}\n`;
-        index++;
-    });
+    // handles 1. and 1)
+    if (isNumber(index)) {
+        let i = parseInt(index);
+        lines.forEach((line) => {
+            result += `${i}${separator}${line}\n`;
+            i++;
+        });
+    }
+
+    // handles a. and a) and A. and A)
+    // 97 = a
+    // 122 = z
+    // 65 = A
+    // 90 = Z
+    if (index === "a" || index === "A") {
+        let char = index;
+        lines.forEach((line) => {
+            result += `${char}${separator}${line}\n`;
+            char = incrementString(char);
+        });
+    }
 
     return result;
 }
