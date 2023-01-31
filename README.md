@@ -248,6 +248,10 @@ Align commands can use RegExp to identify the separator; for example you can use
 * Indent using 2 spaces
 * Indent using 4 spaces
 
+### Ordered List
+
+* Transform to Ordered List
+
 ### Others
 
 * Open selection(s) in new editor

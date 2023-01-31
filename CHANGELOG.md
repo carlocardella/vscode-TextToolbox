@@ -11,6 +11,23 @@ See the [list of open enhancements on GitHub](https://github.com/carlocardella/v
 
 ## Log
 
+## [2.17.0] - 2023-01-31
+
+### Added
+
+* [#17 Insert/transform lines in numbered list](https://github.com/carlocardella/vscode-TextToolbox/issues/17)
+  * New command `Transform to Ordered List`
+  * Currently supports the following ordered list types:
+    * `1.`
+    * `1)`
+    * `a.`
+    * `a)`
+    * `A.`
+    * `A)`
+  * Supports single and multiple selections
+  * Supports multicursor
+  * Supports infinite number of lines: ordered lists based on letters work similar to an Excel spreadsheet
+
 ## [2.16.0] - 2023-01-29
 
 ### Fixed
