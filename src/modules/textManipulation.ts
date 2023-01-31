@@ -1,6 +1,5 @@
-import { Selection, TextEditor, window } from "vscode";
+import { Selection, TextEditor, window, TextLine } from "vscode";
 import { getActiveEditor, getLinesFromDocumentOrSelection, getTextFromSelection, createNewEditor, getDocumentEOL, isNumber, incrementString } from "./helpers";
-import * as os from "os";
 import * as path from "path";
 import jwt_decode from "jwt-decode";
 
@@ -328,11 +327,6 @@ export async function transformToOrderedList() {
     if (!editor) {
         return;
     }
-    const selection = editor.selection;
-    const text = getTextFromSelection(editor, selection);
-    if (!text) {
-        return;
-    }
 
     const listType = await window.showQuickPick(
         Object.values(orderedListTypes).map((listType) => listType),
@@ -348,25 +342,27 @@ export async function transformToOrderedList() {
         return;
     }
 
-    let updatedText = transformToOrderedListInternal(text, listType as orderedListTypes);
-    editor.edit((editBuilder) => {
-        editBuilder.replace(selection, updatedText);
-    });
+    const selections = editor.selections;
+    let lines: TextLine[] = [];
+    if (selections.every((selection) => selection.isEmpty)) {
+        // multi-cursor, no text selected
+        selections.forEach((selection) => {
+            lines!.push(editor.document.lineAt(selection.start.line));
+        });
+    } else {
+        lines = selections.map((selection) => getLinesFromDocumentOrSelection(editor, selection)!).flat();
+    }
 
-    Promise.resolve();
-}
-
-export function transformToOrderedListInternal(text: string, listType: orderedListTypes): string {
-    let lines = text.split(/\r?\n/);
-    let result = "";
     let [index, separator] = [listType[0], `${listType[1]}${listType[2]}`];
 
     // handles 1. and 1)
     if (isNumber(index)) {
-        let i = parseInt(index);
-        lines.forEach((line) => {
-            result += `${i}${separator}${line}\n`;
-            i++;
+        editor.edit((editBuilder) => {
+            let i = parseInt(index);
+            lines!.forEach((line) => {
+                editBuilder.insert(line.range.start, `${i}${separator}`);
+                i++;
+            });
         });
     }
 
@@ -376,12 +372,13 @@ export function transformToOrderedListInternal(text: string, listType: orderedLi
     // 65 = A
     // 90 = Z
     if (index === "a" || index === "A") {
-        let char = index;
-        lines.forEach((line) => {
-            result += `${char}${separator}${line}\n`;
-            char = incrementString(char);
+        editor.edit((editBuilder) => {
+            lines!.forEach((line) => {
+                editBuilder.insert(line.range.start, `${index}${separator}`);
+                index = incrementString(index);
+            });
         });
     }
 
-    return result;
+    Promise.resolve();
 }
