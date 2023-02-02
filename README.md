@@ -251,6 +251,17 @@ Align commands can use RegExp to identify the separator; for example you can use
 ### Ordered List
 
 * Transform to Ordered List
+  * Currently supports the following ordered list types:
+    * `1.` => number.
+    * `1)` => number)
+    * `a.` => lowercase.
+    * `a)` => lowercase)
+    * `A.` => UPPERCASE.
+    * `A)` => UPPPERCASE)
+    * `i.` => Roman lowercase.
+    * `i)` => Roman lowercase)
+    * `I.` => Roman UPPERCASE.
+    * `I)` => Roman UPPERCASE)
 
 ### Others
 

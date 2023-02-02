@@ -413,3 +413,74 @@ export function incrementString(value: string) {
 
     return res;
 }
+
+export enum caseOptions {
+    upper = "upper",
+    lower = "lower",
+}
+
+export function toRoman(num: number, caseOption?: caseOptions ): string {
+    let roman = "";
+    const decimalToRoman: { [key: number]: string } = {
+        1: "I",
+        4: "IV",
+        5: "V",
+        9: "IX",
+        10: "X",
+        40: "XL",
+        50: "L",
+        90: "XC",
+        100: "C",
+        400: "CD",
+        500: "D",
+        900: "CM",
+        1000: "M",
+    };
+    let keys = Object.keys(decimalToRoman)
+        .map((key) => parseInt(key))
+        .sort((a, b) => b - a);
+    for (let i = 0; i < keys.length; i++) {
+        while (num >= keys[i]) {
+            roman += decimalToRoman[keys[i]];
+            num -= keys[i];
+        }
+    }
+    if (caseOption === caseOptions.upper) {
+        return roman.toUpperCase();
+    } else if (caseOption === caseOptions.lower) {
+        return roman.toLowerCase();
+    } else {
+        return roman;
+    }
+}
+
+export function fromRoman(roman: string): number {
+    const romanToDecimal: { [key: string]: number } = {
+        I: 1,
+        V: 5,
+        X: 10,
+        L: 50,
+        C: 100,
+        D: 500,
+        M: 1000,
+        i: 1,
+        v: 5,
+        x: 10,
+        l: 50,
+        c: 100,
+        d: 500,
+        m: 1000,
+    };
+    let decimal = 0;
+    let previous = 0;
+    for (let i = roman.length - 1; i >= 0; i--) {
+        const current = romanToDecimal[roman[i]];
+        if (current < previous) {
+            decimal -= current;
+        } else {
+            decimal += current;
+        }
+        previous = current;
+    }
+    return decimal;
+}

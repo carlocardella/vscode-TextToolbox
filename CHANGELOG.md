@@ -11,6 +11,16 @@ See the [list of open enhancements on GitHub](https://github.com/carlocardella/v
 
 ## Log
 
+## [2.18.0] - 2023-02-01
+
+### Added
+
+* `Transform to Ordered List` now supports Roman numerals
+  * `i.` => Roman lowercase.
+  * `i)` => Roman lowercase)
+  * `I.` => Roman UPPERCASE.
+  * `I)` => Roman UPPERCASE)
+
 ## [2.17.0] - 2023-01-31
 
 ### Added
@@ -18,12 +28,12 @@ See the [list of open enhancements on GitHub](https://github.com/carlocardella/v
 * [#17 Insert/transform lines in numbered list](https://github.com/carlocardella/vscode-TextToolbox/issues/17)
   * New command `Transform to Ordered List`
   * Currently supports the following ordered list types:
-    * `1.`
-    * `1)`
-    * `a.`
-    * `a)`
-    * `A.`
-    * `A)`
+    * `1.` => number.
+    * `1)` => number)
+    * `a.` => lowercase.
+    * `a)` => lowercase)
+    * `A.` => UPPERCASE.
+    * `A)` => UPPPERCASE)
   * Supports single and multiple selections
   * Supports multicursor
   * Supports infinite number of lines: ordered lists based on letters work similar to an Excel spreadsheet

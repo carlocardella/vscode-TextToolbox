@@ -1,7 +1,17 @@
-import { Selection, TextEditor, window, TextLine } from "vscode";
-import { getActiveEditor, getLinesFromDocumentOrSelection, getTextFromSelection, createNewEditor, getDocumentEOL, isNumber, incrementString } from "./helpers";
+import { Selection, TextEditor, window, TextLine, QuickPickItemKind } from "vscode";
+import {
+    getActiveEditor,
+    getLinesFromDocumentOrSelection,
+    getTextFromSelection,
+    createNewEditor,
+    getDocumentEOL,
+    isNumber,
+    incrementString,
+    toRoman,
+} from "./helpers";
 import * as path from "path";
 import jwt_decode from "jwt-decode";
+import { caseOptions } from './helpers';
 
 /**
  * Trim whitespaces from the active selection(s) or from the entire document
@@ -310,16 +320,16 @@ type jwtToken = {
 };
 
 export enum orderedListTypes {
-    "1. " = "1. ",
-    "1) " = "1) ",
-    "a. " = "a. ",
-    "a) " = "a) ",
-    "A. " = "A. ",
-    "A) " = "A) ",
-    // "i. " = "i. ",
-    // "i) " = "i) ",
-    // "I. " = "I. ",
-    // "I) " = "I) ",
+    "1. " = "Number.",
+    "1) " = "Number)",
+    "a. " = "lowercase.",
+    "a) " = "lowercase)",
+    "A. " = "Uppercase.",
+    "A) " = "Uppercase)",
+    "i. " = "Roman lowercase.",
+    "i) " = "Roman lowercase)",
+    "I. " = "Roman UPPERCASE.",
+    "I) " = "Roman UPPERCASE)",
 }
 
 export async function transformToOrderedList() {
@@ -328,17 +338,36 @@ export async function transformToOrderedList() {
         return;
     }
 
-    const listType = await window.showQuickPick(
-        Object.values(orderedListTypes).map((listType) => listType),
-        {
-            placeHolder: "Select the list type",
-            canPickMany: false,
-            ignoreFocusOut: true,
-            matchOnDescription: true,
-            matchOnDetail: true,
-        }
-    );
-    if (!listType) {
+    let pick: string | undefined;
+    await new Promise((resolve) => {
+        let quickPick = window.createQuickPick();
+        quickPick.onDidHide(() => quickPick.dispose());
+        quickPick.title = "Select the list type";
+        quickPick.canSelectMany = false;
+        quickPick.matchOnDescription = true;
+
+        const enumAsKeyValue = Object.entries(orderedListTypes).reduce((acc, [key, value]) => {
+            acc[key] = value;
+            return acc;
+        }, {} as { [key: string]: string });
+        quickPick.items = Object.keys(enumAsKeyValue).map((listItem) => {
+            return { label: listItem, description: enumAsKeyValue[listItem] };
+        });
+        quickPick.title = "Select the list type";
+        quickPick.show();
+
+        quickPick.onDidChangeSelection(async (selection) => {
+            pick = selection[0].label;
+        });
+
+        quickPick.onDidAccept(async () => {
+            if (pick) {
+                quickPick.hide();
+                resolve(pick);
+            }
+        });
+    });
+    if (!pick) {
         return;
     }
 
@@ -353,7 +382,7 @@ export async function transformToOrderedList() {
         lines = selections.map((selection) => getLinesFromDocumentOrSelection(editor, selection)!).flat();
     }
 
-    let [index, separator] = [listType[0], `${listType[1]}${listType[2]}`];
+    let [index, separator] = [pick[0], `${pick[1]}${pick[2]}`];
 
     // handles 1. and 1)
     if (isNumber(index)) {
@@ -376,6 +405,20 @@ export async function transformToOrderedList() {
             lines!.forEach((line) => {
                 editBuilder.insert(line.range.start, `${index}${separator}`);
                 index = incrementString(index);
+            });
+        });
+    }
+
+    // handles I. and I) and i. and i)
+    if (index === "I" || index === "i") {
+        editor.edit((editBuilder) => {
+            let outputCase = index === "I" ? caseOptions.upper : caseOptions.lower;
+            // let outputCase: "upper" | "lower" = index === "I" ? "upper" : "lower";
+            let i = 1;
+            lines!.forEach((line) => {
+                editBuilder.insert(line.range.start, `${index}${separator}`);
+                index = toRoman(i, outputCase);
+                i++;
             });
         });
     }
