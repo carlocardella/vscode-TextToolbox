@@ -190,7 +190,7 @@
             },
             {
                 "command": "vscode-texttoolbox.RemoveControlCharacters",
-                "title": "Remove control characters",
+                "title": "Replace control characters",
                 "category": "Text Toolbox"
             },
             {
@@ -862,12 +862,6 @@
                             "overviewRulerColor": "red",
                             "borderColor": "red"
                         }
-                    },
-                    "TextToolbox.replaceControlCharactersWith": {
-                        "description": "Replace control characters (Remove Control Characters) in the active document with this string",
-                        "type": "string",
-                        "default": "",
-                        "scope": "window"
                     },
                     "TextToolbox.alignTextDefaultSeparator": {
                         "description": "Align text default separator (Align Text)",

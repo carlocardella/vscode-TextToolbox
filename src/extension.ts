@@ -601,7 +601,7 @@ export function activate(context: ExtensionContext) {
     );
     context.subscriptions.push(
         commands.registerTextEditorCommand("vscode-texttoolbox.RemoveControlCharacters", () => {
-            ControlCharacters.removeControlCharacters();
+            ControlCharacters.replaceControlCharacters();
         })
     );
 

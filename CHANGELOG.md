@@ -11,6 +11,13 @@ See the [list of open enhancements on GitHub](https://github.com/carlocardella/v
 
 ## Log
 
+## [2.19.0] - 2023-02-17
+
+### Changed
+
+* Renamed `Remove control characters` to `Replace control characters`
+  * Rather than just removing control and Unicode characters (e.g. Left Double Quotation Marks, `U+201C`), the command now replaces known characters with their ASCII equivalent
+
 ## [2.18.0] - 2023-02-01
 
 ### Added

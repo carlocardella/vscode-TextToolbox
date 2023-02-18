@@ -1,7 +1,7 @@
 import * as assert from "assert";
 import { after, before, describe, afterEach } from "mocha";
 import { EOL } from "os";
-import { removeControlCharacters } from "../../modules/controlCharacters";
+import { replaceControlCharacters } from "../../modules/controlCharacters";
 import { closeTextEditor, createNewEditor, getActiveEditor, getDocumentTextOrSelection, selectAllText, sleep } from "../../modules/helpers";
 import { ConfigurationTarget, Selection, window, workspace, commands, env } from "vscode";
 
@@ -35,7 +35,7 @@ suite("controlCharacters", () => {
             test("Remove control characters from full document, replace with empty string", async () => {
                 await createNewEditor(newTextEditor);
                 const editor = getActiveEditor();
-                await removeControlCharacters(editor);
+                await replaceControlCharacters(editor);
                 await sleep(500);
 
                 let text = getDocumentTextOrSelection();
@@ -47,7 +47,7 @@ suite("controlCharacters", () => {
                 await config.update("replaceControlCharactersWith", " ", ConfigurationTarget.Global);
                 await createNewEditor(newTextEditor);
                 const editor = getActiveEditor();
-                await removeControlCharacters(editor);
+                await replaceControlCharacters(editor);
                 await sleep(500);
 
                 let text = getDocumentTextOrSelection();
@@ -59,7 +59,7 @@ suite("controlCharacters", () => {
                 await config.update("replaceControlCharactersWith", "x", ConfigurationTarget.Global);
                 await createNewEditor(newTextEditor);
                 const editor = getActiveEditor();
-                await removeControlCharacters(editor);
+                await replaceControlCharacters(editor);
                 await sleep(500);
 
                 let text = getDocumentTextOrSelection();
@@ -78,7 +78,7 @@ suite("controlCharacters", () => {
                 let selections: Selection[] = [];
                 selections.push(new Selection(4, 0, 4, 8));
                 editor!.selections = selections;
-                await removeControlCharacters(editor);
+                await replaceControlCharacters(editor);
                 await sleep(500);
 
                 await selectAllText();
@@ -94,7 +94,7 @@ suite("controlCharacters", () => {
                 let selections: Selection[] = [];
                 selections.push(new Selection(4, 0, 4, 7));
                 editor!.selections = selections;
-                await removeControlCharacters(editor);
+                await replaceControlCharacters(editor);
                 await sleep(500);
 
                 await selectAllText();
@@ -110,7 +110,7 @@ suite("controlCharacters", () => {
                 let selections: Selection[] = [];
                 selections.push(new Selection(4, 0, 4, 8));
                 editor!.selections = selections;
-                await removeControlCharacters(editor);
+                await replaceControlCharacters(editor);
                 await sleep(500);
 
                 await selectAllText();
