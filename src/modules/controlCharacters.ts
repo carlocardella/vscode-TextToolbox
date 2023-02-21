@@ -107,7 +107,8 @@ const replacementMap: { [key: string]: string } = {
     "\u200B": "", // zero width space
     "\u00ad": "", // zero width space
     "\u200e": "", // zero width space
-    "\u2013": "-", // dash
+    "\u2013": "-", // en dash
+    "\u2014": "-", // em dash
 };
 
 // const regExpText = "[" + chars.join("") + "]";
