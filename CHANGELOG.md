@@ -11,6 +11,14 @@ See the [list of open enhancements on GitHub](https://github.com/carlocardella/v
 
 ## Log
 
+## [2.19.1] - 2023-02-21
+
+### Changed
+
+* Updated unicode chracters replacement map:
+* `U+200b` gets replaced with an empty string
+* `U+2014` gets replaced with a regular dash (`-`)
+
 ## [2.19.0] - 2023-02-17
 
 ### Changed
