@@ -104,7 +104,7 @@ const replacementMap: { [key: string]: string } = {
     "\x94": '"', // Reverse double quote
     "\u00a0": " ", // invisible space
     "\u200c": " ", // invisible space
-    "\u200B": " ", // zero width space
+    "\u200B": "", // zero width space
     "\u00ad": "", // zero width space
     "\u200e": "", // zero width space
     "\u2013": "-", // dash
