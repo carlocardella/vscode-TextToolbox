@@ -132,7 +132,7 @@ function getTimeFormatsQuickPickItemDescription(format: string, testDate?: DateT
             dateTimeValue = date.toRFC2822()!;
             break;
         case "HTTP":
-            dateTimeValue = date.toHTTP();
+            dateTimeValue = date.toHTTP()!;
             break;
         case "DATETIME_SHORT_WITH_SECONDS":
             dateTimeValue = date.toLocaleString(DateTime.DATETIME_SHORT_WITH_SECONDS)!;
