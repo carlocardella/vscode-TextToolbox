@@ -15,7 +15,6 @@ import * as Delimiters from "./modules/delimiters";
 import * as path from "path";
 import { REGEX_VALIDATE_EMAIL } from "./modules/filterText";
 import * as Indentation from "./modules/indentation";
-import { getActiveEditor } from "./modules/helpers";
 import { delimiterTypes } from "./modules/delimiters";
 
 export function activate(context: ExtensionContext) {
@@ -76,7 +75,7 @@ export function activate(context: ExtensionContext) {
     // insert text
     context.subscriptions.push(
         commands.registerTextEditorCommand("vscode-texttoolbox.InsertGUID", async () => {
-            const editor = getActiveEditor();
+            const editor = Helpers.getActiveEditor();
             if (!editor) {
                 return;
             }
@@ -127,7 +126,7 @@ export function activate(context: ExtensionContext) {
                 });
             }
             if (pick) {
-                const editor = getActiveEditor();
+                const editor = Helpers.getActiveEditor();
                 if (!editor) {
                     return;
                 }
@@ -180,6 +179,21 @@ export function activate(context: ExtensionContext) {
     context.subscriptions.push(
         commands.registerTextEditorCommand("vscode-texttoolbox.DuplicateTab", () => {
             InsertText.duplicateTab();
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.PrefixWith", () => {
+            InsertText.surroundText(InsertText.SurroundAction.Prefix);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.SuffixWith", () => {
+            InsertText.surroundText(InsertText.SurroundAction.Suffix);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.SurroundWith", () => {
+            InsertText.surroundText(InsertText.SurroundAction.Surround);
         })
     );
 
@@ -350,7 +364,7 @@ export function activate(context: ExtensionContext) {
         commands.registerTextEditorCommand("vscode-texttoolbox.indentUsingTwoSpaces", () => {
             // prettier-ignore
             Indentation.updateIndentation(
-                getActiveEditor()!,
+                Helpers.getActiveEditor()!,
                 Indentation.IndentationType.Spaces,
                 2
             );
@@ -360,7 +374,7 @@ export function activate(context: ExtensionContext) {
         commands.registerTextEditorCommand("vscode-texttoolbox.indentUsingFourSpaces", () => {
             // prettier-ignore
             Indentation.updateIndentation(
-                getActiveEditor()!,
+                Helpers.getActiveEditor()!,
                 Indentation.IndentationType.Spaces,
                 4
             );

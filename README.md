@@ -139,6 +139,9 @@ Likewise, `Convert to CapitalCase` has been removed in favor of the built-in VSC
 * Insert numbers sequence
 * Pad Selection Right
 * Pad Selection Left
+* Prefix with...
+* Suffix with...
+* Surround with...
 
 _Note_: If multiple cursors are active, ask the user if to insert the same random value or unique random values at each cursor's position
 

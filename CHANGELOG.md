@@ -11,6 +11,14 @@ See the [list of open enhancements on GitHub](https://github.com/carlocardella/v
 
 ## Log
 
+## [2.20.0] - 2023-04-13
+
+### Added
+
+* `Prefix with...`: prefix all selections with text entered by the user
+* `Suffix with...`: suffix all selections with text entered by the user
+* `Surround with...`: surround all selections with text entered by the user
+
 ## [2.19.2] - 2023-04-12
 
 ### Fixed

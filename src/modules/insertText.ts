@@ -743,3 +743,75 @@ export async function duplicateTab(): Promise<boolean | undefined> {
     await createNewEditor(currentEditor.document.getText());
     return Promise.resolve(true);
 }
+
+/**
+ * Enum surround actions
+ *
+ * @export
+ * @enum {string}
+ */
+export enum SurroundAction {
+    Prefix = "prefix",
+    Suffix = "suffix",
+    Surround = "surround",
+}
+
+/**
+ * Surround selections with user's text
+ *
+ * @export
+ * @async
+ * @param {SurroundAction} action The type if surround action to use
+ * @returns {*}
+ */
+export async function surroundText(action: SurroundAction) {
+    const editor = getActiveEditor();
+    if (!editor) {
+        return;
+    }
+
+    const surround = await window.showInputBox({
+        prompt: `Enter the ${action} text...`,
+        ignoreFocusOut: true,
+    });
+    if (!surround) {
+        return;
+    }
+
+    const selections = editor.selections;
+    editor.edit((editBuilder) => {
+        selections.forEach((s) => {
+            const text = editor.document.getText(s);
+            const newText = surroundTextInternal(text, surround, action);
+            editBuilder.replace(s, newText);
+        });
+    });
+}
+
+/**
+ * Surround text with user's text
+ *
+ * @param {string} text The text to surround
+ * @param {string} surround The text to surround with
+ * @param {SurroundAction} action The type of surround action to use
+ * @returns {string}
+ */
+function surroundTextInternal(text: string, surround: string, action: SurroundAction): string {
+    let newText = "";
+
+    switch (action) {
+        case SurroundAction.Prefix:
+            newText = surround + text;
+            break;
+        case SurroundAction.Suffix:
+            newText = text + surround;
+            break;
+        case SurroundAction.Surround:
+            newText = surround + text + surround;
+            break;
+        default:
+            break;
+    }
+
+    return newText;
+}

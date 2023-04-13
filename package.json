@@ -412,6 +412,21 @@
         "command": "vscode-texttoolbox.transformToOrderedList",
         "title": "Transform to Ordered List",
         "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.PrefixWith",
+        "title": "Prefix with...",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.SuffixWith",
+        "title": "Suffix with...",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.SurroundWith",
+        "title": "Surround with...",
+        "category": "Text Toolbox"
       }
     ],
     "menus": {
@@ -606,6 +621,18 @@
         {
           "group": "tt.insert",
           "command": "vscode-texttoolbox.InsertCurrency"
+        },
+        {
+          "group": "tt.insert",
+          "command": "vscode-texttoolbox.PrefixWith"
+        },
+        {
+          "group": "tt.insert",
+          "command": "vscode-texttoolbox.SuffixWith"
+        },
+        {
+          "group": "tt.insert",
+          "command": "vscode-texttoolbox.SurroundWith"
         }
       ],
       "tt.transform": [
