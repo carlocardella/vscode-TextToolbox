@@ -11,6 +11,12 @@ See the [list of open enhancements on GitHub](https://github.com/carlocardella/v
 
 ## Log
 
+## [2.19.2] - 2023-04-12
+
+### Fixed
+
+* [#44 Remove empty lines should remove a line if made only of whitespaces](https://github.com/carlocardella/vscode-TextToolbox/issues/44)
+
 ## [2.19.1] - 2023-02-21
 
 ### Changed

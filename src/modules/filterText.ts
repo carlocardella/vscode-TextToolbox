@@ -47,7 +47,7 @@ export async function removeEmptyLinesInternal(text: string, redundantOnly: bool
     let rr: string;
     // /^\n{2,}/gm ==> two or more empty lines
     // /^\n+/gm    ==> any empty line
-    redundantOnly ? (r = /^(\n{2,}|^(\r\n){2,})/gm) : (r = /^(\n+|\r\n+)/gm);
+    redundantOnly ? (r = /^\s*(\n{2,}|^\s*(\r\n){2,})/gm) : (r = /^\s*(\n+|\r\n+)/gm);
     // replace multiple empty lines with a single one, or with nothing
     redundantOnly ? (rr = eol) : (rr = "");
 
