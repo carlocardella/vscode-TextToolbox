@@ -11,6 +11,12 @@ See the [list of open enhancements on GitHub](https://github.com/carlocardella/v
 
 ## Log
 
+## [2.21.0] - 2023-04-21
+
+### Added
+
+* `Insert line separator...`
+
 ## [2.20.0] - 2023-04-13
 
 ### Added

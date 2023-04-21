@@ -427,6 +427,11 @@
         "command": "vscode-texttoolbox.SurroundWith",
         "title": "Surround with...",
         "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.InsertLineSeparator",
+        "title": "Insert line separator...",
+        "category": "Text Toolbox"
       }
     ],
     "menus": {
@@ -633,6 +638,10 @@
         {
           "group": "tt.insert",
           "command": "vscode-texttoolbox.SurroundWith"
+        },
+        {
+          "group": "tt.insert",
+          "command": "vscode-texttoolbox.InsertLineSeparator"
         }
       ],
       "tt.transform": [

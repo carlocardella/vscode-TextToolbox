@@ -815,3 +815,39 @@ function surroundTextInternal(text: string, surround: string, action: SurroundAc
 
     return newText;
 }
+
+/**
+ * Insert a line separator
+ *
+ * @export
+ * @async
+ * @param {?string} [separator] The separator to insert
+ * @returns {*}
+ */
+export async function InsertLineSeparator(separator?: string) {
+    const editor = getActiveEditor();
+    if (!editor) {
+        return;
+    }
+
+    if (!separator) {
+        separator = await window.showInputBox({
+            prompt: "Enter the separator...",
+            placeHolder: "-",
+            ignoreFocusOut: true,
+        });
+    }
+
+    if (!separator) {
+        separator = "-";
+    }
+
+    const selections = editor.selections;
+    editor.edit((editBuilder) => {
+        selections.forEach((s) => {
+            const newText = `\n${separator?.repeat(100)}\n\n`;
+            editBuilder.replace(s, newText);
+        });
+    });
+}
+

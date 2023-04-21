@@ -196,6 +196,11 @@ export function activate(context: ExtensionContext) {
             InsertText.surroundText(InsertText.SurroundAction.Surround);
         })
     );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.InsertLineSeparator", () => {
+            InsertText.InsertLineSeparator();
+        })
+    );
 
     // filter text
     context.subscriptions.push(
