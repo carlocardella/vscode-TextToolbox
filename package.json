@@ -155,22 +155,22 @@
       },
       {
         "command": "vscode-texttoolbox.SortLinesResultInNewEditor",
-        "title": "Sort lines, result in new editor",
+        "title": "Sort lines, result in new editor...",
         "category": "Text Toolbox"
       },
       {
         "command": "vscode-texttoolbox.SortLines",
-        "title": "Sort lines",
+        "title": "Sort lines...",
         "category": "Text Toolbox"
       },
       {
         "command": "vscode-texttoolbox.SortLinesByLengthResultInNewEditor",
-        "title": "Sort lines by length, result in new editor",
+        "title": "Sort lines by length, result in new editor...",
         "category": "Text Toolbox"
       },
       {
         "command": "vscode-texttoolbox.SortLinesByLength",
-        "title": "Sort lines by length",
+        "title": "Sort lines by length...",
         "category": "Text Toolbox"
       },
       {
@@ -180,12 +180,12 @@
       },
       {
         "command": "vscode-texttoolbox.InsertLineNumbers",
-        "title": "Insert line numbers",
+        "title": "Insert line numbers...",
         "category": "Text Toolbox"
       },
       {
         "command": "vscode-texttoolbox.InsertSequenceNumbers",
-        "title": "Insert numbers sequence",
+        "title": "Insert numbers sequence...",
         "category": "Text Toolbox"
       },
       {

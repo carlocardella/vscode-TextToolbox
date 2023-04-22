@@ -11,6 +11,13 @@ See the [list of open enhancements on GitHub](https://github.com/carlocardella/v
 
 ## Log
 
+## [2.21.1] - 2023-04-22
+
+### Fixed
+
+* Fix padding commands
+* Fix `Sort by length` commands
+
 ## [2.21.0] - 2023-04-21
 
 ### Added
