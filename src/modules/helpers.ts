@@ -145,10 +145,10 @@ export function getLinesFromSelection(editor: TextEditor, selection?: Selection)
                     lines.push(editor?.document.lineAt(i));
                 }
             }
-            if (i > selectionStartLine && i < selectionEndLine) {
+            else if (i > selectionStartLine && i < selectionEndLine) {
                 lines.push(editor?.document.lineAt(i));
             }
-            if (i === selectionEndLine) {
+            else if (i === selectionEndLine) {
                 if (s.end.character > 0) {
                     lines.push(editor?.document.lineAt(i));
                 }
