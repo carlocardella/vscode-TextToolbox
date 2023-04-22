@@ -2,35 +2,36 @@ import {
     createNewEditor,
     getDocumentTextOrSelection,
     getSelection,
-    getLinesFromString,
-    linesToLine,
     getActiveEditor,
     getDocumentEOL,
     getLinesFromSelection,
 } from "./helpers";
-import * as os from "os";
-import { EndOfLine, Selection, TextLine, window } from "vscode";
+import { Selection, TextLine, window } from "vscode";
 
 /**
  * Sorting direction: ascending | descending | reverse
  */
-export const sortDirection = ["ascending", "descending", "reverse"];
+export enum sortDirection {
+    ascending = "ascending",
+    descending = "descending",
+    reverse = "reverse",
+}
 
 /**
  * Ask the user the sort direction: ascending (default), descending and reverse
  * @param openInNewTextEditor Optionally open the sorted lines in a new editor
  * @async
  */
-export async function askForSortDirection(openInNewTextEditor?: boolean) {
-    const direction = await window.showQuickPick(sortDirection, {
+export async function askForSortDirection(openInNewTextEditor?: boolean): Promise<sortDirection | undefined> {
+    const direction = await window.showQuickPick(Object.values(sortDirection), {
         ignoreFocusOut: true,
         canPickMany: false,
     });
     if (!direction) {
-        return;
+        return Promise.reject();
     }
 
-    sortLines(direction, openInNewTextEditor);
+    return Promise.resolve(sortDirection[direction as keyof typeof sortDirection]);
 }
 
 /**

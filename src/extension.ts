@@ -284,23 +284,35 @@ export function activate(context: ExtensionContext) {
 
     // sort text
     context.subscriptions.push(
-        commands.registerTextEditorCommand("vscode-texttoolbox.SortLinesResultInNewEditor", () => {
-            SortLines.askForSortDirection(true);
+        commands.registerTextEditorCommand("vscode-texttoolbox.SortLinesResultInNewEditor", async () => {
+            let sortDirection = await SortLines.askForSortDirection();
+            if (sortDirection) {
+                SortLines.sortLines(sortDirection, true);
+            }
         })
     );
     context.subscriptions.push(
-        commands.registerTextEditorCommand("vscode-texttoolbox.SortLines", () => {
-            SortLines.askForSortDirection();
+        commands.registerTextEditorCommand("vscode-texttoolbox.SortLines", async () => {
+            let sortDirection = await SortLines.askForSortDirection();
+            if (sortDirection) {
+                SortLines.sortLines(sortDirection, false);
+            }
         })
     );
     context.subscriptions.push(
-        commands.registerTextEditorCommand("vscode-texttoolbox.SortLinesByLengthResultInNewEditor", () => {
-            SortLines.askForSortDirection(true);
+        commands.registerTextEditorCommand("vscode-texttoolbox.SortLinesByLengthResultInNewEditor", async () => {
+            let sortDirection = await SortLines.askForSortDirection();
+            if (sortDirection) {
+                SortLines.sortLinesByLength(sortDirection, true);
+            }
         })
     );
     context.subscriptions.push(
-        commands.registerTextEditorCommand("vscode-texttoolbox.SortLinesByLength", () => {
-            SortLines.askForSortDirection();
+        commands.registerTextEditorCommand("vscode-texttoolbox.SortLinesByLength", async () => {
+            let sortDirection = await SortLines.askForSortDirection();
+            if (sortDirection) {
+                SortLines.sortLinesByLength(sortDirection, false);
+            }
         })
     );
 
