@@ -11,3 +11,6 @@ node_modules/
 .gitignore
 package.json
 *.drawio
+dist/test/*
+assets
+!assets/extension_icon.png
