@@ -29,10 +29,18 @@
         "commandCenter.border": "#e7e7e799"
     },
     "peacock.color": "#832561",
-    "cSpell.words": ["carlocardella", "darkred", "luxon", "pickone", "submenu", "texttoolbox", "untrusted"],
+    "cSpell.words": [
+        "carlocardella",
+        "darkred",
+        "luxon",
+        "pickone",
+        "submenu",
+        "texttoolbox",
+        "untrusted"
+    ],
     // MOCHA EXPLORER
-    "mochaExplorer.require": "ts-node/register",
-    "mochaExplorer.files": "src/test/**/*.ts",
-    "mochaExplorer.logpanel": true,
+    "mochaExplorer.files": "dist/test/**/*.js",
+    "mochaExplorer.require": "source-map-support/register",
+    "mochaExplorer.watch": "dist/**/*.js",
     "task.allowAutomaticTasks": "on"
 }
