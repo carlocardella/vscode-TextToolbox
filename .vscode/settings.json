@@ -26,7 +26,8 @@
         "statusBarItem.remoteBackground": "#832561",
         "statusBarItem.remoteForeground": "#e7e7e7",
         "sash.hoverBorder": "#ab307e",
-        "commandCenter.border": "#e7e7e799"
+        "commandCenter.border": "#e7e7e799",
+        "tab.activeBorder": "#ab307e"
     },
     "peacock.color": "#832561",
     "cSpell.words": ["carlocardella", "darkred", "luxon", "pickone", "submenu", "texttoolbox", "untrusted"],
