@@ -74,6 +74,27 @@ export function activate(context: ExtensionContext) {
 
     // insert text
     context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.InsertUUID", async () => {
+            const editor = Helpers.getActiveEditor();
+            if (!editor) {
+                return;
+            }
+
+            const selections = editor.selections;
+            let uniqueValues: string | undefined = "";
+            if (selections.length > 1) {
+                uniqueValues = await window.showQuickPick(["Yes", "No"], {
+                    canPickMany: false,
+                    ignoreFocusOut: true,
+                    title: `Insert unique UUIDs at each cursor position?`,
+                });
+            }
+            const uniqueRandomValues = uniqueValues === "Yes" ? true : false;
+
+            InsertText.insertUUID(uniqueRandomValues);
+        })
+    );
+    context.subscriptions.push(
         commands.registerTextEditorCommand("vscode-texttoolbox.InsertGUID", async () => {
             const editor = Helpers.getActiveEditor();
             if (!editor) {

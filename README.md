@@ -63,6 +63,8 @@ Likewise, `Convert to CapitalCase` has been removed in favor of the built-in VSC
 
 ### Insert text
 
+* Insert UUID
+  * 0d7196e1-df50-ea89-b518-9335ecc62a20
 * Insert GUID
   * 14854fc2-f782-5136-aebb-a121b9ba6af1
 * Insert GUID all zeros

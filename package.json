@@ -99,6 +99,11 @@
         "category": "Text Toolbox"
       },
       {
+        "command": "vscode-texttoolbox.InsertUUID",
+        "title": "Insert UUID",
+        "category": "Text Toolbox"
+      },
+      {
         "command": "vscode-texttoolbox.InsertGUID",
         "title": "Insert GUID",
         "category": "Text Toolbox"
@@ -587,6 +592,10 @@
         }
       ],
       "tt.insert": [
+        {
+          "group": "tt.insert",
+          "command": "vscode-texttoolbox.InsertUUID"
+        },
         {
           "group": "tt.insert",
           "command": "vscode-texttoolbox.InsertGUID"
@@ -1135,7 +1144,7 @@
     "@types/node": "^20.8.10",
     "@types/node-uuid": "0.0.28",
     "@types/pad": "^2.1.0",
-    "@types/vscode": "^1.45.0",
+    "@types/vscode": "^1.63.2",
     "@typescript-eslint/eslint-plugin": "^6.9.1",
     "@typescript-eslint/parser": "^6.9.1",
     "@vscode/test-electron": "^2.3.6",

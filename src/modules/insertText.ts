@@ -3,6 +3,7 @@ import { DateTime } from "luxon";
 import { Chance } from "chance";
 import { createNewEditor, getActiveEditor, getDocumentEOL, getLinesFromSelection } from "./helpers";
 import { LoremIpsum } from "lorem-ipsum";
+import { randomBytes } from "crypto";
 
 /**
  * Insert a random GUID, or a neutral GUID made of all zeros
@@ -24,6 +25,43 @@ export function insertGUID(uniqueRandomValues?: boolean, allZeros?: boolean) {
             s.isEmpty ? editBuilder.insert(s.active, guid) : editBuilder.replace(s, guid);
         });
     });
+}
+
+/**
+ * Insert a new UUID in the document or selection
+ *
+ * @export
+ * @param {boolean} [uniqueRandomValues]
+ */
+export function insertUUID(uniqueRandomValues?: boolean) {
+    const editor = getActiveEditor();
+    let uuid = generateUUID();
+
+    editor?.edit((editBuilder) => {
+        editor.selections.forEach(async (s) => {
+            if (uniqueRandomValues) {
+                uuid = generateUUID();
+            }
+            s.isEmpty ? editBuilder.insert(s.active, uuid) : editBuilder.replace(s, uuid);
+        });
+    });
+}
+
+/**
+ * Returns a new UUID
+ *
+ * @return {*}  {string}
+ */
+function generateUUID(): string {
+    const match = randomBytes(16)
+        .toString("hex")
+        .match(/(.{8})(.{4})(.{4})(.{4})(.{12})/);
+
+    if (match === null) {
+        throw new Error("Failed to generate UUID");
+    }
+
+    return match.slice(1).join("-");
 }
 
 /**
@@ -850,4 +888,3 @@ export async function InsertLineSeparator(separator?: string) {
         });
     });
 }
-

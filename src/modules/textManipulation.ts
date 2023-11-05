@@ -1,4 +1,4 @@
-import { Selection, TextEditor, window, TextLine, QuickPickItemKind } from "vscode";
+import { Selection, TextEditor, window, TextLine } from "vscode";
 import {
     getActiveEditor,
     getLinesFromDocumentOrSelection,

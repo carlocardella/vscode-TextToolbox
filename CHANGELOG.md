@@ -11,6 +11,16 @@ See the [list of open enhancements on GitHub](https://github.com/carlocardella/v
 
 ## Log
 
+## [2.22.0] - 2023-11-05
+
+### Added
+
+* `Insert UUID`
+
+### Changed
+
+* Updated Node modules
+
 ## [2.21.1] - 2023-04-22
 
 ### Fixed
