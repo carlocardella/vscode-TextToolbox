@@ -1075,7 +1075,7 @@
       {
         "command": "vscode-texttoolbox.TabOut",
         "key": "tab",
-        "when": "editorTextFocus && !suggestWidgetVisible && !inlineSuggestionVisible && !inSnippetMode && !editorHasMultipleSelections"
+        "when": "editorTextFocus && !suggestWidgetVisible && !inlineSuggestionVisible && !inSnippetMode && !editorHasMultipleSelections && !inlineEditIsVisible && !tabShouldJumpToInlineEdit"
       },
       {
         "command": "vscode-texttoolbox.SelectTextBetweenBrackets",
