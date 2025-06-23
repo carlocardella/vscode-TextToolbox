@@ -527,22 +527,51 @@ function findOpeningQuote(text: string, delimiterType: delimiterTypes, startOffs
         let openingDelimiter = Object.values(openingDelimiters).find((delimiter) => delimiter.char === text.at(position)) ?? undefined;
 
         if (openingDelimiter) {
-            return {
-                name: openingDelimiter.name,
-                char: text.at(position)!,
-                pairedChar: openingDelimiter.pairedChar,
-                position: position,
-                pairedOffset: undefined, // update
-                type: openingDelimiter.type,
-                direction: openingDelimiter.direction,
-                offset: startOffset,
-            } as delimiter;
+            // Check if this quote is escaped
+            if (!isEscapedQuote(text, position)) {
+                return {
+                    name: openingDelimiter.name,
+                    char: text.at(position)!,
+                    pairedChar: openingDelimiter.pairedChar,
+                    position: position,
+                    pairedOffset: undefined, // update
+                    type: openingDelimiter.type,
+                    direction: openingDelimiter.direction,
+                    offset: startOffset,
+                } as delimiter;
+            }
         }
 
         position--;
     }
 
     return;
+}
+
+/**
+ * Check if a quote character at the given position is escaped by a backslash
+ *
+ * @param {string} text The text to check
+ * @param {number} position The position of the quote character
+ * @returns {boolean} True if the quote is escaped, false otherwise
+ */
+function isEscapedQuote(text: string, position: number): boolean {
+    if (position === 0) {
+        return false;
+    }
+
+    // Count consecutive backslashes before the quote
+    let backslashCount = 0;
+    let checkPosition = position - 1;
+    
+    while (checkPosition >= 0 && text.at(checkPosition) === '\\') {
+        backslashCount++;
+        checkPosition--;
+    }
+    
+    // If there's an odd number of backslashes, the quote is escaped
+    // If there's an even number (including 0), the quote is not escaped
+    return backslashCount % 2 === 1;
 }
 
 /**
@@ -561,16 +590,19 @@ function findClosingQuote(text: string, openingDelimiter: delimiter, startOffset
 
     while (position < text.length) {
         if (text.at(position) === openingDelimiter.pairedChar) {
-            return {
-                name: delimiters.filter((delimiter) => delimiter.char === text.at(position))[0].name,
-                char: text.at(position)!,
-                pairedChar: openingDelimiter.char,
-                position: startOffset + position + 1,
-                pairedOffset: undefined, // update
-                type: openingDelimiter.type,
-                direction: delimiterTypeDirection.close,
-                offset: startOffset,
-            } as delimiter;
+            // Check if this quote is escaped
+            if (!isEscapedQuote(text, position)) {
+                return {
+                    name: delimiters.filter((delimiter) => delimiter.char === text.at(position))[0].name,
+                    char: text.at(position)!,
+                    pairedChar: openingDelimiter.char,
+                    position: startOffset + position + 1,
+                    pairedOffset: undefined, // update
+                    type: openingDelimiter.type,
+                    direction: delimiterTypeDirection.close,
+                    offset: startOffset,
+                } as delimiter;
+            }
         }
 
         position++;
