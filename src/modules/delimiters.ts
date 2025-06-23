@@ -508,6 +508,7 @@ function getDelimitersOffset(delimiterType: delimiterTypes): [number | undefined
 
 /**
  * Find the opening quote starting from the cursor position or active selection
+ * Now handles both escaped and unescaped quotes to find the closest pair
  *
  * @param {string} text
  * @param {delimiterTypes} delimiterType
@@ -520,26 +521,24 @@ function findOpeningQuote(text: string, delimiterType: delimiterTypes, startOffs
     }
 
     let position = text.length - 1;
-
     let openingDelimiters = delimiters.filter((delimiter) => delimiter.direction === "open" && delimiter.type === delimiterType);
 
     while (position >= 0) {
         let openingDelimiter = Object.values(openingDelimiters).find((delimiter) => delimiter.char === text.at(position)) ?? undefined;
 
         if (openingDelimiter) {
-            // Check if this quote is escaped
-            if (!isEscapedQuote(text, position)) {
-                return {
-                    name: openingDelimiter.name,
-                    char: text.at(position)!,
-                    pairedChar: openingDelimiter.pairedChar,
-                    position: position,
-                    pairedOffset: undefined, // update
-                    type: openingDelimiter.type,
-                    direction: openingDelimiter.direction,
-                    offset: startOffset,
-                } as delimiter;
-            }
+            // For escaped quotes, we still consider them as valid delimiters
+            // The key is to find the closest matching pair, whether escaped or not
+            return {
+                name: openingDelimiter.name,
+                char: text.at(position)!,
+                pairedChar: openingDelimiter.pairedChar,
+                position: position,
+                pairedOffset: undefined, // update
+                type: openingDelimiter.type,
+                direction: openingDelimiter.direction,
+                offset: startOffset,
+            } as delimiter;
         }
 
         position--;
@@ -576,6 +575,7 @@ function isEscapedQuote(text: string, position: number): boolean {
 
 /**
  * Find the closing quote starting from the cursor position or active selection
+ * Now handles both escaped and unescaped quotes with proper pairing logic
  *
  * @param {string} text The text to search in
  * @param {delimiter} openingDelimiter The opening delimiter
@@ -588,15 +588,28 @@ function findClosingQuote(text: string, openingDelimiter: delimiter, startOffset
         return undefined;
     }
 
+    // Check if the opening delimiter was escaped
+    const openingWasEscaped = isEscapedQuote(text, openingDelimiter.position - startOffset);
+
     while (position < text.length) {
         if (text.at(position) === openingDelimiter.pairedChar) {
-            // Check if this quote is escaped
-            if (!isEscapedQuote(text, position)) {
+            const currentIsEscaped = isEscapedQuote(text, position);
+            
+            // Match escaped quotes with escaped quotes, unescaped with unescaped
+            if (openingWasEscaped === currentIsEscaped) {
+                // For escaped quotes, we want to exclude the escape character from the selection
+                // So if this is an escaped quote, the selection should end before the backslash
+                let adjustedPosition = position;
+                if (currentIsEscaped && position > 0) {
+                    // For escaped quotes, adjust position to exclude the backslash
+                    adjustedPosition = position - 1;
+                }
+                
                 return {
                     name: delimiters.filter((delimiter) => delimiter.char === text.at(position))[0].name,
                     char: text.at(position)!,
                     pairedChar: openingDelimiter.char,
-                    position: startOffset + position + 1,
+                    position: startOffset + adjustedPosition + 1,
                     pairedOffset: undefined, // update
                     type: openingDelimiter.type,
                     direction: delimiterTypeDirection.close,
