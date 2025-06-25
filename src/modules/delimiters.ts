@@ -407,6 +407,13 @@ export function selectTextBetweenDelimiters(delimiterType: delimiterTypes) {
     let newSelectionOffsetStart = openingDelimiter.position;
     let newSelectionOffsetEnd = closingDelimiter.position;
 
+    // For escaped quotes, adjust the start position to exclude the backslash
+    const openingIsEscaped = (openingDelimiter as any).isEscaped;
+    if (openingIsEscaped) {
+        // Start after the escaped quote (skip the backslash and quote)
+        newSelectionOffsetStart = openingDelimiter.position + 1;
+    }
+
     let currentSelection = getTextFromSelection(editor, editor.selection);
     if (selectionIncludesDelimiters(currentSelection!, delimiterType) || !currentSelection) {
         // the current selection already includes the delimiters, so the new selection should not, unless:
@@ -508,6 +515,7 @@ function getDelimitersOffset(delimiterType: delimiterTypes): [number | undefined
 
 /**
  * Find the opening quote starting from the cursor position or active selection
+ * Now handles both escaped and unescaped quotes to find the closest pair
  *
  * @param {string} text
  * @param {delimiterTypes} delimiterType
@@ -520,13 +528,15 @@ function findOpeningQuote(text: string, delimiterType: delimiterTypes, startOffs
     }
 
     let position = text.length - 1;
-
     let openingDelimiters = delimiters.filter((delimiter) => delimiter.direction === "open" && delimiter.type === delimiterType);
 
     while (position >= 0) {
         let openingDelimiter = Object.values(openingDelimiters).find((delimiter) => delimiter.char === text.at(position)) ?? undefined;
 
         if (openingDelimiter) {
+            // Check if this opening quote is escaped
+            const isEscaped = isEscapedQuote(text, position);
+            
             return {
                 name: openingDelimiter.name,
                 char: text.at(position)!,
@@ -536,7 +546,9 @@ function findOpeningQuote(text: string, delimiterType: delimiterTypes, startOffs
                 type: openingDelimiter.type,
                 direction: openingDelimiter.direction,
                 offset: startOffset,
-            } as delimiter;
+                // Store whether this opening delimiter is escaped for use in closing quote search
+                isEscaped: isEscaped,
+            } as delimiter & { isEscaped: boolean };
         }
 
         position--;
@@ -546,7 +558,34 @@ function findOpeningQuote(text: string, delimiterType: delimiterTypes, startOffs
 }
 
 /**
+ * Check if a quote character at the given position is escaped by a backslash
+ *
+ * @param {string} text The text to check
+ * @param {number} position The position of the quote character
+ * @returns {boolean} True if the quote is escaped, false otherwise
+ */
+function isEscapedQuote(text: string, position: number): boolean {
+    if (position === 0) {
+        return false;
+    }
+
+    // Count consecutive backslashes before the quote
+    let backslashCount = 0;
+    let checkPosition = position - 1;
+    
+    while (checkPosition >= 0 && text.at(checkPosition) === '\\') {
+        backslashCount++;
+        checkPosition--;
+    }
+    
+    // If there's an odd number of backslashes, the quote is escaped
+    // If there's an even number (including 0), the quote is not escaped
+    return backslashCount % 2 === 1;
+}
+
+/**
  * Find the closing quote starting from the cursor position or active selection
+ * Now handles both escaped and unescaped quotes with proper pairing logic
  *
  * @param {string} text The text to search in
  * @param {delimiter} openingDelimiter The opening delimiter
@@ -554,23 +593,41 @@ function findOpeningQuote(text: string, delimiterType: delimiterTypes, startOffs
  * @param {number} [position=0] The position to start the search from
  * @returns {(delimiter | undefined)}
  */
-function findClosingQuote(text: string, openingDelimiter: delimiter, startOffset: number, position: number = 0): delimiter | undefined {
+function findClosingQuote(text: string, openingDelimiter: delimiter & { isEscaped?: boolean }, startOffset: number, position: number = 0): delimiter | undefined {
     if (!text) {
         return undefined;
     }
 
+    // Get the escape status from the opening delimiter
+    const openingWasEscaped = openingDelimiter.isEscaped || false;
+
     while (position < text.length) {
         if (text.at(position) === openingDelimiter.pairedChar) {
-            return {
-                name: delimiters.filter((delimiter) => delimiter.char === text.at(position))[0].name,
-                char: text.at(position)!,
-                pairedChar: openingDelimiter.char,
-                position: startOffset + position + 1,
-                pairedOffset: undefined, // update
-                type: openingDelimiter.type,
-                direction: delimiterTypeDirection.close,
-                offset: startOffset,
-            } as delimiter;
+            const currentIsEscaped = isEscapedQuote(text, position);
+            
+            // Match escaped quotes with escaped quotes, unescaped with unescaped
+            if (openingWasEscaped === currentIsEscaped) {
+                // For escaped quotes, we want to exclude the escape character from the selection
+                // So if this is an escaped quote, the selection should end before the backslash
+                let adjustedPosition = position;
+                if (currentIsEscaped && position > 0) {
+                    // For escaped quotes, adjust position to exclude the backslash
+                    // We want to end at the position just before the backslash
+                    adjustedPosition = position - 1;
+                }
+                
+                return {
+                    name: delimiters.filter((delimiter) => delimiter.char === text.at(position))[0].name,
+                    char: text.at(position)!,
+                    pairedChar: openingDelimiter.char,
+                    position: startOffset + adjustedPosition + (currentIsEscaped ? 0 : 1),
+                    pairedOffset: undefined, // update
+                    type: openingDelimiter.type,
+                    direction: delimiterTypeDirection.close,
+                    offset: startOffset,
+                    isEscaped: currentIsEscaped,
+                } as delimiter & { isEscaped: boolean };
+            }
         }
 
         position++;
