@@ -52,9 +52,15 @@
             "type": "extensionHost",
             "request": "launch",
             "runtimeExecutable": "${execPath}",
-            "args": ["--extensionDevelopmentPath=${workspaceFolder}", "--extensionTestsPath=${workspaceFolder}/out/test/suite/index", "--disable-extensions"],
+            "args": [
+                "--extensionDevelopmentPath=${workspaceFolder}", 
+                "--extensionTestsPath=${workspaceFolder}/out/test/suite/index", 
+                "--disable-extensions"
+            ],
             "outFiles": ["${workspaceFolder}/out/test/**/*.js"],
-            "preLaunchTask": "npm: unit-tests"
+            "preLaunchTask": "npm: test-compile",
+            "internalConsoleOptions": "openOnSessionStart",
+            "skipFiles": ["<node_internals>/**"]
         }
     ]
 }

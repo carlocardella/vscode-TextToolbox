@@ -1,10 +1,10 @@
 import * as assert from "assert";
-import { after, before, describe } from "mocha";
+import { after, before, describe, it } from "mocha";
 import { sleep, createNewEditor, selectAllText, closeTextEditor, getDocumentTextOrSelection, getActiveEditor } from "../../modules/helpers";
 import { convertSelection, caseConversions } from "../../modules/caseConversion";
 import { Selection } from "vscode";
 
-suite("caseConversion", () => {
+describe("caseConversion", () => {
     before(() => {
         console.log("Starting caseConversion tests");
     });
@@ -41,7 +41,7 @@ suite("caseConversion", () => {
         ];
 
         testsSingleLine.forEach((t) => {
-            test(`Convert "${t.text}" to ${t.conversionType}`, async () => {
+            it(`Convert "${t.text}" to ${t.conversionType}`, async () => {
                 await createNewEditor(t.text);
                 await selectAllText();
                 convertSelection(t.conversionType);
@@ -54,7 +54,7 @@ suite("caseConversion", () => {
     });
 
     describe("Case Conversion Edge Cases", () => {
-        test("Convert empty string", async () => {
+        it("Convert empty string", async () => {
             await createNewEditor("");
             await selectAllText();
             convertSelection(caseConversions.camelCase);
@@ -63,7 +63,7 @@ suite("caseConversion", () => {
             assert.strictEqual(actualText, "", "Empty string should remain empty");
         });
 
-        test("Convert single word", async () => {
+        it("Convert single word", async () => {
             await createNewEditor("word");
             await selectAllText();
             convertSelection(caseConversions.pascalCase);
@@ -72,7 +72,7 @@ suite("caseConversion", () => {
             assert.strictEqual(actualText, "Word", "Single word should be capitalized for PascalCase");
         });
 
-        test("Convert numbers and special characters", async () => {
+        it("Convert numbers and special characters", async () => {
             await createNewEditor("test123 document_with$special@chars");
             await selectAllText();
             convertSelection(caseConversions.camelCase);
@@ -82,7 +82,7 @@ suite("caseConversion", () => {
             assert.ok(actualText && actualText.length > 0, "Should handle special characters gracefully");
         });
 
-        test("Convert already correct case", async () => {
+        it("Convert already correct case", async () => {
             await createNewEditor("alreadyCamelCase");
             await selectAllText();
             convertSelection(caseConversions.camelCase);
@@ -93,7 +93,7 @@ suite("caseConversion", () => {
     });
 
     describe("Case Conversion Multi Line", () => {
-        test("Convert multiple lines", async () => {
+        it("Convert multiple lines", async () => {
             await createNewEditor("first line\nsecond line\nthird line");
             await selectAllText();
             convertSelection(caseConversions.camelCase);
@@ -107,7 +107,7 @@ suite("caseConversion", () => {
             assert.strictEqual(lines[2], "thirdLine", "Third line should be converted");
         });
 
-        test("Convert with multicursor selection", async () => {
+        it("Convert with multicursor selection", async () => {
             await createNewEditor("first text\n\nsecond text");
             const editor = getActiveEditor();
             if (editor) {
@@ -129,7 +129,7 @@ suite("caseConversion", () => {
     });
 
     describe("Case Conversion Partial Selection", () => {
-        test("Convert partial word selection", async () => {
+        it("Convert partial word selection", async () => {
             await createNewEditor("hello world test");
             const editor = getActiveEditor();
             if (editor) {

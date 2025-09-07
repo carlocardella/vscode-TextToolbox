@@ -1126,6 +1126,8 @@
     "webpack-dev": "webpack --mode development --watch",
     "test-compile": "tsc -p ./",
     "unit-tests": "tsc -w -p ./",
+    "test": "node run-tests.js",
+    "test:vscode": "npm run test-compile && node ./out/test/runTest.js",
     "vscode:prepublish": "npm run package",
     "compile-web": "webpack",
     "watch-web": "webpack --watch",

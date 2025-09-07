@@ -1,5 +1,5 @@
 import * as assert from 'assert';
-import { before, after, describe } from 'mocha';
+import { before, after, describe, it } from 'mocha';
 import { 
     sleep, 
     closeTextEditor, 
@@ -14,7 +14,7 @@ import { sortLines, sortLinesByLength, sortDirection, askForSortDirection } from
 import { Selection } from 'vscode';
 
 
-suite('sortText', () => {
+describe('sortText', () => {
     before(() => {
         console.log('Starting sortText tests');
     });
@@ -25,7 +25,7 @@ suite('sortText', () => {
     });
 
     describe("Sort Text Lines", () => {
-        test("Sort lines ascending", async () => {
+        it("Sort lines ascending", async () => {
             await createNewEditor();
             const eol = getDocumentEOL(getActiveEditor());
             const textUnsorted = `Connecticut${eol}Pennsylvania${eol}Rhode Island${eol}${eol}${eol}Delaware${eol}Alabama${eol}Arkansas${eol}${eol}New Jersey${eol}Washington${eol}New York${eol}Texas${eol}${eol}`;
@@ -39,7 +39,7 @@ suite('sortText', () => {
             assert.deepStrictEqual(await linesToLine(lines!), expectedAscending);
         });
 
-        test("Sort lines descending", async () => {
+        it("Sort lines descending", async () => {
             await createNewEditor();
             const eol = getDocumentEOL(getActiveEditor());
             const textUnsorted = `Connecticut${eol}Pennsylvania${eol}Rhode Island${eol}${eol}${eol}Delaware${eol}Alabama${eol}Arkansas${eol}${eol}New Jersey${eol}Washington${eol}New York${eol}Texas${eol}${eol}`;
@@ -53,7 +53,7 @@ suite('sortText', () => {
             assert.deepStrictEqual(await linesToLine(lines!), expectedDescending);
         });
 
-        test("Sort lines reverse", async () => {
+        it("Sort lines reverse", async () => {
             await createNewEditor();
             const eol = getDocumentEOL(getActiveEditor());
             const textUnsorted = `Connecticut${eol}Pennsylvania${eol}Rhode Island${eol}${eol}${eol}Delaware${eol}Alabama${eol}Arkansas${eol}${eol}New Jersey${eol}Washington${eol}New York${eol}Texas${eol}${eol}`;
@@ -67,7 +67,7 @@ suite('sortText', () => {
             assert.deepStrictEqual(await linesToLine(lines!), expectedReverse);
         });
 
-        test("Sort lines ascending in new editor", async () => {
+        it("Sort lines ascending in new editor", async () => {
             await createNewEditor();
             const eol = getDocumentEOL(getActiveEditor());
             const textUnsorted = `Connecticut${eol}Pennsylvania${eol}Rhode Island${eol}${eol}${eol}Delaware${eol}Alabama${eol}Arkansas${eol}${eol}New Jersey${eol}Washington${eol}New York${eol}Texas${eol}${eol}`;
@@ -81,7 +81,7 @@ suite('sortText', () => {
             assert.deepStrictEqual(await linesToLine(lines!), expectedAscending);
         });
 
-        test("Sort selected lines", async () => {
+        it("Sort selected lines", async () => {
             await createNewEditor();
             const eol = getDocumentEOL(getActiveEditor());
             const textUnsorted = `Connecticut${eol}Pennsylvania${eol}Rhode Island${eol}${eol}${eol}Delaware${eol}Alabama${eol}Arkansas${eol}${eol}New Jersey${eol}Washington${eol}New York${eol}Texas${eol}${eol}`;
@@ -98,7 +98,7 @@ suite('sortText', () => {
             assert.deepStrictEqual(await linesToLine(lines!), selectionExpectedAscending);
         });
 
-        test("Handle empty document", async () => {
+        it("Handle empty document", async () => {
             await createNewEditor("");
             try {
                 await sortLines("ascending", false);
@@ -108,7 +108,7 @@ suite('sortText', () => {
             }
         });
 
-        test("Handle invalid sort direction", async () => {
+        it("Handle invalid sort direction", async () => {
             await createNewEditor("line1\nline2\nline3");
             try {
                 await sortLines("invalid", false);
@@ -118,7 +118,7 @@ suite('sortText', () => {
             }
         });
 
-        test("Sort case sensitive", async () => {
+        it("Sort case sensitive", async () => {
             await createNewEditor();
             const eol = getDocumentEOL(getActiveEditor());
             const textUnsorted = `apple${eol}Banana${eol}cherry${eol}Date`;
@@ -132,7 +132,7 @@ suite('sortText', () => {
             assert.deepStrictEqual(await linesToLine(lines!), expectedAscending);
         });
 
-        test("Sort numeric strings", async () => {
+        it("Sort numeric strings", async () => {
             await createNewEditor();
             const eol = getDocumentEOL(getActiveEditor());
             const textUnsorted = `10${eol}2${eol}1${eol}20`;
@@ -148,7 +148,7 @@ suite('sortText', () => {
     });
 
     describe("Sort Lines by Length", () => {
-        test("Sort by length ascending", async () => {
+        it("Sort by length ascending", async () => {
             await createNewEditor();
             const eol = getDocumentEOL(getActiveEditor());
             const textUnsorted = `verylonglineoftext${eol}short${eol}medium length${eol}x`;
@@ -162,7 +162,7 @@ suite('sortText', () => {
             assert.deepStrictEqual(text, expectedAscending);
         });
 
-        test("Sort by length descending", async () => {
+        it("Sort by length descending", async () => {
             await createNewEditor();
             const eol = getDocumentEOL(getActiveEditor());
             const textUnsorted = `verylonglineoftext${eol}short${eol}medium length${eol}x`;
@@ -176,7 +176,7 @@ suite('sortText', () => {
             assert.deepStrictEqual(text, expectedDescending);
         });
 
-        test("Sort by length reverse", async () => {
+        it("Sort by length reverse", async () => {
             await createNewEditor();
             const eol = getDocumentEOL(getActiveEditor());
             const textUnsorted = `verylonglineoftext${eol}short${eol}medium length${eol}x`;
@@ -190,7 +190,7 @@ suite('sortText', () => {
             assert.deepStrictEqual(text, expectedReverse);
         });
 
-        test("Sort by length in new editor", async () => {
+        it("Sort by length in new editor", async () => {
             await createNewEditor();
             const eol = getDocumentEOL(getActiveEditor());
             const textUnsorted = `verylonglineoftext${eol}short${eol}medium length${eol}x`;
@@ -204,7 +204,7 @@ suite('sortText', () => {
             assert.deepStrictEqual(text, expectedAscending);
         });
 
-        test("Handle empty lines in length sort", async () => {
+        it("Handle empty lines in length sort", async () => {
             await createNewEditor();
             const eol = getDocumentEOL(getActiveEditor());
             const textUnsorted = `long line${eol}${eol}short${eol}${eol}x`;
@@ -218,7 +218,7 @@ suite('sortText', () => {
             assert.deepStrictEqual(text, expectedAscending);
         });
 
-        test("Handle invalid sort direction for length", async () => {
+        it("Handle invalid sort direction for length", async () => {
             await createNewEditor("line1\nline2\nline3");
             try {
                 await sortLinesByLength("invalid", false);
@@ -228,7 +228,7 @@ suite('sortText', () => {
             }
         });
 
-        test("Handle empty document for length sort", async () => {
+        it("Handle empty document for length sort", async () => {
             await createNewEditor("");
             try {
                 await sortLinesByLength("ascending", false);
@@ -240,7 +240,7 @@ suite('sortText', () => {
     });
 
     describe("Sort Direction Enum", () => {
-        test("Sort direction enum values", () => {
+        it("Sort direction enum values", () => {
             assert.strictEqual(sortDirection.ascending, "ascending");
             assert.strictEqual(sortDirection.descending, "descending");
             assert.strictEqual(sortDirection.reverse, "reverse");
@@ -248,7 +248,7 @@ suite('sortText', () => {
     });
 
     describe("Edge Cases", () => {
-        test("Sort single line", async () => {
+        it("Sort single line", async () => {
             await createNewEditor("single line");
             await sortLines("ascending", false);
             await sleep(500);
@@ -257,7 +257,7 @@ suite('sortText', () => {
             assert.strictEqual(text, "single line");
         });
 
-        test("Sort identical lines", async () => {
+        it("Sort identical lines", async () => {
             await createNewEditor();
             const eol = getDocumentEOL(getActiveEditor());
             const textUnsorted = `same${eol}same${eol}same`;
@@ -271,7 +271,7 @@ suite('sortText', () => {
             assert.deepStrictEqual(text, expected);
         });
 
-        test("Sort with special characters", async () => {
+        it("Sort with special characters", async () => {
             await createNewEditor();
             const eol = getDocumentEOL(getActiveEditor());
             const textUnsorted = `@symbol${eol}#hashtag${eol}!exclamation${eol}$dollar`;
@@ -285,7 +285,7 @@ suite('sortText', () => {
             assert.deepStrictEqual(await linesToLine(lines!), expectedAscending);
         });
 
-        test("Sort with whitespace", async () => {
+        it("Sort with whitespace", async () => {
             await createNewEditor();
             const eol = getDocumentEOL(getActiveEditor());
             const textUnsorted = `  spaced${eol}nospace${eol}\ttabbed${eol} single`;
@@ -300,7 +300,7 @@ suite('sortText', () => {
             assert.ok(text.includes("\t"), "Should preserve tabs");
         });
 
-        test("Sort very long lines", async () => {
+        it("Sort very long lines", async () => {
             await createNewEditor();
             const eol = getDocumentEOL(getActiveEditor());
             const longLine = "a".repeat(1000);

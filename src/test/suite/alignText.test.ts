@@ -1,10 +1,10 @@
 import * as assert from "assert";
-import { after, before, describe } from "mocha";
+import { after, before, describe, it } from "mocha";
 import { EOL } from "os";
 import { alignText } from '../../modules/alignText';
 import { closeTextEditor, sleep, createNewEditor, selectAllText, getDocumentTextOrSelection } from '../../modules/helpers';
 
-suite("alignText", () => {
+describe("alignText", () => {
     before(() => {
         console.log("Starting alignText tests");
     });
@@ -21,7 +21,7 @@ suite("alignText", () => {
         let tests = [{ newText: newText, separator: ",", expected: expectedComma }];
 
         tests.forEach((t) => {
-            test(`Align text to separator '${t.separator}'`, async () => {
+            it(`Align text to separator '${t.separator}'`, async () => {
                 await createNewEditor(t.newText);
                 await selectAllText();
                 await alignText(t.separator);
@@ -44,7 +44,7 @@ suite("alignText", () => {
         ];
 
         tests.forEach((t) => {
-            test(`Align text as table ${t.withHeaders ? "with headers" : ""}`, async () => {
+            it(`Align text as table ${t.withHeaders ? "with headers" : ""}`, async () => {
                 await createNewEditor(t.newText);
                 await selectAllText();
                 await alignText(t.separator, true, t.withHeaders);

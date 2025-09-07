@@ -1,0 +1,7 @@
+{
+  "ui": "tdd",
+  "spec": "out/test/suite/**/*.test.js",
+  "recursive": true,
+  "timeout": 5000,
+  "require": []
+}

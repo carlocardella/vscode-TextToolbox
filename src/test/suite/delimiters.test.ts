@@ -1,10 +1,10 @@
 import * as assert from "assert";
-import { after, before, describe } from "mocha";
+import { after, before, describe, it } from "mocha";
 import { EOL } from "os";
 import { alignText } from "../../modules/alignText";
 import { closeTextEditor, sleep, createNewEditor, selectAllText, getDocumentTextOrSelection } from "../../modules/helpers";
 
-suite("delimiters", () => {
+describe("delimiters", () => {
     before(() => {
         console.log("Starting delimiters tests");
     });

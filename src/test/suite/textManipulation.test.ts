@@ -1,5 +1,5 @@
 import * as assert from 'assert';
-import { before, after, describe } from 'mocha';
+import { before, after, describe, it } from 'mocha';
 import { 
     sleep, 
     closeTextEditor, 
@@ -32,7 +32,7 @@ import {
 } from '../../modules/textManipulation';
 import { Selection } from 'vscode';
 
-suite("textManipulation", () => {
+describe("textManipulation", () => {
     before(() => {
         console.log('Starting textManipulation tests');
     });
@@ -43,7 +43,7 @@ suite("textManipulation", () => {
     });
 
     describe("Trim whitespaces", () => {
-        test("Trim whitespaces from entire document", async () => {
+        it("Trim whitespaces from entire document", async () => {
             await createNewEditor();
             const eol = getDocumentEOL(getActiveEditor());
             const text = `Hutruaka pouzjan pu ${eol}   elnordu ce ${eol}     jan gabajo ${eol}genlosif fobavos vucozu jesidjo  ${eol}     os ijme koige fomej zuce ruv juusuje    ${eol}`;
@@ -58,7 +58,7 @@ suite("textManipulation", () => {
             assert.strictEqual(trimmedText, expected);
         });
 
-        test("Trim whitespaces from selection", async () => {
+        it("Trim whitespaces from selection", async () => {
             await createNewEditor();
             const eol = getDocumentEOL(getActiveEditor());
             const text = `Hutruaka pouzjan pu ${eol}   elnordu ce ${eol}     jan gabajo ${eol}genlosif fobavos vucozu jesidjo  ${eol}     os ijme koige fomej zuce ruv juusuje    ${eol}`;
@@ -78,7 +78,7 @@ suite("textManipulation", () => {
             assert.strictEqual(trimmedText, expected);
         });
 
-        test("Trim whitespaces with tabs and spaces", async () => {
+        it("Trim whitespaces with tabs and spaces", async () => {
             await createNewEditor();
             const eol = getDocumentEOL(getActiveEditor());
             const text = `\t  line with tabs and spaces  \t${eol}   \tline with leading and trailing\t   ${eol}`;
@@ -93,7 +93,7 @@ suite("textManipulation", () => {
             assert.strictEqual(trimmedText, expected);
         });
 
-        test("Handle empty lines in trim", async () => {
+        it("Handle empty lines in trim", async () => {
             await createNewEditor();
             const eol = getDocumentEOL(getActiveEditor());
             const text = `  line1  ${eol}${eol}  line2  ${eol}`;
@@ -110,7 +110,7 @@ suite("textManipulation", () => {
     });
 
     describe('Transform Path', () => {
-        test('Transform Windows path to POSIX', async () => {
+        it('Transform Windows path to POSIX', async () => {
             const pathString = 'C:\\temp\\pippo.txt';
             const expected = 'C:/temp/pippo.txt';
 
@@ -123,7 +123,7 @@ suite("textManipulation", () => {
             assert.strictEqual(actual, expected);
         });
 
-        test('Transform POSIX path to Windows', async () => {
+        it('Transform POSIX path to Windows', async () => {
             const pathString = 'C://temp//pippo.txt';
             const expected = 'C:\\temp\\pippo.txt';
 
@@ -136,7 +136,7 @@ suite("textManipulation", () => {
             assert.strictEqual(actual, expected);
         });
 
-        test('Transform path to Darwin format', async () => {
+        it('Transform path to Darwin format', async () => {
             const pathString = 'C:\\Users\\Documents\\file.txt';
             const expected = 'C:/Users/Documents/file.txt';
 
@@ -149,7 +149,7 @@ suite("textManipulation", () => {
             assert.strictEqual(actual, expected);
         });
 
-        test('Transform complex path with multiple separators', async () => {
+        it('Transform complex path with multiple separators', async () => {
             const pathString = 'C:\\\\Program Files\\\\App\\\\config.json';
             const expected = 'C:/Program Files/App/config.json';
 
@@ -164,7 +164,7 @@ suite("textManipulation", () => {
     });
 
     describe('Split Selection', () => {
-        test('Split selection by comma', async () => {
+        it('Split selection by comma', async () => {
             await createNewEditor();
             const eol = getDocumentEOL(getActiveEditor());
             const text = 'apple,banana,cherry,date';
@@ -179,7 +179,7 @@ suite("textManipulation", () => {
             assert.strictEqual(actual, expected);
         });
 
-        test('Split selection by semicolon', async () => {
+        it('Split selection by semicolon', async () => {
             await createNewEditor();
             const eol = getDocumentEOL(getActiveEditor());
             const text = 'item1;item2;item3';
@@ -194,7 +194,7 @@ suite("textManipulation", () => {
             assert.strictEqual(actual, expected);
         });
 
-        test('Split selection in new editor', async () => {
+        it('Split selection in new editor', async () => {
             await createNewEditor();
             const eol = getDocumentEOL(getActiveEditor());
             const text = 'one|two|three';
@@ -209,7 +209,7 @@ suite("textManipulation", () => {
             assert.strictEqual(actual, expected);
         });
 
-        test('Split multiple selections', async () => {
+        it('Split multiple selections', async () => {
             await createNewEditor();
             const eol = getDocumentEOL(getActiveEditor());
             const text = 'a,b,c and x,y,z';
@@ -230,7 +230,7 @@ suite("textManipulation", () => {
             }
         });
 
-        test('Handle empty selection for split', async () => {
+        it('Handle empty selection for split', async () => {
             await createNewEditor('some text');
             const editor = getActiveEditor();
             if (editor) {
@@ -242,7 +242,7 @@ suite("textManipulation", () => {
     });
 
     describe('Text Conversions', () => {
-        test('Convert to Base64', async () => {
+        it('Convert to Base64', async () => {
             const text = 'Hello World';
             const expected = convertToBase64(text);
 
@@ -255,7 +255,7 @@ suite("textManipulation", () => {
             assert.strictEqual(actual, expected);
         });
 
-        test('Convert from Base64', async () => {
+        it('Convert from Base64', async () => {
             const base64Text = 'SGVsbG8gV29ybGQ='; // 'Hello World' in base64
             const expected = 'Hello World';
 
@@ -268,7 +268,7 @@ suite("textManipulation", () => {
             assert.strictEqual(actual, expected);
         });
 
-        test('Convert to HTML entities', async () => {
+        it('Convert to HTML entities', async () => {
             const text = '<script>alert("test");</script>';
             const expected = convertToHTML(text);
 
@@ -284,7 +284,7 @@ suite("textManipulation", () => {
             assert.ok(actual!.includes('&quot;'), "Should convert \" to &quot;");
         });
 
-        test('Convert from HTML entities', async () => {
+        it('Convert from HTML entities', async () => {
             const htmlText = '&lt;script&gt;alert(&quot;test&quot;);&lt;/script&gt;';
             const expected = '<script>alert("test");</script>';
 
@@ -297,7 +297,7 @@ suite("textManipulation", () => {
             assert.strictEqual(actual, expected);
         });
 
-        test('Encode URI', async () => {
+        it('Encode URI', async () => {
             const text = 'hello world!@#$%^&*()';
             const expected = encodeUri(text);
 
@@ -312,7 +312,7 @@ suite("textManipulation", () => {
             assert.ok(actual!.includes('%21'), "Should encode ! as %21");
         });
 
-        test('Decode URI', async () => {
+        it('Decode URI', async () => {
             const encodedText = 'hello%20world%21%40%23%24%25%5E%26%2A%28%29';
             const expected = 'hello world!@#$%^&*()';
 
@@ -325,7 +325,7 @@ suite("textManipulation", () => {
             assert.strictEqual(actual, expected);
         });
 
-        test('Convert decimal to hexadecimal', async () => {
+        it('Convert decimal to hexadecimal', async () => {
             const decimal = '255';
             const expected = 'ff';
 
@@ -338,7 +338,7 @@ suite("textManipulation", () => {
             assert.strictEqual(actual, expected);
         });
 
-        test('Convert hexadecimal to decimal', async () => {
+        it('Convert hexadecimal to decimal', async () => {
             const hex = 'ff';
             const expected = '255';
 
@@ -351,7 +351,7 @@ suite("textManipulation", () => {
             assert.strictEqual(actual, expected);
         });
 
-        test('Decode JWT token', async () => {
+        it('Decode JWT token', async () => {
             // Simple JWT token for testing (header.payload.signature)
             const jwtToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
 
@@ -370,44 +370,44 @@ suite("textManipulation", () => {
     });
 
     describe('Conversion Utility Functions', () => {
-        test('convertToBase64 function', () => {
+        it('convertToBase64 function', () => {
             const result = convertToBase64('Hello');
             assert.strictEqual(result, 'SGVsbG8=');
         });
 
-        test('convertFromBase64 function', () => {
+        it('convertFromBase64 function', () => {
             const result = convertFromBase64('SGVsbG8=');
             assert.strictEqual(result, 'Hello');
         });
 
-        test('convertToHTML function', () => {
+        it('convertToHTML function', () => {
             const result = convertToHTML('<div>test & "quote"</div>');
             assert.strictEqual(result, '&lt;div&gt;test &amp; &quot;quote&quot;&lt;/div&gt;');
         });
 
-        test('convertFromHTML function', () => {
+        it('convertFromHTML function', () => {
             const result = convertFromHTML('&lt;div&gt;test &amp; &quot;quote&quot;&lt;/div&gt;');
             assert.strictEqual(result, '<div>test & "quote"</div>');
         });
 
-        test('encodeUri function', () => {
+        it('encodeUri function', () => {
             const result = encodeUri('hello world!');
             assert.strictEqual(result, 'hello%20world%21');
         });
 
-        test('decodeUri function', () => {
+        it('decodeUri function', () => {
             const result = decodeUri('hello%20world%21');
             assert.strictEqual(result, 'hello world!');
         });
 
-        test('convertDecimalToHexadecimal function', () => {
+        it('convertDecimalToHexadecimal function', () => {
             assert.strictEqual(convertDecimalToHexadecimal(255), 'ff');
             assert.strictEqual(convertDecimalToHexadecimal(16), '10');
             assert.strictEqual(convertDecimalToHexadecimal(0), '0');
             assert.strictEqual(convertDecimalToHexadecimal(1.5), undefined, "Should return undefined for non-integer");
         });
 
-        test('convertHexadecimalToDecimal function', () => {
+        it('convertHexadecimalToDecimal function', () => {
             assert.strictEqual(convertHexadecimalToDecimal('ff'), 255);
             assert.strictEqual(convertHexadecimalToDecimal('10'), 16);
             assert.strictEqual(convertHexadecimalToDecimal('0'), 0);
@@ -416,7 +416,7 @@ suite("textManipulation", () => {
     });
 
     describe('Ordered List Types', () => {
-        test('Ordered list enum values', () => {
+        it('Ordered list enum values', () => {
             assert.strictEqual(orderedListTypes["1. "], "Number.");
             assert.strictEqual(orderedListTypes["1) "], "Number)");
             assert.strictEqual(orderedListTypes["a. "], "lowercase.");
@@ -431,7 +431,7 @@ suite("textManipulation", () => {
     });
 
     describe('Error Handling', () => {
-        test('Handle empty text in conversions', async () => {
+        it('Handle empty text in conversions', async () => {
             await createNewEditor('');
             await selectAllText();
             await convertSelection(conversionType.toBase64);
@@ -441,7 +441,7 @@ suite("textManipulation", () => {
             assert.strictEqual(actual, '', "Should handle empty text gracefully");
         });
 
-        test('Handle invalid base64 in conversion', async () => {
+        it('Handle invalid base64 in conversion', async () => {
             await createNewEditor('invalid-base64-string');
             await selectAllText();
             
@@ -455,7 +455,7 @@ suite("textManipulation", () => {
             }
         });
 
-        test('Handle invalid hex in conversion', async () => {
+        it('Handle invalid hex in conversion', async () => {
             await createNewEditor('xyz');
             await selectAllText();
             await convertSelection(conversionType.hexToDec);
@@ -465,7 +465,7 @@ suite("textManipulation", () => {
             assert.ok(actual, "Should produce some result even with invalid hex");
         });
 
-        test('Handle invalid decimal in conversion', async () => {
+        it('Handle invalid decimal in conversion', async () => {
             await createNewEditor('not-a-number');
             await selectAllText();
             await convertSelection(conversionType.decToHex);
@@ -476,7 +476,7 @@ suite("textManipulation", () => {
             assert.ok(true, "Should handle invalid decimal input");
         });
 
-        test('Handle complex JWT decode', async () => {
+        it('Handle complex JWT decode', async () => {
             const invalidJWT = 'invalid.jwt.token';
             
             await createNewEditor(invalidJWT);
@@ -493,7 +493,7 @@ suite("textManipulation", () => {
     });
 
     describe('Edge Cases', () => {
-        test('Multiple selections with different conversions', async () => {
+        it('Multiple selections with different conversions', async () => {
             const text = 'Hello World and More Text';
             
             await createNewEditor(text);
@@ -513,7 +513,7 @@ suite("textManipulation", () => {
             }
         });
 
-        test('Very long text conversion', async () => {
+        it('Very long text conversion', async () => {
             const longText = 'a'.repeat(10000);
             
             await createNewEditor(longText);
@@ -526,7 +526,7 @@ suite("textManipulation", () => {
             assert.ok(actual!.length > longText.length, "Base64 should be longer than original");
         });
 
-        test('Special characters in path transformation', async () => {
+        it('Special characters in path transformation', async () => {
             const pathString = 'C:\\Program Files (x86)\\My App\\config.json';
             const expected = 'C:/Program Files (x86)/My App/config.json';
 
@@ -539,7 +539,7 @@ suite("textManipulation", () => {
             assert.strictEqual(actual, expected);
         });
 
-        test('Unicode text in conversions', async () => {
+        it('Unicode text in conversions', async () => {
             const unicodeText = 'Hello 世界 🌍';
             
             await createNewEditor(unicodeText);

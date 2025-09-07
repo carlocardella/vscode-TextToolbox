@@ -1,5 +1,5 @@
 import * as assert from 'assert';
-import { after, before, describe } from 'mocha';
+import { after, before, describe, it } from 'mocha';
 import { 
     closeTextEditor, 
     sleep, 
@@ -12,7 +12,7 @@ import {
 import { minifyJson, stringifyJson, escapeWin32PathInJson } from '../../modules/json';
 import { Selection } from 'vscode';
 
-suite('JSON', () => {
+describe('JSON', () => {
     before(() => {
         console.log('Starting JSON tests');
     });
@@ -22,7 +22,7 @@ suite('JSON', () => {
         console.log('All JSON tests done');
     });
 
-suite('JSON', () => {
+describe('JSON', () => {
     before(() => {
         console.log('Starting JSON tests');
     });
@@ -33,7 +33,7 @@ suite('JSON', () => {
     });
 
     describe('JSON Stringify', () => {
-        test('Stringify valid JSON object', async () => {
+        it('Stringify valid JSON object', async () => {
             await createNewEditor();
             const eol = getDocumentEOL(getActiveEditor());
             const inputJson = `{
@@ -53,7 +53,7 @@ suite('JSON', () => {
             assert.ok(actual!.includes("pwsh"), "Should contain pwsh value");
         });
 
-        test('Stringify and fix simple object syntax', async () => {
+        it('Stringify and fix simple object syntax', async () => {
             await createNewEditor();
             const eol = getDocumentEOL(getActiveEditor());
             const inputText = "a:a,b:b";
@@ -67,7 +67,7 @@ suite('JSON', () => {
             assert.strictEqual(actual, expectedPattern);
         });
 
-        test('Stringify and fix object with duplicate properties', async () => {
+        it('Stringify and fix object with duplicate properties', async () => {
             await createNewEditor();
             const eol = getDocumentEOL(getActiveEditor());
             const inputText = "a:a,b:b,a:c";
@@ -83,7 +83,7 @@ suite('JSON', () => {
             // Note: jsonic handles duplicates by keeping the last value
         });
 
-        test('Stringify complex nested object', async () => {
+        it('Stringify complex nested object', async () => {
             const inputText = "name:John,age:30,address:{street:123 Main St,city:Anytown}";
             
             await createNewEditor(inputText);
@@ -97,7 +97,7 @@ suite('JSON', () => {
             assert.ok(actual!.includes('"street"'), "Should contain nested street property");
         });
 
-        test('Stringify array syntax', async () => {
+        it('Stringify array syntax', async () => {
             const inputText = "[item1,item2,item3]";
             
             await createNewEditor(inputText);
@@ -111,7 +111,7 @@ suite('JSON', () => {
             assert.ok(actual!.includes("item3"), "Should contain item3");
         });
 
-        test('Stringify with selection', async () => {
+        it('Stringify with selection', async () => {
             const inputText = `{
     "prop1": "value1",
     "prop2": "value2"
@@ -129,7 +129,7 @@ suite('JSON', () => {
             }
         });
 
-        test('Handle empty document for stringify', async () => {
+        it('Handle empty document for stringify', async () => {
             await createNewEditor("");
             await stringifyJson(false);
 
@@ -137,7 +137,7 @@ suite('JSON', () => {
             assert.strictEqual(actual, '""', "Should return empty string stringified");
         });
 
-        test('Handle invalid JSON syntax with fix enabled', async () => {
+        it('Handle invalid JSON syntax with fix enabled', async () => {
             const inputText = "{invalid:json,missing:quotes}";
             
             await createNewEditor(inputText);
@@ -152,7 +152,7 @@ suite('JSON', () => {
     });
 
     describe('JSON Minify', () => {
-        test('Minify formatted JSON', async () => {
+        it('Minify formatted JSON', async () => {
             const inputJson = `[
     {
         "Name": "pwsh",
@@ -175,7 +175,7 @@ suite('JSON', () => {
             assert.strictEqual(actual, expectedMinified);
         });
 
-        test('Minify already minified JSON', async () => {
+        it('Minify already minified JSON', async () => {
             const inputJson = '{"name":"value","number":123}';
             
             await createNewEditor(inputJson);
@@ -186,7 +186,7 @@ suite('JSON', () => {
             assert.strictEqual(actual, inputJson, "Should remain the same if already minified");
         });
 
-        test('Minify with selection', async () => {
+        it('Minify with selection', async () => {
             const inputJson = `{
     "first": "value1",
     "second": "value2"
@@ -205,7 +205,7 @@ suite('JSON', () => {
             }
         });
 
-        test('Minify complex nested structure', async () => {
+        it('Minify complex nested structure', async () => {
             const inputJson = `{
     "users": [
         {
@@ -232,7 +232,7 @@ suite('JSON', () => {
             assert.ok(actual!.includes('"users"'), "Should preserve content");
         });
 
-        test('Handle empty document for minify', async () => {
+        it('Handle empty document for minify', async () => {
             await createNewEditor("");
             await minifyJson();
 
@@ -240,7 +240,7 @@ suite('JSON', () => {
             assert.strictEqual(actual, '""', "Should handle empty document");
         });
 
-        test('Minify array', async () => {
+        it('Minify array', async () => {
             const inputJson = `[
     "item1",
     "item2",
@@ -256,7 +256,7 @@ suite('JSON', () => {
             assert.strictEqual(actual, expectedMinified);
         });
 
-        test('Minify with special characters', async () => {
+        it('Minify with special characters', async () => {
             const inputJson = `{
     "message": "Hello\\nWorld",
     "path": "C:\\\\Users\\\\test",
@@ -276,7 +276,7 @@ suite('JSON', () => {
     });
 
     describe('Escape Win32 Paths', () => {
-        test('Escape single backslashes in selection', async () => {
+        it('Escape single backslashes in selection', async () => {
             const inputText = 'C:\\Users\\Documents\\file.txt';
             const expectedOutput = 'C:\\\\Users\\\\Documents\\\\file.txt';
             
@@ -289,7 +289,7 @@ suite('JSON', () => {
             assert.strictEqual(actual, expectedOutput);
         });
 
-        test('Escape backslashes in JSON string', async () => {
+        it('Escape backslashes in JSON string', async () => {
             const inputText = '{"path": "C:\\Program Files\\App\\config.json"}';
             const expectedOutput = '{"path": "C:\\\\Program Files\\\\App\\\\config.json"}';
             
@@ -302,7 +302,7 @@ suite('JSON', () => {
             assert.strictEqual(actual, expectedOutput);
         });
 
-        test('Escape multiple paths in selection', async () => {
+        it('Escape multiple paths in selection', async () => {
             const inputText = 'Path1: C:\\Users\\user1\\file.txt\nPath2: D:\\Data\\backup\\archive.zip';
             const expectedOutput = 'Path1: C:\\\\Users\\\\user1\\\\file.txt\nPath2: D:\\\\Data\\\\backup\\\\archive.zip';
             
@@ -315,7 +315,7 @@ suite('JSON', () => {
             assert.strictEqual(actual, expectedOutput);
         });
 
-        test('Handle already escaped paths', async () => {
+        it('Handle already escaped paths', async () => {
             const inputText = 'C:\\\\Users\\\\Documents\\\\file.txt';
             const expectedOutput = 'C:\\\\\\\\Users\\\\\\\\Documents\\\\\\\\file.txt';
             
@@ -328,7 +328,7 @@ suite('JSON', () => {
             assert.strictEqual(actual, expectedOutput);
         });
 
-        test('Handle text without backslashes', async () => {
+        it('Handle text without backslashes', async () => {
             const inputText = 'No backslashes here, just forward/slashes/and/normal/text';
             
             await createNewEditor(inputText);
@@ -340,7 +340,7 @@ suite('JSON', () => {
             assert.strictEqual(actual, inputText, "Should remain unchanged if no backslashes");
         });
 
-        test('Handle empty selection for path escaping', async () => {
+        it('Handle empty selection for path escaping', async () => {
             await createNewEditor("Some text with C:\\path\\here");
             const editor = getActiveEditor();
             if (editor) {
@@ -354,7 +354,7 @@ suite('JSON', () => {
             }
         });
 
-        test('Escape multiple selections', async () => {
+        it('Escape multiple selections', async () => {
             const inputText = 'Path1: C:\\Users\nPath2: D:\\Data\nPath3: E:\\Backup';
             
             await createNewEditor(inputText);
@@ -378,7 +378,7 @@ suite('JSON', () => {
     });
 
     describe('Error Handling', () => {
-        test('Handle malformed JSON gracefully', async () => {
+        it('Handle malformed JSON gracefully', async () => {
             const inputText = '{broken:json,missing"quotes:values}';
             
             await createNewEditor(inputText);
@@ -394,7 +394,7 @@ suite('JSON', () => {
             }
         });
 
-        test('Handle very large JSON objects', async () => {
+        it('Handle very large JSON objects', async () => {
             const largeObject = Array.from({length: 100}, (_, i) => `"prop${i}": "value${i}"`).join(',');
             const inputText = `{${largeObject}}`;
             
@@ -407,7 +407,7 @@ suite('JSON', () => {
             assert.ok(actual!.length > 0, "Should produce output");
         });
 
-        test('Handle special JSON values', async () => {
+        it('Handle special JSON values', async () => {
             const inputText = 'null:null,bool:true,number:42,string:"text"';
             
             await createNewEditor(inputText);

@@ -31,9 +31,10 @@
     },
     "peacock.color": "#832561",
     "cSpell.words": ["carlocardella", "darkred", "luxon", "pickone", "submenu", "texttoolbox", "untrusted"],
-    // MOCHA EXPLORER
-    "mochaExplorer.require": "ts-node/register",
-    "mochaExplorer.files": "src/test/**/*.ts",
-    "mochaExplorer.logpanel": true,
+    // TEST EXPLORER - DISABLED for VS Code Extension Tests
+    // Use F5 → "Extension Tests" instead
+    "mochaExplorer.files": [],
+    "testExplorer.codeLens": false,
+    "testExplorer.gutterDecoration": false,
     "task.allowAutomaticTasks": "on"
 }

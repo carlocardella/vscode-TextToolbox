@@ -14,7 +14,7 @@ import {
 } from "../../modules/filterText";
 import { ConfigurationTarget, window, workspace, Selection, Position } from "vscode";
 
-suite("filterText", () => {
+describe("filterText", () => {
     before(() => {
         console.log("Starting filterText tests");
     });
@@ -25,7 +25,7 @@ suite("filterText", () => {
     });
 
     describe("Remove all empty lines", async () => {
-        test("Remove redundant empty lines", async () => {
+        it("Remove redundant empty lines", async () => {
             await createNewEditor();
             const eol = getDocumentEOL(getActiveEditor());
             const testEditorText = `Fehfomda pemup mihjeb${eol}${eol}uvonono nelvojpo wokragsi geligab${eol}${eol}${eol}pokacan repafme racje ut alhacov${eol}${eol}Hireme gahze${eol}${eol}${eol}${eol}${eol}pi zo iro becago vekabo${eol}luihait abe zukuv gof tususho${eol}${eol}${eol}${eol}`;
@@ -39,7 +39,7 @@ suite("filterText", () => {
             assert.deepStrictEqual(text, testEditorTextRedundantExpected);
         });
 
-        test("Remove all empty lines", async () => {
+        it("Remove all empty lines", async () => {
             await createNewEditor();
             const eol = getDocumentEOL(getActiveEditor());
             const testEditorText = `Fehfomda pemup mihjeb${eol}${eol}uvonono nelvojpo wokragsi geligab${eol}${eol}${eol}pokacan repafme racje ut alhacov${eol}${eol}Hireme gahze${eol}${eol}${eol}${eol}${eol}pi zo iro becago vekabo${eol}luihait abe zukuv gof tususho${eol}${eol}${eol}${eol}`;
@@ -53,7 +53,7 @@ suite("filterText", () => {
             assert.deepStrictEqual(text, testEditorTextAllExpected);
         });
 
-        test("Handle empty document", async () => {
+        it("Handle empty document", async () => {
             await createNewEditor("");
             await removeEmptyLines(false);
             await sleep(500);
@@ -62,7 +62,7 @@ suite("filterText", () => {
             assert.strictEqual(text, "");
         });
 
-        test("Handle document with only empty lines", async () => {
+        it("Handle document with only empty lines", async () => {
             await createNewEditor();
             const eol = getDocumentEOL(getActiveEditor());
             const testEditorText = `${eol}${eol}${eol}${eol}`;
@@ -75,7 +75,7 @@ suite("filterText", () => {
             assert.strictEqual(text, "");
         });
 
-        test("Remove empty lines internal function", async () => {
+        it("Remove empty lines internal function", async () => {
             await createNewEditor();
             const eol = getDocumentEOL(getActiveEditor());
             const testText = `line1${eol}${eol}${eol}line2${eol}${eol}line3${eol}`;
@@ -91,7 +91,7 @@ suite("filterText", () => {
     });
 
     describe("Remove duplicate lines", async () => {
-        test("Remove duplicate lines with selection", async () => {
+        it("Remove duplicate lines with selection", async () => {
             await createNewEditor();
             const eol = getDocumentEOL(getActiveEditor());
             const testEditorDuplicateLines = `Gowul ibbohu tafeid fokecdif lab adazujob${eol}meaf dekase sij of wehi nefowumu wizabeti${eol}${eol}Gowul ibbohu tafeid fokecdif lab adazujob${eol}Gowul ibbohu tafeid fokecdif lab adazujob${eol}${eol}${eol}palte${eol}${eol}${eol}meaf dekase sij of wehi nefowumu wizabeti${eol}meaf dekase sij of wehi nefowumu wizabeti${eol}meaf dekase sij of wehi nefowumu wizabeti${eol}${eol}${eol}Nefzuh toehe jiubvid tic didukod ehe ji ${eol}ana mur tiofapel sudvivot hub wurgo jifhi jumkehfot ${eol}palte${eol}${eol}ana mur tiofapel sudvivot hub wurgo jifhi jumkehfot ${eol}`;
@@ -106,7 +106,7 @@ suite("filterText", () => {
             assert.deepStrictEqual(text, testEditorDuplicateLinesRemoved);
         });
 
-        test("Remove duplicate lines from document", async () => {
+        it("Remove duplicate lines from document", async () => {
             await createNewEditor();
             const eol = getDocumentEOL(getActiveEditor());
             const testEditorDuplicateLines = `Gowul ibbohu tafeid fokecdif lab adazujob${eol}meaf dekase sij of wehi nefowumu wizabeti${eol}${eol}Gowul ibbohu tafeid fokecdif lab adazujob${eol}Gowul ibbohu tafeid fokecdif lab adazujob${eol}${eol}${eol}palte${eol}${eol}${eol}meaf dekase sij of wehi nefowumu wizabeti${eol}meaf dekase sij of wehi nefowumu wizabeti${eol}meaf dekase sij of wehi nefowumu wizabeti${eol}${eol}${eol}Nefzuh toehe jiubvid tic didukod ehe ji ${eol}ana mur tiofapel sudvivot hub wurgo jifhi jumkehfot ${eol}palte${eol}${eol}ana mur tiofapel sudvivot hub wurgo jifhi jumkehfot ${eol}`;
@@ -120,7 +120,7 @@ suite("filterText", () => {
             assert.deepStrictEqual(text, testEditorDuplicateLinesRemoved);
         });
 
-        test("Remove duplicate lines and open in new editor", async () => {
+        it("Remove duplicate lines and open in new editor", async () => {
             await createNewEditor();
             const eol = getDocumentEOL(getActiveEditor());
             const testEditorDuplicateLines = `Gowul ibbohu tafeid fokecdif lab adazujob${eol}meaf dekase sij of wehi nefowumu wizabeti${eol}${eol}Gowul ibbohu tafeid fokecdif lab adazujob${eol}Gowul ibbohu tafeid fokecdif lab adazujob${eol}${eol}${eol}palte${eol}${eol}${eol}meaf dekase sij of wehi nefowumu wizabeti${eol}meaf dekase sij of wehi nefowumu wizabeti${eol}meaf dekase sij of wehi nefowumu wizabeti${eol}${eol}${eol}Nefzuh toehe jiubvid tic didukod ehe ji ${eol}ana mur tiofapel sudvivot hub wurgo jifhi jumkehfot ${eol}palte${eol}${eol}ana mur tiofapel sudvivot hub wurgo jifhi jumkehfot ${eol}`;
@@ -135,7 +135,7 @@ suite("filterText", () => {
             assert.deepStrictEqual(text, testEditorDuplicateLinesRemoved);
         });
 
-        test("Handle empty lines in duplicate removal", async () => {
+        it("Handle empty lines in duplicate removal", async () => {
             await createNewEditor();
             const eol = getDocumentEOL(getActiveEditor());
             const testText = `${eol}line1${eol}${eol}line1${eol}${eol}${eol}`;
@@ -149,7 +149,7 @@ suite("filterText", () => {
             assert.strictEqual(text, expected);
         });
 
-        test("Handle single line document", async () => {
+        it("Handle single line document", async () => {
             await createNewEditor("single line");
             await removeDuplicateLines(false);
             await sleep(500);
@@ -160,7 +160,7 @@ suite("filterText", () => {
     });
 
     describe("Filter lines", () => {
-        test("Filter text with regex pattern", async () => {
+        it("Filter text with regex pattern", async () => {
             await createNewEditor();
             const eol = getDocumentEOL(getActiveEditor());
             const textToFilter = `pippo${eol}pippo${eol}${eol}paperino${eol}paperino pippo${eol}${eol}${eol}pippo${eol}paperino${eol}pippo paperino${eol}${eol}paperino${eol}paperino${eol}${eol}paperino${eol}`;
@@ -175,7 +175,7 @@ suite("filterText", () => {
             assert.deepStrictEqual(text, regExpExpectedResult);
         });
 
-        test("Filter text with string pattern", async () => {
+        it("Filter text with string pattern", async () => {
             await createNewEditor();
             const eol = getDocumentEOL(getActiveEditor());
             const textToFilter = `pippo${eol}pippo${eol}${eol}paperino${eol}paperino pippo${eol}${eol}${eol}pippo${eol}paperino${eol}pippo paperino${eol}${eol}paperino${eol}paperino${eol}${eol}paperino${eol}`;
@@ -195,7 +195,7 @@ suite("filterText", () => {
             await config.update("filtersUseRegularExpressions", undefined, ConfigurationTarget.Global);
         });
 
-        test("Filter text with case sensitive search", async () => {
+        it("Filter text with case sensitive search", async () => {
             await createNewEditor();
             const eol = getDocumentEOL(getActiveEditor());
             const textToFilter = `Test${eol}test${eol}TEST${eol}Test${eol}`;
@@ -207,26 +207,26 @@ suite("filterText", () => {
             assert.ok(result!.includes("Test"), "Should include exact match");
         });
 
-        test("Handle empty regex search", async () => {
+        it("Handle empty regex search", async () => {
             await createNewEditor("some text");
             let result = findLinesMatchingRegEx("");
             assert.strictEqual(result, undefined, "Should return undefined for empty search");
         });
 
-        test("Handle empty string search", async () => {
+        it("Handle empty string search", async () => {
             await createNewEditor("some text");
             let result = await findLinesMatchingString("");
             assert.strictEqual(result, undefined, "Should return undefined for empty search");
         });
 
-        test("Handle regex with global flag", async () => {
+        it("Handle regex with global flag", async () => {
             await createNewEditor("test line\nanother test\nno match\ntest again");
             let result = findLinesMatchingRegEx("/test/g");
             assert.ok(result, "Should find matches");
             assert.ok(result!.length > 0, "Should have matches");
         });
 
-        test("Handle regex without global flag", async () => {
+        it("Handle regex without global flag", async () => {
             await createNewEditor("test line\nanother test\nno match\ntest again");
             let result = findLinesMatchingRegEx("/test/");
             assert.ok(result, "Should find match");
@@ -235,7 +235,7 @@ suite("filterText", () => {
     });
 
     describe("Open selection in new editor", () => {
-        test("Open single selection in new editor", async () => {
+        it("Open single selection in new editor", async () => {
             await createNewEditor();
             const eol = getDocumentEOL(getActiveEditor());
             const text = `pippo${eol}pippo${eol}${eol}paperino${eol}paperino pippo${eol}${eol}${eol}pippo${eol}paperino${eol}pippo paperino${eol}${eol}paperino${eol}paperino${eol}${eol}paperino${eol}`;
@@ -251,7 +251,7 @@ suite("filterText", () => {
             assert.ok(newText?.includes("pippo"), "Should contain selected text");
         });
 
-        test("Open multiple selections in new editor", async () => {
+        it("Open multiple selections in new editor", async () => {
             await createNewEditor();
             const eol = getDocumentEOL(getActiveEditor());
             const text = `pippo${eol}pippo${eol}${eol}paperino${eol}paperino pippo${eol}${eol}${eol}pippo${eol}paperino${eol}pippo paperino${eol}${eol}paperino${eol}paperino${eol}${eol}paperino${eol}`;
@@ -274,7 +274,7 @@ suite("filterText", () => {
             assert.deepStrictEqual(newText, expected);
         });
 
-        test("Handle empty selection", async () => {
+        it("Handle empty selection", async () => {
             await createNewEditor("test content");
             const editor = getActiveEditor();
             // Set cursor position without selection
@@ -284,7 +284,7 @@ suite("filterText", () => {
             assert.strictEqual(result, false, "Should return false for empty selection");
         });
 
-        test("Handle no active editor", async () => {
+        it("Handle no active editor", async () => {
             // Close any open editors first
             await closeTextEditor(true);
             
@@ -298,7 +298,7 @@ suite("filterText", () => {
     });
 
     describe("Text between spaces utility", () => {
-        test("Get text between spaces at cursor", async () => {
+        it("Get text between spaces at cursor", async () => {
             await createNewEditor("hello world test");
             const editor = getActiveEditor();
             if (editor) {
@@ -310,7 +310,7 @@ suite("filterText", () => {
             }
         });
 
-        test("Get text with special characters", async () => {
+        it("Get text with special characters", async () => {
             await createNewEditor("test-name_value.property");
             const editor = getActiveEditor();
             if (editor) {
@@ -322,7 +322,7 @@ suite("filterText", () => {
             }
         });
 
-        test("Handle cursor at beginning of document", async () => {
+        it("Handle cursor at beginning of document", async () => {
             await createNewEditor("hello world");
             const editor = getActiveEditor();
             if (editor) {
@@ -335,7 +335,7 @@ suite("filterText", () => {
     });
 
     describe("Regex constants", () => {
-        test("Text between spaces regex", () => {
+        it("Text between spaces regex", () => {
             const testCases = [
                 { text: "hello", expected: true },
                 { text: "test-name", expected: true },
@@ -351,7 +351,7 @@ suite("filterText", () => {
             });
         });
 
-        test("Email validation regex", () => {
+        it("Email validation regex", () => {
             const testCases = [
                 { email: "test@example.com", expected: true },
                 { email: "user.name@domain.org", expected: true },

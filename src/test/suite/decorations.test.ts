@@ -1,5 +1,5 @@
 import * as assert from 'assert';
-import { before, after, describe } from 'mocha';
+import { before, after, describe, it } from 'mocha';
 import { 
     sleep, 
     closeTextEditor, 
@@ -11,7 +11,7 @@ import {
 import TTDecorations from '../../modules/decorations';
 import { Selection, Range, Position, DecorationRenderOptions } from 'vscode';
 
-suite('decorations', () => {
+describe('decorations', () => {
     let decorations: TTDecorations;
 
     before(() => {
@@ -29,21 +29,21 @@ suite('decorations', () => {
     });
 
     describe('TTDecorations Class', () => {
-        test('Create TTDecorations instance', () => {
+        it('Create TTDecorations instance', () => {
             const instance = new TTDecorations();
             assert.ok(instance, 'Should create TTDecorations instance');
             assert.ok(Array.isArray(instance.Decorators), 'Should have Decorators array');
             assert.strictEqual(instance.Decorators.length, 0, 'Should start with empty decorators');
         });
 
-        test('Decorators array is initialized', () => {
+        it('Decorators array is initialized', () => {
             assert.ok(decorations.Decorators, 'Decorators array should exist');
             assert.strictEqual(typeof decorations.Decorators, 'object', 'Decorators should be an array/object');
         });
     });
 
     describe('Highlight Text Functionality', () => {
-        test('Highlight single word with default decorator', async () => {
+        it('Highlight single word with default decorator', async () => {
             await createNewEditor('Hello world test');
             const editor = getActiveEditor();
             if (editor) {
@@ -58,7 +58,7 @@ suite('decorations', () => {
             }
         });
 
-        test('Highlight selected text with default decorator', async () => {
+        it('Highlight selected text with default decorator', async () => {
             await createNewEditor('This is a test sentence');
             const editor = getActiveEditor();
             if (editor) {
@@ -73,7 +73,7 @@ suite('decorations', () => {
             }
         });
 
-        test('Highlight with custom settings - all matches', async () => {
+        it('Highlight with custom settings - all matches', async () => {
             await createNewEditor('test line\nanother test\ntest again');
             const editor = getActiveEditor();
             if (editor) {
@@ -90,7 +90,7 @@ suite('decorations', () => {
             }
         });
 
-        test('Highlight with case insensitive search', async () => {
+        it('Highlight with case insensitive search', async () => {
             await createNewEditor('Test line\nanother TEST\ntest again');
             const editor = getActiveEditor();
             if (editor) {
@@ -106,7 +106,7 @@ suite('decorations', () => {
             }
         });
 
-        test('Handle empty selection for highlight', async () => {
+        it('Handle empty selection for highlight', async () => {
             await createNewEditor('Some text without selection');
             const editor = getActiveEditor();
             if (editor) {
@@ -124,7 +124,7 @@ suite('decorations', () => {
             }
         });
 
-        test('Handle highlighting in empty document', async () => {
+        it('Handle highlighting in empty document', async () => {
             await createNewEditor('');
             
             try {
@@ -138,7 +138,7 @@ suite('decorations', () => {
     });
 
     describe('Remove Highlights Functionality', () => {
-        test('Remove all highlights', async () => {
+        it('Remove all highlights', async () => {
             await createNewEditor('test text for removal');
             const editor = getActiveEditor();
             if (editor) {
@@ -157,7 +157,7 @@ suite('decorations', () => {
             }
         });
 
-        test('Remove specific highlight', async () => {
+        it('Remove specific highlight', async () => {
             await createNewEditor('word1 word2 word1 word2');
             const editor = getActiveEditor();
             if (editor) {
@@ -179,7 +179,7 @@ suite('decorations', () => {
             }
         });
 
-        test('Remove highlight from empty document', async () => {
+        it('Remove highlight from empty document', async () => {
             await createNewEditor('');
             
             try {
@@ -193,7 +193,7 @@ suite('decorations', () => {
     });
 
     describe('Find Decoration Functionality', () => {
-        test('Find existing decoration by range', async () => {
+        it('Find existing decoration by range', async () => {
             await createNewEditor('findme text here');
             const editor = getActiveEditor();
             if (editor) {
@@ -209,7 +209,7 @@ suite('decorations', () => {
             }
         });
 
-        test('Find decoration at cursor position', async () => {
+        it('Find decoration at cursor position', async () => {
             await createNewEditor('cursor test text');
             const editor = getActiveEditor();
             if (editor) {
@@ -227,7 +227,7 @@ suite('decorations', () => {
             }
         });
 
-        test('Find decoration returns undefined for non-existent range', async () => {
+        it('Find decoration returns undefined for non-existent range', async () => {
             await createNewEditor('no decoration here');
             const nonExistentRange = new Range(0, 100, 0, 200);
             
@@ -237,7 +237,7 @@ suite('decorations', () => {
     });
 
     describe('Get Range to Highlight', () => {
-        test('Get range for word at cursor', async () => {
+        it('Get range for word at cursor', async () => {
             await createNewEditor('word selection test');
             const editor = getActiveEditor();
             if (editor) {
@@ -257,7 +257,7 @@ suite('decorations', () => {
             }
         });
 
-        test('Get range for selection', async () => {
+        it('Get range for selection', async () => {
             await createNewEditor('text with selection here');
             const editor = getActiveEditor();
             if (editor) {
@@ -276,7 +276,7 @@ suite('decorations', () => {
             }
         });
 
-        test('Get range with all matches setting', async () => {
+        it('Get range with all matches setting', async () => {
             await createNewEditor('match this match and match again');
             const editor = getActiveEditor();
             if (editor) {
@@ -296,7 +296,7 @@ suite('decorations', () => {
             }
         });
 
-        test('Get range with regex setting', async () => {
+        it('Get range with regex setting', async () => {
             await createNewEditor('test123 and test456 patterns');
             const editor = getActiveEditor();
             if (editor) {
@@ -313,7 +313,7 @@ suite('decorations', () => {
             }
         });
 
-        test('Handle empty document for range detection', async () => {
+        it('Handle empty document for range detection', async () => {
             await createNewEditor('');
             
             try {
@@ -326,7 +326,7 @@ suite('decorations', () => {
     });
 
     describe('Refresh Highlights', () => {
-        test('Refresh highlights with existing decorations', async () => {
+        it('Refresh highlights with existing decorations', async () => {
             await createNewEditor('refresh test content');
             const editor = getActiveEditor();
             if (editor) {
@@ -345,7 +345,7 @@ suite('decorations', () => {
             }
         });
 
-        test('Refresh highlights with no decorations', async () => {
+        it('Refresh highlights with no decorations', async () => {
             await createNewEditor('content without decorations');
             
             try {
@@ -356,7 +356,7 @@ suite('decorations', () => {
             }
         });
 
-        test('Refresh highlights with no active editor', async () => {
+        it('Refresh highlights with no active editor', async () => {
             await closeTextEditor(true); // Close all editors
             
             try {
@@ -369,7 +369,7 @@ suite('decorations', () => {
     });
 
     describe('Decoration Edge Cases', () => {
-        test('Multiple decorations on same range', async () => {
+        it('Multiple decorations on same range', async () => {
             await createNewEditor('same word same word');
             const editor = getActiveEditor();
             if (editor) {
@@ -387,7 +387,7 @@ suite('decorations', () => {
             }
         });
 
-        test('Highlight very long text', async () => {
+        it('Highlight very long text', async () => {
             const longText = 'word '.repeat(1000) + 'target ' + 'word '.repeat(1000);
             await createNewEditor(longText);
             const editor = getActiveEditor();
@@ -406,7 +406,7 @@ suite('decorations', () => {
             }
         });
 
-        test('Highlight with special characters', async () => {
+        it('Highlight with special characters', async () => {
             await createNewEditor('test @#$%^&*() special chars');
             const editor = getActiveEditor();
             if (editor) {
@@ -423,7 +423,7 @@ suite('decorations', () => {
             }
         });
 
-        test('Highlight unicode text', async () => {
+        it('Highlight unicode text', async () => {
             await createNewEditor('Hello 世界 🌍 unicode test');
             const editor = getActiveEditor();
             if (editor) {
@@ -440,7 +440,7 @@ suite('decorations', () => {
             }
         });
 
-        test('Decoration with multi-line content', async () => {
+        it('Decoration with multi-line content', async () => {
             await createNewEditor('line1\nline2 target here\nline3\ntarget again');
             const editor = getActiveEditor();
             if (editor) {
@@ -460,7 +460,7 @@ suite('decorations', () => {
     });
 
     describe('Performance and Memory', () => {
-        test('Performance with many decorations', async () => {
+        it('Performance with many decorations', async () => {
             await createNewEditor('test '.repeat(100));
             const editor = getActiveEditor();
             if (editor) {
@@ -485,7 +485,7 @@ suite('decorations', () => {
             }
         });
 
-        test('Memory cleanup after removing all decorations', async () => {
+        it('Memory cleanup after removing all decorations', async () => {
             await createNewEditor('cleanup test content');
             const editor = getActiveEditor();
             if (editor) {
@@ -507,7 +507,7 @@ suite('decorations', () => {
     });
 
     describe('Integration Tests', () => {
-        test('Highlight and remove workflow', async () => {
+        it('Highlight and remove workflow', async () => {
             await createNewEditor('workflow test example');
             const editor = getActiveEditor();
             if (editor) {
@@ -530,7 +530,7 @@ suite('decorations', () => {
             }
         });
 
-        test('Multiple highlight sessions', async () => {
+        it('Multiple highlight sessions', async () => {
             await createNewEditor('session one test\nsession two test');
             const editor = getActiveEditor();
             if (editor) {

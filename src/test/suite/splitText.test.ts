@@ -5,7 +5,7 @@ import { Selection } from "vscode";
 import { EOL } from "os";
 import { splitSelectionInternal } from "../../modules/textManipulation";
 
-suite("splitText", () => {
+describe("splitText", () => {
     before(() => {
         console.log("Starting splitText tests");
     });
@@ -22,7 +22,7 @@ suite("splitText", () => {
 
         const textSplitFirstLineNewEditor = `Aute${EOL}ex${EOL}anim${EOL}dolore${EOL}sunt${EOL}pariatur${EOL}culpa${EOL}sit${EOL}ut${EOL}ut${EOL}ex${EOL}incididunt${EOL}mollit${EOL}dolore.${EOL}`;
 
-        test("Split the second line in a text of three", async () => {
+        it("Split the second line in a text of three", async () => {
             await createNewEditor(textToSplit);
             const editor = getActiveEditor();
             editor!.selections = [new Selection(1, 0, 1, editor?.document.lineAt(1).text.length!)];
@@ -35,7 +35,7 @@ suite("splitText", () => {
             assert.deepStrictEqual(text, textSplitSecondLine);
         });
 
-        test("Split the first line in a text of three, open in new editor", async () => {
+        it("Split the first line in a text of three, open in new editor", async () => {
             await createNewEditor(textToSplit);
             const editor = getActiveEditor();
             editor!.selections = [new Selection(0, 0, 0, editor?.document.lineAt(1).text.length!)];

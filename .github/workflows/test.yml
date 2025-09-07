@@ -1,0 +1,33 @@
+name: Test VS Code Extension
+
+on: [push, pull_request]
+
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      
+    - name: Install Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18.x
+        
+    - name: Install dependencies
+      run: npm install
+      
+    - name: Compile tests
+      run: npm run test-compile
+      
+    - name: Run tests
+      run: npm run test:vscode
+      if: runner.os == 'Linux'
+      
+    - name: Run tests (headless)
+      run: xvfb-run -a npm run test:vscode
+      if: runner.os == 'Linux'

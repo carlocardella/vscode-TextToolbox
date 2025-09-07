@@ -1,5 +1,5 @@
 import * as assert from 'assert';
-import { before, after, describe } from 'mocha';
+import { before, after, describe, it } from 'mocha';
 import { 
     sleep, 
     closeTextEditor, 
@@ -11,7 +11,7 @@ import {
 import { copyTextWithMetadata } from '../../modules/copyText';
 import { Selection } from 'vscode';
 
-suite('copyText', () => {
+describe('copyText', () => {
     before(() => {
         console.log('Starting copyText tests');
     });
@@ -22,18 +22,18 @@ suite('copyText', () => {
     });
 
     describe('Copy Text with Metadata', () => {
-        test('Copy text with metadata function exists', async () => {
+        it('Copy text with metadata function exists', async () => {
             assert.ok(copyTextWithMetadata, 'copyTextWithMetadata function should exist');
             assert.strictEqual(typeof copyTextWithMetadata, 'function', 'copyTextWithMetadata should be a function');
         });
 
-        test('Copy text with metadata returns promise', async () => {
+        it('Copy text with metadata returns promise', async () => {
             await createNewEditor('test content');
             const result = copyTextWithMetadata();
             assert.ok(result instanceof Promise, 'Should return a Promise');
         });
 
-        test('Copy text with metadata with valid editor', async () => {
+        it('Copy text with metadata with valid editor', async () => {
             await createNewEditor('test content for copying');
             await selectAllText();
             
@@ -47,7 +47,7 @@ suite('copyText', () => {
             }
         });
 
-        test('Copy text with metadata with no active editor', async () => {
+        it('Copy text with metadata with no active editor', async () => {
             await closeTextEditor(true); // Ensure no active editor
             
             try {
@@ -58,7 +58,7 @@ suite('copyText', () => {
             }
         });
 
-        test('Copy text with different content types', async () => {
+        it('Copy text with different content types', async () => {
             const testCases = [
                 'Simple text',
                 'Text with\nmultiple\nlines',
@@ -84,7 +84,7 @@ suite('copyText', () => {
             }
         });
 
-        test('Copy text with different selection types', async () => {
+        it('Copy text with different selection types', async () => {
             const content = 'Line 1\nLine 2\nLine 3\nLine 4';
             await createNewEditor(content);
             
@@ -112,7 +112,7 @@ suite('copyText', () => {
             }
         });
 
-        test('Copy text with multiple selections', async () => {
+        it('Copy text with multiple selections', async () => {
             const content = 'First line\nSecond line\nThird line';
             await createNewEditor(content);
             
@@ -136,7 +136,7 @@ suite('copyText', () => {
     });
 
     describe('Copy Text Edge Cases', () => {
-        test('Copy from very large document', async () => {
+        it('Copy from very large document', async () => {
             const largeContent = 'A'.repeat(100000); // 100KB of text
             await createNewEditor(largeContent);
             await selectAllText();
@@ -149,7 +149,7 @@ suite('copyText', () => {
             }
         });
 
-        test('Copy from document with only whitespace', async () => {
+        it('Copy from document with only whitespace', async () => {
             const whitespaceContent = '   \n\n\t\t\t   \n   ';
             await createNewEditor(whitespaceContent);
             await selectAllText();
@@ -162,7 +162,7 @@ suite('copyText', () => {
             }
         });
 
-        test('Copy with rapid successive calls', async () => {
+        it('Copy with rapid successive calls', async () => {
             await createNewEditor('Test content for rapid calls');
             await selectAllText();
             
@@ -180,7 +180,7 @@ suite('copyText', () => {
             }
         });
 
-        test('Copy after editor state changes', async () => {
+        it('Copy after editor state changes', async () => {
             await createNewEditor('Initial content');
             
             const editor = getActiveEditor();
@@ -205,7 +205,7 @@ suite('copyText', () => {
     describe('Future Copy Text Functionality Tests', () => {
         // These tests serve as placeholders for future enhanced functionality
         
-        test('Copy text functionality baseline', () => {
+        it('Copy text functionality baseline', () => {
             // This test documents the current minimal state of the copyText module
             // and can be expanded when the module is enhanced with actual copy functionality
             
@@ -223,7 +223,7 @@ suite('copyText', () => {
             assert.ok(true, 'Baseline test for future enhancements');
         });
 
-        test('Copy metadata structure expectations', () => {
+        it('Copy metadata structure expectations', () => {
             // When the module is enhanced, metadata might include:
             const expectedMetadataStructure = {
                 content: 'string',           // The copied text
@@ -240,7 +240,7 @@ suite('copyText', () => {
             assert.ok(expectedMetadataStructure, 'Metadata structure defined for future implementation');
         });
 
-        test('Copy operation types expectations', () => {
+        it('Copy operation types expectations', () => {
             // Future copy operations might support:
             const expectedCopyTypes = [
                 'line',              // Copy entire line(s)
@@ -258,7 +258,7 @@ suite('copyText', () => {
     });
 
     describe('Copy Text Integration Tests', () => {
-        test('Copy text with different file types', async () => {
+        it('Copy text with different file types', async () => {
             const fileTypeTests = [
                 { content: 'console.log("Hello");', type: 'JavaScript' },
                 { content: 'def hello():\n    print("Hello")', type: 'Python' },
@@ -281,7 +281,7 @@ suite('copyText', () => {
             }
         });
 
-        test('Copy text performance baseline', async () => {
+        it('Copy text performance baseline', async () => {
             const content = 'Performance test content\n'.repeat(1000);
             await createNewEditor(content);
             await selectAllText();
@@ -301,7 +301,7 @@ suite('copyText', () => {
             }
         });
 
-        test('Copy text memory usage baseline', async () => {
+        it('Copy text memory usage baseline', async () => {
             // Test with various content sizes to establish memory usage patterns
             const sizes = [100, 1000, 10000, 50000];
             
