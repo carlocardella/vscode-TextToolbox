@@ -1,6 +1,5 @@
 import { validateSelection, getActiveEditor } from "./helpers";
 import { Range } from "vscode";
-import * as os from "os";
 
 /**
  * Case conversion types

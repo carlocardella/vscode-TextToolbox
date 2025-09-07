@@ -1,13 +1,40 @@
-**/tsconfig.json
-!file.ts
-todo
-out/
+# Source files
 src/
-**/*.map
+**/tsconfig*.json
+tsconfig*.json
 webpack.config.js
+
+# Build artifacts not needed in package
+out/
+**/*.map
+.nyc_output/
+
+# Development and testing
 node_modules/
 .vscode/
 .github/
 .gitignore
-package.json
 *.drawio
+todo
+
+# NPM and package management
+package-lock.json
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Test files
+**/test/**
+**/*.test.ts
+**/*.test.js
+
+# TypeScript and build configs
+.eslintrc*
+.prettier*
+
+# Misc development files
+*.vsix
+.DS_Store
+Thumbs.db
+*.tgz
+coverage/

@@ -1,5 +1,5 @@
 import { getActiveEditor, getTextFromSelection } from "./helpers";
-import * as jsonic from "jsonic";
+import jsonic from "jsonic";
 import { Selection } from "vscode";
 
 /**

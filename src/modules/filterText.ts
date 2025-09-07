@@ -1,5 +1,4 @@
 import { getActiveEditor, getDocumentTextOrSelection, createNewEditor, getSelection, linesToLine, getLinesFromString, getTextFromSelection, getDocumentEOL } from "./helpers";
-import * as os from "os";
 import { window, workspace, TextEditor, Selection, Uri } from "vscode";
 
 export const REGEX_TEXT_BETWEEN_SPACES = /([^\s"'`{}()[\]])+/;
@@ -63,7 +62,6 @@ export async function removeDuplicateLines(openInNewTextEditor: boolean) {
     let text = getDocumentTextOrSelection();
     const eol = getDocumentEOL(getActiveEditor());
 
-    const o = os;
     let lines = text?.split(eol);
     if (!lines) {
         return;

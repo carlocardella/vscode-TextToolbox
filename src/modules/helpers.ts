@@ -1,5 +1,4 @@
 import { commands, Range, Selection, TextEditor, window, workspace, TextLine, DocumentHighlight, Position, EndOfLine, TextDocument } from "vscode";
-import * as os from "os";
 
 /**
  * Returns the active text editor
@@ -354,7 +353,7 @@ export function getDocumentEOL(editor?: TextEditor): string {
         editor = getActiveEditor();
     }
     if (!editor) {
-        return os.EOL;
+        return "\n"; // default to LF
     }
 
     if (editor.document.eol === EndOfLine.CRLF) {
@@ -363,7 +362,7 @@ export function getDocumentEOL(editor?: TextEditor): string {
         return "\n";
     }
 
-    return os.EOL;
+    return "\n"; // default to LF
 }
 
 export function isNumber(str: string): boolean {
