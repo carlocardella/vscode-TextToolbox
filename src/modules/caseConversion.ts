@@ -73,33 +73,54 @@ export function convertSelection(conversion: caseConversions) {
 
 class ConvertCase {
     static toPascalCase(text: string): string {
-        return text
-            .replace(/(?<=[a-z])[A-Z]/gm, (match) => match.replace(match, ` ${match}`))
-            .toLowerCase()
-            .replace(/\b\w|[ \t]./g, (match) => match.toUpperCase())
-            .split(" ")
-            .join("");
+        // Process each line separately to preserve line breaks
+        return text.split('\n').map(line => {
+            return line
+                // Handle existing separators
+                .replace(/[-_\s]+/g, ' ')
+                .toLowerCase()
+                .replace(/\b\w/g, (match) => match.toUpperCase())
+                .replace(/\s+/g, "");
+        }).join('\n');
     }
 
     static toCamelCase(text: string): string {
-        return text
-            .replace(/(?<=[a-z])[A-Z]/gm, (match) => match.replace(match, ` ${match}`))
-            .toLowerCase()
-            .replace(/[ \t]([^A-Z])/g, (match, group1) => group1.toUpperCase());
+        // Process each line separately to preserve line breaks
+        return text.split('\n').map((line, index) => {
+            const pascalLine = line
+                // Handle existing separators
+                .replace(/[-_\s]+/g, ' ')
+                .toLowerCase()
+                .replace(/\b\w/g, (match) => match.toUpperCase())
+                .replace(/\s+/g, "");
+            
+            // For camelCase, first character should be lowercase (except for first line if processing single text)
+            return pascalLine.charAt(0).toLowerCase() + pascalLine.slice(1);
+        }).join('\n');
     }
 
     static toSnakeCase(text: string): string {
-        return text
-            .replace(/(?<=[a-z])[A-Z]/gm, (match) => match.replace(match, `_${match}`))
-            .replace(/(?<!^)\s/gm, "_")
-            .toLowerCase();
+        // Process each line separately to preserve line breaks
+        return text.split('\n').map(line => {
+            return line
+                // Handle existing separators
+                .replace(/[-\s]+/g, '_')
+                // Handle camelCase/PascalCase
+                .replace(/(?<=[a-z])[A-Z]/g, (match) => `_${match}`)
+                .toLowerCase();
+        }).join('\n');
     }
 
     static toKebabCase(text: string): string {
-        return text
-            .replace(/(?<=[a-z])[A-Z]/gm, (match) => match.replace(match, `-${match}`))
-            .replace(/(?<!^)\s/gm, "-")
-            .toLowerCase();
+        // Process each line separately to preserve line breaks
+        return text.split('\n').map(line => {
+            return line
+                // Handle existing separators
+                .replace(/[_\s]+/g, '-')
+                // Handle camelCase/PascalCase
+                .replace(/(?<=[a-z])[A-Z]/g, (match) => `-${match}`)
+                .toLowerCase();
+        }).join('\n');
     }
 
     static toConstantCase(text: string): string {
@@ -107,17 +128,27 @@ class ConvertCase {
     }
 
     static toDotCase(text: string): string {
-        // prettier-ignore
-        return text
-            .replace(/(?<=[a-z])[A-Z]/gm, (match) => match.replace(match, `.${match}`))
-            .replace(/(?<!^)\s/gm, ".");
+        // Process each line separately to preserve line breaks
+        return text.split('\n').map(line => {
+            return line
+                // Handle existing separators
+                .replace(/[-_\s]+/g, '.')
+                // Handle camelCase/PascalCase
+                .replace(/(?<=[a-z])[A-Z]/g, (match) => `.${match}`)
+                .toLowerCase();
+        }).join('\n');
     }
 
     static toPathCase(text: string): string {
-        return text
-            .replace(/(?<=[a-z])[A-Z]/gm, (match) => match.replace(match, `/${match}`))
-            .replace(/(?<!^)\s/gm, "/")
-            .toLowerCase();
+        // Process each line separately to preserve line breaks
+        return text.split('\n').map(line => {
+            return line
+                // Handle existing separators
+                .replace(/[-_\s]+/g, '/')
+                // Handle camelCase/PascalCase
+                .replace(/(?<=[a-z])[A-Z]/g, (match) => `/${match}`)
+                .toLowerCase();
+        }).join('\n');
     }
 
     static toHeaderCase(text: string): string {
@@ -125,15 +156,27 @@ class ConvertCase {
     }
 
     static toSentenceCase(text: string): string {
-        // return text.replace(/(\b[a-zA-Z])/g, (match, group1) => group1.toUpperCase());
-        return text
-            .replace(/(?<=[a-z])[A-Z]/gm, (match) => match.replace(match, ` ${match}`))
-            .toLowerCase()
-            .replace(/^./, (match) => match.toUpperCase());
+        // Process each line separately to preserve line breaks
+        return text.split('\n').map(line => {
+            return line
+                // Handle existing separators - convert to spaces
+                .replace(/[-_]+/g, ' ')
+                // Handle camelCase/PascalCase
+                .replace(/(?<=[a-z])[A-Z]/g, (match) => ` ${match}`)
+                // Clean up multiple spaces
+                .replace(/\s+/g, ' ')
+                .toLowerCase()
+                .trim()
+                // Capitalize first letter
+                .replace(/^./, (match) => match.toUpperCase());
+        }).join('\n');
     }
 
     static toCapitalCase(text: string): string {
-        return text.replace(/\b\w/g, (_) => _.toUpperCase());
+        // Process each line separately to preserve line breaks
+        return text.split('\n').map(line => {
+            return line.replace(/\b\w/g, (_) => _.toUpperCase());
+        }).join('\n');
     }
 
     // static toTitleCase(text: string): string {

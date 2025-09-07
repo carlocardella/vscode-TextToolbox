@@ -295,11 +295,18 @@ export async function getSelections(editor: TextEditor): Promise<readonly Select
  * @return {*}  {RegExp}
  */
 export function getRegExpObject(regex: string): RegExp {
-    const regExpFlags = regex.match("(?!.*/).*")![0] || undefined;
-    const regExpString = regex.match("(?<=/)(.*?)(?=/)")![0];
-    const regExpObject = new RegExp(regExpString, regExpFlags);
-
-    return new RegExp(regExpObject);
+    // Check if the input is a regex with delimiters (e.g., /pattern/flags)
+    const regexMatch = regex.match(/^\/(.+?)\/([gimuy]*)$/);
+    
+    if (regexMatch) {
+        // Extract pattern and flags from delimited regex
+        const regExpString = regexMatch[1];
+        const regExpFlags = regexMatch[2] || undefined;
+        return new RegExp(regExpString, regExpFlags);
+    } else {
+        // Treat as a simple string pattern
+        return new RegExp(regex);
+    }
 }
 
 /**
@@ -379,6 +386,20 @@ export function isNumber(str: string): boolean {
 }
 
 export function incrementString(value: string) {
+    // Handle numeric strings
+    if (isNumber(value)) {
+        const num = parseInt(value, 10);
+        const incremented = (num + 1).toString();
+        
+        // Preserve leading zeros if the original had them
+        if (value.length > incremented.length && value.startsWith('0')) {
+            return incremented.padStart(value.length, '0');
+        }
+        
+        return incremented;
+    }
+
+    // Handle alphanumeric strings (original letter increment logic)
     // credit: https://stackoverflow.com/a/55952917/9335336
     let carry = 1;
     let res = "";

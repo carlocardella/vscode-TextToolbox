@@ -42,8 +42,11 @@ function indentSpaces(line: string, indentSize: number): string {
 }
 
 export function setEditorOptionsContext(editor: TextEditor) {
-    commands.executeCommand("setContext", "tt.tabSize", editor!.options.tabSize);
-    commands.executeCommand("setContext", "tt.insertSpaces", editor!.options.insertSpaces);
+    if (!editor) {
+        return;
+    }
+    commands.executeCommand("setContext", "tt.tabSize", editor.options.tabSize);
+    commands.executeCommand("setContext", "tt.insertSpaces", editor.options.insertSpaces);
     // @update: https://github.com/microsoft/vscode/blob/main/src/vscode-dts/vscode.proposed.indentSize.d.ts
-    // commands.executeCommand("setContext", "tt.indentSize", editor!.options.indentSize);
+    // commands.executeCommand("setContext", "tt.indentSize", editor.options.indentSize);
 }

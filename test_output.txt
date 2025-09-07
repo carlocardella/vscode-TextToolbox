@@ -1,0 +1,1164 @@
+
+> vscode-texttoolbox@2.23.0 test:vscode
+> npm run test-compile && node ./out/test/runTest.js
+
+
+> vscode-texttoolbox@2.23.0 test-compile
+> tsc -p ./
+
+- Resolving version...
+✔ Validated version: 1.103.2
+✔ Found existing install in /Users/carlo/Git/vscode-TextToolbox.worktrees/master/.vscode-test/vscode-darwin-arm64-1.103.2
+[90m[main 2025-09-07T17:10:15.141Z][0m update#setState disabled
+[90m[main 2025-09-07T17:10:15.141Z][0m update#ctor - updates are disabled by the environment
+Via 'product.json#extensionEnabledApiProposals' extension 'ms-vsliveshare.vsliveshare' wants API proposal 'notebookCellExecutionState' but that proposal DOES NOT EXIST. Likely, the proposal has been finalized (check 'vscode.d.ts') or was abandoned.
+Via 'product.json#extensionEnabledApiProposals' extension 'ms-python.gather' wants API proposal 'notebookCellExecutionState' but that proposal DOES NOT EXIST. Likely, the proposal has been finalized (check 'vscode.d.ts') or was abandoned.
+Via 'product.json#extensionEnabledApiProposals' extension 'ms-python.vscode-pylance' wants API proposal 'mcpConfigurationProvider' but that proposal DOES NOT EXIST. Likely, the proposal has been finalized (check 'vscode.d.ts') or was abandoned.
+ChatSessionStore: Migrating 0 chat sessions from storage service to file system
+Started local extension host with pid 21951.
+Loading development extension at /Users/carlo/Git/vscode-TextToolbox.worktrees/master
+Settings Sync: Account status changed from uninitialized to unavailable
+vscode-texttoolbox is active
+[0m[0m
+[0m  alignText[0m
+Starting alignText tests
+[0m    Align text to separator[0m
+    [32m  ✔[0m[90m Align text to separator ','[0m[31m (551ms)[0m
+[0m    Align text as table[0m
+    [32m  ✔[0m[90m Align text as table [0m[31m (517ms)[0m
+    [32m  ✔[0m[90m Align text as table with headers[0m[31m (516ms)[0m
+All alignText tests done
+[0m  caseConversion[0m
+Starting caseConversion tests
+[0m    Case Conversion Single Line[0m
+    [32m  ✔[0m[90m Convert "test document" to camelCase[0m[31m (539ms)[0m
+    [32m  ✔[0m[90m Convert "hello world test" to camelCase[0m[31m (515ms)[0m
+    [32m  ✔[0m[90m Convert "already_snake_case" to camelCase[0m[31m (512ms)[0m
+    [32m  ✔[0m[90m Convert "test document" to constantCase[0m[31m (515ms)[0m
+    [32m  ✔[0m[90m Convert "already-kebab-case" to constantCase[0m[31m (522ms)[0m
+    [32m  ✔[0m[90m Convert "test document" to dotCase[0m[31m (525ms)[0m
+    [32m  ✔[0m[90m Convert "multiple word test" to dotCase[0m[31m (523ms)[0m
+    [32m  ✔[0m[90m Convert "test document" to headerCase[0m[31m (522ms)[0m
+    [32m  ✔[0m[90m Convert "multiple word test" to headerCase[0m[31m (514ms)[0m
+    [32m  ✔[0m[90m Convert "TeSt dOcuUMent" to invertCase[0m[31m (524ms)[0m
+    [32m  ✔[0m[90m Convert "UPPERCASE" to invertCase[0m[31m (527ms)[0m
+    [32m  ✔[0m[90m Convert "lowercase" to invertCase[0m[31m (519ms)[0m
+    [32m  ✔[0m[90m Convert "test document" to kebabCase[0m[31m (524ms)[0m
+    [32m  ✔[0m[90m Convert "camelCase text" to kebabCase[0m[31m (522ms)[0m
+    [32m  ✔[0m[90m Convert "test document" to pascalCase[0m[31m (526ms)[0m
+    [32m  ✔[0m[90m Convert "multiple word test" to pascalCase[0m[31m (519ms)[0m
+    [32m  ✔[0m[90m Convert "test document" to pathCase[0m[31m (518ms)[0m
+    [32m  ✔[0m[90m Convert "multiple word test" to pathCase[0m[31m (526ms)[0m
+    [32m  ✔[0m[90m Convert "test document" to sentenceCase[0m[31m (520ms)[0m
+    [32m  ✔[0m[90m Convert "UPPERCASE TEXT" to sentenceCase[0m[31m (526ms)[0m
+    [32m  ✔[0m[90m Convert "test document" to snakeCase[0m[31m (523ms)[0m
+    [32m  ✔[0m[90m Convert "camelCase text" to snakeCase[0m[31m (530ms)[0m
+[0m    Case Conversion Edge Cases[0m
+    [32m  ✔[0m[90m Convert empty string[0m[31m (528ms)[0m
+    [32m  ✔[0m[90m Convert single word[0m[31m (526ms)[0m
+    [32m  ✔[0m[90m Convert numbers and special characters[0m[31m (523ms)[0m
+    [32m  ✔[0m[90m Convert already correct case[0m[31m (522ms)[0m
+[0m    Case Conversion Multi Line[0m
+    [31m  1) Convert multiple lines[0m
+    [31m  2) Convert with multicursor selection[0m
+[0m    Case Conversion Partial Selection[0m
+    [31m  3) Convert partial word selection[0m
+All caseConversion tests done
+[0m  controlCharacters[0m
+Starting controlCharacters tests
+[0m    Control Characters[0m
+[0m      Remove control characters from full document[0m
+      [31m  4) Remove control characters from full document, replace with empty string[0m
+      [31m  5) Remove control characters from full document, replace with space[0m
+      [31m  6) Remove control characters from full document, replace with custom string x[0m
+[0m      Remove control characters from selection[0m
+      [31m  7) Remove control characters from selection, replace with empty string[0m
+      [31m  8) Remove control characters from selection, replace with space[0m
+      [31m  9) Remove control characters from selection, replace with custom string x[0m
+[0m      Remove control charachters on paste[0m
+      [36m  - Remove control characters on paste[0m
+All controlCharacters tests done
+[0m  copyText[0m
+Starting copyText tests
+[0m    Copy Text with Metadata[0m
+    [32m  ✔[0m[90m Copy text with metadata function exists[0m
+    [32m  ✔[0m[90m Copy text with metadata returns promise[0m
+    [32m  ✔[0m[90m Copy text with metadata with valid editor[0m
+    [32m  ✔[0m[90m Copy text with metadata with no active editor[0m
+    [32m  ✔[0m[90m Copy text with different content types[0m[31m (117ms)[0m
+    [32m  ✔[0m[90m Copy text with different selection types[0m
+    [32m  ✔[0m[90m Copy text with multiple selections[0m
+[0m    Copy Text Edge Cases[0m
+    [32m  ✔[0m[90m Copy from very large document[0m
+    [32m  ✔[0m[90m Copy from document with only whitespace[0m
+    [32m  ✔[0m[90m Copy with rapid successive calls[0m
+    [32m  ✔[0m[90m Copy after editor state changes[0m
+[0m    Future Copy Text Functionality Tests[0m
+    [32m  ✔[0m[90m Copy text functionality baseline[0m
+    [32m  ✔[0m[90m Copy metadata structure expectations[0m
+    [32m  ✔[0m[90m Copy operation types expectations[0m
+[0m    Copy Text Integration Tests[0m
+    [32m  ✔[0m[90m Copy text with different file types[0m[33m (58ms)[0m
+    [32m  ✔[0m[90m Copy text performance baseline[0m
+    [32m  ✔[0m[90m Copy text memory usage baseline[0m[33m (47ms)[0m
+All copyText tests done
+[0m  decorations[0m
+Starting decorations tests
+[0m    TTDecorations Class[0m
+    [32m  ✔[0m[90m Create TTDecorations instance[0m
+    [32m  ✔[0m[90m Decorators array is initialized[0m
+[0m    Highlight Text Functionality[0m
+    [32m  ✔[0m[90m Highlight single word with default decorator[0m[31m (562ms)[0m
+    [32m  ✔[0m[90m Highlight selected text with default decorator[0m[31m (513ms)[0m
+    [32m  ✔[0m[90m Highlight with custom settings - all matches[0m[31m (509ms)[0m
+    [32m  ✔[0m[90m Highlight with case insensitive search[0m[31m (509ms)[0m
+    [32m  ✔[0m[90m Handle empty selection for highlight[0m[31m (510ms)[0m
+    [32m  ✔[0m[90m Handle highlighting in empty document[0m
+[0m    Remove Highlights Functionality[0m
+    [32m  ✔[0m[90m Remove all highlights[0m[31m (1016ms)[0m
+    [32m  ✔[0m[90m Remove specific highlight[0m[31m (1021ms)[0m
+    [32m  ✔[0m[90m Remove highlight from empty document[0m[31m (515ms)[0m
+[0m    Find Decoration Functionality[0m
+    [32m  ✔[0m[90m Find existing decoration by range[0m[31m (522ms)[0m
+    [32m  ✔[0m[90m Find decoration at cursor position[0m[31m (521ms)[0m
+    [31m  10) Find decoration returns undefined for non-existent range[0m
+[0m    Get Range to Highlight[0m
+    [32m  ✔[0m[90m Get range for word at cursor[0m
+    [32m  ✔[0m[90m Get range for selection[0m
+    [32m  ✔[0m[90m Get range with all matches setting[0m
+    [31m  11) Get range with regex setting[0m
+    [32m  ✔[0m[90m Handle empty document for range detection[0m
+[0m    Refresh Highlights[0m
+    [32m  ✔[0m[90m Refresh highlights with existing decorations[0m[31m (519ms)[0m
+    [32m  ✔[0m[90m Refresh highlights with no decorations[0m
+    [32m  ✔[0m[90m Refresh highlights with no active editor[0m
+[0m    Decoration Edge Cases[0m
+    [32m  ✔[0m[90m Multiple decorations on same range[0m[31m (1038ms)[0m
+    [32m  ✔[0m[90m Highlight very long text[0m[31m (513ms)[0m
+    [32m  ✔[0m[90m Highlight with special characters[0m[31m (509ms)[0m
+    [32m  ✔[0m[90m Highlight unicode text[0m[31m (510ms)[0m
+    [32m  ✔[0m[90m Decoration with multi-line content[0m[31m (517ms)[0m
+[0m    Performance and Memory[0m
+    [32m  ✔[0m[90m Performance with many decorations[0m[31m (520ms)[0m
+    [32m  ✔[0m[90m Memory cleanup after removing all decorations[0m[31m (1027ms)[0m
+[0m    Integration Tests[0m
+    [32m  ✔[0m[90m Highlight and remove workflow[0m[31m (1019ms)[0m
+    [32m  ✔[0m[90m Multiple highlight sessions[0m[31m (1023ms)[0m
+All decorations tests done
+[0m  filterText[0m
+Starting filterText tests
+[0m    Remove all empty lines[0m
+    [32m  ✔[0m[90m Remove redundant empty lines[0m[31m (532ms)[0m
+    [32m  ✔[0m[90m Remove all empty lines[0m[31m (540ms)[0m
+    [32m  ✔[0m[90m Handle empty document[0m[31m (510ms)[0m
+    [32m  ✔[0m[90m Handle document with only empty lines[0m[31m (533ms)[0m
+    [32m  ✔[0m[90m Remove empty lines internal function[0m
+[0m    Remove duplicate lines[0m
+    [32m  ✔[0m[90m Remove duplicate lines with selection[0m[31m (536ms)[0m
+    [32m  ✔[0m[90m Remove duplicate lines from document[0m[31m (521ms)[0m
+    [32m  ✔[0m[90m Remove duplicate lines and open in new editor[0m[31m (529ms)[0m
+    [32m  ✔[0m[90m Handle empty lines in duplicate removal[0m[31m (535ms)[0m
+    [32m  ✔[0m[90m Handle single line document[0m[31m (517ms)[0m
+[0m    Filter lines[0m
+    [32m  ✔[0m[90m Filter text with regex pattern[0m[31m (551ms)[0m
+    [32m  ✔[0m[90m Filter text with string pattern[0m[31m (592ms)[0m
+    [32m  ✔[0m[90m Filter text with case sensitive search[0m
+    [32m  ✔[0m[90m Handle empty regex search[0m
+    [32m  ✔[0m[90m Handle empty string search[0m
+    [32m  ✔[0m[90m Handle regex with global flag[0m
+    [32m  ✔[0m[90m Handle regex without global flag[0m
+[0m    Open selection in new editor[0m
+    [32m  ✔[0m[90m Open single selection in new editor[0m[31m (529ms)[0m
+    [32m  ✔[0m[90m Open multiple selections in new editor[0m[31m (533ms)[0m
+    [32m  ✔[0m[90m Handle empty selection[0m
+    [32m  ✔[0m[90m Handle no active editor[0m
+[0m    Text between spaces utility[0m
+    [32m  ✔[0m[90m Get text between spaces at cursor[0m[33m (39ms)[0m
+    [32m  ✔[0m[90m Get text with special characters[0m
+    [32m  ✔[0m[90m Handle cursor at beginning of document[0m
+[0m    Regex constants[0m
+    [32m  ✔[0m[90m Text between spaces regex[0m
+    [32m  ✔[0m[90m Email validation regex[0m
+All insertText tests done
+[0m  helpers[0m
+Starting helpers tests
+[0m    Editor Operations[0m
+    [32m  ✔[0m[90m Create and close new editor[0m
+    [32m  ✔[0m[90m Get active editor[0m
+    [32m  ✔[0m[90m Select all text[0m
+    [32m  ✔[0m[90m Get document text or selection[0m
+    [32m  ✔[0m[90m Get document EOL[0m
+[0m    Line Operations[0m
+    [32m  ✔[0m[90m Get lines from selection[0m
+[0m    Utility Functions[0m
+    [32m  ✔[0m[90m Check if string is number[0m
+    [31m  12) Increment string[0m
+    [31m  13) Get RegExp object[0m
+[0m    Performance Tests[0m
+    [32m  ✔[0m[90m Editor operations performance[0m
+    [32m  ✔[0m[90m String operations performance[0m
+[0m    Edge Cases[0m
+    [32m  ✔[0m[90m Handle null and undefined inputs[0m
+    [32m  ✔[0m[90m Handle large inputs[0m
+    [32m  ✔[0m[90m Handle special characters[0m
+All helpers tests done
+[0m  Indentation Module[0m
+[0m    IndentationType enum[0m
+    [32m  ✔[0m[90m should have correct enum values[0m
+[0m    updateIndentation[0m
+    [32m  ✔[0m[90m should convert tabs to 2 spaces[0m[31m (102ms)[0m
+    [32m  ✔[0m[90m should convert tabs to 4 spaces[0m[31m (102ms)[0m
+    [32m  ✔[0m[90m should convert 4 spaces to 2 spaces[0m[31m (103ms)[0m
+    [32m  ✔[0m[90m should convert 2 spaces to 4 spaces[0m[31m (105ms)[0m
+    [32m  ✔[0m[90m should not change anything when indentation size matches current tab size[0m[31m (105ms)[0m
+    [32m  ✔[0m[90m should handle mixed indentation correctly[0m[31m (104ms)[0m
+    [32m  ✔[0m[90m should preserve selection correctly[0m[31m (105ms)[0m
+    [32m  ✔[0m[90m should handle empty lines correctly[0m[31m (102ms)[0m
+    [32m  ✔[0m[90m should handle lines with only whitespace[0m[31m (110ms)[0m
+    [32m  ✔[0m[90m should update tab options for tabs indentation type[0m
+[0m    setEditorOptionsContext[0m
+    [32m  ✔[0m[90m should execute setContext commands for tab size and insert spaces[0m
+    [32m  ✔[0m[90m should handle tab indentation settings without errors[0m
+    [31m  14) should handle undefined editor gracefully[0m
+    [32m  ✔[0m[90m should work with different tab size values[0m
+[0m    Integration tests[0m
+    [32m  ✔[0m[90m should handle complex indentation scenarios[0m[31m (167ms)[0m
+    [32m  ✔[0m[90m should maintain code functionality after indentation changes[0m[31m (117ms)[0m
+    [32m  ✔[0m[90m should work with different programming languages[0m[31m (115ms)[0m
+[0m    Performance tests[0m
+    [32m  ✔[0m[90m should handle large files efficiently[0m[31m (520ms)[0m
+    [32m  ✔[0m[90m should handle rapid successive indentation changes[0m[31m (153ms)[0m
+[0m    Edge cases[0m
+    [32m  ✔[0m[90m should handle documents with only empty lines[0m[31m (113ms)[0m
+    [32m  ✔[0m[90m should handle single character lines[0m[31m (115ms)[0m
+    [32m  ✔[0m[90m should handle lines with special characters[0m[31m (116ms)[0m
+[0m  JSON[0m
+Starting JSON tests
+[0m    JSON[0m
+Starting JSON tests
+[0m      JSON Stringify[0m
+      [32m  ✔[0m[90m Stringify valid JSON object[0m
+      [31m  15) Stringify and fix simple object syntax[0m
+      [31m  16) Stringify and fix object with duplicate properties[0m
+      [31m  17) Stringify complex nested object[0m
+      [32m  ✔[0m[90m Stringify array syntax[0m
+      [32m  ✔[0m[90m Stringify with selection[0m
+      [31m  18) Handle empty document for stringify[0m
+      [31m  19) Handle invalid JSON syntax with fix enabled[0m
+[0m      JSON Minify[0m
+      [31m  20) Minify formatted JSON[0m
+      [32m  ✔[0m[90m Minify already minified JSON[0m
+      [31m  21) Minify with selection[0m
+      [31m  22) Minify complex nested structure[0m
+      [31m  23) Handle empty document for minify[0m
+      [31m  24) Minify array[0m
+      [31m  25) Minify with special characters[0m
+[0m      Escape Win32 Paths[0m
+      [32m  ✔[0m[90m Escape single backslashes in selection[0m[31m (110ms)[0m
+      [32m  ✔[0m[90m Escape backslashes in JSON string[0m[31m (110ms)[0m
+      [32m  ✔[0m[90m Escape multiple paths in selection[0m[31m (115ms)[0m
+      [32m  ✔[0m[90m Handle already escaped paths[0m[31m (119ms)[0m
+      [32m  ✔[0m[90m Handle text without backslashes[0m[31m (121ms)[0m
+      [32m  ✔[0m[90m Handle empty selection for path escaping[0m[31m (119ms)[0m
+      [31m  26) Escape multiple selections[0m
+[0m      Error Handling[0m
+      [32m  ✔[0m[90m Handle malformed JSON gracefully[0m
+      [32m  ✔[0m[90m Handle very large JSON objects[0m
+      [32m  ✔[0m[90m Handle special JSON values[0m
+All JSON tests done
+All JSON tests done
+[0m  sortText[0m
+Starting sortText tests
+[0m    Sort Text Lines[0m
+    [31m  27) Sort lines ascending[0m
+    [31m  28) Sort lines descending[0m
+    [31m  29) Sort lines reverse[0m
+    [31m  30) Sort lines ascending in new editor[0m
+    [32m  ✔[0m[90m Sort selected lines[0m[31m (535ms)[0m
+    [32m  ✔[0m[90m Handle empty document[0m
+    [32m  ✔[0m[90m Handle invalid sort direction[0m
+    [31m  31) Sort case sensitive[0m
+    [31m  32) Sort numeric strings[0m
+[0m    Sort Lines by Length[0m
+    [32m  ✔[0m[90m Sort by length ascending[0m[31m (540ms)[0m
+    [32m  ✔[0m[90m Sort by length descending[0m[31m (535ms)[0m
+    [32m  ✔[0m[90m Sort by length reverse[0m[31m (536ms)[0m
+    [32m  ✔[0m[90m Sort by length in new editor[0m[31m (537ms)[0m
+    [32m  ✔[0m[90m Handle empty lines in length sort[0m[31m (526ms)[0m
+    [32m  ✔[0m[90m Handle invalid sort direction for length[0m
+    [32m  ✔[0m[90m Handle empty document for length sort[0m
+[0m    Sort Direction Enum[0m
+    [32m  ✔[0m[90m Sort direction enum values[0m
+[0m    Edge Cases[0m
+    [32m  ✔[0m[90m Sort single line[0m[31m (523ms)[0m
+    [32m  ✔[0m[90m Sort identical lines[0m[31m (533ms)[0m
+    [31m  33) Sort with special characters[0m
+    [32m  ✔[0m[90m Sort with whitespace[0m[31m (536ms)[0m
+    [32m  ✔[0m[90m Sort very long lines[0m[31m (539ms)[0m
+All sortText tests done
+[0m  splitText[0m
+Starting splitText tests
+[0m    Split Text[0m
+    [32m  ✔[0m[90m Split the second line in a text of three[0m[31m (547ms)[0m
+    [32m  ✔[0m[90m Split the first line in a text of three, open in new editor[0m[31m (523ms)[0m
+All splitText tests done
+[0m  textManipulation[0m
+Starting textManipulation tests
+[0m    Trim whitespaces[0m
+    [32m  ✔[0m[90m Trim whitespaces from entire document[0m[31m (530ms)[0m
+    [31m  34) Trim whitespaces from selection[0m
+    [32m  ✔[0m[90m Trim whitespaces with tabs and spaces[0m[31m (538ms)[0m
+    [32m  ✔[0m[90m Handle empty lines in trim[0m[31m (534ms)[0m
+[0m    Transform Path[0m
+    [32m  ✔[0m[90m Transform Windows path to POSIX[0m[31m (525ms)[0m
+    [32m  ✔[0m[90m Transform POSIX path to Windows[0m[31m (522ms)[0m
+    [32m  ✔[0m[90m Transform path to Darwin format[0m[31m (526ms)[0m
+    [32m  ✔[0m[90m Transform complex path with multiple separators[0m[31m (525ms)[0m
+[0m    Split Selection[0m
+    [32m  ✔[0m[90m Split selection by comma[0m[31m (540ms)[0m
+    [32m  ✔[0m[90m Split selection by semicolon[0m[31m (535ms)[0m
+    [32m  ✔[0m[90m Split selection in new editor[0m[31m (549ms)[0m
+    [31m  35) Split multiple selections[0m
+    [32m  ✔[0m[90m Handle empty selection for split[0m
+[0m    Text Conversions[0m
+    [32m  ✔[0m[90m Convert to Base64[0m[31m (523ms)[0m
+    [32m  ✔[0m[90m Convert from Base64[0m[31m (528ms)[0m
+    [32m  ✔[0m[90m Convert to HTML entities[0m[31m (530ms)[0m
+    [32m  ✔[0m[90m Convert from HTML entities[0m[31m (528ms)[0m
+    [31m  36) Encode URI[0m
+    [32m  ✔[0m[90m Decode URI[0m[31m (532ms)[0m
+    [32m  ✔[0m[90m Convert decimal to hexadecimal[0m[31m (526ms)[0m
+    [32m  ✔[0m[90m Convert hexadecimal to decimal[0m[31m (529ms)[0m
+    [32m  ✔[0m[90m Decode JWT token[0m[31m (524ms)[0m
+[0m    Conversion Utility Functions[0m
+    [32m  ✔[0m[90m convertToBase64 function[0m
+    [32m  ✔[0m[90m convertFromBase64 function[0m
+    [32m  ✔[0m[90m convertToHTML function[0m
+    [32m  ✔[0m[90m convertFromHTML function[0m
+    [31m  37) encodeUri function[0m
+    [32m  ✔[0m[90m decodeUri function[0m
+    [32m  ✔[0m[90m convertDecimalToHexadecimal function[0m
+    [32m  ✔[0m[90m convertHexadecimalToDecimal function[0m
+[0m    Ordered List Types[0m
+    [32m  ✔[0m[90m Ordered list enum values[0m
+[0m    Error Handling[0m
+    [32m  ✔[0m[90m Handle empty text in conversions[0m[31m (526ms)[0m
+    [32m  ✔[0m[90m Handle invalid base64 in conversion[0m[31m (520ms)[0m
+    [32m  ✔[0m[90m Handle invalid hex in conversion[0m[31m (526ms)[0m
+    [32m  ✔[0m[90m Handle invalid decimal in conversion[0m[31m (527ms)[0m
+    [32m  ✔[0m[90m Handle complex JWT decode[0m
+[0m    Edge Cases[0m
+    [31m  38) Multiple selections with different conversions[0m
+    [32m  ✔[0m[90m Very long text conversion[0m[31m (532ms)[0m
+    [32m  ✔[0m[90m Special characters in path transformation[0m[31m (533ms)[0m
+    [31m  39) Unicode text in conversions[0m
+All textManipulation tests done
+[92m [0m[32m 199 passing[0m[90m (1m)[0m
+[36m [0m[36m 1 pending[0m
+[31m  39 failing[0m
+[0m  1) caseConversion
+       Case Conversion Multi Line
+         Convert multiple lines:
+
+      [31mAssertionError [ERR_ASSERTION]: Should preserve line structure
+
+1 !== 3
+[0m
+      [32m+ expected[0m [31m- actual[0m
+
+      [31m-1[0m
+      [32m+3[0m
+      [0m[90m
+  	at Context.<anonymous> (out/test/suite/caseConversion.test.js:131:20)
+[0m
+[0m  2) caseConversion
+       Case Conversion Multi Line
+         Convert with multicursor selection:
+
+      [31mAssertionError [ERR_ASSERTION]: Second selection should be converted to CONSTANT_CASE[0m
+      [32m+ expected[0m [31m- actual[0m
+
+      [31m-false[0m
+      [32m+true[0m
+      [0m[90m
+  	at Context.<anonymous> (out/test/suite/caseConversion.test.js:150:24)
+[0m
+[0m  3) caseConversion
+       Case Conversion Partial Selection
+         Convert partial word selection:
+
+      [31mAssertionError [ERR_ASSERTION]: Non-selected parts should remain unchanged[0m
+      [32m+ expected[0m [31m- actual[0m
+
+      [31m-false[0m
+      [32m+true[0m
+      [0m[90m
+  	at Context.<anonymous> (out/test/suite/caseConversion.test.js:166:24)
+[0m
+[0m  4) controlCharacters
+       Control Characters
+         Remove control characters from full document
+           Remove control characters from full document, replace with empty string:
+
+      [31mAssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+
++ 'LoremIpsumDolorSitAmetConsecteturAdipiscingElitSed DoEiusmodTemporIncididuntUtLaboreEtDoloreMagnaAliquaUtEnimAdMinimVeniamQuisNostrudExercitationUllamcoLaboris NisiUtAliquipExEaCommodoConsequatDuisAute IrureDolorInReprehenderitInVoluptateVelitEsseCillumDoloreEuFugiatNulla PariaturExcepteurSintOccaecat CupidatatNon ProidentSuntInCulpaQuiOfficiaDeseruntMollitAnimIdEstLaborum\n' +
++   'Lorem Ipsum Dolor Sit Amet Consectetur Adipiscing Elit Sed Do Eiusmod Tempor Incididunt Ut Labore Et Dolore Magna Aliqua Ut Enim Ad Minim Veniam Quis Nostrud Exercitation Ullamco Laboris Nisi Ut Aliquip Ex Ea Commodo Consequat Duis Aute Irure Dolor In Reprehenderit In Voluptate Velit Esse Cillum Dolore Eu Fugiat Nulla Pariatur Excepteur Sint Occaecat Cupidatat Non Proident Sunt In Culpa Qui Officia Deserunt Mollit Anim Id Est Laborum\n' +
++   '<img src="image.jpg" />\n' +
+- 'LoremIpsumDolorSitAmetConsecteturAdipiscingElitSedDoEiusmodTemporIncididuntUtLaboreEtDoloreMagnaAliquaUtEnimAdMinimVeniamQuisNostrudExercitationUllamcoLaborisNisiUtAliquipExEaCommodoConsequatDuisAuteIrureDolorInReprehenderitInVoluptateVelitEsseCillumDoloreEuFugiatNullaPariaturExcepteurSintOccaecatCupidatatNonProidentSuntInCulpaQuiOfficiaDeseruntMollitAnimIdEstLaborum\n' +
+-   'LoremIpsumDolorSitAmetConsecteturAdipiscingElitSedDoEiusmodTemporIncididuntUtLaboreEtDoloreMagnaAliquaUtEnimAdMinimVeniamQuisNostrudExercitationUllamcoLaborisNisiUtAliquipExEaCommodoConsequatDuisAuteIrureDolorInReprehenderitInVoluptateVelitEsseCillumDoloreEuFugiatNullaPariaturExcepteurSintOccaecatCupidatatNonProidentSuntInCulpaQuiOfficiaDeseruntMollitAnimIdEstLaborum\n' +
+-   '<img src=image.jpg />\n' +
+    'There is one before\n' +
++   '- vs -\n'
+-   ' vs -\n'
+[0m
+      [32m+ expected[0m [31m- actual[0m
+
+      [31m-LoremIpsumDolorSitAmetConsecteturAdipiscingElitSed DoEiusmodTemporIncididuntUtLaboreEtDoloreMagnaAliquaUtEnimAdMinimVeniamQuisNostrudExercitationUllamcoLaboris NisiUtAliquipExEaCommodoConsequatDuisAute IrureDolorInReprehenderitInVoluptateVelitEsseCillumDoloreEuFugiatNulla PariaturExcepteurSintOccaecat CupidatatNon ProidentSuntInCulpaQuiOfficiaDeseruntMollitAnimIdEstLaborum[0m
+      [31m-Lorem Ipsum Dolor Sit Amet Consectetur Adipiscing Elit Sed Do Eiusmod Tempor Incididunt Ut Labore Et Dolore Magna Aliqua Ut Enim Ad Minim Veniam Quis Nostrud Exercitation Ullamco Laboris Nisi Ut Aliquip Ex Ea Commodo Consequat Duis Aute Irure Dolor In Reprehenderit In Voluptate Velit Esse Cillum Dolore Eu Fugiat Nulla Pariatur Excepteur Sint Occaecat Cupidatat Non Proident Sunt In Culpa Qui Officia Deserunt Mollit Anim Id Est Laborum[0m
+      [31m-<img src="image.jpg" />[0m
+      [32m+LoremIpsumDolorSitAmetConsecteturAdipiscingElitSedDoEiusmodTemporIncididuntUtLaboreEtDoloreMagnaAliquaUtEnimAdMinimVeniamQuisNostrudExercitationUllamcoLaborisNisiUtAliquipExEaCommodoConsequatDuisAuteIrureDolorInReprehenderitInVoluptateVelitEsseCillumDoloreEuFugiatNullaPariaturExcepteurSintOccaecatCupidatatNonProidentSuntInCulpaQuiOfficiaDeseruntMollitAnimIdEstLaborum[0m
+      [32m+LoremIpsumDolorSitAmetConsecteturAdipiscingElitSedDoEiusmodTemporIncididuntUtLaboreEtDoloreMagnaAliquaUtEnimAdMinimVeniamQuisNostrudExercitationUllamcoLaborisNisiUtAliquipExEaCommodoConsequatDuisAuteIrureDolorInReprehenderitInVoluptateVelitEsseCillumDoloreEuFugiatNullaPariaturExcepteurSintOccaecatCupidatatNonProidentSuntInCulpaQuiOfficiaDeseruntMollitAnimIdEstLaborum[0m
+      [32m+<img src=image.jpg />[0m
+       There is one before
+      [31m-- vs -[0m
+      [32m+ vs -[0m
+      [0m[90m
+  	at Context.<anonymous> (out/test/suite/controlCharacters.test.js:69:24)
+[0m
+[0m  5) controlCharacters
+       Control Characters
+         Remove control characters from full document
+           Remove control characters from full document, replace with space:
+[0m[31m     CodeExpectedError: Unable to write to User Settings because TextToolbox.replaceControlCharactersWith is not a registered configuration.[0m[90m
+      at e1t.z (vscode-file://vscode-app/Users/carlo/Git/vscode-TextToolbox.worktrees/master/.vscode-test/vscode-darwin-arm64-1.103.2/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/workbench/workbench.desktop.main.js:3605:6793)
+      at e1t.F (vscode-file://vscode-app/Users/carlo/Git/vscode-TextToolbox.worktrees/master/.vscode-test/vscode-darwin-arm64-1.103.2/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/workbench/workbench.desktop.main.js:3605:9281)
+      at e1t.o (vscode-file://vscode-app/Users/carlo/Git/vscode-TextToolbox.worktrees/master/.vscode-test/vscode-darwin-arm64-1.103.2/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/workbench/workbench.desktop.main.js:3605:3874)
+      at Object.factory (vscode-file://vscode-app/Users/carlo/Git/vscode-TextToolbox.worktrees/master/.vscode-test/vscode-darwin-arm64-1.103.2/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/workbench/workbench.desktop.main.js:3605:3774)
+      at Nv.j (vscode-file://vscode-app/Users/carlo/Git/vscode-TextToolbox.worktrees/master/.vscode-test/vscode-darwin-arm64-1.103.2/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/workbench/workbench.desktop.main.js:30:75710)
+      at vscode-file://vscode-app/Users/carlo/Git/vscode-TextToolbox.worktrees/master/.vscode-test/vscode-darwin-arm64-1.103.2/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/workbench/workbench.desktop.main.js:30:75622
+      at new Promise (<anonymous>)
+      at Nv.queue (vscode-file://vscode-app/Users/carlo/Git/vscode-TextToolbox.worktrees/master/.vscode-test/vscode-darwin-arm64-1.103.2/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/workbench/workbench.desktop.main.js:30:75564)
+      at e1t.writeConfiguration (vscode-file://vscode-app/Users/carlo/Git/vscode-TextToolbox.worktrees/master/.vscode-test/vscode-darwin-arm64-1.103.2/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/workbench/workbench.desktop.main.js:3605:3743)
+      at uhn.Hb (vscode-file://vscode-app/Users/carlo/Git/vscode-TextToolbox.worktrees/master/.vscode-test/vscode-darwin-arm64-1.103.2/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/workbench/workbench.desktop.main.js:3605:42740)
+[0m
+[0m  6) controlCharacters
+       Control Characters
+         Remove control characters from full document
+           Remove control characters from full document, replace with custom string x:
+[0m[31m     CodeExpectedError: Unable to write to User Settings because TextToolbox.replaceControlCharactersWith is not a registered configuration.[0m[90m
+      at e1t.z (vscode-file://vscode-app/Users/carlo/Git/vscode-TextToolbox.worktrees/master/.vscode-test/vscode-darwin-arm64-1.103.2/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/workbench/workbench.desktop.main.js:3605:6793)
+      at e1t.F (vscode-file://vscode-app/Users/carlo/Git/vscode-TextToolbox.worktrees/master/.vscode-test/vscode-darwin-arm64-1.103.2/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/workbench/workbench.desktop.main.js:3605:9281)
+      at e1t.o (vscode-file://vscode-app/Users/carlo/Git/vscode-TextToolbox.worktrees/master/.vscode-test/vscode-darwin-arm64-1.103.2/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/workbench/workbench.desktop.main.js:3605:3874)
+      at Object.factory (vscode-file://vscode-app/Users/carlo/Git/vscode-TextToolbox.worktrees/master/.vscode-test/vscode-darwin-arm64-1.103.2/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/workbench/workbench.desktop.main.js:3605:3774)
+      at Nv.j (vscode-file://vscode-app/Users/carlo/Git/vscode-TextToolbox.worktrees/master/.vscode-test/vscode-darwin-arm64-1.103.2/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/workbench/workbench.desktop.main.js:30:75710)
+      at vscode-file://vscode-app/Users/carlo/Git/vscode-TextToolbox.worktrees/master/.vscode-test/vscode-darwin-arm64-1.103.2/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/workbench/workbench.desktop.main.js:30:75622
+      at new Promise (<anonymous>)
+      at Nv.queue (vscode-file://vscode-app/Users/carlo/Git/vscode-TextToolbox.worktrees/master/.vscode-test/vscode-darwin-arm64-1.103.2/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/workbench/workbench.desktop.main.js:30:75564)
+      at e1t.writeConfiguration (vscode-file://vscode-app/Users/carlo/Git/vscode-TextToolbox.worktrees/master/.vscode-test/vscode-darwin-arm64-1.103.2/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/workbench/workbench.desktop.main.js:3605:3743)
+      at uhn.Hb (vscode-file://vscode-app/Users/carlo/Git/vscode-TextToolbox.worktrees/master/.vscode-test/vscode-darwin-arm64-1.103.2/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/workbench/workbench.desktop.main.js:3605:42740)
+[0m
+[0m  7) controlCharacters
+       Control Characters
+         Remove control characters from selection
+           Remove control characters from selection, replace with empty string:
+
+      [31mAssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+
+  'Lorem​Ipsum­Dolor​Sit­Amet​Consectetur​Adipiscing​Elit​Sed‌Do​Eiusmod​Tempor​Incididunt​Ut​Labore​Et​Dolore​Magna​Aliqua​Ut​Enim​Ad​Minim​Veniam​Quis​Nostrud​Exercitation­Ullamco​Laboris‌Nisi​Ut​Aliquip­Ex​Ea​Commodo​Consequat​Duis​Aute‌Irure​Dolor​In​Reprehenderit​In​Voluptate​Velit​Esse​Cillum​Dolore­Eu​Fugiat​Nulla‌Pariatur​Excepteur­Sint​Occaecat‌Cupidatat​Non‌Proident​Sunt​In​Culpa­Qui​Officia​Deserunt​Mollit​Anim​Id​Est​Laborum\n' +
+    'Lorem Ipsum Dolor Sit Amet Consectetur Adipiscing Elit Sed Do Eiusmod Tempor Incididunt Ut Labore Et Dolore Magna Aliqua Ut Enim Ad Minim Veniam Quis Nostrud Exercitation Ullamco Laboris Nisi Ut Aliquip Ex Ea Commodo Consequat Duis Aute Irure Dolor In Reprehenderit In Voluptate Velit Esse Cillum Dolore Eu Fugiat Nulla Pariatur Excepteur Sint Occaecat Cupidatat Non Proident Sunt In Culpa Qui Officia Deserunt Mollit Anim Id Est Laborum\n' +
+    '<img src=“image.jpg” />\n' +
+    'There‎ is one ‎before\n' +
++   '- vs -\n'
+-   ' vs -\n'
+[0m
+      [32m+ expected[0m [31m- actual[0m
+
+       Lorem​Ipsum­Dolor​Sit­Amet​Consectetur​Adipiscing​Elit​Sed‌Do​Eiusmod​Tempor​Incididunt​Ut​Labore​Et​Dolore​Magna​Aliqua​Ut​Enim​Ad​Minim​Veniam​Quis​Nostrud​Exercitation­Ullamco​Laboris‌Nisi​Ut​Aliquip­Ex​Ea​Commodo​Consequat​Duis​Aute‌Irure​Dolor​In​Reprehenderit​In​Voluptate​Velit​Esse​Cillum​Dolore­Eu​Fugiat​Nulla‌Pariatur​Excepteur­Sint​Occaecat‌Cupidatat​Non‌Proident​Sunt​In​Culpa­Qui​Officia​Deserunt​Mollit​Anim​Id​Est​Laborum
+       Lorem Ipsum Dolor Sit Amet Consectetur Adipiscing Elit Sed Do Eiusmod Tempor Incididunt Ut Labore Et Dolore Magna Aliqua Ut Enim Ad Minim Veniam Quis Nostrud Exercitation Ullamco Laboris Nisi Ut Aliquip Ex Ea Commodo Consequat Duis Aute Irure Dolor In Reprehenderit In Voluptate Velit Esse Cillum Dolore Eu Fugiat Nulla Pariatur Excepteur Sint Occaecat Cupidatat Non Proident Sunt In Culpa Qui Officia Deserunt Mollit Anim Id Est Laborum
+       <img src=“image.jpg” />
+       There‎ is one ‎before
+      [31m-- vs -[0m
+      [32m+ vs -[0m
+      [0m[90m
+  	at Context.<anonymous> (out/test/suite/controlCharacters.test.js:106:24)
+[0m
+[0m  8) controlCharacters
+       Control Characters
+         Remove control characters from selection
+           Remove control characters from selection, replace with space:
+[0m[31m     CodeExpectedError: Unable to write to User Settings because TextToolbox.replaceControlCharactersWith is not a registered configuration.[0m[90m
+      at e1t.z (vscode-file://vscode-app/Users/carlo/Git/vscode-TextToolbox.worktrees/master/.vscode-test/vscode-darwin-arm64-1.103.2/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/workbench/workbench.desktop.main.js:3605:6793)
+      at e1t.F (vscode-file://vscode-app/Users/carlo/Git/vscode-TextToolbox.worktrees/master/.vscode-test/vscode-darwin-arm64-1.103.2/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/workbench/workbench.desktop.main.js:3605:9281)
+      at e1t.o (vscode-file://vscode-app/Users/carlo/Git/vscode-TextToolbox.worktrees/master/.vscode-test/vscode-darwin-arm64-1.103.2/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/workbench/workbench.desktop.main.js:3605:3874)
+      at Object.factory (vscode-file://vscode-app/Users/carlo/Git/vscode-TextToolbox.worktrees/master/.vscode-test/vscode-darwin-arm64-1.103.2/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/workbench/workbench.desktop.main.js:3605:3774)
+      at Nv.j (vscode-file://vscode-app/Users/carlo/Git/vscode-TextToolbox.worktrees/master/.vscode-test/vscode-darwin-arm64-1.103.2/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/workbench/workbench.desktop.main.js:30:75710)
+      at vscode-file://vscode-app/Users/carlo/Git/vscode-TextToolbox.worktrees/master/.vscode-test/vscode-darwin-arm64-1.103.2/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/workbench/workbench.desktop.main.js:30:75622
+      at new Promise (<anonymous>)
+      at Nv.queue (vscode-file://vscode-app/Users/carlo/Git/vscode-TextToolbox.worktrees/master/.vscode-test/vscode-darwin-arm64-1.103.2/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/workbench/workbench.desktop.main.js:30:75564)
+      at e1t.writeConfiguration (vscode-file://vscode-app/Users/carlo/Git/vscode-TextToolbox.worktrees/master/.vscode-test/vscode-darwin-arm64-1.103.2/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/workbench/workbench.desktop.main.js:3605:3743)
+      at uhn.Hb (vscode-file://vscode-app/Users/carlo/Git/vscode-TextToolbox.worktrees/master/.vscode-test/vscode-darwin-arm64-1.103.2/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/workbench/workbench.desktop.main.js:3605:42740)
+[0m
+[0m  9) controlCharacters
+       Control Characters
+         Remove control characters from selection
+           Remove control characters from selection, replace with custom string x:
+[0m[31m     CodeExpectedError: Unable to write to User Settings because TextToolbox.replaceControlCharactersWith is not a registered configuration.[0m[90m
+      at e1t.z (vscode-file://vscode-app/Users/carlo/Git/vscode-TextToolbox.worktrees/master/.vscode-test/vscode-darwin-arm64-1.103.2/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/workbench/workbench.desktop.main.js:3605:6793)
+      at e1t.F (vscode-file://vscode-app/Users/carlo/Git/vscode-TextToolbox.worktrees/master/.vscode-test/vscode-darwin-arm64-1.103.2/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/workbench/workbench.desktop.main.js:3605:9281)
+      at e1t.o (vscode-file://vscode-app/Users/carlo/Git/vscode-TextToolbox.worktrees/master/.vscode-test/vscode-darwin-arm64-1.103.2/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/workbench/workbench.desktop.main.js:3605:3874)
+      at Object.factory (vscode-file://vscode-app/Users/carlo/Git/vscode-TextToolbox.worktrees/master/.vscode-test/vscode-darwin-arm64-1.103.2/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/workbench/workbench.desktop.main.js:3605:3774)
+      at Nv.j (vscode-file://vscode-app/Users/carlo/Git/vscode-TextToolbox.worktrees/master/.vscode-test/vscode-darwin-arm64-1.103.2/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/workbench/workbench.desktop.main.js:30:75710)
+      at vscode-file://vscode-app/Users/carlo/Git/vscode-TextToolbox.worktrees/master/.vscode-test/vscode-darwin-arm64-1.103.2/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/workbench/workbench.desktop.main.js:30:75622
+      at new Promise (<anonymous>)
+      at Nv.queue (vscode-file://vscode-app/Users/carlo/Git/vscode-TextToolbox.worktrees/master/.vscode-test/vscode-darwin-arm64-1.103.2/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/workbench/workbench.desktop.main.js:30:75564)
+      at e1t.writeConfiguration (vscode-file://vscode-app/Users/carlo/Git/vscode-TextToolbox.worktrees/master/.vscode-test/vscode-darwin-arm64-1.103.2/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/workbench/workbench.desktop.main.js:3605:3743)
+      at uhn.Hb (vscode-file://vscode-app/Users/carlo/Git/vscode-TextToolbox.worktrees/master/.vscode-test/vscode-darwin-arm64-1.103.2/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/workbench/workbench.desktop.main.js:3605:42740)
+[0m
+[0m  10) decorations
+       Find Decoration Functionality
+         Find decoration returns undefined for non-existent range:
+[0m[31m     AssertionError [ERR_ASSERTION]: Should return undefined for non-existent decoration
++ actual - expected
+
++ TTDecoration {
++   DecorationType: {
++     dispose: [Function: dispose],
++     key: 'TextEditorDecorationType29'
++   },
++   File: 'Untitled-11',
++   Index: '00330e36-d999-5787-a474-00edfdcbf848',
++   Range: Fs {
++     c: Co {
++       c: 0,
++       e: 0
++     },
++     e: Co {
++       c: 0,
++       e: 6
++     }
++   }
++ }
+- undefined
+[0m[90m
+  	at Context.<anonymous> (out/test/suite/decorations.test.js:231:20)
+[0m
+[0m  11) decorations
+       Get Range to Highlight
+         Get range with regex setting:
+[0m[31m     Error: Timeout of 2000ms exceeded. For async tests and hooks, ensure "done()" is called; if returning a Promise, ensure it resolves. (/Users/carlo/Git/vscode-TextToolbox.worktrees/master/out/test/suite/decorations.test.js)[0m[90m
+  	at listOnTimeout (node:internal/timers:588:17)
+  	at process.processTimers (node:internal/timers:523:7)
+[0m
+[0m  12) helpers
+       Utility Functions
+         Increment string:
+
+      [31mAssertionError [ERR_ASSERTION]: 99 should increment to 100
+
+'9:' !== '100'
+[0m
+      [32m+ expected[0m [31m- actual[0m
+
+      [31m-9:[0m
+      [32m+100[0m
+      [0m[90m
+  	at Context.<anonymous> (out/test/suite/helpers.test.js:123:20)
+  	at process.processImmediate (node:internal/timers:485:21)
+[0m
+[0m  13) helpers
+       Utility Functions
+         Get RegExp object:
+[0m[31m     TypeError: Cannot read properties of null (reading '0')[0m[90m
+  	at getRegExpObject (out/modules/helpers.js:270:57)
+  	at Context.<anonymous> (out/test/suite/helpers.test.js:132:58)
+  	at process.processImmediate (node:internal/timers:485:21)
+[0m
+[0m  14) Indentation Module
+       setEditorOptionsContext
+         should handle undefined editor gracefully:
+[0m[31m     AssertionError [ERR_ASSERTION]: Got unwanted exception.
+Actual message: "Cannot read properties of undefined (reading 'options')"[0m[90m
+  	at Context.<anonymous> (out/test/suite/indentation.test.js:214:20)
+  	at process.processImmediate (node:internal/timers:485:21)
+[0m
+[0m  15) JSON
+       JSON
+         JSON Stringify
+           Stringify and fix simple object syntax:
+
+      [31mAssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 'a:a,b:b'
+- '{\n    "a": "a",\n    "b": "b"\n}'
+[0m
+      [32m+ expected[0m [31m- actual[0m
+
+      [31m-a:a,b:b[0m
+      [32m+{[0m
+      [32m+    "a": "a",[0m
+      [32m+    "b": "b"[0m
+      [32m+}[0m
+      [0m[90m
+  	at Context.<anonymous> (out/test/suite/json.test.js:86:24)
+[0m
+[0m  16) JSON
+       JSON
+         JSON Stringify
+           Stringify and fix object with duplicate properties:
+
+      [31mAssertionError [ERR_ASSERTION]: Should contain property a[0m
+      [32m+ expected[0m [31m- actual[0m
+
+      [31m-false[0m
+      [32m+true[0m
+      [0m[90m
+  	at Context.<anonymous> (out/test/suite/json.test.js:97:24)
+[0m
+[0m  17) JSON
+       JSON
+         JSON Stringify
+           Stringify complex nested object:
+
+      [31mAssertionError [ERR_ASSERTION]: Should contain name property[0m
+      [32m+ expected[0m [31m- actual[0m
+
+      [31m-false[0m
+      [32m+true[0m
+      [0m[90m
+  	at Context.<anonymous> (out/test/suite/json.test.js:108:24)
+[0m
+[0m  18) JSON
+       JSON
+         JSON Stringify
+           Handle empty document for stringify:
+
+      [31mAssertionError [ERR_ASSERTION]: Should return empty string stringified
+
+'' !== '""'
+[0m
+      [32m+ expected[0m [31m- actual[0m
+
+      [32m+""[0m
+      [0m[90m
+  	at Context.<anonymous> (out/test/suite/json.test.js:142:24)
+[0m
+[0m  19) JSON
+       JSON
+         JSON Stringify
+           Handle invalid JSON syntax with fix enabled:
+
+      [31mAssertionError [ERR_ASSERTION]: Should fix property names[0m
+      [32m+ expected[0m [31m- actual[0m
+
+      [31m-false[0m
+      [32m+true[0m
+      [0m[90m
+  	at Context.<anonymous> (out/test/suite/json.test.js:151:24)
+[0m
+[0m  20) JSON
+       JSON
+         JSON Minify
+           Minify formatted JSON:
+
+      [31mAssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ '[\n' +
++   '    {\n' +
++   '        "Name": "pwsh",\n' +
++   '        "Id": 10788,\n' +
++   '        "Company": "Microsoft Corporation"\n' +
++   '    },\n' +
++   '    {\n' +
++   '        "Name": "pwsh",\n' +
++   '        "Id": 24072,\n' +
++   '        "Company": "Microsoft Corporation"\n' +
++   '    }\n' +
++   ']'
+- '[{"Name":"pwsh","Id":10788,"Company":"Microsoft Corporation"},{"Name":"pwsh","Id":24072,"Company":"Microsoft Corporation"}]'
+[0m
+      [32m+ expected[0m [31m- actual[0m
+
+      [31m-[[0m
+      [31m-    {[0m
+      [31m-        "Name": "pwsh",[0m
+      [31m-        "Id": 10788,[0m
+      [31m-        "Company": "Microsoft Corporation"[0m
+      [31m-    },[0m
+      [31m-    {[0m
+      [31m-        "Name": "pwsh",[0m
+      [31m-        "Id": 24072,[0m
+      [31m-        "Company": "Microsoft Corporation"[0m
+      [31m-    }[0m
+      [31m-][0m
+      [32m+[{"Name":"pwsh","Id":10788,"Company":"Microsoft Corporation"},{"Name":"pwsh","Id":24072,"Company":"Microsoft Corporation"}][0m
+      [0m[90m
+  	at Context.<anonymous> (out/test/suite/json.test.js:174:24)
+[0m
+[0m  21) JSON
+       JSON
+         JSON Minify
+           Minify with selection:
+[0m[31m     Expected ",", "}" or [^,}\]] but end of input found.[0m[90m
+  
+[0m
+[0m  22) JSON
+       JSON
+         JSON Minify
+           Minify complex nested structure:
+
+      [31mAssertionError [ERR_ASSERTION]: Should remove all newlines[0m
+      [32m+ expected[0m [31m- actual[0m
+
+      [31m-false[0m
+      [32m+true[0m
+      [0m[90m
+  	at Context.<anonymous> (out/test/suite/json.test.js:220:24)
+[0m
+[0m  23) JSON
+       JSON
+         JSON Minify
+           Handle empty document for minify:
+
+      [31mAssertionError [ERR_ASSERTION]: Should handle empty document
+
+'' !== '""'
+[0m
+      [32m+ expected[0m [31m- actual[0m
+
+      [32m+""[0m
+      [0m[90m
+  	at Context.<anonymous> (out/test/suite/json.test.js:228:24)
+[0m
+[0m  24) JSON
+       JSON
+         JSON Minify
+           Minify array:
+
+      [31mAssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ '[\n    "item1",\n    "item2",\n    "item3"\n]'
+- '["item1","item2","item3"]'
+[0m
+      [32m+ expected[0m [31m- actual[0m
+
+      [31m-[[0m
+      [31m-    "item1",[0m
+      [31m-    "item2",[0m
+      [31m-    "item3"[0m
+      [31m-][0m
+      [32m+["item1","item2","item3"][0m
+      [0m[90m
+  	at Context.<anonymous> (out/test/suite/json.test.js:241:24)
+[0m
+[0m  25) JSON
+       JSON
+         JSON Minify
+           Minify with special characters:
+
+      [31mAssertionError [ERR_ASSERTION]: Should preserve escaped characters[0m
+      [32m+ expected[0m [31m- actual[0m
+
+      [31m-false[0m
+      [32m+true[0m
+      [0m[90m
+  	at Context.<anonymous> (out/test/suite/json.test.js:254:24)
+[0m
+[0m  26) JSON
+       JSON
+         Escape Win32 Paths
+           Escape multiple selections:
+
+      [31mAssertionError [ERR_ASSERTION]: Should escape second selection[0m
+      [32m+ expected[0m [31m- actual[0m
+
+      [31m-false[0m
+      [32m+true[0m
+      [0m[90m
+  	at Context.<anonymous> (out/test/suite/json.test.js:336:28)
+[0m
+[0m  27) sortText
+       Sort Text Lines
+         Sort lines ascending:
+
+      [31mAssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+
++ 'Connecticut\n' +
++   'Pennsylvania\n' +
++   'Rhode Island\n' +
++   '\n' +
++   '\n' +
++   'Delaware\n' +
++   'Alabama\n' +
+- 'Alabama\n' +
+    'Arkansas\n' +
++   '\n' +
+-   'Connecticut\n' +
+-   'Delaware\n' +
+    'New Jersey\n' +
++   'Washington\n' +
+    'New York\n' +
+-   'Pennsylvania\n' +
+-   'Rhode Island\n' +
+    'Texas\n' +
++   '\n'
+-   'Washington'
+[0m
+      [32m+ expected[0m [31m- actual[0m
+
+      [32m+Alabama[0m
+      [32m+Arkansas[0m
+       Connecticut
+      [31m-Pennsylvania[0m
+      [31m-Rhode Island[0m
+      [31m-[0m
+      [31m-[0m
+       Delaware
+      [31m-Alabama[0m
+      [31m-Arkansas[0m
+      [31m-[0m
+       New Jersey
+      [31m-Washington[0m
+       New York
+      [32m+Pennsylvania[0m
+      [32m+Rhode Island[0m
+       Texas
+      [31m-[0m
+      [32m+Washington[0m
+      [0m[90m
+  	at Context.<anonymous> (out/test/suite/sortText.test.js:60:20)
+[0m
+[0m  28) sortText
+       Sort Text Lines
+         Sort lines descending:
+
+      [31mAssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+
++ 'Connecticut\n' +
++   'Pennsylvania\n' +
+- 'Washington\n' +
+-   'Texas\n' +
+    'Rhode Island\n' +
++   '\n' +
++   '\n' +
+-   'Pennsylvania\n' +
+-   'New York\n' +
+-   'New Jersey\n' +
+    'Delaware\n' +
++   'Alabama\n' +
+-   'Connecticut\n' +
+    'Arkansas\n' +
++   '\n' +
++   'New Jersey\n' +
++   'Washington\n' +
++   'New York\n' +
++   'Texas\n' +
++   '\n'
+-   'Alabama'
+[0m
+      [32m+ expected[0m [31m- actual[0m
+
+      [31m-Connecticut[0m
+      [32m+Washington[0m
+      [32m+Texas[0m
+      [32m+Rhode Island[0m
+       Pennsylvania
+      [31m-Rhode Island[0m
+      [31m-[0m
+      [31m-[0m
+      [32m+New York[0m
+      [32m+New Jersey[0m
+       Delaware
+      [31m-Alabama[0m
+      [32m+Connecticut[0m
+       Arkansas
+      [31m-[0m
+      [31m-New Jersey[0m
+      [31m-Washington[0m
+      [31m-New York[0m
+      [31m-Texas[0m
+      [31m-[0m
+      [32m+Alabama[0m
+      [0m[90m
+  	at Context.<anonymous> (out/test/suite/sortText.test.js:71:20)
+[0m
+[0m  29) sortText
+       Sort Text Lines
+         Sort lines reverse:
+
+      [31mAssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+
++ 'Connecticut\n' +
++   'Pennsylvania\n' +
++   'Rhode Island\n' +
++   '\n' +
++   '\n' +
++   'Delaware\n' +
++   'Alabama\n' +
++   'Arkansas\n' +
++   '\n' +
++   'New Jersey\n' +
++   'Washington\n' +
+- 'Texas\n' +
+    'New York\n' +
++   'Texas\n' +
++   '\n'
+-   'Washington\n' +
+-   'New Jersey\n' +
+-   'Arkansas\n' +
+-   'Alabama\n' +
+-   'Delaware\n' +
+-   'Rhode Island\n' +
+-   'Pennsylvania\n' +
+-   'Connecticut'
+[0m
+      [32m+ expected[0m [31m- actual[0m
+
+      [31m-Connecticut[0m
+      [32m+Texas[0m
+      [32m+New York[0m
+      [32m+Washington[0m
+      [32m+New Jersey[0m
+      [32m+Arkansas[0m
+      [32m+Alabama[0m
+      [32m+Delaware[0m
+      [32m+Rhode Island[0m
+       Pennsylvania
+      [31m-Rhode Island[0m
+      [31m-[0m
+      [31m-[0m
+      [31m-Delaware[0m
+      [31m-Alabama[0m
+      [31m-Arkansas[0m
+      [31m-[0m
+      [31m-New Jersey[0m
+      [31m-Washington[0m
+      [31m-New York[0m
+      [31m-Texas[0m
+      [31m-[0m
+      [32m+Connecticut[0m
+      [0m[90m
+  	at Context.<anonymous> (out/test/suite/sortText.test.js:82:20)
+[0m
+[0m  30) sortText
+       Sort Text Lines
+         Sort lines ascending in new editor:
+
+      [31mAssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+
++ 'Connecticut'
+- 'Alabama\n' +
+-   'Arkansas\n' +
+-   'Connecticut\n' +
+-   'Delaware\n' +
+-   'New Jersey\n' +
+-   'New York\n' +
+-   'Pennsylvania\n' +
+-   'Rhode Island\n' +
+-   'Texas\n' +
+-   'Washington'
+[0m
+      [32m+ expected[0m [31m- actual[0m
+
+      [31m-Connecticut[0m
+      [32m+Alabama[0m
+      [32m+Arkansas[0m
+      [32m+Connecticut[0m
+      [32m+Delaware[0m
+      [32m+New Jersey[0m
+      [32m+New York[0m
+      [32m+Pennsylvania[0m
+      [32m+Rhode Island[0m
+      [32m+Texas[0m
+      [32m+Washington[0m
+      [0m[90m
+  	at Context.<anonymous> (out/test/suite/sortText.test.js:93:20)
+[0m
+[0m  31) sortText
+       Sort Text Lines
+         Sort case sensitive:
+
+      [31mAssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+
++ 'apple\nBanana\ncherry\nDate'
+- 'Banana\nDate\napple\ncherry'
+[0m
+      [32m+ expected[0m [31m- actual[0m
+
+      [32m+Banana[0m
+      [32m+Date[0m
+       apple
+      [31m-Banana[0m
+      [31m-cherry[0m
+      [31m-Date[0m
+      [32m+cherry[0m
+      [0m[90m
+  	at Context.<anonymous> (out/test/suite/sortText.test.js:138:20)
+[0m
+[0m  32) sortText
+       Sort Text Lines
+         Sort numeric strings:
+
+      [31mAssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+
++ '10\n2\n1\n20'
+- '1\n10\n2\n20'
+[0m
+      [32m+ expected[0m [31m- actual[0m
+
+      [32m+1[0m
+       10
+       2
+      [31m-1[0m
+       20
+      [0m[90m
+  	at Context.<anonymous> (out/test/suite/sortText.test.js:149:20)
+[0m
+[0m  33) sortText
+       Edge Cases
+         Sort with special characters:
+
+      [31mAssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
++ actual - expected
+
++ '@symbol\n#hashtag\n!exclamation\n$dollar'
+- '!exclamation\n#hashtag\n$dollar\n@symbol'
+[0m
+      [32m+ expected[0m [31m- actual[0m
+
+      [31m-@symbol[0m
+      [32m+!exclamation[0m
+       #hashtag
+      [31m-!exclamation[0m
+      [31m-$dollar[0m
+      [32m+$dollar[0m
+      [32m+@symbol[0m
+      [0m[90m
+  	at Context.<anonymous> (out/test/suite/sortText.test.js:264:20)
+[0m
+[0m  34) textManipulation
+       Trim whitespaces
+         Trim whitespaces from selection:
+
+      [31mAssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 'Hutruaka pouzjan pu\n' +
+- 'Hutruaka pouzjan pu \n' +
+    'elnordu ce\n' +
++   'jan gabajo\n' +
+-   '     jan gabajo \n' +
+    'genlosif fobavos vucozu jesidjo\n' +
++   'os ijme koige fomej zuce ruv juusuje\n'
+-   '     os ijme koige fomej zuce ruv juusuje    \n'
+[0m
+      [32m+ expected[0m [31m- actual[0m
+
+      [31m-Hutruaka pouzjan pu[0m
+      [32m+Hutruaka pouzjan pu [0m
+       elnordu ce
+      [31m-jan gabajo[0m
+      [32m+     jan gabajo [0m
+       genlosif fobavos vucozu jesidjo
+      [31m-os ijme koige fomej zuce ruv juusuje[0m
+      [32m+     os ijme koige fomej zuce ruv juusuje    [0m
+      [0m[90m
+  	at Context.<anonymous> (out/test/suite/textManipulation.test.js:77:20)
+[0m
+[0m  35) textManipulation
+       Split Selection
+         Split multiple selections:
+
+      [31mAssertionError [ERR_ASSERTION]: Should split second selection[0m
+      [32m+ expected[0m [31m- actual[0m
+
+      [31m-false[0m
+      [32m+true[0m
+      [0m[90m
+  	at Context.<anonymous> (out/test/suite/textManipulation.test.js:198:24)
+[0m
+[0m  36) textManipulation
+       Text Conversions
+         Encode URI:
+
+      [31mAssertionError [ERR_ASSERTION]: Should encode ! as %21[0m
+      [32m+ expected[0m [31m- actual[0m
+
+      [31m-false[0m
+      [32m+true[0m
+      [0m[90m
+  	at Context.<anonymous> (out/test/suite/textManipulation.test.js:265:20)
+[0m
+[0m  37) textManipulation
+       Conversion Utility Functions
+         encodeUri function:
+
+      [31mAssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
++ actual - expected
+
++ 'hello%20world!'
+- 'hello%20world%21'
+                ^
+[0m
+      [32m+ expected[0m [31m- actual[0m
+
+      [31m-hello%20world![0m
+      [32m+hello%20world%21[0m
+      [0m[90m
+  	at Context.<anonymous> (out/test/suite/textManipulation.test.js:331:20)
+  	at process.processImmediate (node:internal/timers:485:21)
+[0m
+[0m  38) textManipulation
+       Edge Cases
+         Multiple selections with different conversions:
+
+      [31mAssertionError [ERR_ASSERTION]: Should preserve unselected text[0m
+      [32m+ expected[0m [31m- actual[0m
+
+      [31m-false[0m
+      [32m+true[0m
+      [0m[90m
+  	at Context.<anonymous> (out/test/suite/textManipulation.test.js:431:24)
+[0m
+[0m  39) textManipulation
+       Edge Cases
+         Unicode text in conversions:
+
+      [31mAssertionError [ERR_ASSERTION]: Should preserve unicode through conversion cycle
++ actual - expected
+
++ 'Hello \x16L <\n'
+- 'Hello 世界 🌍'
+         ^
+[0m
+      [32m+ expected[0m [31m- actual[0m
+
+      [31m-Hello L <[0m
+      [32m+Hello 世界 🌍[0m
+      [0m[90m
+  	at Context.<anonymous> (out/test/suite/textManipulation.test.js:467:20)
+[0m
+Error: 39 tests failed.
+	at /Users/carlo/Git/vscode-TextToolbox.worktrees/master/out/test/suite/index.js:61:27
+	at done (/Users/carlo/Git/vscode-TextToolbox.worktrees/master/node_modules/mocha/lib/mocha.js:1058:7)
+[90m[main 2025-09-07T17:11:33.201Z][0m Extension host with pid 21951 exited with code: 0, signal: unknown.
+Exit code:   1
+TestRunFailedError: Test run failed with code 1
+    at ChildProcess.onProcessClosed (/Users/carlo/Git/vscode-TextToolbox.worktrees/master/node_modules/@vscode/test-electron/out/runTest.js:110:24)
+    at ChildProcess.emit (node:events:519:28)
+    at ChildProcess._handle.onexit (node:internal/child_process:294:12) {
+  code: 1,
+  signal: undefined
+}
+Failed to run tests
