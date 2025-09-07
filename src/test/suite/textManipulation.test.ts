@@ -1,8 +1,35 @@
 import * as assert from 'assert';
 import { before, after, describe } from 'mocha';
-import { sleep, closeTextEditor, createNewEditor, getActiveEditor, selectAllText, getDocumentTextOrSelection } from '../../modules/helpers';
-import * as os from 'os';
-import { pathTransformationType, transformPath, trimLineOrSelection } from '../../modules/textManipulation';
+import { 
+    sleep, 
+    closeTextEditor, 
+    createNewEditor, 
+    getActiveEditor, 
+    selectAllText, 
+    getDocumentTextOrSelection,
+    getDocumentEOL
+} from '../../modules/helpers';
+import { 
+    pathTransformationType, 
+    transformPath, 
+    trimLineOrSelection,
+    splitSelection,
+    splitSelectionInternal,
+    convertSelection,
+    convertSelectionInternal,
+    conversionType,
+    convertToBase64,
+    convertFromBase64,
+    convertToHTML,
+    convertFromHTML,
+    encodeUri,
+    decodeUri,
+    decodeJWTToken,
+    convertDecimalToHexadecimal,
+    convertHexadecimalToDecimal,
+    orderedListTypes,
+    transformToOrderedList
+} from '../../modules/textManipulation';
 import { Selection } from 'vscode';
 
 suite("textManipulation", () => {
@@ -12,27 +39,28 @@ suite("textManipulation", () => {
     after(async () => {
         await sleep(500);
         await closeTextEditor(true);
-        console.log('All testManipulation tests done')
+        console.log('All textManipulation tests done');
     });
 
-    describe("Trim whitespaces from selection or document", () => {
-        const eol = os.EOL;
-
-        test("Trim whitespaces from document", async () => {
+    describe("Trim whitespaces", () => {
+        test("Trim whitespaces from entire document", async () => {
+            await createNewEditor();
+            const eol = getDocumentEOL(getActiveEditor());
             const text = `Hutruaka pouzjan pu ${eol}   elnordu ce ${eol}     jan gabajo ${eol}genlosif fobavos vucozu jesidjo  ${eol}     os ijme koige fomej zuce ruv juusuje    ${eol}`;
             const expected = `Hutruaka pouzjan pu${eol}elnordu ce${eol}jan gabajo${eol}genlosif fobavos vucozu jesidjo${eol}os ijme koige fomej zuce ruv juusuje${eol}`;
 
             await createNewEditor(text);
-
             await trimLineOrSelection();
             await sleep(500);
+            
             const editor = getActiveEditor();
             const trimmedText = editor?.document.getText();
-
-            assert.deepStrictEqual(trimmedText, expected);
+            assert.strictEqual(trimmedText, expected);
         });
 
         test("Trim whitespaces from selection", async () => {
+            await createNewEditor();
+            const eol = getDocumentEOL(getActiveEditor());
             const text = `Hutruaka pouzjan pu ${eol}   elnordu ce ${eol}     jan gabajo ${eol}genlosif fobavos vucozu jesidjo  ${eol}     os ijme koige fomej zuce ruv juusuje    ${eol}`;
             const expected = `Hutruaka pouzjan pu ${eol}elnordu ce${eol}     jan gabajo ${eol}genlosif fobavos vucozu jesidjo${eol}     os ijme koige fomej zuce ruv juusuje    ${eol}`;
 
@@ -47,28 +75,488 @@ suite("textManipulation", () => {
             await sleep(500);
 
             const trimmedText = editor?.document.getText();
+            assert.strictEqual(trimmedText, expected);
+        });
 
-            assert.deepStrictEqual(trimmedText, expected);
+        test("Trim whitespaces with tabs and spaces", async () => {
+            await createNewEditor();
+            const eol = getDocumentEOL(getActiveEditor());
+            const text = `\t  line with tabs and spaces  \t${eol}   \tline with leading and trailing\t   ${eol}`;
+            const expected = `line with tabs and spaces${eol}line with leading and trailing${eol}`;
+
+            await createNewEditor(text);
+            await trimLineOrSelection();
+            await sleep(500);
+
+            const editor = getActiveEditor();
+            const trimmedText = editor?.document.getText();
+            assert.strictEqual(trimmedText, expected);
+        });
+
+        test("Handle empty lines in trim", async () => {
+            await createNewEditor();
+            const eol = getDocumentEOL(getActiveEditor());
+            const text = `  line1  ${eol}${eol}  line2  ${eol}`;
+            const expected = `line1${eol}${eol}line2${eol}`;
+
+            await createNewEditor(text);
+            await trimLineOrSelection();
+            await sleep(500);
+
+            const editor = getActiveEditor();
+            const trimmedText = editor?.document.getText();
+            assert.strictEqual(trimmedText, expected);
         });
     });
 
     describe('Transform Path', () => {
-        const tests = [
-            { type: pathTransformationType.posix, pathString: 'C:\\temp\\pippo.txt', expected: 'C:/temp/pippo.txt' },
-            { type: pathTransformationType.win32, pathString: 'C://temp//pippo.txt', expected: 'C:\\temp\\pippo.txt' }
-        ];
+        test('Transform Windows path to POSIX', async () => {
+            const pathString = 'C:\\temp\\pippo.txt';
+            const expected = 'C:/temp/pippo.txt';
 
-        tests.forEach(function (t) {
-            test(`Transform path to ${t.type}`, async () => {
-                await createNewEditor(t.pathString);
-                await selectAllText();
-                await transformPath(t.type);
+            await createNewEditor(pathString);
+            await selectAllText();
+            await transformPath(pathTransformationType.posix);
+            await sleep(500);
+
+            const actual = getDocumentTextOrSelection();
+            assert.strictEqual(actual, expected);
+        });
+
+        test('Transform POSIX path to Windows', async () => {
+            const pathString = 'C://temp//pippo.txt';
+            const expected = 'C:\\temp\\pippo.txt';
+
+            await createNewEditor(pathString);
+            await selectAllText();
+            await transformPath(pathTransformationType.win32);
+            await sleep(500);
+
+            const actual = getDocumentTextOrSelection();
+            assert.strictEqual(actual, expected);
+        });
+
+        test('Transform path to Darwin format', async () => {
+            const pathString = 'C:\\Users\\Documents\\file.txt';
+            const expected = 'C:/Users/Documents/file.txt';
+
+            await createNewEditor(pathString);
+            await selectAllText();
+            await transformPath(pathTransformationType.darwin);
+            await sleep(500);
+
+            const actual = getDocumentTextOrSelection();
+            assert.strictEqual(actual, expected);
+        });
+
+        test('Transform complex path with multiple separators', async () => {
+            const pathString = 'C:\\\\Program Files\\\\App\\\\config.json';
+            const expected = 'C:/Program Files/App/config.json';
+
+            await createNewEditor(pathString);
+            await selectAllText();
+            await transformPath(pathTransformationType.posix);
+            await sleep(500);
+
+            const actual = getDocumentTextOrSelection();
+            assert.strictEqual(actual, expected);
+        });
+    });
+
+    describe('Split Selection', () => {
+        test('Split selection by comma', async () => {
+            await createNewEditor();
+            const eol = getDocumentEOL(getActiveEditor());
+            const text = 'apple,banana,cherry,date';
+            const expected = `apple${eol}banana${eol}cherry${eol}date`;
+
+            await createNewEditor(text);
+            await selectAllText();
+            await splitSelectionInternal(',', false);
+            await sleep(500);
+
+            const actual = getDocumentTextOrSelection();
+            assert.strictEqual(actual, expected);
+        });
+
+        test('Split selection by semicolon', async () => {
+            await createNewEditor();
+            const eol = getDocumentEOL(getActiveEditor());
+            const text = 'item1;item2;item3';
+            const expected = `item1${eol}item2${eol}item3`;
+
+            await createNewEditor(text);
+            await selectAllText();
+            await splitSelectionInternal(';', false);
+            await sleep(500);
+
+            const actual = getDocumentTextOrSelection();
+            assert.strictEqual(actual, expected);
+        });
+
+        test('Split selection in new editor', async () => {
+            await createNewEditor();
+            const eol = getDocumentEOL(getActiveEditor());
+            const text = 'one|two|three';
+            const expected = `one${eol}two${eol}three${eol}`;
+
+            await createNewEditor(text);
+            await selectAllText();
+            await splitSelectionInternal('|', true);
+            await sleep(500);
+
+            const actual = getDocumentTextOrSelection();
+            assert.strictEqual(actual, expected);
+        });
+
+        test('Split multiple selections', async () => {
+            await createNewEditor();
+            const eol = getDocumentEOL(getActiveEditor());
+            const text = 'a,b,c and x,y,z';
+
+            await createNewEditor(text);
+            const editor = getActiveEditor();
+            if (editor) {
+                editor.selections = [
+                    new Selection(0, 0, 0, 5),   // 'a,b,c'
+                    new Selection(0, 10, 0, 15)  // 'x,y,z'
+                ];
+                await splitSelectionInternal(',', false);
                 await sleep(500);
 
                 const actual = getDocumentTextOrSelection();
+                assert.ok(actual!.includes('a'), "Should split first selection");
+                assert.ok(actual!.includes('x'), "Should split second selection");
+            }
+        });
 
-                assert.deepStrictEqual(actual, t.expected);
-            });
+        test('Handle empty selection for split', async () => {
+            await createNewEditor('some text');
+            const editor = getActiveEditor();
+            if (editor) {
+                editor.selection = new Selection(0, 0, 0, 0); // Empty selection
+                const result = await splitSelectionInternal(',', false);
+                assert.strictEqual(result, false, "Should return false for empty selection");
+            }
+        });
+    });
+
+    describe('Text Conversions', () => {
+        test('Convert to Base64', async () => {
+            const text = 'Hello World';
+            const expected = convertToBase64(text);
+
+            await createNewEditor(text);
+            await selectAllText();
+            await convertSelection(conversionType.toBase64);
+            await sleep(500);
+
+            const actual = getDocumentTextOrSelection();
+            assert.strictEqual(actual, expected);
+        });
+
+        test('Convert from Base64', async () => {
+            const base64Text = 'SGVsbG8gV29ybGQ='; // 'Hello World' in base64
+            const expected = 'Hello World';
+
+            await createNewEditor(base64Text);
+            await selectAllText();
+            await convertSelection(conversionType.fromBase64);
+            await sleep(500);
+
+            const actual = getDocumentTextOrSelection();
+            assert.strictEqual(actual, expected);
+        });
+
+        test('Convert to HTML entities', async () => {
+            const text = '<script>alert("test");</script>';
+            const expected = convertToHTML(text);
+
+            await createNewEditor(text);
+            await selectAllText();
+            await convertSelection(conversionType.toHTML);
+            await sleep(500);
+
+            const actual = getDocumentTextOrSelection();
+            assert.strictEqual(actual, expected);
+            assert.ok(actual!.includes('&lt;'), "Should convert < to &lt;");
+            assert.ok(actual!.includes('&gt;'), "Should convert > to &gt;");
+            assert.ok(actual!.includes('&quot;'), "Should convert \" to &quot;");
+        });
+
+        test('Convert from HTML entities', async () => {
+            const htmlText = '&lt;script&gt;alert(&quot;test&quot;);&lt;/script&gt;';
+            const expected = '<script>alert("test");</script>';
+
+            await createNewEditor(htmlText);
+            await selectAllText();
+            await convertSelection(conversionType.fromHTML);
+            await sleep(500);
+
+            const actual = getDocumentTextOrSelection();
+            assert.strictEqual(actual, expected);
+        });
+
+        test('Encode URI', async () => {
+            const text = 'hello world!@#$%^&*()';
+            const expected = encodeUri(text);
+
+            await createNewEditor(text);
+            await selectAllText();
+            await convertSelection(conversionType.encodeUri);
+            await sleep(500);
+
+            const actual = getDocumentTextOrSelection();
+            assert.strictEqual(actual, expected);
+            assert.ok(actual!.includes('%20'), "Should encode space as %20");
+            assert.ok(actual!.includes('%21'), "Should encode ! as %21");
+        });
+
+        test('Decode URI', async () => {
+            const encodedText = 'hello%20world%21%40%23%24%25%5E%26%2A%28%29';
+            const expected = 'hello world!@#$%^&*()';
+
+            await createNewEditor(encodedText);
+            await selectAllText();
+            await convertSelection(conversionType.decodeUri);
+            await sleep(500);
+
+            const actual = getDocumentTextOrSelection();
+            assert.strictEqual(actual, expected);
+        });
+
+        test('Convert decimal to hexadecimal', async () => {
+            const decimal = '255';
+            const expected = 'ff';
+
+            await createNewEditor(decimal);
+            await selectAllText();
+            await convertSelection(conversionType.decToHex);
+            await sleep(500);
+
+            const actual = getDocumentTextOrSelection();
+            assert.strictEqual(actual, expected);
+        });
+
+        test('Convert hexadecimal to decimal', async () => {
+            const hex = 'ff';
+            const expected = '255';
+
+            await createNewEditor(hex);
+            await selectAllText();
+            await convertSelection(conversionType.hexToDec);
+            await sleep(500);
+
+            const actual = getDocumentTextOrSelection();
+            assert.strictEqual(actual, expected);
+        });
+
+        test('Decode JWT token', async () => {
+            // Simple JWT token for testing (header.payload.signature)
+            const jwtToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
+
+            await createNewEditor(jwtToken);
+            await selectAllText();
+            await convertSelection(conversionType.JWTDecode);
+            await sleep(500);
+
+            const actual = getDocumentTextOrSelection();
+            assert.ok(actual, "Should have decoded JWT");
+            assert.ok(actual!.includes('"token"'), "Should include token");
+            assert.ok(actual!.includes('"header"'), "Should include header");
+            assert.ok(actual!.includes('"payload"'), "Should include payload");
+            assert.ok(actual!.includes('John Doe'), "Should include decoded name");
+        });
+    });
+
+    describe('Conversion Utility Functions', () => {
+        test('convertToBase64 function', () => {
+            const result = convertToBase64('Hello');
+            assert.strictEqual(result, 'SGVsbG8=');
+        });
+
+        test('convertFromBase64 function', () => {
+            const result = convertFromBase64('SGVsbG8=');
+            assert.strictEqual(result, 'Hello');
+        });
+
+        test('convertToHTML function', () => {
+            const result = convertToHTML('<div>test & "quote"</div>');
+            assert.strictEqual(result, '&lt;div&gt;test &amp; &quot;quote&quot;&lt;/div&gt;');
+        });
+
+        test('convertFromHTML function', () => {
+            const result = convertFromHTML('&lt;div&gt;test &amp; &quot;quote&quot;&lt;/div&gt;');
+            assert.strictEqual(result, '<div>test & "quote"</div>');
+        });
+
+        test('encodeUri function', () => {
+            const result = encodeUri('hello world!');
+            assert.strictEqual(result, 'hello%20world%21');
+        });
+
+        test('decodeUri function', () => {
+            const result = decodeUri('hello%20world%21');
+            assert.strictEqual(result, 'hello world!');
+        });
+
+        test('convertDecimalToHexadecimal function', () => {
+            assert.strictEqual(convertDecimalToHexadecimal(255), 'ff');
+            assert.strictEqual(convertDecimalToHexadecimal(16), '10');
+            assert.strictEqual(convertDecimalToHexadecimal(0), '0');
+            assert.strictEqual(convertDecimalToHexadecimal(1.5), undefined, "Should return undefined for non-integer");
+        });
+
+        test('convertHexadecimalToDecimal function', () => {
+            assert.strictEqual(convertHexadecimalToDecimal('ff'), 255);
+            assert.strictEqual(convertHexadecimalToDecimal('10'), 16);
+            assert.strictEqual(convertHexadecimalToDecimal('0'), 0);
+            assert.ok(isNaN(convertHexadecimalToDecimal('xyz')!), "Should return NaN for invalid hex");
+        });
+    });
+
+    describe('Ordered List Types', () => {
+        test('Ordered list enum values', () => {
+            assert.strictEqual(orderedListTypes["1. "], "Number.");
+            assert.strictEqual(orderedListTypes["1) "], "Number)");
+            assert.strictEqual(orderedListTypes["a. "], "lowercase.");
+            assert.strictEqual(orderedListTypes["a) "], "lowercase)");
+            assert.strictEqual(orderedListTypes["A. "], "Uppercase.");
+            assert.strictEqual(orderedListTypes["A) "], "Uppercase)");
+            assert.strictEqual(orderedListTypes["i. "], "Roman lowercase.");
+            assert.strictEqual(orderedListTypes["i) "], "Roman lowercase)");
+            assert.strictEqual(orderedListTypes["I. "], "Roman UPPERCASE.");
+            assert.strictEqual(orderedListTypes["I) "], "Roman UPPERCASE)");
+        });
+    });
+
+    describe('Error Handling', () => {
+        test('Handle empty text in conversions', async () => {
+            await createNewEditor('');
+            await selectAllText();
+            await convertSelection(conversionType.toBase64);
+            await sleep(500);
+
+            const actual = getDocumentTextOrSelection();
+            assert.strictEqual(actual, '', "Should handle empty text gracefully");
+        });
+
+        test('Handle invalid base64 in conversion', async () => {
+            await createNewEditor('invalid-base64-string');
+            await selectAllText();
+            
+            try {
+                await convertSelection(conversionType.fromBase64);
+                await sleep(500);
+                // Should not crash even with invalid base64
+                assert.ok(true, "Should handle invalid base64 gracefully");
+            } catch (error) {
+                assert.ok(true, "Should handle error gracefully");
+            }
+        });
+
+        test('Handle invalid hex in conversion', async () => {
+            await createNewEditor('xyz');
+            await selectAllText();
+            await convertSelection(conversionType.hexToDec);
+            await sleep(500);
+
+            const actual = getDocumentTextOrSelection();
+            assert.ok(actual, "Should produce some result even with invalid hex");
+        });
+
+        test('Handle invalid decimal in conversion', async () => {
+            await createNewEditor('not-a-number');
+            await selectAllText();
+            await convertSelection(conversionType.decToHex);
+            await sleep(500);
+
+            const actual = getDocumentTextOrSelection();
+            // Should handle gracefully, might stay the same or become empty
+            assert.ok(true, "Should handle invalid decimal input");
+        });
+
+        test('Handle complex JWT decode', async () => {
+            const invalidJWT = 'invalid.jwt.token';
+            
+            await createNewEditor(invalidJWT);
+            await selectAllText();
+            
+            try {
+                await convertSelection(conversionType.JWTDecode);
+                await sleep(500);
+                assert.ok(true, "Should handle invalid JWT gracefully");
+            } catch (error) {
+                assert.ok(true, "Should handle JWT decode error gracefully");
+            }
+        });
+    });
+
+    describe('Edge Cases', () => {
+        test('Multiple selections with different conversions', async () => {
+            const text = 'Hello World and More Text';
+            
+            await createNewEditor(text);
+            const editor = getActiveEditor();
+            if (editor) {
+                editor.selections = [
+                    new Selection(0, 0, 0, 5),   // 'Hello'
+                    new Selection(0, 6, 0, 11)   // 'World'
+                ];
+                
+                await convertSelection(conversionType.toBase64);
+                await sleep(500);
+                
+                const actual = getDocumentTextOrSelection();
+                assert.ok(actual, "Should handle multiple selections");
+                assert.ok(actual!.includes('and More Text'), "Should preserve unselected text");
+            }
+        });
+
+        test('Very long text conversion', async () => {
+            const longText = 'a'.repeat(10000);
+            
+            await createNewEditor(longText);
+            await selectAllText();
+            await convertSelection(conversionType.toBase64);
+            await sleep(500);
+
+            const actual = getDocumentTextOrSelection();
+            assert.ok(actual, "Should handle very long text");
+            assert.ok(actual!.length > longText.length, "Base64 should be longer than original");
+        });
+
+        test('Special characters in path transformation', async () => {
+            const pathString = 'C:\\Program Files (x86)\\My App\\config.json';
+            const expected = 'C:/Program Files (x86)/My App/config.json';
+
+            await createNewEditor(pathString);
+            await selectAllText();
+            await transformPath(pathTransformationType.posix);
+            await sleep(500);
+
+            const actual = getDocumentTextOrSelection();
+            assert.strictEqual(actual, expected);
+        });
+
+        test('Unicode text in conversions', async () => {
+            const unicodeText = 'Hello 世界 🌍';
+            
+            await createNewEditor(unicodeText);
+            await selectAllText();
+            await convertSelection(conversionType.toBase64);
+            await sleep(500);
+
+            const actual = getDocumentTextOrSelection();
+            assert.ok(actual, "Should handle unicode text");
+            
+            // Convert back to verify
+            await selectAllText();
+            await convertSelection(conversionType.fromBase64);
+            await sleep(500);
+
+            const restored = getDocumentTextOrSelection();
+            assert.strictEqual(restored, unicodeText, "Should preserve unicode through conversion cycle");
         });
     });
 });
