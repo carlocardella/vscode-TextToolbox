@@ -13,7 +13,7 @@ export async function stringifyJson(fixJson: boolean): Promise<void> {
         return Promise.reject();
     }
 
-    editor.edit((editBuilder) => {
+    return editor.edit((editBuilder) => {
         let selections: Selection[] = [];
 
         if (editor.selection.isEmpty) {
@@ -25,17 +25,25 @@ export async function stringifyJson(fixJson: boolean): Promise<void> {
         selections.forEach((s) => {
             let newJson: string = "";
             let selectionText = getTextFromSelection(editor, s);
+            
             if (fixJson) {
-                newJson = JSON.stringify(jsonic(selectionText!), null, 4);
+                try {
+                    const parsed = jsonic(selectionText!);
+                    newJson = JSON.stringify(parsed, null, 4);
+                } catch (error) {
+                    // If jsonic parsing fails, fallback to original text
+                    newJson = selectionText!;
+                }
             } else {
                 newJson = JSON.stringify(selectionText, null, 4);
             }
 
             editBuilder.replace(s, newJson);
         });
+    }).then(() => {
+        // Return void after successful edit
+        return Promise.resolve();
     });
-
-    return Promise.resolve();
 }
 
 /**
@@ -48,7 +56,7 @@ export async function minifyJson(): Promise<void> {
         return Promise.reject();
     }
 
-    editor.edit((editBuilder) => {
+    return editor.edit((editBuilder) => {
         let selections: Selection[] = [];
 
         if (editor.selection.isEmpty) {
@@ -63,9 +71,10 @@ export async function minifyJson(): Promise<void> {
 
             editBuilder.replace(s, newJson);
         });
+    }).then(() => {
+        // Return void after successful edit
+        return Promise.resolve();
     });
-
-    return Promise.resolve();
 }
 
 export function escapeWin32PathInJson() {
