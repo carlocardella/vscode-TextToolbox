@@ -153,11 +153,24 @@ export async function replaceControlCharacters(editor?: TextEditor): Promise<voi
     let text: string | undefined;
     let newText: string;
 
+    // Get the replacement string from configuration
+    const config = workspace.getConfiguration("TextToolbox");
+    const replacementString = config.get("replaceControlCharactersWith", "");
+
     editor.edit((editBuilder) => {
         selections.forEach(async (selection) => {
             text = getTextFromSelection(editor!, selection);
-            newText = text?.replace(regexp, (match) => replacementMap[match] ?? " ")!;
-            editBuilder.replace(selection, newText);
+            if (text) {
+                // Replace control characters with the configured replacement string
+                // If no replacement configured, use the mapping or empty string
+                newText = text.replace(regexp, (match) => {
+                    if (replacementString !== "") {
+                        return replacementString;
+                    }
+                    return replacementMap[match] ?? "";
+                });
+                editBuilder.replace(selection, newText);
+            }
         });
     });
 
