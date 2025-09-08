@@ -55,18 +55,29 @@ export async function sortLines(direction: string, openInNewTextEditor?: boolean
         return Promise.reject("No lines to sort, all lines are null or empty");
     }
 
+    // Filter out empty lines for sorting
+    let nonEmptyLines = selectedLines.filter(line => line.text.trim() !== "");
+    
     let sortedLines: TextLine[];
     let selectionStartLineNumber = selectedLines[0].lineNumber;
     let selectionEndLineNumber = selectedLines.at(-1)!.lineNumber;
     switch (direction) {
         case "ascending":
-            sortedLines = selectedLines.sort((a, b) => 0 - (a.text > b.text ? -1 : 1));
+            sortedLines = nonEmptyLines.sort((a, b) => {
+                if (a.text < b.text) { return -1; }
+                if (a.text > b.text) { return 1; }
+                return 0;
+            });
             break;
         case "descending":
-            sortedLines = selectedLines.sort((a, b) => 0 - (a.text > b.text ? 1 : -1));
+            sortedLines = nonEmptyLines.sort((a, b) => {
+                if (a.text > b.text) { return -1; }
+                if (a.text < b.text) { return 1; }
+                return 0;
+            });
             break;
         case "reverse":
-            sortedLines = selectedLines.reverse();
+            sortedLines = nonEmptyLines.reverse();
             break;
         default:
             return Promise.reject("Sort direction is invalid");
@@ -78,13 +89,8 @@ export async function sortLines(direction: string, openInNewTextEditor?: boolean
         return Promise.resolve(true);
     } else {
         const editor = window.activeTextEditor;
-        // prettier-ignore
-        const selection = new Selection(
-            selectionStartLineNumber,
-            0,
-            selectionEndLineNumber,
-            editor!.document.lineAt(selectionEndLineNumber).text.length
-        );
+        // Use the actual selection or the entire document if no selection
+        const selection = getSelection(editor!);
 
         editor?.edit((editBuilder) => {
             editBuilder.replace(selection, newText);

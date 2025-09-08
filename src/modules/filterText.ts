@@ -42,15 +42,34 @@ export async function removeEmptyLines(redundantOnly: boolean) {
  */
 export async function removeEmptyLinesInternal(text: string, redundantOnly: boolean): Promise<string> {
     const eol = getDocumentEOL(getActiveEditor());
-    let r;
-    let rr: string;
-    // /^\n{2,}/gm ==> two or more empty lines
-    // /^\n+/gm    ==> any empty line
-    redundantOnly ? (r = /^\s*(\n{2,}|^\s*(\r\n){2,})/gm) : (r = /^\s*(\n+|\r\n+)/gm);
-    // replace multiple empty lines with a single one, or with nothing
-    redundantOnly ? (rr = eol) : (rr = "");
-
-    return Promise.resolve(text.replace(r, rr!));
+    
+    if (redundantOnly) {
+        // For redundant only, replace multiple consecutive empty lines with single empty line
+        // Split by line endings, process, and rejoin
+        const lines = text.split(eol);
+        const result: string[] = [];
+        let emptyLineCount = 0;
+        
+        for (let i = 0; i < lines.length; i++) {
+            if (lines[i].trim() === '') {
+                emptyLineCount++;
+                if (emptyLineCount === 1) {
+                    result.push(lines[i]); // Keep first empty line
+                }
+                // Skip additional empty lines
+            } else {
+                emptyLineCount = 0;
+                result.push(lines[i]);
+            }
+        }
+        
+        return Promise.resolve(result.join(eol));
+    } else {
+        // Remove all empty lines
+        const lines = text.split(eol);
+        const result = lines.filter(line => line.trim() !== '');
+        return Promise.resolve(result.join(eol));
+    }
 }
 
 /**

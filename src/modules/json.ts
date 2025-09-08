@@ -67,9 +67,22 @@ export async function minifyJson(): Promise<void> {
 
         selections.forEach((s) => {
             let selectionText = getTextFromSelection(editor, s);
-            let newJson = JSON.stringify(jsonic(selectionText!));
-
-            editBuilder.replace(s, newJson);
+            
+            // Handle empty text
+            if (!selectionText || selectionText.trim() === '') {
+                editBuilder.replace(s, '""');
+                return;
+            }
+            
+            try {
+                // Try to parse and minify the JSON
+                let newJson = JSON.stringify(jsonic(selectionText!));
+                editBuilder.replace(s, newJson);
+            } catch (error) {
+                // If parsing fails, leave the original text unchanged
+                // This handles partial selections that aren't valid JSON
+                console.warn('JSON minify failed:', error);
+            }
         });
     }).then(() => {
         // Return void after successful edit

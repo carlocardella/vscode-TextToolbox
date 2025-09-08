@@ -908,6 +908,12 @@
               "borderColor": "red"
             }
           },
+          "TextToolbox.replaceControlCharactersWith": {
+            "type": "string",
+            "default": "",
+            "scope": "window",
+            "description": "String to replace control characters with when removing them"
+          },
           "TextToolbox.alignTextDefaultSeparator": {
             "description": "Align text default separator (Align Text)",
             "type": "string",

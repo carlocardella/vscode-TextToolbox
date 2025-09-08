@@ -287,7 +287,22 @@ export function convertFromHTML(text: string): string {
 }
 
 export function encodeUri(text: string): string {
-    return encodeURIComponent(text);
+    // More aggressive URI encoding that also encodes reserved characters like !
+    return text
+        .split('')
+        .map(char => {
+            const code = char.charCodeAt(0);
+            // Only keep basic alphanumeric characters, - _ . ~
+            if ((code >= 48 && code <= 57) ||   // 0-9
+                (code >= 65 && code <= 90) ||   // A-Z
+                (code >= 97 && code <= 122) ||  // a-z
+                char === '-' || char === '_' || char === '.' || char === '~') {
+                return char;
+            } else {
+                return '%' + code.toString(16).toUpperCase().padStart(2, '0');
+            }
+        })
+        .join('');
 }
 
 export function decodeUri(text: string): string {
