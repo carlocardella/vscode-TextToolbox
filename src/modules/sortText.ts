@@ -49,7 +49,7 @@ export async function sortLines(direction: string, openInNewTextEditor?: boolean
     if (!editor) {
         return Promise.reject("No active editor");
     }
-    let selectedLines = getLinesFromSelection(editor);
+    let selectedLines = getLinesFromSelection(editor, getSelection(editor));
 
     if (!selectedLines) {
         return Promise.reject("No lines to sort, all lines are null or empty");

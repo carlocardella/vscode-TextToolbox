@@ -95,7 +95,7 @@ export function getSelection(editor: TextEditor): Selection {
         let selection: Selection;
 
         const lineCount = editor.document.lineCount;
-        selection = new Selection(0, 0, lineCount, editor.document.lineAt(lineCount - 1).text.length);
+        selection = new Selection(0, 0, lineCount - 1, editor.document.lineAt(lineCount - 1).text.length);
         return selection;
     }
 
