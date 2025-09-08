@@ -224,7 +224,8 @@ describe("textManipulation", () => {
                 await splitSelectionInternal(',', false);
                 await sleep(500);
 
-                const actual = getDocumentTextOrSelection();
+                const actual = editor.document.getText();
+                console.log("Split multiple selections result:", JSON.stringify(actual));
                 assert.ok(actual!.includes('a'), "Should split first selection");
                 assert.ok(actual!.includes('x'), "Should split second selection");
             }
@@ -507,7 +508,8 @@ describe("textManipulation", () => {
                 await convertSelection(conversionType.toBase64);
                 await sleep(500);
                 
-                const actual = getDocumentTextOrSelection();
+                const actual = editor.document.getText();
+                console.log('Multiple selections different conversions result:', JSON.stringify(actual));
                 assert.ok(actual, "Should handle multiple selections");
                 assert.ok(actual!.includes('and More Text'), "Should preserve unselected text");
             }
@@ -543,11 +545,13 @@ describe("textManipulation", () => {
             const unicodeText = 'Hello 世界 🌍';
             
             await createNewEditor(unicodeText);
+            const editor = getActiveEditor();
             await selectAllText();
             await convertSelection(conversionType.toBase64);
             await sleep(500);
 
-            const actual = getDocumentTextOrSelection();
+            const actual = editor!.document.getText();
+            console.log('Unicode toBase64 result:', JSON.stringify(actual));
             assert.ok(actual, "Should handle unicode text");
             
             // Convert back to verify
@@ -555,7 +559,8 @@ describe("textManipulation", () => {
             await convertSelection(conversionType.fromBase64);
             await sleep(500);
 
-            const restored = getDocumentTextOrSelection();
+            const restored = editor!.document.getText();
+            console.log('Unicode fromBase64 result:', JSON.stringify(restored));
             assert.strictEqual(restored, unicodeText, "Should preserve unicode through conversion cycle");
         });
     });

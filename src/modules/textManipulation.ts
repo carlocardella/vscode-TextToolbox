@@ -23,7 +23,23 @@ export async function trimLineOrSelection(): Promise<boolean | undefined> {
         return;
     }
 
-    const textLines = getLinesFromDocumentOrSelection(editor);
+    let textLines: TextLine[] = [];
+
+    // Handle multiple selections
+    if (editor.selections.length > 0 && !editor.selections.every(s => s.isEmpty)) {
+        for (const selection of editor.selections) {
+            const selectionLines = getLinesFromDocumentOrSelection(editor, selection);
+            if (selectionLines) {
+                textLines.push(...selectionLines);
+            }
+        }
+    } else {
+        // Handle entire document when no selections
+        const allLines = getLinesFromDocumentOrSelection(editor);
+        if (allLines) {
+            textLines = allLines;
+        }
+    }
 
     editor.edit((eb) => {
         textLines?.forEach((textLine) => {
@@ -58,7 +74,8 @@ export async function splitSelectionInternal(delimiter: string, openInNewEditor:
         return Promise.resolve(false);
     }
 
-    if (editor.selection.isEmpty) {
+    // Check if all selections are empty
+    if (editor.selections.every(s => s.isEmpty)) {
         return Promise.resolve(false);
     }
 
@@ -68,14 +85,18 @@ export async function splitSelectionInternal(delimiter: string, openInNewEditor:
         let newEditorText: string = "";
 
         editor.selections.forEach((s) => {
-            newEditorText += getTextFromSelection(editor, s)?.split(delimiter).join(eol) + eol;
+            if (!s.isEmpty) {
+                newEditorText += getTextFromSelection(editor, s)?.split(delimiter).join(eol) + eol;
+            }
         });
 
         await createNewEditor(newEditorText);
     } else {
         editor.edit((editBuilder) => {
             editor.selections.forEach((s) => {
-                editBuilder.replace(s, getTextFromSelection(editor, s)?.split(delimiter).join(eol)!);
+                if (!s.isEmpty) {
+                    editBuilder.replace(s, getTextFromSelection(editor, s)?.split(delimiter).join(eol)!);
+                }
             });
         });
     }
@@ -267,10 +288,10 @@ export async function convertSelectionInternal(editor: TextEditor, selection: Se
 }
 
 export function convertToBase64(text: string): string {
-    return Buffer.from(text, "binary").toString("base64");
+    return Buffer.from(text, "utf8").toString("base64");
 }
 export function convertFromBase64(text: string): string {
-    return Buffer.from(text, "base64").toString("binary");
+    return Buffer.from(text, "base64").toString("utf8");
 }
 
 export function convertToHTML(text: string): string {
