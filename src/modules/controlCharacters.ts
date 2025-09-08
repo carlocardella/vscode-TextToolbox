@@ -157,7 +157,8 @@ export async function replaceControlCharacters(editor?: TextEditor): Promise<voi
 
     // Get the replacement string from configuration
     const config = workspace.getConfiguration("TextToolbox");
-    const replacementString = config.get("replaceControlCharactersWith", "");
+    const replacementString = config.get("replaceControlCharactersWith");
+    const useConfiguredReplacement = replacementString !== undefined;
 
     // Check if there's a meaningful selection (not just cursor position), if not, work on entire document
     const hasSelection = selections.some(selection => 
@@ -173,8 +174,8 @@ export async function replaceControlCharacters(editor?: TextEditor): Promise<voi
         if (text) {
             // Replace control characters with the configured replacement string
             newText = text.replace(regexp, (match) => {
-                if (replacementString !== "") {
-                    return replacementString;
+                if (useConfiguredReplacement) {
+                    return String(replacementString || "");
                 }
                 return replacementMap[match] ?? "";
             });
@@ -197,8 +198,8 @@ export async function replaceControlCharacters(editor?: TextEditor): Promise<voi
                 if (text) {
                     // Replace control characters with the configured replacement string
                     newText = text.replace(regexp, (match) => {
-                        if (replacementString !== "") {
-                            return replacementString;
+                        if (useConfiguredReplacement) {
+                            return String(replacementString || "");
                         }
                         return replacementMap[match] ?? "";
                     });
