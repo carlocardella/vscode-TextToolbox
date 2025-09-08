@@ -120,7 +120,7 @@ describe("caseConversion", () => {
                 convertSelection(caseConversions.constantCase);
                 await sleep(500);
                 
-                const actualText = getDocumentTextOrSelection();
+                const actualText = editor.document.getText();
                 assert.ok(actualText, "Should return text result");
                 assert.ok(actualText!.includes("FIRST"), "First selection should be converted to CONSTANT_CASE");
                 assert.ok(actualText!.includes("SECOND"), "Second selection should be converted to CONSTANT_CASE");
@@ -139,7 +139,7 @@ describe("caseConversion", () => {
                 convertSelection(caseConversions.constantCase);
                 await sleep(500);
                 
-                const actualText = getDocumentTextOrSelection();
+                const actualText = editor.document.getText();
                 assert.ok(actualText, "Should return text result");
                 assert.ok(actualText!.includes("WORLD"), "Selected word should be converted");
                 assert.ok(actualText!.includes("hello"), "Non-selected parts should remain unchanged");
