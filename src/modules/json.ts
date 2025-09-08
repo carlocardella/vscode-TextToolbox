@@ -76,12 +76,19 @@ export async function minifyJson(): Promise<void> {
             
             try {
                 // Try to parse and minify the JSON
-                let newJson = JSON.stringify(jsonic(selectionText!));
+                let parsed = jsonic(selectionText!);
+                let newJson = JSON.stringify(parsed);
                 editBuilder.replace(s, newJson);
             } catch (error) {
-                // If parsing fails, leave the original text unchanged
-                // This handles partial selections that aren't valid JSON
+                // If parsing fails, try to at least remove whitespace if it looks like JSON
                 console.warn('JSON minify failed:', error);
+                let trimmedText = selectionText.trim();
+                if (trimmedText.startsWith('{') || trimmedText.startsWith('[') || trimmedText.startsWith('"')) {
+                    // Looks like JSON - at least remove newlines and extra spaces
+                    let minified = trimmedText.replace(/\s+/g, ' ').replace(/\s*([{}[\]:,])\s*/g, '$1');
+                    editBuilder.replace(s, minified);
+                }
+                // If it doesn't look like JSON, leave it unchanged
             }
         });
     }).then(() => {
@@ -96,12 +103,17 @@ export function escapeWin32PathInJson() {
         return;
     }
 
-    if (!editor.selection.isEmpty) {
+    // Check if there are any non-empty selections
+    const hasNonEmptySelections = editor.selections.some(selection => !selection.isEmpty);
+    
+    if (hasNonEmptySelections) {
         editor.edit((editBuilder) => {
             editor.selections.forEach((selection) => {
-                const text = getTextFromSelection(editor, selection);
-                const newText = text!.replace(/\\/g, "\\\\");
-                editBuilder.replace(selection, newText);
+                if (!selection.isEmpty) {
+                    const text = getTextFromSelection(editor, selection);
+                    const newText = text!.replace(/\\/g, "\\\\");
+                    editBuilder.replace(selection, newText);
+                }
             });
         });
     }

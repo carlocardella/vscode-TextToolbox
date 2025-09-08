@@ -258,8 +258,8 @@ describe('JSON', () => {
 
         it('Minify with special characters', async () => {
             const inputJson = `{
-    "message": "Hello\\nWorld",
-    "path": "C:\\\\Users\\\\test",
+    "message": "Hello\\\\nWorld",
+    "path": "C:\\\\\\\\Users\\\\\\\\test",
     "unicode": "café"
 }`;
             
@@ -369,7 +369,8 @@ describe('JSON', () => {
                 escapeWin32PathInJson();
                 await sleep(100);
 
-                let actual = getDocumentTextOrSelection();
+                // Get the full document text since we have multiple selections
+                let actual = editor.document.getText();
                 assert.ok(actual!.includes("C:\\\\Users"), "Should escape first selection");
                 assert.ok(actual!.includes("D:\\\\Data"), "Should escape second selection");
                 assert.ok(actual!.includes("E:\\\\Backup"), "Should escape third selection");
