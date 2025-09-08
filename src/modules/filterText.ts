@@ -43,6 +43,9 @@ export async function removeEmptyLines(redundantOnly: boolean) {
 export async function removeEmptyLinesInternal(text: string, redundantOnly: boolean): Promise<string> {
     const eol = getDocumentEOL(getActiveEditor());
     
+    // Check if original text ends with line ending
+    const endsWithEol = text.endsWith(eol);
+    
     if (redundantOnly) {
         // For redundant only, replace multiple consecutive empty lines with single empty line
         // Split by line endings, process, and rejoin
@@ -63,12 +66,32 @@ export async function removeEmptyLinesInternal(text: string, redundantOnly: bool
             }
         }
         
-        return Promise.resolve(result.join(eol));
+        let resultText = result.join(eol);
+        
+        // If result ends with an empty string (representing an empty line that was preserved), 
+        // and the original text had multiple trailing line endings,
+        // we need to add the final eol because join() doesn't add separator after last element
+        if (result.length > 0 && result[result.length - 1] === '' && text.endsWith(eol + eol)) {
+            resultText += eol;
+        }
+        
+        return Promise.resolve(resultText);
     } else {
         // Remove all empty lines
         const lines = text.split(eol);
         const result = lines.filter(line => line.trim() !== '');
-        return Promise.resolve(result.join(eol));
+        
+        // If no lines remain, return empty string
+        if (result.length === 0) {
+            return Promise.resolve('');
+        }
+        
+        let resultText = result.join(eol);
+        // Preserve final line ending if original had one and result doesn't end with it
+        if (endsWithEol && !resultText.endsWith(eol)) {
+            resultText += eol;
+        }
+        return Promise.resolve(resultText);
     }
 }
 
