@@ -47,7 +47,9 @@ export const chars = [
     "(\u2009)", // thin space
     "(\u200A)", // hair space
     "(\u200B)", // zero width space
+    "(\u200C)", // zero width non-joiner
     "(\u200D)", // zero width joiner
+    "(\u200E)", // left-to-right mark
     "(\u2013)", // en dash
     "(\u2014)", // em dash
     "(\u2028)", // line separator space
@@ -157,22 +159,54 @@ export async function replaceControlCharacters(editor?: TextEditor): Promise<voi
     const config = workspace.getConfiguration("TextToolbox");
     const replacementString = config.get("replaceControlCharactersWith", "");
 
-    editor.edit((editBuilder) => {
-        selections.forEach(async (selection) => {
-            text = getTextFromSelection(editor!, selection);
-            if (text) {
-                // Replace control characters with the configured replacement string
-                // If no replacement configured, use the mapping or empty string
-                newText = text.replace(regexp, (match) => {
-                    if (replacementString !== "") {
-                        return replacementString;
-                    }
-                    return replacementMap[match] ?? "";
-                });
-                editBuilder.replace(selection, newText);
-            }
+    // Check if there's a meaningful selection (not just cursor position), if not, work on entire document
+    const hasSelection = selections.some(selection => 
+        !selection.isEmpty && 
+        !(selection.start.line === 0 && selection.start.character === 0 && 
+          selection.end.line === editor.document.lineCount - 1 && 
+          selection.end.character === editor.document.lineAt(editor.document.lineCount - 1).text.length)
+    );
+    
+    if (!hasSelection) {
+        // No selection, work on entire document
+        text = editor.document.getText();
+        if (text) {
+            // Replace control characters with the configured replacement string
+            newText = text.replace(regexp, (match) => {
+                if (replacementString !== "") {
+                    return replacementString;
+                }
+                return replacementMap[match] ?? "";
+            });
+            
+            // Replace entire document
+            const fullRange = new Range(
+                editor.document.lineAt(0).range.start,
+                editor.document.lineAt(editor.document.lineCount - 1).range.end
+            );
+            
+            await editor.edit((editBuilder) => {
+                editBuilder.replace(fullRange, newText);
+            });
+        }
+    } else {
+        // Work on selections
+        editor.edit((editBuilder) => {
+            selections.forEach(async (selection) => {
+                text = getTextFromSelection(editor!, selection);
+                if (text) {
+                    // Replace control characters with the configured replacement string
+                    newText = text.replace(regexp, (match) => {
+                        if (replacementString !== "") {
+                            return replacementString;
+                        }
+                        return replacementMap[match] ?? "";
+                    });
+                    editBuilder.replace(selection, newText);
+                }
+            });
         });
-    });
+    }
 
     return Promise.resolve();
 }
