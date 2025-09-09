@@ -11,3 +11,9 @@ dist/
 # Local History for Visual Studio Code
 .history/
 ./package-lock.json
+
+# Debug and temporary development files
+debug-*.js
+test-json*.js
+quick-test.js
+*-debug.js
