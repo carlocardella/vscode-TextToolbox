@@ -197,7 +197,6 @@ The goal is to extend the current Text Toolbox extension with additional tools a
 
 ## 📱 QR Code Generators
 
-**Priority**: Low  
 **Description**: Add QR code generation capabilities
 
 ### Functions to Implement:
@@ -288,7 +287,6 @@ The goal is to extend the current Text Toolbox extension with additional tools a
 
 ## ⏱️ Measurement Tools
 
-**Priority**: Low  
 **Description**: Add time and performance measurement utilities
 
 ### Functions to Implement:
@@ -346,7 +344,6 @@ The goal is to extend the current Text Toolbox extension with additional tools a
 
 ## 📄 PDF and File Tools
 
-**Priority**: Low  
 **Description**: Add file handling and verification utilities
 
 ### Functions to Implement:
@@ -397,7 +394,6 @@ The goal is to extend the current Text Toolbox extension with additional tools a
 
 ## 🔐 Additional Encoding Tools
 
-**Priority**: Low  
 **Description**: Add specialized encoding and decoding utilities
 
 ### Functions to Implement:
@@ -412,7 +408,6 @@ The goal is to extend the current Text Toolbox extension with additional tools a
 
 ## 💻 Device and System Info
 
-**Priority**: Low  
 **Description**: Add system information utilities
 
 ### Functions to Implement:
