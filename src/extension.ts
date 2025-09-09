@@ -16,6 +16,7 @@ import * as path from "path";
 import { REGEX_VALIDATE_EMAIL } from "./modules/filterText";
 import * as Indentation from "./modules/indentation";
 import { delimiterTypes } from "./modules/delimiters";
+import * as StringUtilities from "./modules/stringUtilities";
 
 export function activate(context: ExtensionContext) {
     console.log("vscode-texttoolbox is active");
@@ -638,6 +639,38 @@ export function activate(context: ExtensionContext) {
         },
         null,
         context.subscriptions
+    );
+
+    // string utilities
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.SlugifyString", () => {
+            StringUtilities.applyStringUtility(StringUtilities.stringUtilityType.slugify);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.ObfuscateString", () => {
+            StringUtilities.applyStringUtility(StringUtilities.stringUtilityType.obfuscate);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.DeobfuscateString", () => {
+            StringUtilities.applyStringUtility(StringUtilities.stringUtilityType.deobfuscate);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.GenerateNumeronym", () => {
+            StringUtilities.applyStringUtility(StringUtilities.stringUtilityType.numeronym);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.ShowTextStatistics", () => {
+            StringUtilities.showTextStatistics();
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.ShowTextStatisticsInNewEditor", () => {
+            StringUtilities.showTextStatisticsInNewEditor();
+        })
     );
 
     // control characters

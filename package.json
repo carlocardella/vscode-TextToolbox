@@ -199,6 +199,36 @@
         "category": "Text Toolbox"
       },
       {
+        "command": "vscode-texttoolbox.SlugifyString",
+        "title": "Slugify String (URL-safe)",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.ObfuscateString",
+        "title": "Obfuscate String",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.DeobfuscateString",
+        "title": "Deobfuscate String",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.GenerateNumeronym",
+        "title": "Generate Numeronym (e.g., i18n)",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.ShowTextStatistics",
+        "title": "Show Text Statistics",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.ShowTextStatisticsInNewEditor",
+        "title": "Show Text Statistics in New Editor",
+        "category": "Text Toolbox"
+      },
+      {
         "command": "vscode-texttoolbox.TrimLineOrSelection",
         "title": "Trim",
         "category": "Text Toolbox"
@@ -479,6 +509,11 @@
           "when": "!editorReadonly"
         },
         {
+          "submenu": "tt.stringUtilities",
+          "group": "stringUtilities",
+          "when": "!editorReadonly"
+        },
+        {
           "submenu": "tt.json",
           "group": "json",
           "when": "!editorReadonly"
@@ -719,6 +754,32 @@
           "command": "vscode-texttoolbox.TrimLineOrSelection"
         }
       ],
+      "tt.stringUtilities": [
+        {
+          "group": "tt.stringUtilities",
+          "command": "vscode-texttoolbox.SlugifyString"
+        },
+        {
+          "group": "tt.stringUtilities",
+          "command": "vscode-texttoolbox.ObfuscateString"
+        },
+        {
+          "group": "tt.stringUtilities",
+          "command": "vscode-texttoolbox.DeobfuscateString"
+        },
+        {
+          "group": "tt.stringUtilities",
+          "command": "vscode-texttoolbox.GenerateNumeronym"
+        },
+        {
+          "group": "tt.stringUtilities",
+          "command": "vscode-texttoolbox.ShowTextStatistics"
+        },
+        {
+          "group": "tt.stringUtilities",
+          "command": "vscode-texttoolbox.ShowTextStatisticsInNewEditor"
+        }
+      ],
       "tt.filter": [
         {
           "group": "tt.filter",
@@ -838,6 +899,10 @@
       {
         "id": "tt.transform",
         "label": "Transform"
+      },
+      {
+        "id": "tt.stringUtilities",
+        "label": "String Utilities"
       },
       {
         "id": "tt.json",
