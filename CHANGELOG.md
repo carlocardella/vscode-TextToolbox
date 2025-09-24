@@ -10,7 +10,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ### Added
 
 * **Advanced List Converter** - Four powerful list manipulation tools for data transformation:
-  * `Transpose Data` - Convert rows to columns with customizable delimiters (CSV, TSV, custom)
+  * `Transpose Data` - Convert rows to columns with customizable delimiters (CSV, TSV, custom) - now includes directional variants:
+    * `Transpose Data (Rows ↔ Columns)` - Bidirectional conversion 
+    * `Transpose Data (Rows → Columns)` - Optimized for row-based data
+    * `Transpose Data (Columns → Rows)` - Optimized for column-based data
   * `Reverse List Order` - Reverse the order of lines in your text
   * `Truncate Lines` - Limit line length with optional ellipsis indicators
   * `Advanced Prefix/Suffix` - Pattern-based line numbering with support for numbers, letters (a-z, A-Z), Roman numerals (i, I), dates, times, and line numbers
