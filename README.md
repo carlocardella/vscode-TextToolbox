@@ -113,6 +113,40 @@ Likewise, `Convert to CapitalCase` has been removed in favor of the built-in VSC
   * Checks length, character variety, common patterns
   * Provides security recommendations and strength score
 
+### Advanced List Converter
+
+* Transpose Data
+  * Convert rows to columns and vice versa
+  * Support for CSV (comma-separated), TSV (tab-separated), and custom delimiters
+  * Handles irregular data with different column counts gracefully
+  * Perfect for data transformation and analysis tasks
+* Reverse List Order
+  * Reverse the order of lines in your selection or document
+  * Preserves empty lines in their relative positions
+  * Different from sorting - maintains original line content
+* Truncate Lines
+  * Limit each line to a specified maximum length
+  * Optional ellipsis (...) to indicate truncated content
+  * Useful for formatting consistency and data cleanup
+* Enhanced Remove Duplicates
+  * Advanced duplicate removal with flexible options:
+    * Keep first or last occurrence of duplicates
+    * Case-sensitive or case-insensitive comparison
+    * Trim whitespace before comparison
+  * Extends built-in duplicate removal with powerful configuration
+* Advanced Prefix/Suffix
+  * Pattern-based line numbering and formatting:
+    * `{n}` - Sequential numbers (1, 2, 3, ...)
+    * `{a}` - Lowercase letters (a, b, c, ..., z, aa, ab, ...)
+    * `{A}` - Uppercase letters (A, B, C, ..., Z, AA, AB, ...)
+    * `{i}` - Roman numerals lowercase (i, ii, iii, iv, ...)
+    * `{I}` - Roman numerals uppercase (I, II, III, IV, ...)
+    * `{line}` - Line numbers from document
+    * `{date}` - Current date
+    * `{time}` - Current time
+  * Support for complex patterns with multiple placeholders
+  * Ideal for creating numbered lists, documentation, and structured content
+
 ### Selection
 
 * Invert Selection

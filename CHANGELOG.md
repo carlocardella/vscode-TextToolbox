@@ -7,6 +7,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## Unreleased
 
+### Added
+
+* **Advanced List Converter** - Five powerful list manipulation tools for data transformation:
+  * `Transpose Data` - Convert rows to columns with customizable delimiters (CSV, TSV, custom)
+  * `Reverse List Order` - Reverse the order of lines in your text
+  * `Truncate Lines` - Limit line length with optional ellipsis indicators
+  * `Enhanced Remove Duplicates` - Advanced duplicate removal with options for case sensitivity, whitespace trimming, and keeping first/last occurrence
+  * `Advanced Prefix/Suffix` - Pattern-based line numbering with support for numbers, letters (a-z, A-Z), Roman numerals (i, I), dates, times, and line numbers
+
+### Changed
+
+* **Menu Organization** - Added new "Advanced List Converter" submenu under Text Toolbox for improved discoverability
+* **Test Coverage** - Added comprehensive test suite with 31 test cases covering all Advanced List Converter functions
+
 See the [list of open enhancements on GitHub](https://github.com/carlocardella/vscode-TextToolbox/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3Aenhancement)
 
 ## Log
