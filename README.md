@@ -1,6 +1,5 @@
 # VSCode Text Toolbox
 
-![.github/workflows/BuildAndPublish.yml](https://github.com/carlocardella/vscode-TextToolbox/workflows/.github/workflows/BuildAndPublish.yml/badge.svg?branch=master)
 ![Visual Studio Marketplace Version](https://img.shields.io/visual-studio-marketplace/v/carlocardella.vscode-texttoolbox)
 ![Visual Studio Marketplace Installs](https://img.shields.io/visual-studio-marketplace/i/carlocardella.vscode-texttoolbox)
 ![Visual Studio Marketplace Downloads](https://img.shields.io/visual-studio-marketplace/d/carlocardella.vscode-texttoolbox)

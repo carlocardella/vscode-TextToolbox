@@ -63,8 +63,19 @@ const webConfig = /** @type WebpackConfig */ {
         usedExports: true, // enable tree shaking
         sideEffects: false, // mark all files as side-effect free for better tree shaking
         minimize: true, // enable minification in production mode
+        splitChunks: {
+            chunks: "all",
+            cacheGroups: {
+                vendor: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: "vendors",
+                    chunks: "all",
+                    minSize: 0,
+                },
+            },
+        },
     },
-    devtool: "nosources-source-map", // create a source map that points to the original source file
+    devtool: process.env.NODE_ENV === "production" ? false : "nosources-source-map", // no source maps in production
 };
 const nodeConfig = /** @type WebpackConfig */ {
     context: __dirname,
@@ -112,7 +123,7 @@ const nodeConfig = /** @type WebpackConfig */ {
         sideEffects: false, // mark all files as side-effect free for better tree shaking
         minimize: true, // enable minification in production mode
     },
-    devtool: "nosources-source-map", // create a source map that points to the original source file
+    devtool: process.env.NODE_ENV === "production" ? false : "nosources-source-map", // no source maps in production
 };
 
 module.exports = [webConfig, nodeConfig];
