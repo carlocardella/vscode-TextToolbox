@@ -668,6 +668,11 @@ export function activate(context: ExtensionContext) {
         })
     );
     context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.InvertSelection", () => {
+            StringUtilities.invertSelection();
+        })
+    );
+    context.subscriptions.push(
         commands.registerTextEditorCommand("vscode-texttoolbox.ShowTextStatisticsInNewEditor", () => {
             StringUtilities.showTextStatisticsInNewEditor();
         })

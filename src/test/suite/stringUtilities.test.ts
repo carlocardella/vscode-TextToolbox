@@ -18,6 +18,7 @@ import {
     calculateTextStatistics,
     showTextStatistics,
     showTextStatisticsInNewEditor,
+    invertSelection,
     TextStatistics
 } from '../../modules/stringUtilities';
 import { Selection, Position } from 'vscode';
@@ -386,6 +387,169 @@ describe("stringUtilities", () => {
             const result = slugifyString(longString);
             assert.strictEqual(result.length, 1000);
             assert.strictEqual(result, longString);
+        });
+    });
+
+    describe("Selection Inversion", () => {
+        it("Should invert single line selection", async () => {
+            const testText = "Line one\nLine two\nLine three";
+            await createNewEditor(testText);
+            await sleep(100);
+            
+            const editor = getActiveEditor();
+            if (editor) {
+                // Select "Line two" (middle line)
+                const startPos = new Position(1, 0); // Start of line 2
+                const endPos = new Position(1, 8); // End of "Line two"
+                editor.selection = new Selection(startPos, endPos);
+                
+                // Apply invert selection
+                invertSelection();
+                
+                // Should have two selections: before and after the original selection
+                assert.strictEqual(editor.selections.length, 2);
+                
+                // First selection should be from start of document to start of "Line two"
+                const firstSelection = editor.selections[0];
+                assert.strictEqual(firstSelection.start.line, 0);
+                assert.strictEqual(firstSelection.start.character, 0);
+                assert.strictEqual(firstSelection.end.line, 1);
+                assert.strictEqual(firstSelection.end.character, 0);
+                
+                // Second selection should be from end of "Line two" to end of document
+                const secondSelection = editor.selections[1];
+                assert.strictEqual(secondSelection.start.line, 1);
+                assert.strictEqual(secondSelection.start.character, 8);
+                assert.strictEqual(secondSelection.end.line, 2);
+                assert.strictEqual(secondSelection.end.character, 10);
+            } else {
+                assert.fail("Editor should be available");
+            }
+            
+            await closeTextEditor();
+        });
+
+        it("Should invert partial line selection", async () => {
+            const testText = "The quick brown fox jumps over the lazy dog";
+            await createNewEditor(testText);
+            await sleep(100);
+            
+            const editor = getActiveEditor();
+            if (editor) {
+                // Select "brown fox" in the middle
+                const startPos = new Position(0, 10); // Start of "brown"
+                const endPos = new Position(0, 19); // End of "fox"
+                editor.selection = new Selection(startPos, endPos);
+                
+                // Apply invert selection
+                invertSelection();
+                
+                // Should have two selections: before and after "brown fox"
+                assert.strictEqual(editor.selections.length, 2);
+                
+                // First selection should be from start to "brown"
+                const firstSelection = editor.selections[0];
+                assert.strictEqual(firstSelection.start.line, 0);
+                assert.strictEqual(firstSelection.start.character, 0);
+                assert.strictEqual(firstSelection.end.line, 0);
+                assert.strictEqual(firstSelection.end.character, 10);
+                
+                // Second selection should be from end of "fox" to end
+                const secondSelection = editor.selections[1];
+                assert.strictEqual(secondSelection.start.line, 0);
+                assert.strictEqual(secondSelection.start.character, 19);
+                assert.strictEqual(secondSelection.end.line, 0);
+                assert.strictEqual(secondSelection.end.character, 43);
+            } else {
+                assert.fail("Editor should be available");
+            }
+            
+            await closeTextEditor();
+        });
+
+        it("Should handle multiple selections", async () => {
+            const testText = "First line\nSecond line\nThird line\nFourth line";
+            await createNewEditor(testText);
+            await sleep(100);
+            
+            const editor = getActiveEditor();
+            if (editor) {
+                // Select multiple parts: "irst" (not at start) and "hird" (not at start)
+                const firstSelection = new Selection(new Position(0, 1), new Position(0, 5)); // "irst"
+                const secondSelection = new Selection(new Position(2, 1), new Position(2, 5)); // "hird"
+                editor.selections = [firstSelection, secondSelection];
+                
+                // Apply invert selection
+                invertSelection();
+                
+                // Should have three selections: 
+                // 1. From start of document (0,0) to start of "irst" (0,1)
+                // 2. From end of "irst" (0,5) to start of "hird" (2,1) 
+                // 3. From end of "hird" (2,5) to end of document
+                assert.strictEqual(editor.selections.length, 3);
+            } else {
+                assert.fail("Editor should be available");
+            }
+            
+            await closeTextEditor();
+        });
+
+        it("Should handle selection at start of document", async () => {
+            const testText = "First line\nSecond line\nThird line";
+            await createNewEditor(testText);
+            await sleep(100);
+            
+            const editor = getActiveEditor();
+            if (editor) {
+                // Select "First" at the very beginning
+                const startPos = new Position(0, 0);
+                const endPos = new Position(0, 5);
+                editor.selection = new Selection(startPos, endPos);
+                
+                // Apply invert selection
+                invertSelection();
+                
+                // Should have one selection: from end of "First" to end of document
+                assert.strictEqual(editor.selections.length, 1);
+                
+                const selection = editor.selections[0];
+                assert.strictEqual(selection.start.line, 0);
+                assert.strictEqual(selection.start.character, 5);
+            } else {
+                assert.fail("Editor should be available");
+            }
+            
+            await closeTextEditor();
+        });
+
+        it("Should handle selection at end of document", async () => {
+            const testText = "First line\nSecond line\nThird line";
+            await createNewEditor(testText);
+            await sleep(100);
+            
+            const editor = getActiveEditor();
+            if (editor) {
+                // Select "line" at the very end
+                const startPos = new Position(2, 6);
+                const endPos = new Position(2, 10);
+                editor.selection = new Selection(startPos, endPos);
+                
+                // Apply invert selection
+                invertSelection();
+                
+                // Should have one selection: from start of document to start of "line"
+                assert.strictEqual(editor.selections.length, 1);
+                
+                const selection = editor.selections[0];
+                assert.strictEqual(selection.start.line, 0);
+                assert.strictEqual(selection.start.character, 0);
+                assert.strictEqual(selection.end.line, 2);
+                assert.strictEqual(selection.end.character, 6);
+            } else {
+                assert.fail("Editor should be available");
+            }
+            
+            await closeTextEditor();
         });
     });
 });

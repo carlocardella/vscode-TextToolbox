@@ -7,6 +7,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## Unreleased
 
+### Added
+
+* `Slugify String (URL-safe)` - Convert text to URL-friendly slug format (e.g., "Hello World!" → "hello-world")
+* `Obfuscate String` - Simple character shift obfuscation for text
+* `Deobfuscate String` - Reverse obfuscation to restore original text
+* `Generate Numeronym` - Create numeronyms from words (e.g., "internationalization" → "i18n")
+* `Show Text Statistics` - Display detailed statistics about selected text or entire document
+* `Show Text Statistics in New Editor` - Open text statistics in a new editor window
+* `Invert Selection` - Select everything except the currently selected text
+
 See the [list of open enhancements on GitHub](https://github.com/carlocardella/vscode-TextToolbox/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3Aenhancement)
 
 ## Log

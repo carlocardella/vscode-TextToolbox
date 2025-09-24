@@ -16,6 +16,7 @@ export enum stringUtilityType {
     "deobfuscate" = "deobfuscate",
     "numeronym" = "numeronym",
     "textStats" = "textStats",
+    "invertSelection" = "invertSelection",
 }
 
 /**
@@ -283,4 +284,75 @@ Analyzed at: ${new Date().toLocaleString()}
 `;
 
     await createNewEditor(statsText);
+}
+
+/**
+ * Invert the current selection in the editor
+ * This means selecting everything except the currently selected text
+ */
+export function invertSelection(): void {
+    const editor = getActiveEditor();
+    if (!editor) {
+        window.showErrorMessage("No active editor found");
+        return;
+    }
+
+    const document = editor.document;
+    const currentSelections = editor.selections;
+    
+    // If no text is selected, show a message
+    if (currentSelections.length === 1 && currentSelections[0].isEmpty) {
+        window.showErrorMessage("No text selected to invert");
+        return;
+    }
+
+    // Create new selections that encompass everything except the current selections
+    const newSelections: Selection[] = [];
+    
+    // Sort selections by start position to process them in order
+    const sortedSelections = [...currentSelections].sort((a, b) => 
+        a.start.line - b.start.line || a.start.character - b.start.character
+    );
+
+    // Start of document to first selection
+    if (sortedSelections.length > 0) {
+        const documentStart = document.positionAt(0);
+        const firstSelectionStart = sortedSelections[0].start;
+        
+        if (!documentStart.isEqual(firstSelectionStart)) {
+            newSelections.push(new Selection(documentStart, firstSelectionStart));
+        }
+    }
+
+    // Between selections
+    for (let i = 0; i < sortedSelections.length - 1; i++) {
+        const currentEnd = sortedSelections[i].end;
+        const nextStart = sortedSelections[i + 1].start;
+        
+        if (!currentEnd.isEqual(nextStart)) {
+            newSelections.push(new Selection(currentEnd, nextStart));
+        }
+    }
+
+    // Last selection to end of document
+    if (sortedSelections.length > 0) {
+        const lastSelectionEnd = sortedSelections[sortedSelections.length - 1].end;
+        const documentEnd = document.positionAt(document.getText().length);
+        
+        if (!lastSelectionEnd.isEqual(documentEnd)) {
+            newSelections.push(new Selection(lastSelectionEnd, documentEnd));
+        }
+    }
+
+    // Apply the new selections
+    if (newSelections.length > 0) {
+        editor.selections = newSelections;
+        
+        // Reveal the first selection to user
+        if (newSelections[0]) {
+            editor.revealRange(newSelections[0]);
+        }
+    } else {
+        window.showInformationMessage("No inverted selection possible - current selection covers the entire document");
+    }
 }

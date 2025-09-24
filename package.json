@@ -229,6 +229,11 @@
         "category": "Text Toolbox"
       },
       {
+        "command": "vscode-texttoolbox.InvertSelection",
+        "title": "Invert Selection",
+        "category": "Text Toolbox"
+      },
+      {
         "command": "vscode-texttoolbox.TrimLineOrSelection",
         "title": "Trim",
         "category": "Text Toolbox"
@@ -778,6 +783,10 @@
         {
           "group": "tt.stringUtilities",
           "command": "vscode-texttoolbox.ShowTextStatisticsInNewEditor"
+        },
+        {
+          "group": "tt.stringUtilities",
+          "command": "vscode-texttoolbox.InvertSelection"
         }
       ],
       "tt.filter": [

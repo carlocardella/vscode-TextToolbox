@@ -47,6 +47,8 @@ Likewise, `Convert to CapitalCase` has been removed in favor of the built-in VSC
   * Lorem ipsum dolor sit amet => lorem.ipsum.dolor.sit.amet
 * kebab-case
   * Lorem ipsum dolor sit amet => lorem-ipsum-dolor-sit-amet
+* path/case
+  * Lorem ipsum dolor sit amet => lorem/ipsum/dolor/sit/amet  
 * Sentence case
   * Lorem ipsum dolor sit amet => Lorem ipsum dolor sit amet
 * snake_case
@@ -59,7 +61,34 @@ Likewise, `Convert to CapitalCase` has been removed in favor of the built-in VSC
 * Convert hexadecimal to integer
 * HTML encode/decide
 * Uri encode/decode
+* Base64 encode
+  * Convert text to Base64 encoding
+* Base64 decode  
+  * Convert Base64 back to text
 * Decode JWT token
+
+### String utilities
+
+* Slugify String (URL-safe)
+  * Hello World! Test String => hello-world-test-string
+* Obfuscate String
+  * Apply simple character shift obfuscation to text
+* Deobfuscate String  
+  * Reverse obfuscation to restore original text
+* Generate Numeronym
+  * internationalization => i18n
+  * localization => l10n
+  * accessibility => a11y
+* Show Text Statistics
+  * Display detailed statistics about selected text or entire document (characters, words, sentences, paragraphs, lines, bytes, estimated reading time)
+* Show Text Statistics in New Editor
+  * Open text statistics in a new editor window
+
+### Selection
+
+* Invert Selection
+  * Select everything except the currently selected text
+  * Example: If you select line 2 in a 3-line document, this command will select lines 1 and 3
 
 ### Insert text
 
