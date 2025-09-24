@@ -3,7 +3,7 @@ import { DateTime } from "luxon";
 import { Chance } from "chance";
 import { createNewEditor, getActiveEditor, getDocumentEOL, getLinesFromSelection } from "./helpers";
 import { LoremIpsum } from "lorem-ipsum";
-import { randomBytes } from "crypto";
+import CryptoJS from "crypto-js";
 
 /**
  * Insert a random GUID, or a neutral GUID made of all zeros
@@ -53,9 +53,11 @@ export function insertUUID(uniqueRandomValues?: boolean) {
  * @return {*}  {string}
  */
 function generateUUID(): string {
-    const match = randomBytes(16)
-        .toString("hex")
-        .match(/(.{8})(.{4})(.{4})(.{4})(.{12})/);
+    // Generate 16 random bytes using crypto-js
+    const randomWords = CryptoJS.lib.WordArray.random(16);
+    const hexString = randomWords.toString(CryptoJS.enc.Hex);
+    
+    const match = hexString.match(/(.{8})(.{4})(.{4})(.{4})(.{12})/);
 
     if (match === null) {
         throw new Error("Failed to generate UUID");

@@ -1297,6 +1297,7 @@
     "@vscode/vsce": "^2.19.0",
     "assert": "^2.1.0",
     "copy-to-clipboard": "^3.3.3",
+    "crypto-browserify": "^3.12.1",
     "eslint": "^8.52.0",
     "glob": "^7.2.3",
     "lorem-ipsum": "^2.0.8",
