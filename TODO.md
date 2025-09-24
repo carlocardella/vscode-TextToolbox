@@ -105,18 +105,64 @@ The goal is to extend the current Text Toolbox extension with additional tools a
 
 ## 📋 List Processing Tools
 
-**Description**: Enhance existing list functionality with advanced operations
+**Description**: Enhance existing list functionality with advanced operations that VS Code doesn't provide built-in
 
-### Functions to Implement:
-- [ ] **Advanced List Converter**
-  - [ ] Transpose data (rows ↔ columns)
-  - [ ] Add prefix to each line
-  - [ ] Add suffix to each line
-  - [ ] Reverse list order
-  - [ ] Sort list (multiple criteria)
-  - [ ] Convert to lowercase
-  - [ ] Truncate values to specific length
-  - [ ] Remove duplicates with options
+**Status**: 🚧 **IN PROGRESS** - Implementation started
+
+### Phase 1: Core Unique Features (High Priority)
+- [ ] **Transpose Data (Rows ↔ Columns)**
+  - [ ] Convert CSV/TSV rows to columns and vice versa
+  - [ ] Support custom delimiters (tab, comma, space, custom)
+  - [ ] Handle irregular data gracefully
+  - [ ] Essential for data manipulation tasks
+- [ ] **Reverse List Order**
+  - [ ] Simple line order reversal (not sorting)
+  - [ ] Preserve empty lines in position
+  - [ ] Different from sort reverse operation
+- [ ] **Truncate Lines to Length**
+  - [ ] Limit each line to N characters
+  - [ ] Optional ellipsis (...) for truncated content
+  - [ ] Useful for formatting consistency
+- [ ] **Enhanced Remove Duplicates**
+  - [ ] Keep first vs last occurrence option
+  - [ ] Case sensitive/insensitive toggle
+  - [ ] Trim whitespace before comparison option
+  - [ ] Extends existing duplicate removal with advanced options
+- [ ] **Advanced Prefix/Suffix Operations**
+  - [ ] Pattern-based numbering: {n}, {i}, {I}, {a}, {A}
+  - [ ] Date/time patterns: {date}, {time}
+  - [ ] Line-based patterns: {line}
+  - [ ] Conditional formatting based on content
+
+### Phase 2: Advanced Operations (Extended Value)
+- [ ] **Multi-Criteria Sorting**
+  - [ ] Numeric vs alphabetic sorting (1,2,10 vs 1,10,2)
+  - [ ] Sort by length then alphabetically
+  - [ ] Custom comparison functions
+  - [ ] Enhances existing sort functionality
+- [ ] **List Analytics & Statistics**
+  - [ ] Count unique items and duplicates
+  - [ ] Length distribution analysis
+  - [ ] Pattern matching and validation
+  - [ ] Complements existing text statistics
+
+### Technical Implementation Notes:
+- **New Module**: `src/modules/advancedListConverter.ts`
+- **VS Code Integration**: New submenu "Advanced List Converter"
+- **No Duplication**: Avoids VS Code built-in transforms (uppercase/lowercase/title case)
+- **Multi-Selection Support**: Works with multiple cursors and selections
+- **Performance**: Optimized for large text processing
+
+### Commands to Add:
+```json
+"vscode-texttoolbox.TransposeData"
+"vscode-texttoolbox.ReverseListOrder" 
+"vscode-texttoolbox.TruncateLines"
+"vscode-texttoolbox.EnhancedRemoveDuplicates"
+"vscode-texttoolbox.AdvancedPrefixSuffix"
+"vscode-texttoolbox.MultiCriteriaSort"
+"vscode-texttoolbox.ListAnalytics"
+```
 
 ## 🌐 Web Development Tools
 
@@ -139,10 +185,6 @@ The goal is to extend the current Text Toolbox extension with additional tools a
 - [ ] **User-Agent Parser**
   - [ ] Parse user-agent strings
   - [ ] Detect browser, engine, OS, CPU, device
-- [ ] **HTTP Status Codes Reference**
-  - [ ] Searchable HTTP status codes list
-  - [ ] Include descriptions and meanings
-  - [ ] Support for WebDAV codes
 
 ## 🔑 JWT and Security Tools
 
@@ -266,41 +308,10 @@ The goal is to extend the current Text Toolbox extension with additional tools a
   - [ ] RFC4193 compliance
   - [ ] Local network addressing
 
-## 🧮 Math and Calculation Tools
-
-**Description**: Add mathematical computation and calculation utilities
-
-### Functions to Implement:
-- [ ] **Math Expression Evaluator**
-  - [ ] Calculate mathematical expressions
-  - [ ] Support functions (sqrt, cos, sin, abs, etc.)
-  - [ ] Variable support
-- [ ] **ETA Calculator**
-  - [ ] Estimate time of arrival
-  - [ ] Duration calculations
-  - [ ] Progress tracking
-- [ ] **Percentage Calculator**
-  - [ ] Calculate percentages between values
-  - [ ] Percentage increase/decrease
-  - [ ] Multiple calculation modes
-- [ ] **Temperature Converter**
-  - [ ] Celsius ↔ Fahrenheit ↔ Kelvin
-  - [ ] Rankine, Delisle, Newton conversions
-  - [ ] Réaumur and Rømer support
-
 ## ⏱️ Measurement Tools
 
 **Description**: Add time and performance measurement utilities
 
-### Functions to Implement:
-- [ ] **Chronometer/Stopwatch**
-  - [ ] Start/stop/reset functionality
-  - [ ] Lap time recording
-  - [ ] Multiple timer support
-- [ ] **Benchmark Builder**
-  - [ ] Compare execution times
-  - [ ] Performance testing utilities
-  - [ ] Statistical analysis of results
 
 ## ✨ Enhanced Text Tools
 
