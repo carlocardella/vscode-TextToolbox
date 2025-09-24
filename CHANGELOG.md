@@ -7,6 +7,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## Unreleased
 
+See the [list of open enhancements on GitHub](https://github.com/carlocardella/vscode-TextToolbox/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3Aenhancement)
+
+## Log
+
+## [2.24.0] - 2025-09-23
+
 ### Added
 
 * `Slugify String (URL-safe)` - Convert text to URL-friendly slug format (e.g., "Hello World!" → "hello-world")
@@ -17,9 +23,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 * `Show Text Statistics in New Editor` - Open text statistics in a new editor window
 * `Invert Selection` - Select everything except the currently selected text
 
-See the [list of open enhancements on GitHub](https://github.com/carlocardella/vscode-TextToolbox/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3Aenhancement)
+### Fixed
 
-## Log
+* Reviewed and fixed all test suites to ensure comprehensive coverage and reliability
+* Fixed test assertion logic for selection inversion edge cases
+* Enhanced test stability and error handling across all modules
 
 ## [2.22.0] - 2023-11-05
 
