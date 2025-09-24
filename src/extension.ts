@@ -18,6 +18,7 @@ import * as Indentation from "./modules/indentation";
 import { delimiterTypes } from "./modules/delimiters";
 import * as StringUtilities from "./modules/stringUtilities";
 import * as CryptoTools from "./modules/cryptoTools";
+import * as AdvancedListConverter from "./modules/advancedListConverter";
 
 export function activate(context: ExtensionContext) {
     console.log("vscode-texttoolbox is active");
@@ -708,6 +709,74 @@ export function activate(context: ExtensionContext) {
     context.subscriptions.push(
         commands.registerCommand("vscode-texttoolbox.AnalyzePasswordStrength", () => {
             CryptoTools.analyzePasswordStrength();
+        })
+    );
+
+    // advanced list converter
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.TransposeData", async () => {
+            const delimiter = await AdvancedListConverter.askForTransposeDelimiter();
+            if (delimiter !== undefined) {
+                await AdvancedListConverter.transposeData(delimiter, false);
+            }
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.TransposeDataInNewEditor", async () => {
+            const delimiter = await AdvancedListConverter.askForTransposeDelimiter();
+            if (delimiter !== undefined) {
+                await AdvancedListConverter.transposeData(delimiter, true);
+            }
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.ReverseListOrder", () => {
+            AdvancedListConverter.reverseListOrder(false);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.ReverseListOrderInNewEditor", () => {
+            AdvancedListConverter.reverseListOrder(true);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.TruncateLines", async () => {
+            const options = await AdvancedListConverter.askForTruncateOptions();
+            if (options) {
+                await AdvancedListConverter.truncateLines(options);
+            }
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.EnhancedRemoveDuplicates", async () => {
+            const options = await AdvancedListConverter.askForDuplicateOptions();
+            if (options) {
+                await AdvancedListConverter.enhancedRemoveDuplicates(options, false);
+            }
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.EnhancedRemoveDuplicatesInNewEditor", async () => {
+            const options = await AdvancedListConverter.askForDuplicateOptions();
+            if (options) {
+                await AdvancedListConverter.enhancedRemoveDuplicates(options, true);
+            }
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.AdvancedPrefixSuffix", async () => {
+            const patternConfig = await AdvancedListConverter.askForPrefixSuffixPattern();
+            if (patternConfig) {
+                await AdvancedListConverter.advancedPrefixSuffix(patternConfig.pattern, patternConfig.type, false);
+            }
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.AdvancedPrefixSuffixInNewEditor", async () => {
+            const patternConfig = await AdvancedListConverter.askForPrefixSuffixPattern();
+            if (patternConfig) {
+                await AdvancedListConverter.advancedPrefixSuffix(patternConfig.pattern, patternConfig.type, true);
+            }
         })
     );
 

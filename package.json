@@ -501,6 +501,51 @@
         "command": "vscode-texttoolbox.AnalyzePasswordStrength",
         "title": "Analyze Password Strength",
         "category": "Text Toolbox: Crypto"
+      },
+      {
+        "command": "vscode-texttoolbox.TransposeData",
+        "title": "Transpose Data (Rows ↔ Columns)",
+        "category": "Text Toolbox: Advanced List Converter"
+      },
+      {
+        "command": "vscode-texttoolbox.TransposeDataInNewEditor",
+        "title": "Transpose Data (Rows ↔ Columns), result in new editor",
+        "category": "Text Toolbox: Advanced List Converter"
+      },
+      {
+        "command": "vscode-texttoolbox.ReverseListOrder",
+        "title": "Reverse List Order",
+        "category": "Text Toolbox: Advanced List Converter"
+      },
+      {
+        "command": "vscode-texttoolbox.ReverseListOrderInNewEditor",
+        "title": "Reverse List Order, result in new editor",
+        "category": "Text Toolbox: Advanced List Converter"
+      },
+      {
+        "command": "vscode-texttoolbox.TruncateLines",
+        "title": "Truncate Lines to Length...",
+        "category": "Text Toolbox: Advanced List Converter"
+      },
+      {
+        "command": "vscode-texttoolbox.EnhancedRemoveDuplicates",
+        "title": "Remove Duplicates (Advanced Options)...",
+        "category": "Text Toolbox: Advanced List Converter"
+      },
+      {
+        "command": "vscode-texttoolbox.EnhancedRemoveDuplicatesInNewEditor",
+        "title": "Remove Duplicates (Advanced Options), result in new editor...",
+        "category": "Text Toolbox: Advanced List Converter"
+      },
+      {
+        "command": "vscode-texttoolbox.AdvancedPrefixSuffix",
+        "title": "Add Advanced Prefix/Suffix...",
+        "category": "Text Toolbox: Advanced List Converter"
+      },
+      {
+        "command": "vscode-texttoolbox.AdvancedPrefixSuffixInNewEditor",
+        "title": "Add Advanced Prefix/Suffix, result in new editor...",
+        "category": "Text Toolbox: Advanced List Converter"
       }
     ],
     "menus": {
@@ -574,6 +619,11 @@
         {
           "submenu": "tt.crypto",
           "group": "crypto",
+          "when": "!editorReadonly"
+        },
+        {
+          "submenu": "tt.advancedListConverter",
+          "group": "advancedListConverter",
           "when": "!editorReadonly"
         },
         {
@@ -946,6 +996,44 @@
           "group": "tt.crypto.analysis",
           "command": "vscode-texttoolbox.AnalyzePasswordStrength"
         }
+      ],
+      "tt.advancedListConverter": [
+        {
+          "group": "tt.advancedListConverter.transpose",
+          "command": "vscode-texttoolbox.TransposeData"
+        },
+        {
+          "group": "tt.advancedListConverter.transpose",
+          "command": "vscode-texttoolbox.TransposeDataInNewEditor"
+        },
+        {
+          "group": "tt.advancedListConverter.reverse",
+          "command": "vscode-texttoolbox.ReverseListOrder"
+        },
+        {
+          "group": "tt.advancedListConverter.reverse",
+          "command": "vscode-texttoolbox.ReverseListOrderInNewEditor"
+        },
+        {
+          "group": "tt.advancedListConverter.truncate",
+          "command": "vscode-texttoolbox.TruncateLines"
+        },
+        {
+          "group": "tt.advancedListConverter.duplicates",
+          "command": "vscode-texttoolbox.EnhancedRemoveDuplicates"
+        },
+        {
+          "group": "tt.advancedListConverter.duplicates",
+          "command": "vscode-texttoolbox.EnhancedRemoveDuplicatesInNewEditor"
+        },
+        {
+          "group": "tt.advancedListConverter.prefix",
+          "command": "vscode-texttoolbox.AdvancedPrefixSuffix"
+        },
+        {
+          "group": "tt.advancedListConverter.prefix",
+          "command": "vscode-texttoolbox.AdvancedPrefixSuffixInNewEditor"
+        }
       ]
     },
     "submenus": [
@@ -996,6 +1084,10 @@
       {
         "id": "tt.crypto",
         "label": "Crypto Tools"
+      },
+      {
+        "id": "tt.advancedListConverter",
+        "label": "Advanced List Converter"
       }
     ],
     "configuration": [
