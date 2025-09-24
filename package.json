@@ -513,6 +513,26 @@
         "category": "Text Toolbox: Advanced List Converter"
       },
       {
+        "command": "vscode-texttoolbox.TransposeRowsToColumns",
+        "title": "Transpose Data (Rows → Columns)",
+        "category": "Text Toolbox: Advanced List Converter"
+      },
+      {
+        "command": "vscode-texttoolbox.TransposeRowsToColumnsInNewEditor",
+        "title": "Transpose Data (Rows → Columns), result in new editor",
+        "category": "Text Toolbox: Advanced List Converter"
+      },
+      {
+        "command": "vscode-texttoolbox.TransposeColumnsToRows",
+        "title": "Transpose Data (Columns → Rows)",
+        "category": "Text Toolbox: Advanced List Converter"
+      },
+      {
+        "command": "vscode-texttoolbox.TransposeColumnsToRowsInNewEditor",
+        "title": "Transpose Data (Columns → Rows), result in new editor",
+        "category": "Text Toolbox: Advanced List Converter"
+      },
+      {
         "command": "vscode-texttoolbox.ReverseListOrder",
         "title": "Reverse List Order",
         "category": "Text Toolbox: Advanced List Converter"
@@ -996,6 +1016,22 @@
         {
           "group": "tt.advancedListConverter.transpose",
           "command": "vscode-texttoolbox.TransposeDataInNewEditor"
+        },
+        {
+          "group": "tt.advancedListConverter.transpose",
+          "command": "vscode-texttoolbox.TransposeRowsToColumns"
+        },
+        {
+          "group": "tt.advancedListConverter.transpose",
+          "command": "vscode-texttoolbox.TransposeRowsToColumnsInNewEditor"
+        },
+        {
+          "group": "tt.advancedListConverter.transpose",
+          "command": "vscode-texttoolbox.TransposeColumnsToRows"
+        },
+        {
+          "group": "tt.advancedListConverter.transpose",
+          "command": "vscode-texttoolbox.TransposeColumnsToRowsInNewEditor"
         },
         {
           "group": "tt.advancedListConverter.reverse",

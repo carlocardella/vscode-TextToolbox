@@ -3,6 +3,8 @@ import { before, after, describe } from "mocha";
 import { sleep, createNewEditor, selectAllText, getDocumentTextOrSelection, closeTextEditor, linesToLine, getActiveEditor, getDocumentEOL } from "../../modules/helpers";
 import { 
     transposeData,
+    transposeRowsToColumnsWithDelimiter,
+    transposeColumnsToRowsWithDelimiter,
     reverseListOrder,
     truncateLines,
     enhancedRemoveDuplicates,
@@ -91,6 +93,38 @@ describe("advancedListConverter", () => {
             await createNewEditor(dataWithEmpty);
             await selectAllText();
             await transposeData(',', false);
+            await sleep(500);
+
+            let result = getDocumentTextOrSelection();
+            assert.strictEqual(result, expectedTransposed);
+        });
+    });
+
+    describe("Directional Transpose", () => {
+        it("Transpose rows to columns (wrapper function)", async () => {
+            await createNewEditor();
+            const eol = getDocumentEOL(getActiveEditor());
+            const csvData = `Name,Age,City${eol}John,25,NYC${eol}Jane,30,LA`;
+            const expectedTransposed = `Name,John,Jane${eol}Age,25,30${eol}City,NYC,LA`;
+            
+            await createNewEditor(csvData);
+            await selectAllText();
+            await transposeRowsToColumnsWithDelimiter(',', false);
+            await sleep(500);
+
+            let result = getDocumentTextOrSelection();
+            assert.strictEqual(result, expectedTransposed);
+        });
+
+        it("Transpose columns to rows (wrapper function)", async () => {
+            await createNewEditor();
+            const eol = getDocumentEOL(getActiveEditor());
+            const columnData = `Name,John,Jane${eol}Age,25,30${eol}City,NYC,LA`;
+            const expectedTransposed = `Name,Age,City${eol}John,25,NYC${eol}Jane,30,LA`;
+            
+            await createNewEditor(columnData);
+            await selectAllText();
+            await transposeColumnsToRowsWithDelimiter(',', false);
             await sleep(500);
 
             let result = getDocumentTextOrSelection();

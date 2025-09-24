@@ -107,6 +107,48 @@ export async function transposeData(delimiter: string = '\t', openInNewEditor: b
 }
 
 /**
+ * Transpose data from rows to columns
+ * Optimized for row-based data (like CSV with multiple records)
+ * @param openInNewEditor Whether to open result in new editor
+ */
+export async function transposeRowsToColumns(openInNewEditor: boolean = false): Promise<void> {
+    const delimiter = await askForTransposeDelimiter();
+    if (delimiter !== undefined) {
+        await transposeData(delimiter, openInNewEditor);
+    }
+}
+
+/**
+ * Transpose data from columns to rows  
+ * Optimized for column-based data (like headers with values below)
+ * @param openInNewEditor Whether to open result in new editor
+ */
+export async function transposeColumnsToRows(openInNewEditor: boolean = false): Promise<void> {
+    const delimiter = await askForTransposeDelimiter();
+    if (delimiter !== undefined) {
+        await transposeData(delimiter, openInNewEditor);
+    }
+}
+
+/**
+ * Transpose data from rows to columns with specified delimiter (for testing)
+ * @param delimiter The delimiter to use
+ * @param openInNewEditor Whether to open result in new editor
+ */
+export async function transposeRowsToColumnsWithDelimiter(delimiter: string, openInNewEditor: boolean = false): Promise<void> {
+    await transposeData(delimiter, openInNewEditor);
+}
+
+/**
+ * Transpose data from columns to rows with specified delimiter (for testing)
+ * @param delimiter The delimiter to use
+ * @param openInNewEditor Whether to open result in new editor
+ */
+export async function transposeColumnsToRowsWithDelimiter(delimiter: string, openInNewEditor: boolean = false): Promise<void> {
+    await transposeData(delimiter, openInNewEditor);
+}
+
+/**
  * Reverse the order of lines in the selection or document
  * @param openInNewEditor Whether to open result in new editor
  */

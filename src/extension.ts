@@ -736,6 +736,26 @@ export function activate(context: ExtensionContext) {
         })
     );
     context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.TransposeRowsToColumns", async () => {
+            await AdvancedListConverter.transposeRowsToColumns(false);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.TransposeRowsToColumnsInNewEditor", async () => {
+            await AdvancedListConverter.transposeRowsToColumns(true);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.TransposeColumnsToRows", async () => {
+            await AdvancedListConverter.transposeColumnsToRows(false);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.TransposeColumnsToRowsInNewEditor", async () => {
+            await AdvancedListConverter.transposeColumnsToRows(true);
+        })
+    );
+    context.subscriptions.push(
         commands.registerTextEditorCommand("vscode-texttoolbox.ReverseListOrder", () => {
             AdvancedListConverter.reverseListOrder(false);
         })
