@@ -7,6 +7,25 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## Unreleased
 
+### Added
+
+* **Crypto Tools** - Comprehensive cryptographic utilities for text processing:
+  * `Generate Hash from Text` - Support for MD5, SHA1, SHA256, SHA224, SHA512, SHA384 hash algorithms
+  * `Generate Bcrypt Hash` - Secure password hashing with configurable salt rounds (1-15)
+  * `Compare Bcrypt Hash` - Verify plain text passwords against bcrypt hashes
+  * `Generate HMAC` - Hash-based Message Authentication Code with SHA256, SHA1, SHA512, MD5 support
+  * `Generate Secure Token` - Cryptographically secure random token generation (1-128 characters)
+  * `Analyze Password Strength` - Comprehensive password security analysis and recommendations
+
+### Changed
+
+* **Improved Bundle Size** - Replaced crypto-browserify with crypto-js for better web compatibility and smaller bundle size
+* **Enhanced Crypto Performance** - Streamlined cryptographic operations using a single, optimized library
+
+### Removed
+
+* **RIPEMD160 Hash Support** - Removed due to limited usage and compatibility constraints with web environments
+
 See the [list of open enhancements on GitHub](https://github.com/carlocardella/vscode-TextToolbox/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3Aenhancement)
 
 ## Log

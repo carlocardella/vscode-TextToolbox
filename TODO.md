@@ -39,6 +39,9 @@ The goal is to extend the current Text Toolbox extension with additional tools a
   - [ ] TripleDES encryption/decryption
   - [ ] Rabbit encryption/decryption
   - [ ] RC4 encryption/decryption
+- [ ] **Token Generator**
+  - [ ] Uppercase, Lowercase, Numbers, Symbols
+  - [ ] Length
 
 ## 🔄 Data Format Converters
 
@@ -215,9 +218,6 @@ The goal is to extend the current Text Toolbox extension with additional tools a
 **Description**: Add developer-focused utilities and references
 
 ### Functions to Implement:
-- [ ] **Git Cheatsheet**
-  - [ ] Searchable Git commands reference
-  - [ ] Common workflows and examples
 - [ ] **Random Port Generator**
   - [ ] Generate random ports outside known range (0-1023)
   - [ ] Check port availability
@@ -426,22 +426,11 @@ The goal is to extend the current Text Toolbox extension with additional tools a
   - [ ] Comprehensive entity support
   - [ ] Bidirectional conversion
   - [ ] Named and numeric entities
-- [ ] **HTML WYSIWYG Editor** (if feasible)
-  - [ ] Rich text editing interface
-  - [ ] HTML source generation
-  - [ ] Preview functionality
 
 ## 📷 Camera and Media Tools
 
 **Priority**: Very Low  
 **Description**: Add media capture tools (if technically feasible)
-
-### Functions to Implement:
-- [ ] **Camera Recorder** (Feasibility Study Required)
-  - [ ] Investigate VS Code extension capabilities
-  - [ ] Webcam access permissions
-  - [ ] Photo capture functionality
-  - [ ] Video recording (if possible)
 
 ## Implementation Notes
 

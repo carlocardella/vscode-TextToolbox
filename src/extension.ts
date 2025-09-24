@@ -17,6 +17,7 @@ import { REGEX_VALIDATE_EMAIL } from "./modules/filterText";
 import * as Indentation from "./modules/indentation";
 import { delimiterTypes } from "./modules/delimiters";
 import * as StringUtilities from "./modules/stringUtilities";
+import * as CryptoTools from "./modules/cryptoTools";
 
 export function activate(context: ExtensionContext) {
     console.log("vscode-texttoolbox is active");
@@ -286,15 +287,15 @@ export function activate(context: ExtensionContext) {
                 // File system path
                 let userPathUri = Uri.file(textBetweenSpaces);
                 await workspace.fs.stat(userPathUri).then(
-                    (stat) => {
+                    (stat: any) => {
                         commands.executeCommand("vscode.open", userPathUri);
                     },
-                    (err) => {
+                    (err: any) => {
                         // if the path does not exist, check if it is a path relative to the open document
                         let folder = path.dirname(editor.document.uri.fsPath);
                         if (folder) {
                             userPathUri = Uri.joinPath(Uri.file(folder), textBetweenSpaces!);
-                            workspace.fs.stat(userPathUri).then((stat) => {
+                            workspace.fs.stat(userPathUri).then((stat: any) => {
                                 commands.executeCommand("vscode.open", userPathUri);
                             });
                         }
@@ -605,7 +606,7 @@ export function activate(context: ExtensionContext) {
 
     // events
     window.onDidChangeActiveTextEditor(
-        (editor) => {
+        (editor: any) => {
             if (editor) {
                 ControlCharacters.decorateControlCharacters(editor);
                 if (decorations) {
@@ -617,7 +618,7 @@ export function activate(context: ExtensionContext) {
         context.subscriptions
     );
     workspace.onDidChangeTextDocument(
-        (event) => {
+        (event: any) => {
             let activeEditor = Helpers.getActiveEditor();
             if (activeEditor) {
                 ControlCharacters.decorateControlCharacters(activeEditor);
@@ -678,9 +679,41 @@ export function activate(context: ExtensionContext) {
         })
     );
 
+    // crypto tools
+    context.subscriptions.push(
+        commands.registerCommand("vscode-texttoolbox.GenerateHashFromText", () => {
+            CryptoTools.generateHashFromText();
+        })
+    );
+    context.subscriptions.push(
+        commands.registerCommand("vscode-texttoolbox.GenerateBcryptHash", () => {
+            CryptoTools.generateBcryptHash();
+        })
+    );
+    context.subscriptions.push(
+        commands.registerCommand("vscode-texttoolbox.CompareBcryptHash", () => {
+            CryptoTools.compareBcryptHash();
+        })
+    );
+    context.subscriptions.push(
+        commands.registerCommand("vscode-texttoolbox.GenerateHMAC", () => {
+            CryptoTools.generateHMAC();
+        })
+    );
+    context.subscriptions.push(
+        commands.registerCommand("vscode-texttoolbox.GenerateToken", () => {
+            CryptoTools.generateToken();
+        })
+    );
+    context.subscriptions.push(
+        commands.registerCommand("vscode-texttoolbox.AnalyzePasswordStrength", () => {
+            CryptoTools.analyzePasswordStrength();
+        })
+    );
+
     // control characters
     context.subscriptions.push(
-        workspace.onDidChangeConfiguration((e) => {
+        workspace.onDidChangeConfiguration((e: any) => {
             if (e.affectsConfiguration("TextToolbox.decorateControlCharacters")) {
                 const editor = Helpers.getActiveEditor();
                 if (editor) {

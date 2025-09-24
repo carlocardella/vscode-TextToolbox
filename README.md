@@ -83,6 +83,36 @@ Likewise, `Convert to CapitalCase` has been removed in favor of the built-in VSC
 * Show Text Statistics in New Editor
   * Open text statistics in a new editor window
 
+### Crypto Tools
+
+* Generate Hash from Text
+  * MD5 - Message Digest 5 hash algorithm
+  * SHA1 - Secure Hash Algorithm 1
+  * SHA256 - Secure Hash Algorithm 256-bit
+  * SHA224 - Secure Hash Algorithm 224-bit  
+  * SHA512 - Secure Hash Algorithm 512-bit
+  * SHA384 - Secure Hash Algorithm 384-bit
+* Generate Bcrypt Hash
+  * Secure password hashing using bcrypt with configurable salt rounds (1-15)
+  * Industry standard for password storage
+* Compare Bcrypt Hash
+  * Verify if a plain text password matches a bcrypt hash
+  * Useful for password validation
+* Generate HMAC
+  * HMAC-SHA256 - Hash-based Message Authentication Code with SHA256
+  * HMAC-SHA1 - Hash-based Message Authentication Code with SHA1
+  * HMAC-SHA512 - Hash-based Message Authentication Code with SHA512
+  * HMAC-MD5 - Hash-based Message Authentication Code with MD5
+  * Requires secret key input for authentication
+* Generate Secure Token
+  * Generate cryptographically secure random tokens
+  * Configurable length (1-128 characters)
+  * Supports hexadecimal and base64 encoding formats
+* Analyze Password Strength
+  * Comprehensive password strength analysis
+  * Checks length, character variety, common patterns
+  * Provides security recommendations and strength score
+
 ### Selection
 
 * Invert Selection
