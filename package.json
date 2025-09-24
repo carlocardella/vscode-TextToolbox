@@ -35,7 +35,6 @@
   ],
   "main": "./dist/extension-node.js",
   "browser": "./dist/extension-web.js",
-  "preview": false,
   "badges": [],
   "icon": "assets/extension_icon.png",
   "repository": {
