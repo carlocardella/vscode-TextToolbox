@@ -185,6 +185,7 @@ describe("advancedListConverter", () => {
             const options: TruncateOptions = {
                 maxLength: 20,
                 addEllipsis: true,
+                ellipsisCountsInLength: true,
                 openInNewEditor: false
             };
             const expectedTruncated = `This is a very lo...${eol}Short${eol}Another very long...`;
@@ -205,6 +206,7 @@ describe("advancedListConverter", () => {
             const options: TruncateOptions = {
                 maxLength: 15,
                 addEllipsis: false,
+                ellipsisCountsInLength: true, // doesn't matter when addEllipsis is false
                 openInNewEditor: false
             };
             const expectedTruncated = `This is a very ${eol}Short line${eol}Another long li`;
@@ -225,6 +227,7 @@ describe("advancedListConverter", () => {
             const options: TruncateOptions = {
                 maxLength: 20,
                 addEllipsis: true,
+                ellipsisCountsInLength: true,
                 openInNewEditor: false
             };
             
@@ -244,9 +247,52 @@ describe("advancedListConverter", () => {
             const options: TruncateOptions = {
                 maxLength: 2,
                 addEllipsis: true,
+                ellipsisCountsInLength: true,
                 openInNewEditor: false
             };
-            const expectedResult = `...`;
+            const expectedResult = `..`;
+            
+            await createNewEditor(longLine);
+            await selectAllText();
+            await truncateLines(options);
+            await sleep(500);
+
+            let result = getDocumentTextOrSelection();
+            assert.strictEqual(result, expectedResult);
+        });
+
+        it("Ellipsis counts within max length", async () => {
+            await createNewEditor();
+            const eol = getDocumentEOL(getActiveEditor());
+            const longLine = `This is a very long line`;
+            const options: TruncateOptions = {
+                maxLength: 10,
+                addEllipsis: true,
+                ellipsisCountsInLength: true, // "..." counts within the 10 chars
+                openInNewEditor: false
+            };
+            const expectedResult = `This is...`; // 7 chars + 3 dots = 10 total
+            
+            await createNewEditor(longLine);
+            await selectAllText();
+            await truncateLines(options);
+            await sleep(500);
+
+            let result = getDocumentTextOrSelection();
+            assert.strictEqual(result, expectedResult);
+        });
+
+        it("Ellipsis is additional to max length", async () => {
+            await createNewEditor();
+            const eol = getDocumentEOL(getActiveEditor());
+            const longLine = `This is a very long line`;
+            const options: TruncateOptions = {
+                maxLength: 10,
+                addEllipsis: true,
+                ellipsisCountsInLength: false, // "..." is additional to the 10 chars
+                openInNewEditor: false
+            };
+            const expectedResult = `This is a ...`; // 10 chars + 3 dots = 13 total
             
             await createNewEditor(longLine);
             await selectAllText();

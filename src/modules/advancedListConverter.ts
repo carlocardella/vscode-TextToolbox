@@ -23,6 +23,7 @@ export interface DuplicateRemovalOptions {
 export interface TruncateOptions {
     maxLength: number;
     addEllipsis: boolean;
+    ellipsisCountsInLength: boolean;  // true = ellipsis counts toward maxLength, false = ellipsis is additional
     openInNewEditor: boolean;
 }
 
@@ -204,11 +205,22 @@ export async function truncateLines(options: TruncateOptions): Promise<void> {
             return line;
         }
         
-        const ellipsis = options.addEllipsis ? '...' : '';
-        const maxContentLength = options.maxLength - ellipsis.length;
+        if (!options.addEllipsis) {
+            return line.substring(0, options.maxLength);
+        }
         
-        if (maxContentLength <= 0) {
-            return ellipsis;
+        const ellipsis = '...';
+        let maxContentLength: number;
+        
+        if (options.ellipsisCountsInLength) {
+            // Ellipsis counts within max length: content + "..." = maxLength
+            maxContentLength = options.maxLength - ellipsis.length;
+            if (maxContentLength <= 0) {
+                return ellipsis.substring(0, options.maxLength);
+            }
+        } else {
+            // Ellipsis is additional: content = maxLength, total = maxLength + 3
+            maxContentLength = options.maxLength;
         }
         
         return line.substring(0, maxContentLength) + ellipsis;
@@ -464,6 +476,21 @@ export async function askForTruncateOptions(): Promise<TruncateOptions | undefin
         return undefined;
     }
 
+    let ellipsisCountsInLength = true;
+    if (addEllipsis.value) {
+        const ellipsisOption = await window.showQuickPick([
+            { label: 'Ellipsis counts within max length', description: 'Total line length = max length (including "...")', value: true },
+            { label: 'Ellipsis is additional', description: 'Content = max length + "..." (3 extra chars)', value: false }
+        ], {
+            placeHolder: 'How should ellipsis (...) count toward the length limit?'
+        });
+
+        if (ellipsisOption === undefined) {
+            return undefined;
+        }
+        ellipsisCountsInLength = ellipsisOption.value;
+    }
+
     const openInNewEditor = await window.showQuickPick([
         { label: 'Replace in current editor', description: 'Modify current selection', value: false },
         { label: 'Open in new editor', description: 'Keep original and open result in new tab', value: true }
@@ -478,6 +505,7 @@ export async function askForTruncateOptions(): Promise<TruncateOptions | undefin
     return {
         maxLength,
         addEllipsis: addEllipsis.value,
+        ellipsisCountsInLength,
         openInNewEditor: openInNewEditor.value
     };
 }

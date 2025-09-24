@@ -116,7 +116,9 @@ Likewise, `Convert to CapitalCase` has been removed in favor of the built-in VSC
 ### Advanced List Converter
 
 * Transpose Data
-  * Convert rows to columns and vice versa
+  * **Bidirectional**: Convert rows to columns and vice versa
+  * **Rows → Columns**: Optimized for converting row-based data (like CSV records) to column format
+  * **Columns → Rows**: Optimized for converting column-based data (like headers with values) to row format
   * Support for CSV (comma-separated), TSV (tab-separated), and custom delimiters
   * Handles irregular data with different column counts gracefully
   * Perfect for data transformation and analysis tasks

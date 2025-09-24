@@ -810,6 +810,27 @@ export async function surroundText(action: SurroundAction) {
         return;
     }
 
+    // First ask if they want simple text or advanced patterns
+    const useAdvanced = await window.showQuickPick([
+        { label: 'Simple Text', description: 'Enter plain text to add', value: false },
+        { label: 'Advanced Patterns', description: 'Use patterns like {n}, {i}, {date}, etc.', value: true }
+    ], {
+        placeHolder: action === SurroundAction.Prefix ? 'Prefix with simple text or advanced patterns?' : 
+                    action === SurroundAction.Suffix ? 'Suffix with simple text or advanced patterns?' :
+                    'Surround with simple text or advanced patterns?'
+    });
+
+    if (useAdvanced === undefined) {
+        return;
+    }
+
+    if (useAdvanced.value && (action === SurroundAction.Prefix || action === SurroundAction.Suffix)) {
+        // Use advanced prefix/suffix functionality
+        await useAdvancedPrefixSuffix(action === SurroundAction.Prefix ? 'prefix' : 'suffix');
+        return;
+    }
+
+    // Fall back to simple text input for surround or when user chooses simple
     const surround = await window.showInputBox({
         prompt: `Enter the ${action} text...`,
         ignoreFocusOut: true,
@@ -826,6 +847,25 @@ export async function surroundText(action: SurroundAction) {
             editBuilder.replace(s, newText);
         });
     });
+}
+
+/**
+ * Use advanced prefix/suffix functionality with patterns
+ */
+async function useAdvancedPrefixSuffix(type: 'prefix' | 'suffix'): Promise<void> {
+    const pattern = await window.showInputBox({
+        prompt: 'Enter pattern (use {n} for numbers, {i}/{I} for letters, {r}/{R} for Roman, {date}, {time}, {line})',
+        placeHolder: 'e.g., "{n}. ", "Item {I}: ", " - {date}"',
+        value: type === 'prefix' ? '{n}. ' : ' - {date}'
+    });
+
+    if (!pattern) {
+        return;
+    }
+
+    // Import and use the advanced functionality
+    const { advancedPrefixSuffix } = await import('./advancedListConverter');
+    await advancedPrefixSuffix(pattern, type, false);
 }
 
 /**

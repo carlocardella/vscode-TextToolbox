@@ -505,58 +505,58 @@
       {
         "command": "vscode-texttoolbox.TransposeData",
         "title": "Transpose Data (Rows ↔ Columns)",
-        "category": "Text Toolbox: Advanced List Converter"
+        "category": "Text Toolbox"
       },
       {
         "command": "vscode-texttoolbox.TransposeDataInNewEditor",
         "title": "Transpose Data (Rows ↔ Columns), result in new editor",
-        "category": "Text Toolbox: Advanced List Converter"
+        "category": "Text Toolbox"
       },
       {
         "command": "vscode-texttoolbox.TransposeRowsToColumns",
         "title": "Transpose Data (Rows → Columns)",
-        "category": "Text Toolbox: Advanced List Converter"
+        "category": "Text Toolbox"
       },
       {
         "command": "vscode-texttoolbox.TransposeRowsToColumnsInNewEditor",
         "title": "Transpose Data (Rows → Columns), result in new editor",
-        "category": "Text Toolbox: Advanced List Converter"
+        "category": "Text Toolbox"
       },
       {
         "command": "vscode-texttoolbox.TransposeColumnsToRows",
         "title": "Transpose Data (Columns → Rows)",
-        "category": "Text Toolbox: Advanced List Converter"
+        "category": "Text Toolbox"
       },
       {
         "command": "vscode-texttoolbox.TransposeColumnsToRowsInNewEditor",
         "title": "Transpose Data (Columns → Rows), result in new editor",
-        "category": "Text Toolbox: Advanced List Converter"
+        "category": "Text Toolbox"
       },
       {
         "command": "vscode-texttoolbox.ReverseListOrder",
         "title": "Reverse List Order",
-        "category": "Text Toolbox: Advanced List Converter"
+        "category": "Text Toolbox"
       },
       {
         "command": "vscode-texttoolbox.ReverseListOrderInNewEditor",
         "title": "Reverse List Order, result in new editor",
-        "category": "Text Toolbox: Advanced List Converter"
+        "category": "Text Toolbox"
       },
       {
         "command": "vscode-texttoolbox.TruncateLines",
         "title": "Truncate Lines to Length...",
-        "category": "Text Toolbox: Advanced List Converter"
+        "category": "Text Toolbox"
       },
 
       {
         "command": "vscode-texttoolbox.AdvancedPrefixSuffix",
         "title": "Add Advanced Prefix/Suffix...",
-        "category": "Text Toolbox: Advanced List Converter"
+        "category": "Text Toolbox"
       },
       {
         "command": "vscode-texttoolbox.AdvancedPrefixSuffixInNewEditor",
         "title": "Add Advanced Prefix/Suffix, result in new editor...",
-        "category": "Text Toolbox: Advanced List Converter"
+        "category": "Text Toolbox"
       }
     ],
     "menus": {
