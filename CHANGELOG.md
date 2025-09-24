@@ -7,6 +7,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## Unreleased
 
+See the [list of open enhancements on GitHub](https://github.com/carlocardella/vscode-TextToolbox/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3Aenhancement)
+
+## Log
+
+## [2.25.0] - 2025-09-24
+
 ### Added
 
 * **Crypto Tools** - Comprehensive cryptographic utilities for text processing:
@@ -15,7 +21,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
   * `Compare Bcrypt Hash` - Verify plain text passwords against bcrypt hashes
   * `Generate HMAC` - Hash-based Message Authentication Code with SHA256, SHA1, SHA512, MD5 support
   * `Generate Secure Token` - Cryptographically secure random token generation (1-128 characters)
-  * `Analyze Password Strength` - Comprehensive password security analysis and recommendations
+  * `Analyze Password Strength` - Comprehensive password security analysis with 100-point scoring system
 
 ### Changed
 
@@ -25,10 +31,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 ### Removed
 
 * **RIPEMD160 Hash Support** - Removed due to limited usage and compatibility constraints with web environments
-
-See the [list of open enhancements on GitHub](https://github.com/carlocardella/vscode-TextToolbox/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3Aenhancement)
-
-## Log
 
 ## [2.24.1] - 2025-09-23
 
