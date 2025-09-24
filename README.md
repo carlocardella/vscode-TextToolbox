@@ -131,18 +131,10 @@ Likewise, `Convert to CapitalCase` has been removed in favor of the built-in VSC
   * Optional ellipsis (...) to indicate truncated content
   * Useful for formatting consistency and data cleanup
 
-* Advanced Prefix/Suffix
-  * Pattern-based line numbering and formatting:
-    * `{n}` - Sequential numbers (1, 2, 3, ...)
-    * `{a}` - Lowercase letters (a, b, c, ..., z, aa, ab, ...)
-    * `{A}` - Uppercase letters (A, B, C, ..., Z, AA, AB, ...)
-    * `{i}` - Roman numerals lowercase (i, ii, iii, iv, ...)
-    * `{I}` - Roman numerals uppercase (I, II, III, IV, ...)
-    * `{line}` - Line numbers from document
-    * `{date}` - Current date
-    * `{time}` - Current time
-  * Support for complex patterns with multiple placeholders
-  * Ideal for creating numbered lists, documentation, and structured content
+* Truncate Lines with Enhanced Ellipsis Options
+  * Choose whether ellipsis (...) counts within max length or is additional
+  * Better control over exact line truncation behavior
+  * Maintain formatting consistency while preserving content intent
 
 ### Selection
 
@@ -230,12 +222,33 @@ Likewise, `Convert to CapitalCase` has been removed in favor of the built-in VSC
 * Insert numbers sequence
 * Pad Selection Right
 * Pad Selection Left
-* Prefix with...
-* Suffix with...
+* Prefix with... (Enhanced with advanced pattern support)
+* Suffix with... (Enhanced with advanced pattern support)
 * Surround with...
 * Insert line separator...
 
 _Note_: If multiple cursors are active, ask the user if to insert the same random value or unique random values at each cursor's position
+
+### Enhanced Prefix/Suffix
+
+The `Prefix with...` and `Suffix with...` commands now offer both simple text and advanced pattern support:
+
+**Simple Text Mode:**
+* Enter plain text to add to each line
+* Traditional behavior for basic prefix/suffix operations
+
+**Advanced Pattern Mode:**
+* Pattern-based line numbering and formatting:
+  * `{n}` - Sequential numbers (1, 2, 3, ...)
+  * `{i}` - Lowercase letters (a, b, c, ..., z, aa, ab, ...)
+  * `{I}` - Uppercase letters (A, B, C, ..., Z, AA, AB, ...)
+  * `{r}` - Roman numerals lowercase (i, ii, iii, iv, ...)
+  * `{R}` - Roman numerals uppercase (I, II, III, IV, ...)
+  * `{line}` - Line numbers from document
+  * `{date}` - Current date
+  * `{time}` - Current time
+* Support for complex patterns with multiple placeholders
+* Ideal for creating numbered lists, documentation, and structured content
 
 ### Filter
 

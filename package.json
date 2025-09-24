@@ -546,17 +546,6 @@
         "command": "vscode-texttoolbox.TruncateLines",
         "title": "Truncate Lines to Length...",
         "category": "Text Toolbox"
-      },
-
-      {
-        "command": "vscode-texttoolbox.AdvancedPrefixSuffix",
-        "title": "Add Advanced Prefix/Suffix...",
-        "category": "Text Toolbox"
-      },
-      {
-        "command": "vscode-texttoolbox.AdvancedPrefixSuffixInNewEditor",
-        "title": "Add Advanced Prefix/Suffix, result in new editor...",
-        "category": "Text Toolbox"
       }
     ],
     "menus": {
@@ -1044,15 +1033,6 @@
         {
           "group": "tt.advancedListConverter.truncate",
           "command": "vscode-texttoolbox.TruncateLines"
-        },
-
-        {
-          "group": "tt.advancedListConverter.prefix",
-          "command": "vscode-texttoolbox.AdvancedPrefixSuffix"
-        },
-        {
-          "group": "tt.advancedListConverter.prefix",
-          "command": "vscode-texttoolbox.AdvancedPrefixSuffixInNewEditor"
         }
       ]
     },

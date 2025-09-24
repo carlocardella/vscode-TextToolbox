@@ -774,23 +774,6 @@ export function activate(context: ExtensionContext) {
         })
     );
 
-    context.subscriptions.push(
-        commands.registerTextEditorCommand("vscode-texttoolbox.AdvancedPrefixSuffix", async () => {
-            const patternConfig = await AdvancedListConverter.askForPrefixSuffixPattern();
-            if (patternConfig) {
-                await AdvancedListConverter.advancedPrefixSuffix(patternConfig.pattern, patternConfig.type, false);
-            }
-        })
-    );
-    context.subscriptions.push(
-        commands.registerTextEditorCommand("vscode-texttoolbox.AdvancedPrefixSuffixInNewEditor", async () => {
-            const patternConfig = await AdvancedListConverter.askForPrefixSuffixPattern();
-            if (patternConfig) {
-                await AdvancedListConverter.advancedPrefixSuffix(patternConfig.pattern, patternConfig.type, true);
-            }
-        })
-    );
-
     // control characters
     context.subscriptions.push(
         workspace.onDidChangeConfiguration((e: any) => {

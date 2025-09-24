@@ -1,4 +1,3 @@
-<!-- markdownlint-disable-file -->
 # **Change Log**
 
 All notable changes to the "vscode-TextToolbox" extension will be documented in this file.
@@ -15,15 +14,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
     * `Transpose Data (Rows → Columns)` - Optimized for row-based data
     * `Transpose Data (Columns → Rows)` - Optimized for column-based data
   * `Reverse List Order` - Reverse the order of lines in your text
-  * `Truncate Lines` - Limit line length with optional ellipsis indicators
-  * `Advanced Prefix/Suffix` - Pattern-based line numbering with support for numbers, letters (a-z, A-Z), Roman numerals (i, I), dates, times, and line numbers
+  * `Truncate Lines` - Limit line length with optional ellipsis indicators with enhanced ellipsis counting options
+  * Enhanced `Prefix with...` and `Suffix with...` - Now support both simple text and advanced patterns ({n}, {i}, {date}, {time}, etc.)
 
 ### Changed
 
-* **Enhanced Duplicate Removal** - Merged advanced duplicate removal options into existing "Remove duplicate lines" commands
-* **Simplified Commands** - Removed redundant enhanced duplicate commands, keeping user-friendly options dialog
-* **Menu Organization** - Added new "Advanced List Converter" submenu under Text Toolbox for improved discoverability
-* **Test Coverage** - Added comprehensive test suite with 31 test cases covering all Advanced List Converter functions
+* **Enhanced Prefix/Suffix Commands** - `Prefix with...` and `Suffix with...` now offer choice between simple text or advanced patterns
+* **Improved Truncate Functionality** - Users can now choose whether ellipsis (...) counts within max length or is additional
+* **Cleaner Command Palette** - Removed "Advanced List Converter:" prefix from command titles for better user experience
+* **Merged Duplicate Removal** - Combined regular and enhanced duplicate removal into unified commands
+* **Streamlined Commands** - Removed redundant standalone "Advanced Prefix/Suffix" commands (functionality integrated into basic commands)
 
 See the [list of open enhancements on GitHub](https://github.com/carlocardella/vscode-TextToolbox/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3Aenhancement)
 
