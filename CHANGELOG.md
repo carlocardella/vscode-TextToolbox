@@ -11,6 +11,15 @@ See the [list of open enhancements on GitHub](https://github.com/carlocardella/v
 
 ## Log
 
+## [2.24.1] - 2025-09-23
+
+### Changed
+
+* Optimized extension package size by removing unused assets (text_icon_regular.png, text_icon_reverse.png, text-tool.png)
+* Enhanced webpack configuration for better production builds
+* Updated .vscodeignore to exclude development files and unused assets
+* Package size reduced from ~487KB to ~465KB (4.5% reduction)
+
 ## [2.24.0] - 2025-09-23
 
 ### Added
