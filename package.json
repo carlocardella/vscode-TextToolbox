@@ -144,12 +144,12 @@
       },
       {
         "command": "vscode-texttoolbox.RemoveDuplicateLines",
-        "title": "Remove duplicate lines",
+        "title": "Remove duplicate lines...",
         "category": "Text Toolbox"
       },
       {
         "command": "vscode-texttoolbox.RemoveDuplicateLinesResultInNewEditor",
-        "title": "Remove duplicate lines, result in new Editor",
+        "title": "Remove duplicate lines, result in new Editor...",
         "category": "Text Toolbox"
       },
       {
@@ -527,16 +527,7 @@
         "title": "Truncate Lines to Length...",
         "category": "Text Toolbox: Advanced List Converter"
       },
-      {
-        "command": "vscode-texttoolbox.EnhancedRemoveDuplicates",
-        "title": "Remove Duplicates (Advanced Options)...",
-        "category": "Text Toolbox: Advanced List Converter"
-      },
-      {
-        "command": "vscode-texttoolbox.EnhancedRemoveDuplicatesInNewEditor",
-        "title": "Remove Duplicates (Advanced Options), result in new editor...",
-        "category": "Text Toolbox: Advanced List Converter"
-      },
+
       {
         "command": "vscode-texttoolbox.AdvancedPrefixSuffix",
         "title": "Add Advanced Prefix/Suffix...",
@@ -1018,14 +1009,7 @@
           "group": "tt.advancedListConverter.truncate",
           "command": "vscode-texttoolbox.TruncateLines"
         },
-        {
-          "group": "tt.advancedListConverter.duplicates",
-          "command": "vscode-texttoolbox.EnhancedRemoveDuplicates"
-        },
-        {
-          "group": "tt.advancedListConverter.duplicates",
-          "command": "vscode-texttoolbox.EnhancedRemoveDuplicatesInNewEditor"
-        },
+
         {
           "group": "tt.advancedListConverter.prefix",
           "command": "vscode-texttoolbox.AdvancedPrefixSuffix"

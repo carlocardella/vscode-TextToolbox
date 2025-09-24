@@ -238,13 +238,19 @@ export function activate(context: ExtensionContext) {
         })
     );
     context.subscriptions.push(
-        commands.registerTextEditorCommand("vscode-texttoolbox.RemoveDuplicateLines", () => {
-            FilterText.removeDuplicateLines(false);
+        commands.registerTextEditorCommand("vscode-texttoolbox.RemoveDuplicateLines", async () => {
+            const options = await AdvancedListConverter.askForDuplicateOptions();
+            if (options) {
+                await AdvancedListConverter.enhancedRemoveDuplicates(options, false);
+            }
         })
     );
     context.subscriptions.push(
-        commands.registerTextEditorCommand("vscode-texttoolbox.RemoveDuplicateLinesResultInNewEditor", () => {
-            FilterText.removeDuplicateLines(true);
+        commands.registerTextEditorCommand("vscode-texttoolbox.RemoveDuplicateLinesResultInNewEditor", async () => {
+            const options = await AdvancedListConverter.askForDuplicateOptions();
+            if (options) {
+                await AdvancedListConverter.enhancedRemoveDuplicates(options, true);
+            }
         })
     );
     context.subscriptions.push(
@@ -747,22 +753,7 @@ export function activate(context: ExtensionContext) {
             }
         })
     );
-    context.subscriptions.push(
-        commands.registerTextEditorCommand("vscode-texttoolbox.EnhancedRemoveDuplicates", async () => {
-            const options = await AdvancedListConverter.askForDuplicateOptions();
-            if (options) {
-                await AdvancedListConverter.enhancedRemoveDuplicates(options, false);
-            }
-        })
-    );
-    context.subscriptions.push(
-        commands.registerTextEditorCommand("vscode-texttoolbox.EnhancedRemoveDuplicatesInNewEditor", async () => {
-            const options = await AdvancedListConverter.askForDuplicateOptions();
-            if (options) {
-                await AdvancedListConverter.enhancedRemoveDuplicates(options, true);
-            }
-        })
-    );
+
     context.subscriptions.push(
         commands.registerTextEditorCommand("vscode-texttoolbox.AdvancedPrefixSuffix", async () => {
             const patternConfig = await AdvancedListConverter.askForPrefixSuffixPattern();
