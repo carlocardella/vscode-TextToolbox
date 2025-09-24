@@ -128,12 +128,7 @@ Likewise, `Convert to CapitalCase` has been removed in favor of the built-in VSC
   * Limit each line to a specified maximum length
   * Optional ellipsis (...) to indicate truncated content
   * Useful for formatting consistency and data cleanup
-* Enhanced Remove Duplicates
-  * Advanced duplicate removal with flexible options:
-    * Keep first or last occurrence of duplicates
-    * Case-sensitive or case-insensitive comparison
-    * Trim whitespace before comparison
-  * Extends built-in duplicate removal with powerful configuration
+
 * Advanced Prefix/Suffix
   * Pattern-based line numbering and formatting:
     * `{n}` - Sequential numbers (1, 2, 3, ...)
@@ -260,7 +255,9 @@ _Note_: If multiple cursors are active, ask the user if to insert the same rando
 * Remove redundant empty line
   * remove all redundant empty lines from the current document: reduces multiple empty lines to one
 * Remove duplicate lines
+  * Advanced options: keep first/last occurrence, case sensitivity, trim whitespace
 * Remove duplicate lines, result in new Editor
+  * Same advanced options available
 * Remove brackets
 * Remove quotes
 * Cycle brackets

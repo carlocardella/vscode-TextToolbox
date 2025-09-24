@@ -9,15 +9,16 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ### Added
 
-* **Advanced List Converter** - Five powerful list manipulation tools for data transformation:
+* **Advanced List Converter** - Four powerful list manipulation tools for data transformation:
   * `Transpose Data` - Convert rows to columns with customizable delimiters (CSV, TSV, custom)
   * `Reverse List Order` - Reverse the order of lines in your text
   * `Truncate Lines` - Limit line length with optional ellipsis indicators
-  * `Enhanced Remove Duplicates` - Advanced duplicate removal with options for case sensitivity, whitespace trimming, and keeping first/last occurrence
   * `Advanced Prefix/Suffix` - Pattern-based line numbering with support for numbers, letters (a-z, A-Z), Roman numerals (i, I), dates, times, and line numbers
 
 ### Changed
 
+* **Enhanced Duplicate Removal** - Merged advanced duplicate removal options into existing "Remove duplicate lines" commands
+* **Simplified Commands** - Removed redundant enhanced duplicate commands, keeping user-friendly options dialog
 * **Menu Organization** - Added new "Advanced List Converter" submenu under Text Toolbox for improved discoverability
 * **Test Coverage** - Added comprehensive test suite with 31 test cases covering all Advanced List Converter functions
 
