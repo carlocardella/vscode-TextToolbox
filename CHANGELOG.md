@@ -67,6 +67,11 @@ See the [list of open enhancements on GitHub](https://github.com/carlocardella/v
 * **Merged Duplicate Commands** - Consolidated duplicate removal with enhanced options into regular commands
 * **Improved User Workflow** - Single commands that offer choice between simple and advanced functionality
 
+* **Unicode Control/Special Character Normalization**
+  * Refined normalization algorithm: now maps Unicode control and special characters to their ASCII equivalents where possible, with fallback to configured replacement string or removal.
+  * Expanded replacement map: includes curly quotes, diverse space characters, dashes, apostrophes, and more.
+  * Defensive coding: all usages of `editor.options` are now guarded to prevent undefined errors in edge cases.
+  * Comprehensive test coverage: updated and expanded tests for normalization and edge cases.
 ### Technical
 
 * **347 Comprehensive Tests** - Full test coverage including 6 new CSV/Markdown conversion tests

@@ -9,7 +9,6 @@ The goal is to extend the current Text Toolbox extension with additional tools a
 **Description**: Add cryptographic tools missing from the extension
 
 ### Functions Implemented:
-- [x] **Hash Text Generator** ✅
   - [x] MD5 hashing
   - [x] SHA1 hashing  
   - [x] SHA256 hashing
@@ -18,30 +17,23 @@ The goal is to extend the current Text Toolbox extension with additional tools a
   - [x] SHA384 hashing
   - [ ] SHA3 hashing (not implemented)
   - [x] ~~RIPEMD160 hashing~~ (removed for web compatibility)
-- [x] **Bcrypt Hash/Compare** ✅
   - [x] Generate bcrypt hash from text
   - [x] Compare text with bcrypt hash
-- [x] **HMAC Generator** ✅
   - [x] Generate HMAC with secret key
   - [x] Support multiple hash functions (SHA256, SHA1, SHA512, MD5)
-- [ ] **RSA Key Pair Generator**
   - [ ] Generate RSA private/public key pairs
   - [ ] PEM format output
-- [x] **Password Strength Analyzer** ✅
   - [x] Analyze password strength with 100-point scoring system
   - [x] Estimate crack time
   - [x] Entropy calculation
   - [x] Pattern detection and penalties
   - [x] Detailed scoring breakdown
-- [ ] **BIP39 Passphrase Generator**
   - [ ] Generate BIP39 mnemonic
   - [ ] Convert mnemonic to passphrase
-- [ ] **Advanced Encryption/Decryption**
   - [ ] AES encryption/decryption
   - [ ] TripleDES encryption/decryption
   - [ ] Rabbit encryption/decryption
   - [ ] RC4 encryption/decryption
-- [x] **Token Generator** ✅
   - [x] Cryptographically secure random tokens
   - [x] Configurable length (1-128 characters)
   - [x] Hexadecimal and Base64 encoding support
@@ -51,34 +43,27 @@ The goal is to extend the current Text Toolbox extension with additional tools a
 **Description**: Add bidirectional converters between various data formats
 
 ### Functions Implemented:
-- [x] **JSON ↔ YAML Converter** ✅ **COMPLETED September 2025**
   - [x] JSON to YAML conversion with formatting options
   - [x] YAML to JSON conversion with indentation control
   - [x] Comprehensive validation and error handling
   - [x] Custom options: indentation, line width, sort keys
-- [x] **YAML ↔ TOML Converter** ✅ **COMPLETED September 2025**  
   - [x] YAML to TOML conversion with proper data type handling
   - [x] TOML to YAML conversion with formatting preservation
   - [x] Cross-format data type preservation
-- [x] **JSON ↔ TOML Converter** ✅ **COMPLETED September 2025**
   - [x] JSON to TOML conversion with structured formatting
   - [x] TOML to JSON conversion with type preservation
   - [x] Handle complex nested structures
-- [x] **XML ↔ JSON Converter** ✅ **COMPLETED September 2025**
   - [x] XML to JSON conversion with attribute handling
   - [x] JSON to XML conversion with customizable formatting
   - [x] Support for attributes, namespaces, and CDATA
   - [x] Configurable attribute prefixes and text nodes
-- [x] **CSV ↔ Markdown Table Converter** ✅ **COMPLETED September 2025**
   - [x] Convert CSV data to formatted Markdown tables
   - [x] Convert Markdown tables back to CSV format
   - [x] Support multiple delimiters and header options
-- [x] **Markdown ↔ HTML Converter** ✅ **COMPLETED September 2025**
   - [x] Markdown to HTML conversion with markdown-it parser
   - [x] HTML to Markdown conversion with Turndown
   - [x] Support for tables, code blocks, and formatting
   - [x] Configurable conversion options
-- [x] **JSON → CSV Converter** ✅ **COMPLETED September 2025**
   - [x] Convert JSON arrays/objects to CSV format
   - [x] Customizable delimiters and header handling
   - [x] Nested object flattening options
@@ -88,18 +73,10 @@ The goal is to extend the current Text Toolbox extension with additional tools a
 **Description**: Extend beyond hex/decimal to support all common number bases
 
 ### Functions to Implement:
-- [ ] **Integer Base Converter**
-  - [ ] Binary (base 2) conversion
-  - [ ] Octal (base 8) conversion
-  - [ ] Decimal (base 10) conversion
-  - [ ] Hexadecimal (base 16) conversion
-  - [ ] Arbitrary base conversion (base 2-36)
   - [ ] Base64 number conversion
-- [ ] **Roman Numeral Converter**
   - [ ] Arabic numbers to Roman numerals
   - [ ] Roman numerals to Arabic numbers
   - [ ] Validation for valid Roman numeral format
-
 ## 📝 Text Encoding Enhancements
 
 **Description**: Add advanced text encoding and conversion features

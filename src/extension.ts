@@ -636,15 +636,12 @@ export function activate(context: ExtensionContext) {
                 decorations.RefreshHighlights();
             }
 
-            // set context values for indentation commands
-            commands.executeCommand("setContext", "tt.tabSize", activeEditor!.options.tabSize);
-            commands.executeCommand("setContext", "tt.insertSpaces", activeEditor!.options.insertSpaces);
-            commands.executeCommand("setContext", "tt.insertSpaces", activeEditor!.options.insertSpaces);
-
-            // todo: https://github.com/Microsoft/vscode/issues/30066
-            // if (workspace.getConfiguration().get('TextToolbox.removeControlCharactersOnPaste')) {
-            // 	ControlCharacters.removeControlCharacters(getActiveEditor());
-            // }
+            // set context values for indentation commands (guard if no active editor yet)
+            if (activeEditor && activeEditor.options) {
+                commands.executeCommand("setContext", "tt.tabSize", activeEditor.options.tabSize);
+                commands.executeCommand("setContext", "tt.insertSpaces", activeEditor.options.insertSpaces);
+                commands.executeCommand("setContext", "tt.insertSpaces", activeEditor.options.insertSpaces);
+            }
         },
         null,
         context.subscriptions

@@ -14,6 +14,7 @@ dist/
 
 # Debug and temporary development files
 debug-*.js
+debug-*.txt
 test-json*.js
 quick-test.js
 *-debug.js
