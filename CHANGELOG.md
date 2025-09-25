@@ -29,6 +29,29 @@ See the [list of open enhancements on GitHub](https://github.com/carlocardella/v
 
 ## Log
 
+## [2.26.0] - 2025-09-24
+
+### Added
+
+* **Complete Advanced List Converter Suite** - Comprehensive data transformation tools
+* **Enhanced Prefix/Suffix Commands** - Unified commands supporting both simple text and advanced patterns
+* **Directional Transpose Commands** - Separate commands for rows→columns and columns→rows conversion
+* **Enhanced Truncate with Ellipsis Options** - User choice for ellipsis counting behavior
+
+### Changed
+
+* **Streamlined Command Experience** - Removed redundant standalone Advanced Prefix/Suffix commands
+* **Cleaner Command Palette** - Simplified command titles without "Advanced List Converter:" prefix
+* **Merged Duplicate Commands** - Consolidated duplicate removal with enhanced options into regular commands
+* **Improved User Workflow** - Single commands that offer choice between simple and advanced functionality
+
+### Technical
+
+* **335 Comprehensive Tests** - Full test coverage for all Advanced List Converter functionality
+* **TypeScript Compliance** - All new interfaces and implementations follow strict typing
+* **Modular Architecture** - Clean separation of concerns with dedicated advancedListConverter module
+* **Performance Optimized** - Efficient algorithms for data transformation operations
+
 ## [2.25.0] - 2025-09-24
 
 ### Added
