@@ -93,7 +93,61 @@ The goal is to extend the current Text Toolbox extension with additional tools a
   - [ ] Convert text to NATO phonetic alphabet
   - [ ] Support for oral transmission formatting
 
-## 📋 Advanced List Converter ✅ **COMPLETED Phase 1 - September 2025**
+## � Advanced Sequence Generation
+
+**Description**: Enhance sequence insertion capabilities similar to insertnums extension functionality
+
+**Analysis**: Current extension has basic sequence functionality but lacks advanced features
+
+### Current Implementation Assessment:
+- ✅ **Basic Number Sequences** - `insertSequence(Numbers)` with start/length
+- ✅ **Basic Letter Sequences** - `insertSequence(Letters)` (code exists, no command registered)  
+- ✅ **Line Numbers** - `insertLineNumbers()` with customizable start index
+- ✅ **Helper Functions** - `incrementString()` supports both numbers and letters with carry logic
+- ✅ **Random Generation** - Various random data types in `insertRandom()`
+
+### Missing Advanced Features (vs insertnums):
+- [ ] **Step Size Control** - Custom increments (e.g., 5:5 for 5,10,15,20,25)
+- [ ] **Number Formatting** - Padding, hex/binary/octal output, decimal precision  
+- [ ] **Repeat Patterns** - #3 to cycle sequences (1,2,3,1,2,3)
+- [ ] **Frequency Control** - *3 to repeat each value multiple times
+- [ ] **Stop Conditions** - @expression to stop when condition met
+- [ ] **Random Ranges** - r25 for random numbers in specified ranges
+- [ ] **Date Sequences** - Date increments by days/weeks/months/years
+- [ ] **Month Name Sequences** - Month names in different languages
+- [ ] **JavaScript Expressions** - Custom expressions for complex patterns
+- [ ] **Multi-cursor Support** - Advanced sequence handling across multiple cursors
+- [ ] **Sort Order Control** - $ for sorted vs cursor order insertion
+- [ ] **Reverse Output** - ! for reversed sequences
+- [ ] **Command History** - Remember and reuse previous sequence commands
+- [ ] **Complex Syntax Parser** - Rich syntax for combining multiple features
+
+### Overlap Analysis with Existing Features:
+**⚠️ Note**: Some functionality may overlap with existing Prefix/Suffix commands:
+- **Prefix Command** already supports advanced patterns: `{n}`, `{i}`, `{I}`, `{a}`, `{A}`
+- **Prefix Command** includes date/time patterns: `{date}`, `{time}`  
+- **Prefix Command** has Roman numerals: `{i}`, `{I}`
+- Need to analyze if enhancement should extend existing Prefix functionality vs create new sequence system
+
+### Implementation Strategy:
+**🎯 Unified Approach**: Keep separate command names but share implementation
+- **User Experience**: Both "Prefix with..." and "Insert Sequence..." commands for different mental models
+- **Implementation**: Single shared pattern engine handles both use cases
+- **Behavior**: Both add text at cursor/selection position with same underlying logic
+
+- [ ] **Phase 1**: Analyze current Prefix/Suffix pattern implementation capabilities
+- [ ] **Phase 2**: Extend shared pattern engine with missing sequence features
+- [ ] **Phase 3**: Add new command "Insert Sequence..." that uses same pattern engine
+- [ ] **Phase 4**: Enhance pattern syntax with advanced options (step, repeat, formatting)
+- [ ] **Phase 5**: Add missing sequence types (dates, months, expressions, ranges)
+- [ ] **Phase 6**: Implement advanced multi-cursor and formatting support
+
+### Command Design:
+- **Keep**: `vscode-texttoolbox.PrefixWith` - for users who think "add before text"
+- **Add**: `vscode-texttoolbox.InsertSequence` - for users who think "generate sequence"
+- **Shared**: Both commands use same enhanced pattern engine implementation
+
+## �📋 Advanced List Converter ✅ **COMPLETED Phase 1 - September 2025**
 
 **Description**: Enhance existing list functionality with advanced operations that VS Code doesn't provide built-in
 
