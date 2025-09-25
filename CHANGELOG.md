@@ -12,7 +12,25 @@ See the [list of open enhancements on GitHub](https://github.com/carlocardella/v
 
 ### Added
 
-* **🔄 Complete Data Format Converter Suite** - Comprehensive bidirectional format conversion tools:
+* **Enhanced Sequence Generation** - Advanced pattern engine for powerful sequence insertion:
+  * `Advanced Prefix/Suffix` - Enhanced existing commands with pattern choice (simple text or advanced patterns)
+  * `Insert Sequence` - New dedicated sequence generation command using same pattern engine
+  * **Enhanced Number Patterns** - `{n:start:step:format}` syntax with custom start values, step increments, and formatting
+    * Multiple formats: `{n:10::hex}` (hexadecimal), `{n:10::binary}` (binary), `{n:10::octal}` (octal)
+    * Custom increments: `{n:1:2}` generates 1,3,5,7,9... sequence
+    * Start values: `{n:5}` begins numbering at 5
+  * **Enhanced Letter Sequences** - Custom start positions for alphabet sequences
+    * Lowercase: `{i:c}` starts at 'c' (c,d,e,f...)
+    * Uppercase: `{I:Z}` starts at 'Z' (Z,AA,BB,CC...)
+  * **Enhanced Roman Numerals** - Start value support for Roman numeral sequences
+    * Lowercase: `{r:5}` starts at 'v' (v,vi,vii,viii...)
+    * Uppercase: `{R:10}` starts at 'X' (X,XI,XII,XIII...)
+  * **Complex Pattern Support** - Multiple patterns in single string: `Item {n:1:2} - {i:a} ({R:1})`
+  * **Unified Pattern Engine** - Shared implementation between commands for consistency
+  * **Backward Compatibility** - All existing patterns continue to work: `{n}`, `{i}`, `{I}`, `{r}`, `{R}`, `{date}`, `{time}`
+  * **Comprehensive Testing** - 20+ test cases covering basic patterns, enhanced syntax, edge cases, and integration
+
+* **Complete Data Format Converter Suite** - Comprehensive bidirectional format conversion tools:
   * `Convert JSON to YAML` - Transform JSON to YAML with formatting options (indentation, line width, sort keys)
   * `Convert YAML to JSON` - Convert YAML to JSON with indentation control and validation
   * `Convert JSON to CSV` - Export JSON arrays/objects to CSV with customizable delimiters and headers
@@ -45,11 +63,26 @@ See the [list of open enhancements on GitHub](https://github.com/carlocardella/v
 
 ### Changed
 
-* **Enhanced Prefix/Suffix Commands** - `Prefix with...` and `Suffix with...` now offer choice between simple text or advanced patterns
+* **Enhanced Prefix/Suffix Commands** - Now offer choice between simple text or advanced patterns with unified pattern engine
+* **Improved Pattern Syntax** - Enhanced pattern processing with robust error handling and graceful fallbacks
+* **Unified Command Architecture** - Both "Advanced Prefix/Suffix" and "Insert Sequence" share same pattern engine for consistency
 * **Improved Truncate Functionality** - Users can now choose whether ellipsis (...) counts within max length or is additional
 * **Cleaner Command Palette** - Removed "Advanced List Converter:" prefix from command titles for better user experience
 * **Merged Duplicate Removal** - Combined regular and enhanced duplicate removal into unified commands
 * **Streamlined Commands** - Removed redundant standalone "Advanced Prefix/Suffix" commands (functionality integrated into basic commands)
+
+### Fixed
+
+* **Test Suite Stability** - Fixed timeout issue in controlCharacters test suite with proper async handling
+* **Pattern Engine Robustness** - Enhanced error handling for empty parameters in pattern syntax (e.g., `{n:}` now works correctly)
+* **Regex Pattern Matching** - Improved pattern parsing to handle optional parameters gracefully
+
+### Technical
+
+* **387 Comprehensive Tests** - All tests passing with enhanced coverage for new sequence generation features
+* **Enhanced Pattern Processing** - New `processEnhancedPattern()` and `formatNumber()` functions in advancedListConverter module
+* **Type Safety** - Full TypeScript implementation with proper error handling and parameter validation
+* **Modular Architecture** - Clean separation of pattern processing logic for maintainability and extensibility
 
 ## Log
 

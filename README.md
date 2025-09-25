@@ -141,11 +141,13 @@ Likewise, `Convert to CapitalCase` has been removed in favor of the built-in VSC
   * Case-sensitive or case-insensitive comparison
   * Option to trim whitespace before comparison
 * Advanced Prefix/Suffix Operations
-  * Pattern-based line numbering with multiple formats
-  * Support for {n} (numbers), {i}/{I} (letters), {a}/{A} (alphabetic)
-  * Date/time patterns: {date}, {time}
-  * Line number patterns: {line}
-* **CSV ↔ Markdown Table Converter** ⭐ **NEW**
+  * Enhanced pattern engine with advanced syntax: `{n:start:step:format}`
+  * Multiple number formats: hex, binary, octal
+  * Custom start values and step increments for all sequence types
+  * Enhanced letter and Roman numeral sequences
+  * Complex pattern combinations in single string
+  * Full backward compatibility with existing patterns: `{date}`, `{time}`, `{line}`
+* **CSV ↔ Markdown Table Converter**
   * **CSV to Markdown**: Convert CSV data to formatted Markdown tables
   * **Markdown to CSV**: Convert Markdown tables back to CSV format
   * Support for multiple delimiters (comma, semicolon, tab, pipe, custom)
@@ -154,7 +156,7 @@ Likewise, `Convert to CapitalCase` has been removed in favor of the built-in VSC
   * Robust Markdown table parsing with validation
   * Perfect for documentation, data analysis, and format conversion workflows
 
-### Data Format Converters ⭐ **NEW**
+### Data Format Converters
 
 Complete suite of bidirectional data format converters with advanced options:
 
@@ -278,6 +280,47 @@ All converters include:
 * Insert random number
 * Insert random currency amount
   * US Dollar
+
+### Enhanced Sequence Generation
+
+Powerful pattern-based sequence insertion with advanced syntax for numbering, lettering, and formatting:
+
+* **Advanced Prefix/Suffix** - Enhanced existing commands with choice between simple text or advanced patterns
+* **Insert Sequence** - Dedicated sequence generation command using the same powerful pattern engine
+
+#### Pattern Syntax Examples:
+
+**Enhanced Number Patterns:**
+* `{n}` - Basic numbers: 1, 2, 3, 4...
+* `{n:5}` - Start at 5: 5, 6, 7, 8...
+* `{n:1:2}` - Step by 2: 1, 3, 5, 7...
+* `{n:10::hex}` - Hexadecimal: a, b, c, d...
+* `{n:1::binary}` - Binary: 1, 10, 11, 100...
+* `{n:8::octal}` - Octal: 10, 11, 12, 13...
+
+**Enhanced Letter Sequences:**
+* `{i}` - Basic lowercase: a, b, c, d...
+* `{I}` - Basic uppercase: A, B, C, D...
+* `{i:c}` - Start at 'c': c, d, e, f...
+* `{I:Z}` - Start at 'Z': Z, AA, BB, CC...
+
+**Enhanced Roman Numerals:**
+* `{r}` - Basic lowercase Roman: i, ii, iii, iv...
+* `{R}` - Basic uppercase Roman: I, II, III, IV...
+* `{r:5}` - Start at 5: v, vi, vii, viii...
+* `{R:10}` - Start at 10: X, XI, XII, XIII...
+
+**Complex Patterns:**
+* `Item {n:1:2} - {i:a} ({R:1})` - Mixed patterns: "Item 1 - a (I)", "Item 3 - b (II)"...
+* `{date} - Line {n}` - Date with numbering: "9/25/2025 - Line 1", "9/25/2025 - Line 2"...
+
+**Features:**
+* **Unified Pattern Engine** - Same powerful engine for both Prefix/Suffix and Insert Sequence commands
+* **Backward Compatibility** - All existing patterns continue to work: `{date}`, `{time}`, `{line}`
+* **Robust Error Handling** - Graceful fallbacks for invalid parameters
+* **Multiple Formats** - Support for hex, binary, octal number formatting
+* **Flexible Start Points** - Begin sequences at any number or letter
+* **Complex Combinations** - Mix multiple patterns in a single string
   * Euro
   * British Pound
   * Japanese Yen
