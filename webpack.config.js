@@ -29,6 +29,7 @@ const webConfig = /** @type WebpackConfig */ {
             path: require.resolve("path-browserify"),
             process: require.resolve("process/browser"),
             stream: require.resolve("stream-browserify"),
+            timers: require.resolve("timers-browserify"),
             vm: false, // disable vm polyfill as it's not needed for our use case
         },
     },
