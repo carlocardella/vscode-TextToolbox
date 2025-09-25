@@ -381,9 +381,9 @@ export function processEnhancedPattern(pattern: string, lineIndex: number): stri
     const now = new Date();
     
     // Enhanced number patterns: {n}, {n:start}, {n:start:step}, {n:start:step:format}
-    processedPattern = processedPattern.replace(/\{n(?::(\d+))?(?::(\d+))?(?::([^}]+))?\}/g, (match, start = '1', step = '1', format) => {
-        const startNum = parseInt(start, 10);
-        const stepNum = parseInt(step, 10);
+    processedPattern = processedPattern.replace(/\{n(?::(\d*))?(?::(\d*))?(?::([^}]+))?\}/g, (match, start = '1', step = '1', format) => {
+        const startNum = parseInt(start || '1', 10);
+        const stepNum = parseInt(step || '1', 10);
         const value = startNum + (lineIndex * stepNum);
         
         if (format) {
@@ -406,14 +406,14 @@ export function processEnhancedPattern(pattern: string, lineIndex: number): stri
     });
     
     // Enhanced Roman patterns: {r}, {r:start}, {R}, {R:start}
-    processedPattern = processedPattern.replace(/\{r(?::(\d+))?\}/g, (match, start = '1') => {
-        const startNum = parseInt(start, 10);
+    processedPattern = processedPattern.replace(/\{r(?::(\d*))?\}/g, (match, start = '1') => {
+        const startNum = parseInt(start || '1', 10);
         const value = startNum + lineIndex;
         return toRoman(value, false);
     });
     
-    processedPattern = processedPattern.replace(/\{R(?::(\d+))?\}/g, (match, start = '1') => {
-        const startNum = parseInt(start, 10);
+    processedPattern = processedPattern.replace(/\{R(?::(\d*))?\}/g, (match, start = '1') => {
+        const startNum = parseInt(start || '1', 10);
         const value = startNum + lineIndex;
         return toRoman(value, true);
     });

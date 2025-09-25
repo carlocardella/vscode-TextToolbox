@@ -17,9 +17,15 @@ describe("controlCharacters", () => {
         console.log("All controlCharacters tests done");
     });
 
-    afterEach(async () => {
-        let config = workspace.getConfiguration("TextToolbox", window.activeTextEditor?.document);
-        await config.update("replaceControlCharactersWith", undefined, ConfigurationTarget.Global);
+    afterEach(async function () {
+        this.timeout(5000);
+        try {
+            let config = workspace.getConfiguration("TextToolbox", window.activeTextEditor?.document);
+            await config.update("replaceControlCharactersWith", undefined, ConfigurationTarget.Global);
+            await sleep(100); // Give time for config to settle
+        } catch (error) {
+            console.warn("Failed to reset config in afterEach:", error);
+        }
     });
 
     describe("Control Characters", () => {
