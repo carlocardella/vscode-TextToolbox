@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## Unreleased
 
+See the [list of open enhancements on GitHub](https://github.com/carlocardella/vscode-TextToolbox/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3Aenhancement)
+
+## [2.27.0] - 2025-09-25
+
 ### Added
 
 * **🔄 Complete Data Format Converter Suite** - Comprehensive bidirectional format conversion tools:
@@ -46,8 +50,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 * **Cleaner Command Palette** - Removed "Advanced List Converter:" prefix from command titles for better user experience
 * **Merged Duplicate Removal** - Combined regular and enhanced duplicate removal into unified commands
 * **Streamlined Commands** - Removed redundant standalone "Advanced Prefix/Suffix" commands (functionality integrated into basic commands)
-
-See the [list of open enhancements on GitHub](https://github.com/carlocardella/vscode-TextToolbox/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3Aenhancement)
 
 ## Log
 
