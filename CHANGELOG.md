@@ -8,6 +8,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ### Added
 
+* **🔄 Complete Data Format Converter Suite** - Comprehensive bidirectional format conversion tools:
+  * `Convert JSON to YAML` - Transform JSON to YAML with formatting options (indentation, line width, sort keys)
+  * `Convert YAML to JSON` - Convert YAML to JSON with indentation control and validation
+  * `Convert JSON to CSV` - Export JSON arrays/objects to CSV with customizable delimiters and headers
+  * `Convert Markdown to HTML` - Parse Markdown to HTML using markdown-it with table and code support
+  * `Convert HTML to Markdown` - Convert HTML back to Markdown using Turndown with formatting preservation
+  * `Convert JSON to TOML` - Transform JSON to TOML with structured formatting and type preservation
+  * `Convert TOML to JSON` - Convert TOML configuration files to JSON format
+  * `Convert XML to JSON` - Parse XML to JSON with configurable attribute handling and namespace support
+  * `Convert JSON to XML` - Generate XML from JSON with customizable formatting and root elements
+  * `Convert YAML to TOML` - Cross-format conversion between YAML and TOML configurations
+  * `Convert TOML to YAML` - Transform TOML back to YAML with proper data type preservation
+  * All converters include comprehensive error handling, validation, and user-configurable conversion options
+
 * **Advanced List Converter** - Comprehensive suite of data transformation tools:
   * `Transpose Data` - Convert rows to columns with customizable delimiters (CSV, TSV, custom) - now includes directional variants:
     * `Transpose Data (Rows ↔ Columns)` - Bidirectional conversion 

@@ -556,6 +556,61 @@
         "command": "vscode-texttoolbox.MarkdownTableToCsv",
         "title": "Convert Markdown Table to CSV...",
         "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.JsonToYaml",
+        "title": "Convert JSON to YAML...",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.YamlToJson",
+        "title": "Convert YAML to JSON...",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.JsonToCsv",
+        "title": "Convert JSON to CSV...",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.MarkdownToHtml",
+        "title": "Convert Markdown to HTML...",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.HtmlToMarkdown",
+        "title": "Convert HTML to Markdown...",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.JsonToToml",
+        "title": "Convert JSON to TOML...",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.TomlToJson",
+        "title": "Convert TOML to JSON...",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.XmlToJson",
+        "title": "Convert XML to JSON...",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.JsonToXml",
+        "title": "Convert JSON to XML...",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.YamlToToml",
+        "title": "Convert YAML to TOML...",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.TomlToYaml",
+        "title": "Convert TOML to YAML...",
+        "category": "Text Toolbox"
       }
     ],
     "menus": {
@@ -1051,6 +1106,50 @@
         {
           "group": "tt.advancedListConverter.convert",
           "command": "vscode-texttoolbox.MarkdownTableToCsv"
+        },
+        {
+          "group": "tt.advancedListConverter.convert",
+          "command": "vscode-texttoolbox.JsonToYaml"
+        },
+        {
+          "group": "tt.advancedListConverter.convert",
+          "command": "vscode-texttoolbox.YamlToJson"
+        },
+        {
+          "group": "tt.advancedListConverter.convert",
+          "command": "vscode-texttoolbox.JsonToCsv"
+        },
+        {
+          "group": "tt.advancedListConverter.convert",
+          "command": "vscode-texttoolbox.MarkdownToHtml"
+        },
+        {
+          "group": "tt.advancedListConverter.convert",
+          "command": "vscode-texttoolbox.HtmlToMarkdown"
+        },
+        {
+          "group": "tt.advancedListConverter.convert",
+          "command": "vscode-texttoolbox.JsonToToml"
+        },
+        {
+          "group": "tt.advancedListConverter.convert",
+          "command": "vscode-texttoolbox.TomlToJson"
+        },
+        {
+          "group": "tt.advancedListConverter.convert",
+          "command": "vscode-texttoolbox.XmlToJson"
+        },
+        {
+          "group": "tt.advancedListConverter.convert",
+          "command": "vscode-texttoolbox.JsonToXml"
+        },
+        {
+          "group": "tt.advancedListConverter.convert",
+          "command": "vscode-texttoolbox.YamlToToml"
+        },
+        {
+          "group": "tt.advancedListConverter.convert",
+          "command": "vscode-texttoolbox.TomlToYaml"
         }
       ]
     },
@@ -1396,11 +1495,16 @@
     "@types/date-and-time": "^0.13.0",
     "@types/dateformat": "^5.0.1",
     "@types/glob": "^8.1.0",
+    "@types/iarna__toml": "^2.0.5",
+    "@types/js-yaml": "^4.0.9",
     "@types/jsonic": "^0.3.2",
     "@types/luxon": "^3.3.3",
+    "@types/markdown-it": "^14.1.2",
     "@types/mocha": "^9.1.1",
     "@types/node": "^20.8.10",
+    "@types/turndown": "^5.0.5",
     "@types/vscode": "^1.63.2",
+    "@types/xml2js": "^0.4.14",
     "@typescript-eslint/eslint-plugin": "^6.9.1",
     "@typescript-eslint/parser": "^6.9.1",
     "@vscode/test-electron": "^2.3.6",
@@ -1425,16 +1529,21 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
+    "@iarna/toml": "^2.2.5",
     "bcryptjs": "^3.0.2",
     "buffer": "^6.0.3",
     "chance": "^1.1.11",
     "crypto-js": "^4.2.0",
+    "js-yaml": "^4.1.0",
     "jsonic": "^1.0.1",
     "jwt-decode": "^3.1.2",
     "lorem-ipsum": "^2.0.8",
     "luxon": "^3.4.3",
+    "markdown-it": "^14.1.0",
     "os-browserify": "^0.3.0",
     "process": "^0.11.10",
-    "stream-browserify": "^3.0.0"
+    "stream-browserify": "^3.0.0",
+    "turndown": "^7.2.1",
+    "xml2js": "^0.6.2"
   }
 }

@@ -19,6 +19,7 @@ import { delimiterTypes } from "./modules/delimiters";
 import * as StringUtilities from "./modules/stringUtilities";
 import * as CryptoTools from "./modules/cryptoTools";
 import * as AdvancedListConverter from "./modules/advancedListConverter";
+import * as DataFormatConverter from "./modules/dataFormatConverter";
 
 export function activate(context: ExtensionContext) {
     console.log("vscode-texttoolbox is active");
@@ -786,6 +787,94 @@ export function activate(context: ExtensionContext) {
             const options = await AdvancedListConverter.askForMarkdownToCsvOptions();
             if (options) {
                 await AdvancedListConverter.markdownTableToCsv(options);
+            }
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.JsonToYaml", async () => {
+            const options = await DataFormatConverter.askForJsonToYamlOptions();
+            if (options) {
+                await DataFormatConverter.jsonToYaml(options);
+            }
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.YamlToJson", async () => {
+            const options = await DataFormatConverter.askForYamlToJsonOptions();
+            if (options) {
+                await DataFormatConverter.yamlToJson(options);
+            }
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.JsonToCsv", async () => {
+            const options = await DataFormatConverter.askForJsonToCsvOptions();
+            if (options) {
+                await DataFormatConverter.jsonToCsv(options);
+            }
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.MarkdownToHtml", async () => {
+            const options = await DataFormatConverter.askForMarkdownToHtmlOptions();
+            if (options) {
+                await DataFormatConverter.markdownToHtml(options);
+            }
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.HtmlToMarkdown", async () => {
+            const options = await DataFormatConverter.askForHtmlToMarkdownOptions();
+            if (options) {
+                await DataFormatConverter.htmlToMarkdown(options);
+            }
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.JsonToToml", async () => {
+            const options = await DataFormatConverter.askForJsonToTomlOptions();
+            if (options) {
+                await DataFormatConverter.jsonToToml(options);
+            }
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.TomlToJson", async () => {
+            const options = await DataFormatConverter.askForTomlToJsonOptions();
+            if (options) {
+                await DataFormatConverter.tomlToJson(options);
+            }
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.XmlToJson", async () => {
+            const options = await DataFormatConverter.askForXmlToJsonOptions();
+            if (options) {
+                await DataFormatConverter.xmlToJson(options);
+            }
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.JsonToXml", async () => {
+            const options = await DataFormatConverter.askForJsonToXmlOptions();
+            if (options) {
+                await DataFormatConverter.jsonToXml(options);
+            }
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.YamlToToml", async () => {
+            const options = await DataFormatConverter.askForYamlToTomlOptions();
+            if (options) {
+                await DataFormatConverter.yamlToToml(options);
+            }
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.TomlToYaml", async () => {
+            const options = await DataFormatConverter.askForTomlToYamlOptions();
+            if (options) {
+                await DataFormatConverter.tomlToYaml(options);
             }
         })
     );

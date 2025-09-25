@@ -46,33 +46,42 @@ The goal is to extend the current Text Toolbox extension with additional tools a
   - [x] Configurable length (1-128 characters)
   - [x] Hexadecimal and Base64 encoding support
 
-## 🔄 Data Format Converters
+## 🔄 Data Format Converters ✅ **COMPLETED v2.26.0**
 
 **Description**: Add bidirectional converters between various data formats
 
-### Functions to Implement:
-- [ ] **YAML ↔ JSON Converter**
-  - [ ] YAML to JSON conversion
-  - [ ] JSON to YAML conversion
-  - [ ] Validation and error handling
-- [ ] **YAML ↔ TOML Converter**
-  - [ ] YAML to TOML conversion
-  - [ ] TOML to YAML conversion
-- [ ] **JSON ↔ TOML Converter**
-  - [ ] JSON to TOML conversion
-  - [ ] TOML to JSON conversion
-- [ ] **XML ↔ JSON Converter**
-  - [ ] XML to JSON conversion
-  - [ ] JSON to XML conversion
-  - [ ] Handle attributes and namespaces
+### Functions Implemented:
+- [x] **JSON ↔ YAML Converter** ✅ **COMPLETED September 2025**
+  - [x] JSON to YAML conversion with formatting options
+  - [x] YAML to JSON conversion with indentation control
+  - [x] Comprehensive validation and error handling
+  - [x] Custom options: indentation, line width, sort keys
+- [x] **YAML ↔ TOML Converter** ✅ **COMPLETED September 2025**  
+  - [x] YAML to TOML conversion with proper data type handling
+  - [x] TOML to YAML conversion with formatting preservation
+  - [x] Cross-format data type preservation
+- [x] **JSON ↔ TOML Converter** ✅ **COMPLETED September 2025**
+  - [x] JSON to TOML conversion with structured formatting
+  - [x] TOML to JSON conversion with type preservation
+  - [x] Handle complex nested structures
+- [x] **XML ↔ JSON Converter** ✅ **COMPLETED September 2025**
+  - [x] XML to JSON conversion with attribute handling
+  - [x] JSON to XML conversion with customizable formatting
+  - [x] Support for attributes, namespaces, and CDATA
+  - [x] Configurable attribute prefixes and text nodes
 - [x] **CSV ↔ Markdown Table Converter** ✅ **COMPLETED September 2025**
   - [x] Convert CSV data to formatted Markdown tables
   - [x] Convert Markdown tables back to CSV format
   - [x] Support multiple delimiters and header options
-- [ ] **Markdown ↔ HTML Converter**
-  - [ ] Markdown to HTML conversion
-  - [ ] HTML to Markdown conversion (basic)
-  - [ ] Support for common markdown extensions
+- [x] **Markdown ↔ HTML Converter** ✅ **COMPLETED September 2025**
+  - [x] Markdown to HTML conversion with markdown-it parser
+  - [x] HTML to Markdown conversion with Turndown
+  - [x] Support for tables, code blocks, and formatting
+  - [x] Configurable conversion options
+- [x] **JSON → CSV Converter** ✅ **COMPLETED September 2025**
+  - [x] Convert JSON arrays/objects to CSV format
+  - [x] Customizable delimiters and header handling
+  - [x] Nested object flattening options
 
 ## 🔢 Advanced Base Conversion
 

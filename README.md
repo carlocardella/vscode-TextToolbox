@@ -154,6 +154,59 @@ Likewise, `Convert to CapitalCase` has been removed in favor of the built-in VSC
   * Robust Markdown table parsing with validation
   * Perfect for documentation, data analysis, and format conversion workflows
 
+### Data Format Converters ⭐ **NEW**
+
+Complete suite of bidirectional data format converters with advanced options:
+
+* **JSON ↔ YAML Converter**
+  * **JSON to YAML**: Convert JSON to YAML with formatting options
+    * Configurable indentation (2, 4, 8 spaces or tabs)
+    * Line width control for better readability
+    * Option to sort object keys alphabetically
+  * **YAML to JSON**: Convert YAML to JSON with validation
+    * Indentation control (2, 4, 8 spaces or tabs)
+    * Comprehensive error handling for malformed YAML
+* **JSON ↔ TOML Converter**
+  * **JSON to TOML**: Transform JSON to TOML configuration format
+  * **TOML to JSON**: Convert TOML back to JSON with type preservation
+  * Handles complex nested structures and arrays
+  * Maintains data type integrity across conversions
+* **XML ↔ JSON Converter**
+  * **XML to JSON**: Parse XML to JSON with flexible options
+    * Configurable attribute prefix (default: `@`)
+    * Text node naming (default: `#text`)
+    * Support for CDATA sections and namespaces
+  * **JSON to XML**: Generate XML from JSON structure
+    * Customizable root element name
+    * Proper XML formatting with indentation
+    * Handles arrays and nested objects
+* **Markdown ↔ HTML Converter**
+  * **Markdown to HTML**: Parse Markdown using markdown-it parser
+    * Support for tables, code blocks, and formatting
+    * GitHub Flavored Markdown compatibility
+    * Configurable HTML rendering options
+  * **HTML to Markdown**: Convert HTML back to Markdown using Turndown
+    * Preserves formatting and structure
+    * Handles tables, lists, and code blocks
+    * Clean Markdown output
+* **YAML ↔ TOML Converter**
+  * **YAML to TOML**: Cross-format configuration conversion
+  * **TOML to YAML**: Transform TOML to YAML format
+  * Proper data type preservation between formats
+  * Handles configuration-specific structures
+* **JSON → CSV Converter**
+  * Convert JSON arrays or objects to CSV format
+  * Customizable delimiters (comma, semicolon, tab, pipe, custom)
+  * Flexible header handling options
+  * Nested object flattening with dot notation
+  * Proper CSV field escaping for special characters
+
+All converters include:
+* Comprehensive error handling and validation
+* User-configurable conversion options
+* Context menu integration for selected text
+* Command palette access for full document conversion
+
 ### Selection
 
 * Invert Selection
