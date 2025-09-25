@@ -140,7 +140,8 @@ Likewise, `Convert to CapitalCase` has been removed in favor of the built-in VSC
   * Keep first or last occurrence of duplicates
   * Case-sensitive or case-insensitive comparison
   * Option to trim whitespace before comparison
-* Advanced Prefix/Suffix Operations
+* **Enhanced Prefix/Suffix Commands**
+  * Choose between simple text or advanced patterns when adding prefix/suffix
   * Enhanced pattern engine with advanced syntax: `{n:start:step:format}`
   * Multiple number formats: hex, binary, octal
   * Custom start values and step increments for all sequence types
@@ -285,7 +286,7 @@ All converters include:
 
 Powerful pattern-based sequence insertion with advanced syntax for numbering, lettering, and formatting:
 
-* **Advanced Prefix/Suffix** - Enhanced existing commands with choice between simple text or advanced patterns
+* **Enhanced Prefix/Suffix Commands** - Choose "Advanced Patterns" option when using prefix/suffix commands for pattern-based sequences
 * **Insert Sequence** - Dedicated sequence generation command using the same powerful pattern engine
 
 #### Pattern Syntax Examples:

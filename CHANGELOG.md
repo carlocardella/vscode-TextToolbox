@@ -13,7 +13,7 @@ See the [list of open enhancements on GitHub](https://github.com/carlocardella/v
 ### Added
 
 * **Enhanced Sequence Generation** - Advanced pattern engine for powerful sequence insertion:
-  * `Advanced Prefix/Suffix` - Enhanced existing commands with pattern choice (simple text or advanced patterns)
+  * **Enhanced Prefix/Suffix Commands** - Existing prefix/suffix commands now offer "Advanced Patterns" option for pattern-based sequences
   * `Insert Sequence` - New dedicated sequence generation command using same pattern engine
   * **Enhanced Number Patterns** - `{n:start:step:format}` syntax with custom start values, step increments, and formatting
     * Multiple formats: `{n:10::hex}` (hexadecimal), `{n:10::binary}` (binary), `{n:10::octal}` (octal)
@@ -65,11 +65,11 @@ See the [list of open enhancements on GitHub](https://github.com/carlocardella/v
 
 * **Enhanced Prefix/Suffix Commands** - Now offer choice between simple text or advanced patterns with unified pattern engine
 * **Improved Pattern Syntax** - Enhanced pattern processing with robust error handling and graceful fallbacks
-* **Unified Command Architecture** - Both "Advanced Prefix/Suffix" and "Insert Sequence" share same pattern engine for consistency
+* **Unified Command Architecture** - Both prefix/suffix and "Insert Sequence" commands share same pattern engine for consistency
 * **Improved Truncate Functionality** - Users can now choose whether ellipsis (...) counts within max length or is additional
 * **Cleaner Command Palette** - Removed "Advanced List Converter:" prefix from command titles for better user experience
 * **Merged Duplicate Removal** - Combined regular and enhanced duplicate removal into unified commands
-* **Streamlined Commands** - Removed redundant standalone "Advanced Prefix/Suffix" commands (functionality integrated into basic commands)
+* **Streamlined Commands** - Removed redundant standalone "Advanced Prefix/Suffix" command (functionality accessible through basic prefix/suffix commands)
 
 ### Fixed
 
@@ -97,7 +97,7 @@ See the [list of open enhancements on GitHub](https://github.com/carlocardella/v
 
 ### Changed
 
-* **Streamlined Command Experience** - Removed redundant standalone Advanced Prefix/Suffix commands
+* **Streamlined Command Experience** - Removed redundant standalone Advanced Prefix/Suffix command
 * **Cleaner Command Palette** - Simplified command titles without "Advanced List Converter:" prefix
 * **Merged Duplicate Commands** - Consolidated duplicate removal with enhanced options into regular commands
 * **Improved User Workflow** - Single commands that offer choice between simple and advanced functionality

@@ -895,14 +895,6 @@ export function activate(context: ExtensionContext) {
     
     // Advanced sequence generation commands
     context.subscriptions.push(
-        commands.registerTextEditorCommand("vscode-texttoolbox.AdvancedPrefixSuffix", async () => {
-            const options = await AdvancedListConverter.askForPrefixSuffixPattern();
-            if (options) {
-                await AdvancedListConverter.advancedPrefixSuffix(options.pattern, options.type, false);
-            }
-        })
-    );
-    context.subscriptions.push(
         commands.registerTextEditorCommand("vscode-texttoolbox.InsertSequence", async () => {
             const pattern = await window.showInputBox({
                 prompt: 'Enter sequence pattern (Enhanced: {n:start:step:format}, {i:start}, {r:start}, etc.)',
