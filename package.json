@@ -193,6 +193,16 @@
         "category": "Text Toolbox"
       },
       {
+        "command": "vscode-texttoolbox.AdvancedPrefixSuffix",
+        "title": "Advanced Prefix/Suffix with patterns...",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.InsertSequence",
+        "title": "Insert sequence...",
+        "category": "Text Toolbox"
+      },
+      {
         "command": "vscode-texttoolbox.RemoveControlCharacters",
         "title": "Replace control characters",
         "category": "Text Toolbox"
@@ -816,6 +826,14 @@
         {
           "group": "tt.insert",
           "command": "vscode-texttoolbox.InsertSequenceNumbers"
+        },
+        {
+          "group": "tt.insert",
+          "command": "vscode-texttoolbox.InsertSequence"
+        },
+        {
+          "group": "tt.insert",
+          "command": "vscode-texttoolbox.AdvancedPrefixSuffix"
         },
         {
           "group": "tt.insert",

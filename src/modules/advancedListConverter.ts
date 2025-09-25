@@ -372,6 +372,106 @@ function toRoman(num: number, uppercase: boolean = true): string {
 }
 
 /**
+ * Enhanced pattern processor with extended syntax support
+ * Supports: {n:start:step:format}, {i:start}, {I:start}, etc.
+ * @internal - exported for testing purposes
+ */
+export function processEnhancedPattern(pattern: string, lineIndex: number): string {
+    let processedPattern = pattern;
+    const now = new Date();
+    
+    // Enhanced number patterns: {n}, {n:start}, {n:start:step}, {n:start:step:format}
+    processedPattern = processedPattern.replace(/\{n(?::(\d+))?(?::(\d+))?(?::([^}]+))?\}/g, (match, start = '1', step = '1', format) => {
+        const startNum = parseInt(start, 10);
+        const stepNum = parseInt(step, 10);
+        const value = startNum + (lineIndex * stepNum);
+        
+        if (format) {
+            return formatNumber(value, format);
+        }
+        return value.toString();
+    });
+    
+    // Enhanced letter patterns: {i}, {i:start}, {I}, {I:start}
+    processedPattern = processedPattern.replace(/\{i(?::([a-z]))?\}/g, (match, startChar = 'a') => {
+        const startCode = startChar.charCodeAt(0) - 97; // Convert to 0-based index
+        const letterIndex = (startCode + lineIndex) % 26;
+        return String.fromCharCode(97 + letterIndex);
+    });
+    
+    processedPattern = processedPattern.replace(/\{I(?::([A-Z]))?\}/g, (match, startChar = 'A') => {
+        const startCode = startChar.charCodeAt(0) - 65; // Convert to 0-based index
+        const letterIndex = (startCode + lineIndex) % 26;
+        return String.fromCharCode(65 + letterIndex);
+    });
+    
+    // Enhanced Roman patterns: {r}, {r:start}, {R}, {R:start}
+    processedPattern = processedPattern.replace(/\{r(?::(\d+))?\}/g, (match, start = '1') => {
+        const startNum = parseInt(start, 10);
+        const value = startNum + lineIndex;
+        return toRoman(value, false);
+    });
+    
+    processedPattern = processedPattern.replace(/\{R(?::(\d+))?\}/g, (match, start = '1') => {
+        const startNum = parseInt(start, 10);
+        const value = startNum + lineIndex;
+        return toRoman(value, true);
+    });
+    
+    // Legacy simple patterns (for backward compatibility)
+    processedPattern = processedPattern.replace(/\{date\}/g, now.toLocaleDateString());
+    processedPattern = processedPattern.replace(/\{time\}/g, now.toLocaleTimeString());
+    processedPattern = processedPattern.replace(/\{line\}/g, (lineIndex + 1).toString());
+    
+    return processedPattern;
+}
+
+/**
+ * Format number with padding and base conversion
+ * Supports formats like: 05d (5 digits with leading zeros), 04x (4 digit hex), etc.
+ * @internal - exported for testing purposes
+ */
+export function formatNumber(value: number, format: string): string {
+    // Parse format: [padding][width][type]
+    const formatMatch = format.match(/^0?(\d+)?([dxob]?)$/);
+    
+    if (!formatMatch) {
+        return value.toString(); // Fallback to simple string
+    }
+    
+    const [, width, type] = formatMatch;
+    const widthNum = width ? parseInt(width, 10) : 0;
+    
+    let result: string;
+    
+    switch (type) {
+        case 'x':
+            result = value.toString(16);
+            break;
+        case 'X':
+            result = value.toString(16).toUpperCase();
+            break;
+        case 'o':
+            result = value.toString(8);
+            break;
+        case 'b':
+            result = value.toString(2);
+            break;
+        case 'd':
+        default:
+            result = value.toString(10);
+            break;
+    }
+    
+    // Apply padding if width specified and format starts with 0
+    if (widthNum > 0 && format.startsWith('0')) {
+        result = result.padStart(widthNum, '0');
+    }
+    
+    return result;
+}
+
+/**
  * Advanced prefix/suffix operations with pattern support
  * @param pattern The pattern string containing placeholders
  * @param type Whether to add as prefix or suffix
@@ -391,17 +491,8 @@ export async function advancedPrefixSuffix(pattern: string, type: 'prefix' | 'su
     const now = new Date();
     
     for (let i = 0; i < lines.length; i++) {
-        let processedPattern = pattern;
-        
-        // Replace pattern placeholders
-        processedPattern = processedPattern.replace(/\{n\}/g, (i + 1).toString());
-        processedPattern = processedPattern.replace(/\{i\}/g, String.fromCharCode(97 + (i % 26))); // a-z cycling
-        processedPattern = processedPattern.replace(/\{I\}/g, String.fromCharCode(65 + (i % 26))); // A-Z cycling
-        processedPattern = processedPattern.replace(/\{r\}/g, toRoman(i + 1, false));
-        processedPattern = processedPattern.replace(/\{R\}/g, toRoman(i + 1, true));
-        processedPattern = processedPattern.replace(/\{date\}/g, now.toLocaleDateString());
-        processedPattern = processedPattern.replace(/\{time\}/g, now.toLocaleTimeString());
-        processedPattern = processedPattern.replace(/\{line\}/g, (i + 1).toString());
+        // Use enhanced pattern processing
+        const processedPattern = processEnhancedPattern(pattern, i);
         
         // Apply prefix or suffix
         if (type === 'prefix') {
@@ -748,8 +839,8 @@ export async function askForPrefixSuffixPattern(): Promise<{ pattern: string; ty
     }
 
     const pattern = await window.showInputBox({
-        prompt: 'Enter pattern (use {n} for numbers, {i}/{I} for letters, {r}/{R} for Roman, {date}, {time}, {line})',
-        placeHolder: 'e.g., "{n}. ", "Item {I}: ", " - {date}"',
+        prompt: 'Enter pattern (Enhanced: {n:start:step:format}, {i:start}, {r:start}, etc.)',
+        placeHolder: 'e.g., "{n}. ", "{n:10:5:03d} ", "{i:c} ", "{R:1} "',
         value: type.value === 'prefix' ? '{n}. ' : ' - {date}'
     });
 

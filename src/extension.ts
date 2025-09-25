@@ -892,6 +892,29 @@ export function activate(context: ExtensionContext) {
             ControlCharacters.replaceControlCharacters();
         })
     );
+    
+    // Advanced sequence generation commands
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.AdvancedPrefixSuffix", async () => {
+            const options = await AdvancedListConverter.askForPrefixSuffixPattern();
+            if (options) {
+                await AdvancedListConverter.advancedPrefixSuffix(options.pattern, options.type, false);
+            }
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.InsertSequence", async () => {
+            const pattern = await window.showInputBox({
+                prompt: 'Enter sequence pattern (Enhanced: {n:start:step:format}, {i:start}, {r:start}, etc.)',
+                placeHolder: 'e.g., "{n}", "{n:10:5:03d}", "{i:c}", "{R:5}"',
+                value: '{n}'
+            });
+            
+            if (pattern) {
+                await AdvancedListConverter.advancedPrefixSuffix(pattern, 'prefix', false);
+            }
+        })
+    );
 
     // status bar selection
     if (workspace.getConfiguration().get("TextToolbox.enableStatusBarWordLineCount")) {
