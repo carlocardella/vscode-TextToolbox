@@ -773,6 +773,22 @@ export function activate(context: ExtensionContext) {
             }
         })
     );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.CsvToMarkdownTable", async () => {
+            const options = await AdvancedListConverter.askForCsvToMarkdownOptions();
+            if (options) {
+                await AdvancedListConverter.csvToMarkdownTable(options);
+            }
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.MarkdownTableToCsv", async () => {
+            const options = await AdvancedListConverter.askForMarkdownToCsvOptions();
+            if (options) {
+                await AdvancedListConverter.markdownTableToCsv(options);
+            }
+        })
+    );
 
     // control characters
     context.subscriptions.push(

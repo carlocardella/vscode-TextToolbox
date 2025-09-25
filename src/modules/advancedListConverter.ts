@@ -28,6 +28,25 @@ export interface TruncateOptions {
 }
 
 /**
+ * Options for CSV to Markdown table conversion
+ */
+export interface CsvToMarkdownOptions {
+    delimiter: string;
+    useFirstRowAsHeaders: boolean;
+    customHeaders?: string[];
+    openInNewEditor: boolean;
+}
+
+/**
+ * Options for Markdown table to CSV conversion
+ */
+export interface MarkdownToCsvOptions {
+    delimiter: string;
+    includeHeaders: boolean;
+    openInNewEditor: boolean;
+}
+
+/**
  * Advanced prefix/suffix pattern types
  */
 export enum PatternType {
@@ -414,6 +433,165 @@ export async function advancedPrefixSuffix(pattern: string, type: 'prefix' | 'su
 }
 
 /**
+ * Convert CSV data to Markdown table format
+ * @param options Options for CSV conversion including delimiter and header handling
+ */
+export async function csvToMarkdownTable(options: CsvToMarkdownOptions): Promise<void> {
+    const text = getDocumentTextOrSelection();
+    if (!text) {
+        window.showErrorMessage('No text selected or document is empty');
+        return;
+    }
+
+    const eol = getDocumentEOL(getActiveEditor());
+    const lines = text.split(eol).filter(line => line.trim().length > 0);
+    
+    if (lines.length === 0) {
+        window.showErrorMessage('No data found to convert');
+        return;
+    }
+
+    // Parse CSV data
+    const rows = lines.map(line => parseCSVLine(line, options.delimiter));
+    
+    if (rows.length === 0) {
+        window.showErrorMessage('Unable to parse CSV data');
+        return;
+    }
+
+    // Determine headers
+    let headers: string[];
+    let dataRows: string[][];
+
+    if (options.useFirstRowAsHeaders) {
+        headers = rows[0];
+        dataRows = rows.slice(1);
+    } else if (options.customHeaders && options.customHeaders.length > 0) {
+        headers = options.customHeaders;
+        dataRows = rows;
+    } else {
+        // Generate default headers (Column 1, Column 2, etc.)
+        const maxColumns = Math.max(...rows.map(row => row.length));
+        headers = Array.from({ length: maxColumns }, (_, i) => `Column ${i + 1}`);
+        dataRows = rows;
+    }
+
+    // Ensure all data rows have the same number of columns as headers
+    const normalizedDataRows = dataRows.map(row => {
+        const normalizedRow = [...row];
+        while (normalizedRow.length < headers.length) {
+            normalizedRow.push('');
+        }
+        return normalizedRow.slice(0, headers.length);
+    });
+
+    // Create Markdown table
+    const markdownTable = createMarkdownTable(headers, normalizedDataRows);
+
+    if (options.openInNewEditor) {
+        createNewEditor(markdownTable);
+    } else {
+        const editor = getActiveEditor();
+        if (!editor) {
+            return;
+        }
+        
+        const selection = getSelection(editor);
+        if (!selection) {
+            return;
+        }
+
+        editor.edit((editBuilder) => {
+            editBuilder.replace(selection, markdownTable);
+        });
+    }
+}
+
+/**
+ * Parse a CSV line respecting quotes and escaped delimiters
+ */
+function parseCSVLine(line: string, delimiter: string): string[] {
+    const result: string[] = [];
+    let current = '';
+    let inQuotes = false;
+    let i = 0;
+
+    while (i < line.length) {
+        const char = line[i];
+        const nextChar = line[i + 1];
+
+        if (char === '"') {
+            if (inQuotes && nextChar === '"') {
+                // Escaped quote
+                current += '"';
+                i += 2;
+            } else {
+                // Toggle quote state
+                inQuotes = !inQuotes;
+                i++;
+            }
+        } else if (char === delimiter && !inQuotes) {
+            // Delimiter outside quotes
+            result.push(current.trim());
+            current = '';
+            i++;
+        } else {
+            current += char;
+            i++;
+        }
+    }
+
+    // Add the last field
+    result.push(current.trim());
+    
+    return result;
+}
+
+/**
+ * Create a Markdown table from headers and data rows
+ */
+function createMarkdownTable(headers: string[], dataRows: string[][]): string {
+    if (headers.length === 0) {
+        return '';
+    }
+
+    // Calculate column widths for better formatting
+    const columnWidths = headers.map(header => header.length);
+    
+    dataRows.forEach(row => {
+        row.forEach((cell, index) => {
+            if (index < columnWidths.length) {
+                columnWidths[index] = Math.max(columnWidths[index], cell.length);
+            }
+        });
+    });
+
+    // Ensure minimum width of 3 for separator row
+    columnWidths.forEach((width, index) => {
+        columnWidths[index] = Math.max(width, 3);
+    });
+
+    // Create header row
+    const headerRow = '| ' + headers.map((header, index) => 
+        header.padEnd(columnWidths[index])
+    ).join(' | ') + ' |';
+
+    // Create separator row
+    const separatorRow = '| ' + columnWidths.map(width => 
+        '-'.repeat(width)
+    ).join(' | ') + ' |';
+
+    // Create data rows
+    const tableDataRows = dataRows.map(row => 
+        '| ' + row.map((cell, index) => 
+            cell.padEnd(columnWidths[index])
+        ).join(' | ') + ' |'
+    );
+
+    return [headerRow, separatorRow, ...tableDataRows].join('\n');
+}
+
+/**
  * Ask user for transpose delimiter with common options
  */
 export async function askForTransposeDelimiter(): Promise<string | undefined> {
@@ -582,5 +760,302 @@ export async function askForPrefixSuffixPattern(): Promise<{ pattern: string; ty
     return {
         pattern,
         type: type.value
+    };
+}
+
+/**
+ * Ask user for CSV to Markdown table conversion options
+ */
+export async function askForCsvToMarkdownOptions(): Promise<CsvToMarkdownOptions | undefined> {
+    // Ask for delimiter
+    const delimiter = await window.showQuickPick([
+        { label: 'Comma (,)', description: 'Standard CSV format', value: ',' },
+        { label: 'Semicolon (;)', description: 'European CSV format', value: ';' },
+        { label: 'Tab', description: 'Tab-separated values (TSV)', value: '\t' },
+        { label: 'Pipe (|)', description: 'Pipe-separated values', value: '|' },
+        { label: 'Custom...', description: 'Enter your own delimiter', value: 'custom' }
+    ], {
+        placeHolder: 'Choose the delimiter used in your CSV data'
+    });
+
+    if (!delimiter) {
+        return undefined;
+    }
+
+    let finalDelimiter = delimiter.value;
+    if (delimiter.value === 'custom') {
+        const customDelimiter = await window.showInputBox({
+            prompt: 'Enter the custom delimiter',
+            placeHolder: 'e.g., ":", " ", "||"',
+            validateInput: (value) => {
+                if (!value || value.length === 0) {
+                    return 'Delimiter cannot be empty';
+                }
+                return null;
+            }
+        });
+
+        if (!customDelimiter) {
+            return undefined;
+        }
+        finalDelimiter = customDelimiter;
+    }
+
+    // Ask about headers
+    const headerOption = await window.showQuickPick([
+        { label: 'Use first row as headers', description: 'First row contains column names', value: 'first-row' },
+        { label: 'Enter custom headers', description: 'Specify your own column names', value: 'custom' },
+        { label: 'Generate default headers', description: 'Use "Column 1", "Column 2", etc.', value: 'default' }
+    ], {
+        placeHolder: 'How do you want to handle table headers?'
+    });
+
+    if (!headerOption) {
+        return undefined;
+    }
+
+    let useFirstRowAsHeaders = false;
+    let customHeaders: string[] | undefined;
+
+    if (headerOption.value === 'first-row') {
+        useFirstRowAsHeaders = true;
+    } else if (headerOption.value === 'custom') {
+        const headersInput = await window.showInputBox({
+            prompt: 'Enter column headers separated by commas',
+            placeHolder: 'e.g., "Name, Age, Email, Department"',
+            validateInput: (value) => {
+                if (!value || value.trim().length === 0) {
+                    return 'Headers cannot be empty';
+                }
+                return null;
+            }
+        });
+
+        if (!headersInput) {
+            return undefined;
+        }
+
+        customHeaders = headersInput.split(',').map(header => header.trim());
+    }
+
+    // Ask where to show result
+    const openInNewEditor = await window.showQuickPick([
+        { label: 'Replace in current editor', description: 'Replace selected text with Markdown table', value: false },
+        { label: 'Open in new editor', description: 'Keep original and open result in new tab', value: true }
+    ], {
+        placeHolder: 'Where to show the Markdown table?'
+    });
+
+    if (openInNewEditor === undefined) {
+        return undefined;
+    }
+
+    return {
+        delimiter: finalDelimiter,
+        useFirstRowAsHeaders,
+        customHeaders,
+        openInNewEditor: openInNewEditor.value
+    };
+}
+
+/**
+ * Parse a Markdown table into headers and data rows
+ */
+function parseMarkdownTable(markdownTable: string): { headers: string[], dataRows: string[][] } | null {
+    const lines = markdownTable.trim().split('\n').map(line => line.trim());
+    
+    if (lines.length < 2) {
+        return null; // Need at least header and separator rows
+    }
+
+    // Find header row (first row that looks like a table row)
+    let headerRowIndex = -1;
+    let separatorRowIndex = -1;
+    
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        if (line.startsWith('|') && line.endsWith('|')) {
+            if (headerRowIndex === -1) {
+                headerRowIndex = i;
+            } else if (separatorRowIndex === -1) {
+                // Check if this looks like a separator row (contains mainly dashes, colons, spaces, and pipes)
+                const content = line.slice(1, -1); // Remove outer pipes
+                if (/^[\s\-:|]+$/.test(content) && content.includes('-')) {
+                    separatorRowIndex = i;
+                    break;
+                }
+            }
+        }
+    }
+
+    if (headerRowIndex === -1 || separatorRowIndex === -1) {
+        return null; // Not a valid Markdown table
+    }
+
+    // Parse header row
+    const headerLine = lines[headerRowIndex];
+    const headers = headerLine
+        .slice(1, -1) // Remove leading and trailing |
+        .split('|')
+        .map(cell => cell.trim());
+
+    // Parse data rows (everything after separator row)
+    const dataRows: string[][] = [];
+    for (let i = separatorRowIndex + 1; i < lines.length; i++) {
+        const line = lines[i];
+        if (line.startsWith('|') && line.endsWith('|')) {
+            const cells = line
+                .slice(1, -1) // Remove leading and trailing |
+                .split('|')
+                .map(cell => cell.trim());
+            
+            // Pad or truncate cells to match header count
+            while (cells.length < headers.length) {
+                cells.push('');
+            }
+            cells.length = headers.length;
+            
+            dataRows.push(cells);
+        }
+    }
+
+    return { headers, dataRows };
+}
+
+/**
+ * Create CSV from table headers and data rows
+ */
+function createCsvFromTable(headers: string[], dataRows: string[][], delimiter: string, includeHeaders: boolean): string {
+    const csvRows: string[] = [];
+    
+    // Add headers if requested
+    if (includeHeaders) {
+        csvRows.push(headers.map(header => escapeCsvField(header, delimiter)).join(delimiter));
+    }
+    
+    // Add data rows
+    dataRows.forEach(row => {
+        csvRows.push(row.map(cell => escapeCsvField(cell, delimiter)).join(delimiter));
+    });
+    
+    return csvRows.join('\n');
+}
+
+/**
+ * Escape a CSV field if it contains the delimiter, quotes, or newlines
+ */
+function escapeCsvField(field: string, delimiter: string): string {
+    if (field.includes(delimiter) || field.includes('"') || field.includes('\n') || field.includes('\r')) {
+        // Escape quotes by doubling them and wrap in quotes
+        return '"' + field.replace(/"/g, '""') + '"';
+    }
+    return field;
+}
+
+/**
+ * Convert a Markdown table to CSV format
+ */
+export async function markdownTableToCsv(options: MarkdownToCsvOptions): Promise<void> {
+    const text = getDocumentTextOrSelection();
+    if (!text) {
+        window.showErrorMessage('No text selected or document is empty');
+        return;
+    }
+
+    // Parse the Markdown table
+    const parsed = parseMarkdownTable(text);
+    if (!parsed) {
+        window.showErrorMessage('Selected text does not contain a valid Markdown table');
+        return;
+    }
+
+    // Convert to CSV
+    const csvContent = createCsvFromTable(parsed.headers, parsed.dataRows, options.delimiter, options.includeHeaders);
+
+    if (options.openInNewEditor) {
+        createNewEditor(csvContent);
+    } else {
+        const editor = getActiveEditor();
+        if (!editor) {
+            return;
+        }
+        
+        const selection = getSelection(editor);
+        if (!selection) {
+            return;
+        }
+
+        editor.edit((editBuilder) => {
+            editBuilder.replace(selection, csvContent);
+        });
+    }
+}
+
+/**
+ * Ask user for Markdown table to CSV conversion options
+ */
+export async function askForMarkdownToCsvOptions(): Promise<MarkdownToCsvOptions | undefined> {
+    // Ask for delimiter
+    const delimiter = await window.showQuickPick([
+        { label: 'Comma (,)', description: 'Standard CSV format', value: ',' },
+        { label: 'Semicolon (;)', description: 'European CSV format', value: ';' },
+        { label: 'Tab', description: 'Tab-separated values (TSV)', value: '\t' },
+        { label: 'Pipe (|)', description: 'Pipe-separated values', value: '|' },
+        { label: 'Custom...', description: 'Enter your own delimiter', value: 'custom' }
+    ], {
+        placeHolder: 'Choose the delimiter for your CSV output'
+    });
+
+    if (!delimiter) {
+        return undefined;
+    }
+
+    let finalDelimiter = delimiter.value;
+    if (delimiter.value === 'custom') {
+        const customDelimiter = await window.showInputBox({
+            prompt: 'Enter the custom delimiter',
+            placeHolder: 'e.g., ":", " ", "||"',
+            validateInput: (value) => {
+                if (!value || value.length === 0) {
+                    return 'Delimiter cannot be empty';
+                }
+                return null;
+            }
+        });
+
+        if (!customDelimiter) {
+            return undefined;
+        }
+        finalDelimiter = customDelimiter;
+    }
+
+    // Ask about including headers
+    const includeHeaders = await window.showQuickPick([
+        { label: 'Include headers', description: 'First row will contain column names', value: true },
+        { label: 'Data only', description: 'Export only data rows', value: false }
+    ], {
+        placeHolder: 'Include table headers in CSV output?'
+    });
+
+    if (includeHeaders === undefined) {
+        return undefined;
+    }
+
+    // Ask where to show result
+    const openInNewEditor = await window.showQuickPick([
+        { label: 'Replace in current editor', description: 'Replace selected table with CSV', value: false },
+        { label: 'Open in new editor', description: 'Keep original and open CSV in new tab', value: true }
+    ], {
+        placeHolder: 'Where to show the CSV output?'
+    });
+
+    if (openInNewEditor === undefined) {
+        return undefined;
+    }
+
+    return {
+        delimiter: finalDelimiter,
+        includeHeaders: includeHeaders.value,
+        openInNewEditor: openInNewEditor.value
     };
 }

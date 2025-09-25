@@ -135,6 +135,24 @@ Likewise, `Convert to CapitalCase` has been removed in favor of the built-in VSC
   * Choose whether ellipsis (...) counts within max length or is additional
   * Better control over exact line truncation behavior
   * Maintain formatting consistency while preserving content intent
+* Enhanced Remove Duplicates
+  * Advanced duplicate removal with flexible options
+  * Keep first or last occurrence of duplicates
+  * Case-sensitive or case-insensitive comparison
+  * Option to trim whitespace before comparison
+* Advanced Prefix/Suffix Operations
+  * Pattern-based line numbering with multiple formats
+  * Support for {n} (numbers), {i}/{I} (letters), {a}/{A} (alphabetic)
+  * Date/time patterns: {date}, {time}
+  * Line number patterns: {line}
+* **CSV ↔ Markdown Table Converter** ⭐ **NEW**
+  * **CSV to Markdown**: Convert CSV data to formatted Markdown tables
+  * **Markdown to CSV**: Convert Markdown tables back to CSV format
+  * Support for multiple delimiters (comma, semicolon, tab, pipe, custom)
+  * Flexible header options: use first row, specify custom headers, or generate defaults
+  * Proper CSV field escaping for special characters (commas, quotes, newlines)
+  * Robust Markdown table parsing with validation
+  * Perfect for documentation, data analysis, and format conversion workflows
 
 ### Selection
 

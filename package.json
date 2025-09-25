@@ -546,6 +546,16 @@
         "command": "vscode-texttoolbox.TruncateLines",
         "title": "Truncate Lines to Length...",
         "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.CsvToMarkdownTable",
+        "title": "Convert CSV to Markdown Table...",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.MarkdownTableToCsv",
+        "title": "Convert Markdown Table to CSV...",
+        "category": "Text Toolbox"
       }
     ],
     "menus": {
@@ -1033,6 +1043,14 @@
         {
           "group": "tt.advancedListConverter.truncate",
           "command": "vscode-texttoolbox.TruncateLines"
+        },
+        {
+          "group": "tt.advancedListConverter.convert",
+          "command": "vscode-texttoolbox.CsvToMarkdownTable"
+        },
+        {
+          "group": "tt.advancedListConverter.convert",
+          "command": "vscode-texttoolbox.MarkdownTableToCsv"
         }
       ]
     },

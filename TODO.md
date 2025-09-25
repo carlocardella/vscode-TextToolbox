@@ -65,6 +65,10 @@ The goal is to extend the current Text Toolbox extension with additional tools a
   - [ ] XML to JSON conversion
   - [ ] JSON to XML conversion
   - [ ] Handle attributes and namespaces
+- [x] **CSV ↔ Markdown Table Converter** ✅ **COMPLETED September 2025**
+  - [x] Convert CSV data to formatted Markdown tables
+  - [x] Convert Markdown tables back to CSV format
+  - [x] Support multiple delimiters and header options
 - [ ] **Markdown ↔ HTML Converter**
   - [ ] Markdown to HTML conversion
   - [ ] HTML to Markdown conversion (basic)
@@ -133,6 +137,14 @@ The goal is to extend the current Text Toolbox extension with additional tools a
   - [x] Date/time patterns: {date}, {time}
   - [x] Line-based patterns: {line}
   - [x] Conditional formatting based on content
+- [x] **CSV ↔ Markdown Table Converter** ✅ **NEW September 2025**
+  - [x] Convert CSV data to formatted Markdown tables
+  - [x] Convert Markdown tables back to CSV format
+  - [x] Support multiple delimiters (comma, semicolon, tab, pipe, custom)
+  - [x] Flexible header handling (first row, custom headers, default headers)
+  - [x] Proper CSV field escaping for special characters
+  - [x] Robust Markdown table parsing with validation
+  - [x] Bidirectional conversion workflow
 
 ### Phase 2: Advanced Operations (Extended Value)
 - [ ] **Multi-Criteria Sorting**

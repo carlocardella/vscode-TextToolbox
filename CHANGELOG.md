@@ -8,14 +8,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ### Added
 
-* **Advanced List Converter** - Four powerful list manipulation tools for data transformation:
+* **Advanced List Converter** - Comprehensive suite of data transformation tools:
   * `Transpose Data` - Convert rows to columns with customizable delimiters (CSV, TSV, custom) - now includes directional variants:
     * `Transpose Data (Rows ↔ Columns)` - Bidirectional conversion 
     * `Transpose Data (Rows → Columns)` - Optimized for row-based data
     * `Transpose Data (Columns → Rows)` - Optimized for column-based data
   * `Reverse List Order` - Reverse the order of lines in your text
   * `Truncate Lines` - Limit line length with optional ellipsis indicators with enhanced ellipsis counting options
+  * `Enhanced Remove Duplicates` - Advanced duplicate removal with keep first/last, case sensitivity, and whitespace trimming options
   * Enhanced `Prefix with...` and `Suffix with...` - Now support both simple text and advanced patterns ({n}, {i}, {date}, {time}, etc.)
+  * **🆕 CSV ↔ Markdown Table Converter** - Bidirectional conversion between CSV and Markdown table formats:
+    * `Convert CSV to Markdown Table` - Transform CSV data into formatted Markdown tables
+    * `Convert Markdown Table to CSV` - Convert Markdown tables back to CSV format
+    * Support for multiple delimiters (comma, semicolon, tab, pipe, custom)
+    * Flexible header handling (first row, custom headers, default headers)
+    * Proper CSV field escaping for special characters
+    * Robust Markdown table parsing and validation
 
 ### Changed
 
@@ -47,10 +55,12 @@ See the [list of open enhancements on GitHub](https://github.com/carlocardella/v
 
 ### Technical
 
-* **335 Comprehensive Tests** - Full test coverage for all Advanced List Converter functionality
+* **347 Comprehensive Tests** - Full test coverage including 6 new CSV/Markdown conversion tests
 * **TypeScript Compliance** - All new interfaces and implementations follow strict typing
 * **Modular Architecture** - Clean separation of concerns with dedicated advancedListConverter module
-* **Performance Optimized** - Efficient algorithms for data transformation operations
+* **Performance Optimized** - Efficient algorithms for data transformation and table parsing operations
+* **Robust CSV Parsing** - Handles quoted fields, escaped characters, and irregular data structures
+* **Smart Markdown Table Detection** - Validates table structure and provides clear error messages
 
 ## [2.25.0] - 2025-09-24
 

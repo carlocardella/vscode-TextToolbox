@@ -9,8 +9,12 @@ import {
     truncateLines,
     enhancedRemoveDuplicates,
     advancedPrefixSuffix,
+    csvToMarkdownTable,
+    markdownTableToCsv,
     DuplicateRemovalOptions,
-    TruncateOptions
+    TruncateOptions,
+    CsvToMarkdownOptions,
+    MarkdownToCsvOptions
 } from "../../modules/advancedListConverter";
 
 describe("advancedListConverter", () => {
@@ -606,6 +610,254 @@ describe("advancedListConverter", () => {
 
             let result = getDocumentTextOrSelection();
             assert.strictEqual(result, emptyLine);
+        });
+    });
+
+    describe("CSV to Markdown Table", () => {
+        it("Convert CSV with first row as headers", async () => {
+            await createNewEditor();
+            const eol = getDocumentEOL(getActiveEditor());
+            const csvData = `Name,Age,City${eol}John,25,New York${eol}Jane,30,Boston`;
+            const options: CsvToMarkdownOptions = {
+                delimiter: ',',
+                useFirstRowAsHeaders: true,
+                openInNewEditor: false
+            };
+            const expectedTable = `| Name | Age | City     |${eol}| ---- | --- | -------- |${eol}| John | 25  | New York |${eol}| Jane | 30  | Boston   |`;
+            
+            await createNewEditor(csvData);
+            await selectAllText();
+            await csvToMarkdownTable(options);
+            await sleep(500);
+
+            let result = getDocumentTextOrSelection();
+            assert.strictEqual(result, expectedTable);
+        });
+
+        it("Convert CSV with custom headers", async () => {
+            await createNewEditor();
+            const eol = getDocumentEOL(getActiveEditor());
+            const csvData = `John,25,New York${eol}Jane,30,Boston`;
+            const options: CsvToMarkdownOptions = {
+                delimiter: ',',
+                useFirstRowAsHeaders: false,
+                customHeaders: ['Full Name', 'Years', 'Location'],
+                openInNewEditor: false
+            };
+            const expectedTable = `| Full Name | Years | Location |${eol}| --------- | ----- | -------- |${eol}| John      | 25    | New York |${eol}| Jane      | 30    | Boston   |`;
+            
+            await createNewEditor(csvData);
+            await selectAllText();
+            await csvToMarkdownTable(options);
+            await sleep(500);
+
+            let result = getDocumentTextOrSelection();
+            assert.strictEqual(result, expectedTable);
+        });
+
+        it("Convert semicolon-delimited CSV", async () => {
+            await createNewEditor();
+            const eol = getDocumentEOL(getActiveEditor());
+            const csvData = `Product;Price;Stock${eol}Apple;1.50;100${eol}Banana;0.75;200`;
+            const options: CsvToMarkdownOptions = {
+                delimiter: ';',
+                useFirstRowAsHeaders: true,
+                openInNewEditor: false
+            };
+            const expectedTable = `| Product | Price | Stock |${eol}| ------- | ----- | ----- |${eol}| Apple   | 1.50  | 100   |${eol}| Banana  | 0.75  | 200   |`;
+            
+            await createNewEditor(csvData);
+            await selectAllText();
+            await csvToMarkdownTable(options);
+            await sleep(500);
+
+            let result = getDocumentTextOrSelection();
+            assert.strictEqual(result, expectedTable);
+        });
+
+        it("Handle CSV with quoted fields", async () => {
+            await createNewEditor();
+            const eol = getDocumentEOL(getActiveEditor());
+            const csvData = `Name,Description${eol}"John Doe","A person with, commas"${eol}"Jane Smith","Another ""quoted"" value"`;
+            const options: CsvToMarkdownOptions = {
+                delimiter: ',',
+                useFirstRowAsHeaders: true,
+                openInNewEditor: false
+            };
+            // Corrected expected table to match actual column widths:
+            // "Name" (4) vs "John Doe" (8) vs "Jane Smith" (10) = 10 chars
+            // "Description" (11) vs "A person with, commas" (21) vs 'Another "quoted" value' (22) = 22 chars
+            const expectedTable = `| Name       | Description            |${eol}| ---------- | ---------------------- |${eol}| John Doe   | A person with, commas  |${eol}| Jane Smith | Another "quoted" value |`;
+            
+            await createNewEditor(csvData);
+            await selectAllText();
+            await csvToMarkdownTable(options);
+            await sleep(500);
+
+            let result = getDocumentTextOrSelection();
+            assert.strictEqual(result, expectedTable);
+        });
+
+        it("Generate default headers when none specified", async () => {
+            await createNewEditor();
+            const eol = getDocumentEOL(getActiveEditor());
+            const csvData = `John,25,New York${eol}Jane,30,Boston`;
+            const options: CsvToMarkdownOptions = {
+                delimiter: ',',
+                useFirstRowAsHeaders: false,
+                openInNewEditor: false
+            };
+            const expectedTable = `| Column 1 | Column 2 | Column 3 |${eol}| -------- | -------- | -------- |${eol}| John     | 25       | New York |${eol}| Jane     | 30       | Boston   |`;
+            
+            await createNewEditor(csvData);
+            await selectAllText();
+            await csvToMarkdownTable(options);
+            await sleep(500);
+
+            let result = getDocumentTextOrSelection();
+            assert.strictEqual(result, expectedTable);
+        });
+
+        it("Handle irregular CSV data (different column counts)", async () => {
+            await createNewEditor();
+            const eol = getDocumentEOL(getActiveEditor());
+            const csvData = `Name,Age${eol}John,25,New York${eol}Jane`;
+            const options: CsvToMarkdownOptions = {
+                delimiter: ',',
+                useFirstRowAsHeaders: true,
+                openInNewEditor: false
+            };
+            const expectedTable = `| Name | Age |${eol}| ---- | --- |${eol}| John | 25  |${eol}| Jane |     |`;
+            
+            await createNewEditor(csvData);
+            await selectAllText();
+            await csvToMarkdownTable(options);
+            await sleep(500);
+
+            let result = getDocumentTextOrSelection();
+            assert.strictEqual(result, expectedTable);
+        });
+    });
+
+    describe("Markdown Table to CSV", () => {
+        it("Convert Markdown table with headers to CSV", async () => {
+            await createNewEditor();
+            const eol = getDocumentEOL(getActiveEditor());
+            const markdownTable = `| Name       | Age | City       |${eol}| ---------- | --- | ---------- |${eol}| John Doe   | 25  | New York   |${eol}| Jane Smith | 30  | Los Angeles |`;
+            const options: MarkdownToCsvOptions = {
+                delimiter: ',',
+                includeHeaders: true,
+                openInNewEditor: false
+            };
+            const expectedCsv = `Name,Age,City${eol}John Doe,25,New York${eol}Jane Smith,30,Los Angeles`;
+            
+            await createNewEditor(markdownTable);
+            await selectAllText();
+            await markdownTableToCsv(options);
+            await sleep(500);
+
+            let result = getDocumentTextOrSelection();
+            assert.strictEqual(result, expectedCsv);
+        });
+
+        it("Convert Markdown table without headers to CSV", async () => {
+            await createNewEditor();
+            const eol = getDocumentEOL(getActiveEditor());
+            const markdownTable = `| Name       | Age | City       |${eol}| ---------- | --- | ---------- |${eol}| John Doe   | 25  | New York   |${eol}| Jane Smith | 30  | Los Angeles |`;
+            const options: MarkdownToCsvOptions = {
+                delimiter: ',',
+                includeHeaders: false,
+                openInNewEditor: false
+            };
+            const expectedCsv = `John Doe,25,New York${eol}Jane Smith,30,Los Angeles`;
+            
+            await createNewEditor(markdownTable);
+            await selectAllText();
+            await markdownTableToCsv(options);
+            await sleep(500);
+
+            let result = getDocumentTextOrSelection();
+            assert.strictEqual(result, expectedCsv);
+        });
+
+        it("Convert Markdown table with semicolon delimiter", async () => {
+            await createNewEditor();
+            const eol = getDocumentEOL(getActiveEditor());
+            const markdownTable = `| Product | Price | Category |${eol}| ------- | ----- | -------- |${eol}| Laptop  | $999  | Tech     |${eol}| Mouse   | $25   | Tech     |`;
+            const options: MarkdownToCsvOptions = {
+                delimiter: ';',
+                includeHeaders: true,
+                openInNewEditor: false
+            };
+            const expectedCsv = `Product;Price;Category${eol}Laptop;$999;Tech${eol}Mouse;$25;Tech`;
+            
+            await createNewEditor(markdownTable);
+            await selectAllText();
+            await markdownTableToCsv(options);
+            await sleep(500);
+
+            let result = getDocumentTextOrSelection();
+            assert.strictEqual(result, expectedCsv);
+        });
+
+        it("Handle Markdown table with special characters needing escaping", async () => {
+            await createNewEditor();
+            const eol = getDocumentEOL(getActiveEditor());
+            const markdownTable = `| Name         | Description              |${eol}| ------------ | ------------------------ |${eol}| John, Jr.    | Person with, commas      |${eol}| Jane "Quote" | Has "quoted" values      |`;
+            const options: MarkdownToCsvOptions = {
+                delimiter: ',',
+                includeHeaders: true,
+                openInNewEditor: false
+            };
+            const expectedCsv = `Name,Description${eol}"John, Jr.","Person with, commas"${eol}"Jane ""Quote""","Has ""quoted"" values"`;
+            
+            await createNewEditor(markdownTable);
+            await selectAllText();
+            await markdownTableToCsv(options);
+            await sleep(500);
+
+            let result = getDocumentTextOrSelection();
+            assert.strictEqual(result, expectedCsv);
+        });
+
+        it("Handle Markdown table with tab delimiter", async () => {
+            await createNewEditor();
+            const eol = getDocumentEOL(getActiveEditor());
+            const markdownTable = `| ID | Name | Status |${eol}| -- | ---- | ------ |${eol}| 1  | Test | Active |${eol}| 2  | Demo | Inactive |`;
+            const options: MarkdownToCsvOptions = {
+                delimiter: '\t',
+                includeHeaders: true,
+                openInNewEditor: false
+            };
+            const expectedCsv = `ID\tName\tStatus${eol}1\tTest\tActive${eol}2\tDemo\tInactive`;
+            
+            await createNewEditor(markdownTable);
+            await selectAllText();
+            await markdownTableToCsv(options);
+            await sleep(500);
+
+            let result = getDocumentTextOrSelection();
+            assert.strictEqual(result, expectedCsv);
+        });
+
+        it("Handle irregular Markdown table (different column counts)", async () => {
+            await createNewEditor();
+            const eol = getDocumentEOL(getActiveEditor());
+            const markdownTable = `| Name | Age | City |${eol}| ---- | --- | ---- |${eol}| John | 25  | New York | Extra |${eol}| Jane | 30  |`;
+            const options: MarkdownToCsvOptions = {
+                delimiter: ',',
+                includeHeaders: true,
+                openInNewEditor: false
+            };
+            const expectedCsv = `Name,Age,City${eol}John,25,New York${eol}Jane,30,`;
+            
+            await createNewEditor(markdownTable);
+            await selectAllText();
+            await markdownTableToCsv(options);
+            await sleep(500);
+
+            let result = getDocumentTextOrSelection();
+            assert.strictEqual(result, expectedCsv);
         });
     });
 });
