@@ -1,4 +1,4 @@
-# **Change Log**
+# Change Log
 
 All notable changes to the "vscode-TextToolbox" extension will be documented in this file.
 

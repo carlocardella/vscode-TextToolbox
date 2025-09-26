@@ -25,9 +25,45 @@ These documentation guidelines apply specifically to markdown files in the proje
 
 ### Markdown Guidelines
 - Use headings to organize content.
+- Do not use bold for markdown headers.
 - Use bullet points for lists.
 - Include links to related resources.
 - Use code blocks for code snippets.
+
+### Formatting Standards
+
+**Header Formatting:**
+- Section headers (###, ##, #) should NOT use bold formatting
+- Headers are already emphasized by markdown syntax
+- Keep headers clean and professional: `### Section Name` not `### **Section Name**`
+
+**Bold Text Usage:**
+- Use bold ONLY for main command names and important feature names within lists
+- Example: `* **Generate Hash from Text**` for main commands
+- Example: `* **Enhanced Base64/URL Encoding Tools**` for key features
+- Do NOT use bold for section headers or regular descriptive text
+
+**List Formatting Consistency:**
+- All main command/feature names in lists should use bold formatting
+- Sub-descriptions and details remain regular text
+- Use consistent bullet point style (*) throughout
+- Maintain proper 4-space indentation for nested lists
+- Example structure:
+  ```markdown
+  * **Main Command Name**
+    * Regular description text
+    * Additional details without bold
+  ```
+
+**Code Block Standards:**
+- Always specify language for code blocks: ```bash, ```json, ```markdown
+- Use inline code (`command`) for single commands or short code snippets
+- Use code blocks for multi-line examples
+
+**Professional Consistency:**
+- Maintain consistent formatting patterns across all sections
+- Bold usage should be strategic and purposeful, not decorative
+- Create clear visual hierarchy without over-formatting
 
 ## Extension Publishing Guidelines
 
@@ -46,6 +82,9 @@ These documentation guidelines apply specifically to markdown files in the proje
 - ✅ `TODO.md` updated to reflect completed items
 - ✅ All new commands documented with clear descriptions
 - ✅ Code comments and JSDoc updated
+- ✅ **Formatting consistency verified** - all main commands use bold formatting
+- ✅ **Header structure validated** - no bold formatting in section headers
+- ✅ **List formatting standardized** - consistent bullet points and indentation
 
 **3. Version Management**
 - ✅ Update version in `package.json` following semantic versioning
@@ -204,3 +243,12 @@ export OVSX_PAT=<your-access-token>
 - Features work consistently across different file types
 - Keyboard shortcuts don't conflict with VS Code defaults
 - Commands are properly categorized in menus
+
+**Documentation Quality Standards**
+- **Formatting Consistency** - Main command names use bold formatting throughout all sections
+- **Clean Header Structure** - Section headers use clean markdown without bold formatting
+- **Strategic Bold Usage** - Bold text reserved for command names and key features, not decorative purposes
+- **Professional Presentation** - Consistent bullet points, proper indentation, and clear visual hierarchy
+- **Code Block Standards** - All code blocks specify language, inline code for single commands
+- **Cross-Reference Accuracy** - Commands in README match exactly with CHANGELOG entries
+- **User-Focused Language** - Clear, concise descriptions that help users understand command benefits
