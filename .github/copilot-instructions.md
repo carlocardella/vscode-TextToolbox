@@ -1,5 +1,5 @@
 ---
-applyTo: "**/*"
+applyTo: "**/*.md"
 ---
 # VS Code TextToolbox Extension Development Guidelines
 
@@ -16,12 +16,17 @@ These documentation guidelines apply specifically to markdown files in the proje
 - Write clear and concise documentation.
 - Use consistent terminology and style.
 - Include code examples where applicable.
+- Focus on creating evergreen content that remains valuable over time.
+- Write documentation for your future self - assume you may not remember the context.
+- Use active voice and present tense when possible.
+- Break down complex topics into digestible sections.
 
-### Grammar
+### Grammar and Style
 * Use present tense verbs (is, open) instead of past tense (was, opened).
 * Write factual statements and direct commands. Avoid hypotheticals like "could" or "would".
 * Use active voice where the subject performs the action.
 * Write in second person (you) to speak directly to readers.
+* Use descriptive link text instead of generic phrases like "click here".
 
 ### Markdown Guidelines
 - Use headings to organize content.
@@ -29,6 +34,15 @@ These documentation guidelines apply specifically to markdown files in the proje
 - Use bullet points for lists.
 - Include links to related resources.
 - Use code blocks for code snippets.
+- Ensure Markdown syntax is correct and free of linting errors.
+
+**Markdown Linting Best Practices:**
+- Use proper YAML list syntax for frontmatter tags to avoid link reference conflicts
+- Specify language for all code blocks: ```bash, ```json, ```markdown, ```powershell
+- Avoid mixing inline code with markdown links in ways that confuse linters
+- Remove trailing whitespace from lines to prevent MD009 errors
+- Always run "Text Toolbox: Remove Control Characters" when reviewing and cleaning markdown files
+- Test frontmatter syntax in YAML-aware editors when troubleshooting linting issues
 
 ### Formatting Standards
 
@@ -56,7 +70,7 @@ These documentation guidelines apply specifically to markdown files in the proje
   ```
 
 **Code Block Standards:**
-- Always specify language for code blocks: ```bash, ```json, ```markdown
+- Always specify language for code blocks: ```bash, ```json, ```markdown, ```powershell
 - Use inline code (`command`) for single commands or short code snippets
 - Use code blocks for multi-line examples
 
@@ -64,6 +78,40 @@ These documentation guidelines apply specifically to markdown files in the proje
 - Maintain consistent formatting patterns across all sections
 - Bold usage should be strategic and purposeful, not decorative
 - Create clear visual hierarchy without over-formatting
+
+**Link Formatting Standards:**
+- Use descriptive link text instead of generic phrases like "click here"
+- Ensure all links function correctly and point to valid resources
+- Use consistent formatting for internal and external links
+
+### Extension-Specific Documentation Standards
+
+**README.md Structure:**
+- Maintain clear sections for features, installation, usage, and configuration
+- Use consistent command documentation format with examples
+- Include marketplace badges and download statistics at the top
+- Organize features by logical groupings (Text Conversions, Crypto Tools, etc.)
+- Provide practical examples for each major feature
+
+**CHANGELOG.md Standards:**
+- Follow semantic versioning principles
+- Group changes by type: Added, Changed, Fixed, Removed
+- Include version numbers and release dates
+- Provide clear descriptions of user-facing changes
+- Link to GitHub issues/PRs where applicable
+
+**Command Documentation Format:**
+- Use bold formatting for command names: `* **Command Name**`
+- Include brief descriptions and practical examples
+- Specify keyboard shortcuts where applicable
+- Document configuration options and settings
+- Cross-reference related commands when helpful
+
+**Version Documentation:**
+- Document breaking changes clearly
+- Include migration guides for major version updates
+- Maintain backward compatibility information
+- Track deprecated features and removal timelines
 
 ## Extension Publishing Guidelines
 
@@ -252,3 +300,29 @@ export OVSX_PAT=<your-access-token>
 - **Code Block Standards** - All code blocks specify language, inline code for single commands
 - **Cross-Reference Accuracy** - Commands in README match exactly with CHANGELOG entries
 - **User-Focused Language** - Clear, concise descriptions that help users understand command benefits
+
+### Content Organization Guidelines
+
+**File Organization:**
+- Keep documentation files in root directory for maximum visibility
+- Use clear, descriptive filenames (README.md, CHANGELOG.md, TODO.md)
+- Organize supporting documentation in docs/ subdirectory if needed
+- Maintain consistent file structure across releases
+
+**Cross-Reference Standards:**
+- Ensure README command lists match CHANGELOG entries exactly
+- Maintain consistency between package.json command definitions and documentation
+- Validate that all documented features are actually implemented
+- Keep TODO.md synchronized with development progress
+
+**Documentation Maintenance:**
+- Review and update documentation with each release
+- Remove outdated information promptly
+- Consolidate redundant content to avoid confusion
+- Ensure examples remain current with latest extension features
+
+**User Experience Documentation:**
+- Focus on practical usage scenarios and benefits
+- Include troubleshooting information for common issues
+- Provide clear configuration guidance
+- Document keyboard shortcuts and accessibility features
