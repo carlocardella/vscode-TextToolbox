@@ -494,9 +494,16 @@ The goal is to extend the current Text Toolbox Advanced Sequence Generation ✅ 
   - [ ] Decode Outlook SafeLink URLs
   - [ ] Extract original URLs
   - [ ] Batch processing support
+- [x] **Enhanced Base64/URL Encoding Tools** ✅ **COMPLETED Phase 1 - September 2025**
+  - [x] URL-safe Base64 encoding/decoding (replaces +/ with -_, removes padding)  
+  - [x] Query string to JSON parser with duplicate key handling
+  - [x] Enhanced error handling and validation
+  - [x] Cross-platform line ending compatibility
+  - [x] Comprehensive test coverage (399 passing tests)
+  - [ ] **Phase 2 Planned**: Bulk operations, URL builder, data URL generation
 - [ ] **Advanced URL Encoding/Decoding**
   - [ ] Comprehensive URL encoding
-  - [ ] Component-specific encoding
+  - [ ] Component-specific encoding  
   - [ ] Multiple encoding standards
 
 ## 💻 Device and System Info

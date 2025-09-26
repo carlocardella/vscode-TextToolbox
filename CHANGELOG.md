@@ -8,6 +8,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 See the [list of open enhancements on GitHub](https://github.com/carlocardella/vscode-TextToolbox/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3Aenhancement)
 
+## [2.28.0] - 2025-09-26
+
+### Added
+
+* **Enhanced Base64/URL Encoding Tools** - Phase 1 implementation with developer-focused enhancements:
+  * `Convert to URL-safe Base64` - Encode text to URL-safe Base64 format (replaces +/ with -_, removes padding)
+  * `Convert from URL-safe Base64` - Decode URL-safe Base64 back to text with proper padding restoration
+  * `Parse Query String to JSON` - Convert URL query strings to formatted JSON with duplicate key handling
+  * **Enhanced Error Handling** - Improved error messages and validation for all encoding operations
+  * **Developer Benefits**: Perfect for JWT tokens, API development, log analysis, and web-safe encoding
+  * **Cross-platform Compatibility** - Proper line ending support for Windows/Linux/macOS
+  * **Comprehensive Testing** - 399 passing tests including edge cases, Unicode support, and error scenarios
+
 ## [2.27.0] - 2025-09-25
 
 ### Added

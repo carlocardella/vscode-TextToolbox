@@ -64,6 +64,15 @@ Likewise, `Convert to CapitalCase` has been removed in favor of the built-in VSC
   * Convert text to Base64 encoding
 * Base64 decode  
   * Convert Base64 back to text
+* Base64 URL-safe encode
+  * Convert text to URL-safe Base64 format (replaces +/ with -_, removes padding)
+  * Perfect for JWT tokens, web URLs, and API communication
+* Base64 URL-safe decode
+  * Convert URL-safe Base64 back to text with proper padding restoration
+* Parse query string to JSON
+  * Convert URL query strings to formatted JSON objects
+  * Handles duplicate keys (creates arrays) and URL decoding
+  * Supports query strings with or without leading ?
 * Decode JWT token
 
 ### String utilities
