@@ -79,25 +79,50 @@ npm run webpack-prod
 - Create Git tag: `git tag v2.28.0`
 
 **Step 3: Publishing**
+
+**VS Code Marketplace:**
 ```bash
 # Install vsce if not already installed
-npm install -g vsce
+npm install -g @vscode/vsce
 
-# Package the extension
+# Package the extension (optional - vsce publish will do this automatically)
 vsce package
 
 # Publish to VS Code Marketplace
 vsce publish
+```
 
-# Publish to Open VSX Registry (for VS Codium)
-npx ovsx publish
+**Open VSX Registry (for VS Codium):**
+```bash
+# Option 1: Publish the existing .vsix package
+npx ovsx publish vscode-texttoolbox-X.X.X.vsix -p <your-access-token>
+
+# Option 2: Publish directly from source (requires ovsx installed)
+npm install -g ovsx
+ovsx publish -p <your-access-token>
+```
+
+**Getting Open VSX Access Token:**
+1. Go to https://open-vsx.org/
+2. Sign in with GitHub account
+3. Go to your user settings
+4. Generate a new access token
+5. Store the token securely (needed for publishing)
+
+**Environment Variable Setup (Optional):**
+```bash
+# Set environment variable for ovsx token (recommended)
+export OVSX_PAT=<your-access-token>
+# Then publish without -p flag
+npx ovsx publish vscode-texttoolbox-X.X.X.vsix
 ```
 
 **Step 4: Post-Publishing**
 - ✅ Verify extension appears on VS Code Marketplace
-- ✅ Test installation from marketplace
+- ✅ Verify extension appears on Open VSX Registry (if published)
+- ✅ Test installation from both marketplaces
 - ✅ Update GitHub release with changelog
-- ✅ Push tags to remote: `git push --tags`
+- ✅ Push commits and tags to remote: `git push && git push --tags`
 
 ### Release Types
 
@@ -132,6 +157,30 @@ npx ovsx publish
 3. Update patch version
 4. Fast-track publish process
 5. Merge back to master
+
+### Publishing Troubleshooting
+
+**Common Issues:**
+
+**VS Code Marketplace:**
+- `vsce login` required if not authenticated
+- Update vsce to latest version: `npm install -g @vscode/vsce`
+- Check publisher permissions in VS Code Marketplace portal
+
+**Open VSX Registry:**
+- Requires separate access token from https://open-vsx.org/
+- Token must be associated with your GitHub account
+- Use `-p <token>` flag or set `OVSX_PAT` environment variable
+- Verify namespace ownership matches your publisher name
+
+**Authentication Setup:**
+```bash
+# VS Code Marketplace (first time only)
+vsce login <your-publisher-name>
+
+# Open VSX Registry (get token from open-vsx.org)
+export OVSX_PAT=<your-access-token>
+```
 
 ### Quality Standards
 
