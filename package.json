@@ -278,6 +278,21 @@
         "category": "Text Toolbox"
       },
       {
+        "command": "vscode-texttoolbox.convertToBase64Url",
+        "title": "Encode text to URL-safe Base64",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.convertFromBase64Url",
+        "title": "Decode URL-safe Base64 to text",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.parseQueryStringToJson",
+        "title": "Parse query string to JSON",
+        "category": "Text Toolbox"
+      },
+      {
         "command": "vscode-texttoolbox.encodeUri",
         "title": "Encode Uri",
         "category": "Text Toolbox"
@@ -875,6 +890,18 @@
         {
           "group": "tt.transform",
           "command": "vscode-texttoolbox.convertToBase64"
+        },
+        {
+          "group": "tt.transform",
+          "command": "vscode-texttoolbox.convertToBase64Url"
+        },
+        {
+          "group": "tt.transform",
+          "command": "vscode-texttoolbox.convertFromBase64Url"
+        },
+        {
+          "group": "tt.transform",
+          "command": "vscode-texttoolbox.parseQueryStringToJson"
         },
         {
           "group": "tt.transform",

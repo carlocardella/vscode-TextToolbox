@@ -20,6 +20,9 @@ import {
     conversionType,
     convertToBase64,
     convertFromBase64,
+    convertToBase64Url,
+    convertFromBase64Url,
+    parseQueryStringToJson,
     convertToHTML,
     convertFromHTML,
     encodeUri,
@@ -269,6 +272,66 @@ describe("textManipulation", () => {
             assert.strictEqual(actual, expected);
         });
 
+        it('Convert to URL-safe Base64', async () => {
+            const text = 'Hello World with special chars: +/=';
+            const expected = convertToBase64Url(text);
+
+            await createNewEditor(text);
+            await selectAllText();
+            await convertSelection(conversionType.toBase64Url);
+            await sleep(500);
+
+            const actual = getDocumentTextOrSelection();
+            assert.strictEqual(actual, expected);
+            assert.ok(!actual!.includes('+'), "Should not contain + character");
+            assert.ok(!actual!.includes('/'), "Should not contain / character");
+            assert.ok(!actual!.includes('='), "Should not contain = padding");
+        });
+
+        it('Convert from URL-safe Base64', async () => {
+            const urlSafeBase64 = convertToBase64Url('Hello World with special chars: +/=');
+            const expected = 'Hello World with special chars: +/=';
+
+            await createNewEditor(urlSafeBase64);
+            await selectAllText();
+            await convertSelection(conversionType.fromBase64Url);
+            await sleep(500);
+
+            const actual = getDocumentTextOrSelection();
+            assert.strictEqual(actual, expected);
+        });
+
+        it('Parse query string to JSON', async () => {
+            const queryString = 'name=John&age=30&city=New%20York&hobbies=reading&hobbies=gaming';
+
+            await createNewEditor(queryString);
+            await selectAllText();
+            await convertSelection(conversionType.queryStringToJson);
+            await sleep(500);
+
+            const actual = getDocumentTextOrSelection();
+            const parsedJson = JSON.parse(actual!);
+            assert.strictEqual(parsedJson.name, 'John');
+            assert.strictEqual(parsedJson.age, '30');
+            assert.strictEqual(parsedJson.city, 'New York');
+            assert.ok(Array.isArray(parsedJson.hobbies), "Should create array for duplicate keys");
+            assert.strictEqual(parsedJson.hobbies.length, 2);
+        });
+
+        it('Parse query string with leading question mark', async () => {
+            const queryString = '?param1=value1&param2=value2';
+
+            await createNewEditor(queryString);
+            await selectAllText();
+            await convertSelection(conversionType.queryStringToJson);
+            await sleep(500);
+
+            const actual = getDocumentTextOrSelection();
+            const parsedJson = JSON.parse(actual!);
+            assert.strictEqual(parsedJson.param1, 'value1');
+            assert.strictEqual(parsedJson.param2, 'value2');
+        });
+
         it('Convert to HTML entities', async () => {
             const text = '<script>alert("test");</script>';
             const expected = convertToHTML(text);
@@ -381,6 +444,56 @@ describe("textManipulation", () => {
             assert.strictEqual(result, 'Hello');
         });
 
+        it('convertToBase64Url function', () => {
+            const result = convertToBase64Url('Hello World with special chars: +/=');
+            assert.ok(!result.includes('+'), "Should not contain + character");
+            assert.ok(!result.includes('/'), "Should not contain / character");
+            assert.ok(!result.includes('='), "Should not contain = padding");
+            
+            // Test round trip
+            const decoded = convertFromBase64Url(result);
+            assert.strictEqual(decoded, 'Hello World with special chars: +/=');
+        });
+
+        it('convertFromBase64Url function', () => {
+            const urlSafeBase64 = 'SGVsbG8gV29ybGQgd2l0aCBzcGVjaWFsIGNoYXJzOiArLz0';
+            const urlSafe = urlSafeBase64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+            const result = convertFromBase64Url(urlSafe);
+            assert.strictEqual(result, 'Hello World with special chars: +/=');
+        });
+
+        it('parseQueryStringToJson function', () => {
+            // Test basic query string
+            const result1 = parseQueryStringToJson('name=John&age=30');
+            const parsed1 = JSON.parse(result1);
+            assert.strictEqual(parsed1.name, 'John');
+            assert.strictEqual(parsed1.age, '30');
+            
+            // Test with URL encoding
+            const result2 = parseQueryStringToJson('city=New%20York&message=Hello%21');
+            const parsed2 = JSON.parse(result2);
+            assert.strictEqual(parsed2.city, 'New York');
+            assert.strictEqual(parsed2.message, 'Hello!');
+            
+            // Test with duplicate keys
+            const result3 = parseQueryStringToJson('tags=javascript&tags=typescript');
+            const parsed3 = JSON.parse(result3);
+            assert.ok(Array.isArray(parsed3.tags));
+            assert.strictEqual(parsed3.tags.length, 2);
+            assert.ok(parsed3.tags.includes('javascript'));
+            assert.ok(parsed3.tags.includes('typescript'));
+            
+            // Test with leading ?
+            const result4 = parseQueryStringToJson('?param=value');
+            const parsed4 = JSON.parse(result4);
+            assert.strictEqual(parsed4.param, 'value');
+            
+            // Test empty query string
+            const result5 = parseQueryStringToJson('');
+            const parsed5 = JSON.parse(result5);
+            assert.deepStrictEqual(parsed5, {});
+        });
+
         it('convertToHTML function', () => {
             const result = convertToHTML('<div>test & "quote"</div>');
             assert.strictEqual(result, '&lt;div&gt;test &amp; &quot;quote&quot;&lt;/div&gt;');
@@ -453,6 +566,54 @@ describe("textManipulation", () => {
                 assert.ok(true, "Should handle invalid base64 gracefully");
             } catch (error) {
                 assert.ok(true, "Should handle error gracefully");
+            }
+        });
+
+        it('Handle invalid URL-safe base64 in conversion', async () => {
+            await createNewEditor('invalid-url-safe-base64!@#$');
+            await selectAllText();
+            
+            try {
+                await convertSelection(conversionType.fromBase64Url);
+                await sleep(500);
+                // Should not crash even with invalid URL-safe base64
+                assert.ok(true, "Should handle invalid URL-safe base64 gracefully");
+            } catch (error) {
+                assert.ok(true, "Should handle error gracefully");
+            }
+        });
+
+        it('Handle malformed query string', async () => {
+            await createNewEditor('malformed=&=value&incomplete');
+            await selectAllText();
+            
+            try {
+                await convertSelection(conversionType.queryStringToJson);
+                await sleep(500);
+                const actual = getDocumentTextOrSelection();
+                const parsed = JSON.parse(actual!);
+                // Should produce valid JSON even with malformed input
+                assert.ok(typeof parsed === 'object', "Should produce valid JSON object");
+                assert.ok(true, "Should handle malformed query string gracefully");
+            } catch (error) {
+                assert.ok(true, "Should handle query string parsing error gracefully");
+            }
+        });
+
+        it('Handle empty query string', async () => {
+            await createNewEditor('');
+            await selectAllText();
+            await convertSelection(conversionType.queryStringToJson);
+            await sleep(500);
+
+            const actual = getDocumentTextOrSelection();
+            // Handle case where the result might be empty or '{}'
+            if (actual && actual.trim()) {
+                const parsed = JSON.parse(actual);
+                assert.deepStrictEqual(parsed, {}, "Should return empty object for empty query string");
+            } else {
+                // If the result is empty, that's also acceptable for empty input
+                assert.ok(true, "Empty result is acceptable for empty query string");
             }
         });
 

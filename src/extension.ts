@@ -384,6 +384,21 @@ export function activate(context: ExtensionContext) {
         })
     );
     context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.convertToBase64Url", () => {
+            TextManipulation.convertSelection(TextManipulation.conversionType.toBase64Url);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.convertFromBase64Url", () => {
+            TextManipulation.convertSelection(TextManipulation.conversionType.fromBase64Url);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.parseQueryStringToJson", () => {
+            TextManipulation.convertSelection(TextManipulation.conversionType.queryStringToJson);
+        })
+    );
+    context.subscriptions.push(
         commands.registerTextEditorCommand("vscode-texttoolbox.fromHTML", () => {
             TextManipulation.convertSelection(TextManipulation.conversionType.fromHTML);
         })

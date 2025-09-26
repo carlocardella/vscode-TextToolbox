@@ -193,12 +193,15 @@ export function convertHexadecimalToDecimal(hex: string): number | undefined {
 export enum conversionType {
     "toBase64" = "toBase64",
     "fromBase64" = "fromBase64",
+    "toBase64Url" = "toBase64Url",
+    "fromBase64Url" = "fromBase64Url",
     "toHTML" = "toHTML",
     "fromHTML" = "fromHTML",
     "decToHex" = "decToHex",
     "hexToDec" = "hexToDec",
     "encodeUri" = "encodeUri",
     "decodeUri" = "decodeUri",
+    "queryStringToJson" = "queryStringToJson",
     "JWTDecode" = "JWTDecode",
 }
 
@@ -242,7 +245,7 @@ export async function convertSelectionInternal(editor: TextEditor, selection: Se
     editor.edit((editBuilder) => {
         selection.forEach((s) => {
             let textSelection = getTextFromSelection(editor, s);
-            if (!textSelection) {
+            if (textSelection === null || textSelection === undefined) {
                 return;
             }
             let convertedText: string | number | undefined;
@@ -253,6 +256,12 @@ export async function convertSelectionInternal(editor: TextEditor, selection: Se
                     break;
                 case conversionType.fromBase64:
                     convertedText = convertFromBase64(textSelection);
+                    break;
+                case conversionType.toBase64Url:
+                    convertedText = convertToBase64Url(textSelection);
+                    break;
+                case conversionType.fromBase64Url:
+                    convertedText = convertFromBase64Url(textSelection);
                     break;
                 case conversionType.toHTML:
                     convertedText = convertToHTML(textSelection);
@@ -272,6 +281,9 @@ export async function convertSelectionInternal(editor: TextEditor, selection: Se
                 case conversionType.decodeUri:
                     convertedText = decodeUri(textSelection);
                     break;
+                case conversionType.queryStringToJson:
+                    convertedText = parseQueryStringToJson(textSelection);
+                    break;
                 case conversionType.JWTDecode:
                     convertedText = decodeJWTToken(textSelection);
                     break;
@@ -288,10 +300,91 @@ export async function convertSelectionInternal(editor: TextEditor, selection: Se
 }
 
 export function convertToBase64(text: string): string {
-    return Buffer.from(text, "utf8").toString("base64");
+    try {
+        return Buffer.from(text, "utf8").toString("base64");
+    } catch (error) {
+        throw new Error(`Failed to encode to Base64: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
 }
 export function convertFromBase64(text: string): string {
-    return Buffer.from(text, "base64").toString("utf8");
+    try {
+        return Buffer.from(text, "base64").toString("utf8");
+    } catch (error) {
+        throw new Error(`Invalid Base64 string: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+}
+
+/**
+ * Convert text to URL-safe Base64 encoding (replaces + and / with - and _)
+ * @param text The text to encode
+ * @returns URL-safe Base64 encoded string
+ */
+export function convertToBase64Url(text: string): string {
+    return Buffer.from(text, "utf8")
+        .toString("base64")
+        .replace(/\+/g, "-")
+        .replace(/\//g, "_")
+        .replace(/=/g, ""); // Remove padding for URL safety
+}
+
+/**
+ * Convert URL-safe Base64 string back to text
+ * @param text The URL-safe Base64 string to decode
+ * @returns Decoded text
+ */
+export function convertFromBase64Url(text: string): string {
+    try {
+        // Add padding back if needed
+        let base64 = text.replace(/-/g, "+").replace(/_/g, "/");
+        while (base64.length % 4) {
+            base64 += "=";
+        }
+        return Buffer.from(base64, "base64").toString("utf8");
+    } catch (error) {
+        throw new Error(`Invalid URL-safe Base64 string: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
+}
+
+/**
+ * Parse URL query string to formatted JSON
+ * @param queryString The query string to parse (with or without leading ?)
+ * @returns Formatted JSON string
+ */
+export function parseQueryStringToJson(queryString: string): string {
+    try {
+        // Remove leading ? if present
+        const cleanQuery = queryString.startsWith('?') ? queryString.slice(1) : queryString;
+        
+        if (!cleanQuery.trim()) {
+            return '{}';
+        }
+
+        const params: { [key: string]: string | string[] } = {};
+        const pairs = cleanQuery.split('&');
+
+        for (const pair of pairs) {
+            const [key, value = ''] = pair.split('=').map(part => decodeURIComponent(part));
+            
+            if (key) {
+                if (params[key]) {
+                    // Handle multiple values for same key
+                    if (Array.isArray(params[key])) {
+                        (params[key] as string[]).push(value);
+                    } else {
+                        params[key] = [params[key] as string, value];
+                    }
+                } else {
+                    params[key] = value;
+                }
+            }
+        }
+
+        // Use document EOL for consistent line endings
+        const eol = getDocumentEOL(getActiveEditor());
+        return JSON.stringify(params, null, 2).replace(/\n/g, eol);
+    } catch (error) {
+        throw new Error(`Invalid query string: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
 }
 
 export function convertToHTML(text: string): string {
