@@ -6,6 +6,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## Unreleased
 
+### Added
+
+* **Paste as Markdown Table** - Smart clipboard-to-table converter with automatic delimiter detection
+  * Automatically detects common delimiters (tab, comma, semicolon, pipe, space) in clipboard content
+  * Uses first row as table headers for optimal formatting
+  * Inserts formatted Markdown table at cursor position
+  * Supports all standard delimited data formats (CSV, TSV, PSV, etc.)
+  * Perfect for quickly converting spreadsheet data, database exports, and tabular text into documentation
+  * Intelligent parsing handles quoted fields and escaped characters
+  * Real-time feedback shows detected delimiter and table dimensions
+
 See the [list of open enhancements on GitHub](https://github.com/carlocardella/vscode-TextToolbox/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3Aenhancement)
 
 ## [2.28.1] - 2025-09-26

@@ -158,8 +158,10 @@ Likewise, `Convert to CapitalCase` has been removed in favor of the built-in VSC
   * Full backward compatibility with existing patterns: `{date}`, `{time}`, `{line}`
 * **CSV ↔ Markdown Table Converter**
   * **CSV to Markdown**: Convert CSV data to formatted Markdown tables
+  * **Paste as Markdown Table**: Automatically convert clipboard content to Markdown table with smart delimiter detection
   * **Markdown to CSV**: Convert Markdown tables back to CSV format
   * Support for multiple delimiters (comma, semicolon, tab, pipe, custom)
+  * Automatic delimiter detection for clipboard content (tab, comma, semicolon, pipe, space)
   * Flexible header options: use first row, specify custom headers, or generate defaults
   * Proper CSV field escaping for special characters (commas, quotes, newlines)
   * Robust Markdown table parsing with validation

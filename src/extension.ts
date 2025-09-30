@@ -795,6 +795,11 @@ export function activate(context: ExtensionContext) {
         })
     );
     context.subscriptions.push(
+        commands.registerCommand("vscode-texttoolbox.PasteAsMarkdownTable", async () => {
+            await AdvancedListConverter.pasteAsMarkdownTable();
+        })
+    );
+    context.subscriptions.push(
         commands.registerTextEditorCommand("vscode-texttoolbox.MarkdownTableToCsv", async () => {
             const options = await AdvancedListConverter.askForMarkdownToCsvOptions();
             if (options) {

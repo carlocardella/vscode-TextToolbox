@@ -1,4 +1,4 @@
-import { window, Selection } from "vscode";
+import { window, Selection, env } from "vscode";
 import {
     createNewEditor,
     getDocumentTextOrSelection,
@@ -1149,4 +1149,148 @@ export async function askForMarkdownToCsvOptions(): Promise<MarkdownToCsvOptions
         includeHeaders: includeHeaders.value,
         openInNewEditor: openInNewEditor.value
     };
+}
+
+/**
+ * Interface for clipboard table data
+ */
+interface ClipboardTableData {
+    delimiter: string;
+    headers: string[];
+    dataRows: string[][];
+}
+
+/**
+ * Detect the most likely delimiter from a set of delimiters
+ */
+function detectDelimiter(text: string): string {
+    const lines = text.split('\n').filter(line => line.trim().length > 0);
+    if (lines.length === 0) {
+        return ','; // Default to comma
+    }
+
+    // Common delimiters in order of preference
+    const delimiters = ['\t', ',', ';', '|', ' '];
+    const delimiterCounts: { [key: string]: number } = {};
+
+    // Count occurrences of each delimiter across all lines
+    delimiters.forEach(delimiter => {
+        const counts = lines.map(line => (line.split(delimiter).length - 1));
+        
+        // Check if the delimiter consistently appears across lines
+        const firstLineCount = counts[0];
+        const consistentCount = counts.every(count => count === firstLineCount && count > 0);
+        
+        if (consistentCount) {
+            delimiterCounts[delimiter] = firstLineCount;
+        } else {
+            delimiterCounts[delimiter] = 0;
+        }
+    });
+
+    // Find the delimiter with the highest consistent count
+    let bestDelimiter = ',';
+    let maxCount = 0;
+    
+    Object.entries(delimiterCounts).forEach(([delimiter, count]) => {
+        if (count > maxCount) {
+            maxCount = count;
+            bestDelimiter = delimiter;
+        }
+    });
+
+    return bestDelimiter;
+}
+
+/**
+ * Parse clipboard content and extract table data with detected delimiter
+ */
+function parseClipboardTableData(text: string): ClipboardTableData | null {
+    if (!text || text.trim().length === 0) {
+        return null;
+    }
+
+    const delimiter = detectDelimiter(text);
+    const lines = text.split('\n').filter(line => line.trim().length > 0);
+    
+    if (lines.length === 0) {
+        return null;
+    }
+
+    // Parse all lines using the detected delimiter
+    const allRows = lines.map(line => parseCSVLine(line, delimiter));
+    
+    if (allRows.length === 0) {
+        return null;
+    }
+
+    // Use first row as headers
+    const headers = allRows[0];
+    const dataRows = allRows.slice(1);
+
+    return {
+        delimiter,
+        headers,
+        dataRows
+    };
+}
+
+/**
+ * Paste clipboard content as a Markdown table
+ * Automatically detects delimiter and uses first row as headers
+ */
+export async function pasteAsMarkdownTable(): Promise<void> {
+    try {
+        // Read clipboard content
+        const clipboardText = await env.clipboard.readText();
+        
+        if (!clipboardText || clipboardText.trim().length === 0) {
+            window.showErrorMessage('Clipboard is empty or contains no text');
+            return;
+        }
+
+        // Parse clipboard content
+        const tableData = parseClipboardTableData(clipboardText);
+        
+        if (!tableData) {
+            window.showErrorMessage('Unable to parse clipboard content as table data');
+            return;
+        }
+
+        // Create Markdown table
+        const markdownTable = createMarkdownTable(tableData.headers, tableData.dataRows);
+        
+        if (!markdownTable) {
+            window.showErrorMessage('Failed to create Markdown table');
+            return;
+        }
+
+        // Insert at cursor position
+        const editor = getActiveEditor();
+        if (!editor) {
+            window.showErrorMessage('No active editor');
+            return;
+        }
+
+        const position = editor.selection.active;
+        
+        editor.edit((editBuilder) => {
+            editBuilder.insert(position, markdownTable);
+        });
+
+        // Show success message with detected delimiter info
+        const delimiterName = tableData.delimiter === '\t' ? 'Tab' : 
+                             tableData.delimiter === ',' ? 'Comma' :
+                             tableData.delimiter === ';' ? 'Semicolon' :
+                             tableData.delimiter === '|' ? 'Pipe' :
+                             tableData.delimiter === ' ' ? 'Space' :
+                             `"${tableData.delimiter}"`;
+        
+        window.showInformationMessage(
+            `Pasted as Markdown table (${tableData.headers.length} columns, ${tableData.dataRows.length} rows, delimiter: ${delimiterName})`
+        );
+
+    } catch (error) {
+        window.showErrorMessage(`Failed to paste as Markdown table: ${error instanceof Error ? error.message : 'Unknown error'}`);
+    }
 }
