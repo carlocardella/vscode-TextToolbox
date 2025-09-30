@@ -573,6 +573,11 @@
         "category": "Text Toolbox"
       },
       {
+        "command": "vscode-texttoolbox.PasteAsMarkdownTable",
+        "title": "Paste as Markdown Table",
+        "category": "Text Toolbox"
+      },
+      {
         "command": "vscode-texttoolbox.MarkdownTableToCsv",
         "title": "Convert Markdown Table to CSV...",
         "category": "Text Toolbox"
@@ -1138,6 +1143,10 @@
         {
           "group": "tt.advancedListConverter.convert",
           "command": "vscode-texttoolbox.CsvToMarkdownTable"
+        },
+        {
+          "group": "tt.advancedListConverter.convert",
+          "command": "vscode-texttoolbox.PasteAsMarkdownTable"
         },
         {
           "group": "tt.advancedListConverter.convert",
