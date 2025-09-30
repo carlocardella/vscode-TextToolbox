@@ -113,6 +113,52 @@ These documentation guidelines apply specifically to markdown files in the proje
 - Maintain backward compatibility information
 - Track deprecated features and removal timelines
 
+## Development Best Practices
+
+### Feature Development Workflow
+
+**Branch Management:**
+- ✅ **Always create a feature branch** for new changes - never update master directly
+- ✅ Use descriptive branch names: `feature/paste-as-markdown-table`, `fix/delimiter-detection-bug`, `refactor/csv-parsing`
+- ✅ Keep branches focused on single features or fixes to maintain clean history
+- ✅ Delete feature branches after successful merge to keep repository clean
+
+**Development Process:**
+- ✅ **Ensure tests pass before committing** changes (run `npm run test:vscode`)
+- ✅ Exception: For complex features, split into logical commits to avoid losing progress, but ensure final state passes tests
+- ✅ Complex feature commit strategy:
+  - Initial implementation with core functionality
+  - Additional features and enhancements
+  - Test additions and bug fixes
+  - Final documentation and cleanup
+- ✅ Commit early and often with clear, descriptive commit messages
+- ✅ Use conventional commit format: `feat:`, `fix:`, `refactor:`, `docs:`, `test:`
+- ✅ Test functionality manually in addition to automated tests
+
+**Documentation and Finalization:**
+- ✅ **Update documentation at the end** of feature work when all functionality is complete
+- ✅ Documentation timing: Only update docs when feature is fully implemented and tested
+- ✅ Update `TODO.md` to reflect completed items and new planned work
+- ✅ Update `README.md` with new features/commands using consistent formatting
+- ✅ Update `CHANGELOG.md` with detailed feature descriptions in "Unreleased" section
+- ✅ Ensure all documentation follows project formatting standards
+- ✅ Review all changes before preparing to merge to master
+- ✅ Consider documentation updates as the final step before merge preparation
+
+**Quality Assurance:**
+- ✅ Run full test suite before finalizing feature branch
+- ✅ Verify no linting errors or TypeScript compilation issues
+- ✅ Test edge cases and error scenarios
+- ✅ Validate that new functionality integrates properly with existing features
+- ✅ Ensure backward compatibility is maintained
+
+**Pre-Merge Checklist:**
+- ✅ All tests passing
+- ✅ Documentation updated and accurate
+- ✅ No merge conflicts with master branch
+- ✅ Feature branch is clean and ready for review
+- ✅ Consider squashing commits if branch contains many small/experimental commits
+
 ## Extension Publishing Guidelines
 
 ### Pre-Publishing Checklist
