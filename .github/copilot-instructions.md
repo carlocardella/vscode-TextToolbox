@@ -167,6 +167,21 @@ npm run webpack-prod
 
 **Step 3: Publishing**
 
+**Automated Publishing (Recommended):**
+```bash
+# Create and push version tag to trigger automated publishing
+git tag v2.28.2
+git push origin v2.28.2
+
+# GitHub Actions will automatically:
+# - Run tests and build extension
+# - Publish to VS Code Marketplace
+# - Publish to Open VSX Registry  
+# - Create GitHub Release with VSIX file
+```
+
+**Manual Publishing (Fallback):**
+
 **VS Code Marketplace:**
 ```bash
 # Install vsce if not already installed
@@ -208,8 +223,26 @@ npx ovsx publish vscode-texttoolbox-X.X.X.vsix
 - ✅ Verify extension appears on VS Code Marketplace
 - ✅ Verify extension appears on Open VSX Registry (if published)
 - ✅ Test installation from both marketplaces
-- ✅ Update GitHub release with changelog
+- ✅ Verify GitHub release was created with VSIX file (automated)
 - ✅ Push commits and tags to remote: `git push && git push --tags`
+
+### Automated Publishing Setup
+
+**Prerequisites:**
+- GitHub repository secrets configured (see `.github/PUBLISHING_SETUP.md`)
+- Required secrets: `VSCE_PAT`, `OVSX_PAT`
+- Workflow file: `.github/workflows/publish.yml`
+
+**Publishing Trigger:**
+- Push version tags only (e.g., `v2.28.1`, `v3.0.0`)
+- Regular commits to master do NOT trigger publishing
+- Provides safety against accidental releases
+
+**Automated Workflow:**
+1. **Quality Checks** - Run tests and build validation
+2. **Dual Publishing** - Publish to both VS Code Marketplace and Open VSX Registry
+3. **GitHub Release** - Create release with changelog and VSIX file
+4. **Notifications** - GitHub will notify on success/failure
 
 ### Release Types
 
