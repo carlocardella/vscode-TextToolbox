@@ -200,6 +200,11 @@ The goal is to extend the current Text Toolbox Advanced Sequence Generation ✅ 
 - [x] **CSV ↔ Markdown Table Converter** ✅ **NEW September 2025**
   - [x] Convert CSV data to formatted Markdown tables
   - [x] Convert Markdown tables back to CSV format
+  - [x] **Paste as Markdown Table** - Smart clipboard-to-table converter ✅ **v2.29.0**
+    - [x] Automatic delimiter detection (tab, comma, semicolon, pipe, space)
+    - [x] First row as table headers for optimal formatting
+    - [x] Real-time feedback on detected delimiter and table dimensions
+    - [x] Intelligent parsing with quoted field support
   - [x] Support multiple delimiters (comma, semicolon, tab, pipe, custom)
   - [x] Flexible header handling (first row, custom headers, default headers)
   - [x] Proper CSV field escaping for special characters
