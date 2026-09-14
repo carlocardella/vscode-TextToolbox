@@ -94,6 +94,44 @@ describe('helpers', () => {
                 assert.strictEqual(lines![2].text, 'Line 3', 'Third line should match');
             }
         });
+
+        it('Get lines from selection - entire lines from start', async () => {
+            await createNewEditor();
+            const eol = getDocumentEOL(getActiveEditor());
+            const content = `Line 1${eol}Line 2${eol}Line 3${eol}Line 4${eol}Line 5`;
+            
+            await createNewEditor(content);
+            const editor = getActiveEditor();
+            if (editor) {
+                // Simulate selecting all 5 lines starting from position 0 of first line
+                editor.selection = new Selection(0, 0, 4, 6); // Select from start of line 1 to end of line 5
+                const lines = getLinesFromSelection(editor);
+                assert.ok(lines, 'Should get lines');
+                assert.strictEqual(lines!.length, 5, 'Should have 5 lines including first line');
+                assert.strictEqual(lines![0].text, 'Line 1', 'First line should be included');
+                assert.strictEqual(lines![1].text, 'Line 2', 'Second line should match');
+                assert.strictEqual(lines![2].text, 'Line 3', 'Third line should match');
+                assert.strictEqual(lines![3].text, 'Line 4', 'Fourth line should match');
+                assert.strictEqual(lines![4].text, 'Line 5', 'Fifth line should match');
+            }
+        });
+
+        it('Get lines from selection - single line at start', async () => {
+            await createNewEditor();
+            const eol = getDocumentEOL(getActiveEditor());
+            const content = `Line 1${eol}Line 2${eol}Line 3`;
+            
+            await createNewEditor(content);
+            const editor = getActiveEditor();
+            if (editor) {
+                // Select just the first line from position 0
+                editor.selection = new Selection(0, 0, 0, 6); // Select entire first line
+                const lines = getLinesFromSelection(editor);
+                assert.ok(lines, 'Should get lines');
+                assert.strictEqual(lines!.length, 1, 'Should have 1 line');
+                assert.strictEqual(lines![0].text, 'Line 1', 'First line should be included');
+            }
+        });
     });
 
     describe('Utility Functions', () => {

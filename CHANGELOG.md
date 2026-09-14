@@ -1,5 +1,4 @@
-<!-- markdownlint-disable-file -->
-# **Change Log**
+# Change Log
 
 All notable changes to the "vscode-TextToolbox" extension will be documented in this file.
 
@@ -7,9 +6,197 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## Unreleased
 
+## [2.29.0] - 2025-09-30
+
+### Added
+
+* **Paste as Markdown Table** - Smart clipboard-to-table converter with automatic delimiter detection
+  * Automatically detects common delimiters (tab, comma, semicolon, pipe, space) in clipboard content
+  * Uses first row as table headers for optimal formatting
+  * Inserts formatted Markdown table at cursor position
+  * Supports all standard delimited data formats (CSV, TSV, PSV, etc.)
+  * Perfect for quickly converting spreadsheet data, database exports, and tabular text into documentation
+  * Intelligent parsing handles quoted fields and escaped characters
+  * Real-time feedback shows detected delimiter and table dimensions
+
 See the [list of open enhancements on GitHub](https://github.com/carlocardella/vscode-TextToolbox/issues?q=is%3Aissue+is%3Aopen+sort%3Aupdated-desc+label%3Aenhancement)
 
+## [2.28.1] - 2025-09-26
+
+### Fixed
+
+* **Publishing Issue Resolution** - Republished version 2.28.0 as 2.28.1 due to marketplace virus scan failure
+* **Marketplace Availability** - Extension now properly available in VS Code Marketplace
+* **No functional changes** - This is identical to version 2.28.0 content-wise
+
+## [2.28.0] - 2025-09-26
+
+### Added
+
+* **Enhanced Base64/URL Encoding Tools** - Phase 1 implementation with developer-focused enhancements:
+  * `Convert to URL-safe Base64` - Encode text to URL-safe Base64 format (replaces +/ with -_, removes padding)
+  * `Convert from URL-safe Base64` - Decode URL-safe Base64 back to text with proper padding restoration
+  * `Parse Query String to JSON` - Convert URL query strings to formatted JSON with duplicate key handling
+  * **Enhanced Error Handling** - Improved error messages and validation for all encoding operations
+  * **Developer Benefits**: Perfect for JWT tokens, API development, log analysis, and web-safe encoding
+  * **Cross-platform Compatibility** - Proper line ending support for Windows/Linux/macOS
+  * **Comprehensive Testing** - 399 passing tests including edge cases, Unicode support, and error scenarios
+
+## [2.27.0] - 2025-09-25
+
+### Added
+
+* **Enhanced Sequence Generation** - Advanced pattern engine for powerful sequence insertion:
+  * **Enhanced Prefix/Suffix Commands** - Existing prefix/suffix commands now offer "Advanced Patterns" option for pattern-based sequences
+  * `Insert Sequence` - New dedicated sequence generation command using same pattern engine
+  * **Enhanced Number Patterns** - `{n:start:step:format}` syntax with custom start values, step increments, and formatting
+    * Multiple formats: `{n:10::hex}` (hexadecimal), `{n:10::binary}` (binary), `{n:10::octal}` (octal)
+    * Custom increments: `{n:1:2}` generates 1,3,5,7,9... sequence
+    * Start values: `{n:5}` begins numbering at 5
+  * **Enhanced Letter Sequences** - Custom start positions for alphabet sequences
+    * Lowercase: `{i:c}` starts at 'c' (c,d,e,f...)
+    * Uppercase: `{I:Z}` starts at 'Z' (Z,AA,BB,CC...)
+  * **Enhanced Roman Numerals** - Start value support for Roman numeral sequences
+    * Lowercase: `{r:5}` starts at 'v' (v,vi,vii,viii...)
+    * Uppercase: `{R:10}` starts at 'X' (X,XI,XII,XIII...)
+  * **Complex Pattern Support** - Multiple patterns in single string: `Item {n:1:2} - {i:a} ({R:1})`
+  * **Unified Pattern Engine** - Shared implementation between commands for consistency
+  * **Backward Compatibility** - All existing patterns continue to work: `{n}`, `{i}`, `{I}`, `{r}`, `{R}`, `{date}`, `{time}`
+  * **Comprehensive Testing** - 20+ test cases covering basic patterns, enhanced syntax, edge cases, and integration
+
+* **Complete Data Format Converter Suite** - Comprehensive bidirectional format conversion tools:
+  * `Convert JSON to YAML` - Transform JSON to YAML with formatting options (indentation, line width, sort keys)
+  * `Convert YAML to JSON` - Convert YAML to JSON with indentation control and validation
+  * `Convert JSON to CSV` - Export JSON arrays/objects to CSV with customizable delimiters and headers
+  * `Convert Markdown to HTML` - Parse Markdown to HTML using markdown-it with table and code support
+  * `Convert HTML to Markdown` - Convert HTML back to Markdown using Turndown with formatting preservation
+  * `Convert JSON to TOML` - Transform JSON to TOML with structured formatting and type preservation
+  * `Convert TOML to JSON` - Convert TOML configuration files to JSON format
+  * `Convert XML to JSON` - Parse XML to JSON with configurable attribute handling and namespace support
+  * `Convert JSON to XML` - Generate XML from JSON with customizable formatting and root elements
+  * `Convert YAML to TOML` - Cross-format conversion between YAML and TOML configurations
+  * `Convert TOML to YAML` - Transform TOML back to YAML with proper data type preservation
+  * All converters include comprehensive error handling, validation, and user-configurable conversion options
+
+* **Advanced List Converter** - Comprehensive suite of data transformation tools:
+  * `Transpose Data` - Convert rows to columns with customizable delimiters (CSV, TSV, custom) - now includes directional variants:
+    * `Transpose Data (Rows ↔ Columns)` - Bidirectional conversion 
+    * `Transpose Data (Rows → Columns)` - Optimized for row-based data
+    * `Transpose Data (Columns → Rows)` - Optimized for column-based data
+  * `Reverse List Order` - Reverse the order of lines in your text
+  * `Truncate Lines` - Limit line length with optional ellipsis indicators with enhanced ellipsis counting options
+  * `Enhanced Remove Duplicates` - Advanced duplicate removal with keep first/last, case sensitivity, and whitespace trimming options
+  * Enhanced `Prefix with...` and `Suffix with...` - Now support both simple text and advanced patterns ({n}, {i}, {date}, {time}, etc.)
+  * **🆕 CSV ↔ Markdown Table Converter** - Bidirectional conversion between CSV and Markdown table formats:
+    * `Convert CSV to Markdown Table` - Transform CSV data into formatted Markdown tables
+    * `Convert Markdown Table to CSV` - Convert Markdown tables back to CSV format
+    * Support for multiple delimiters (comma, semicolon, tab, pipe, custom)
+    * Flexible header handling (first row, custom headers, default headers)
+    * Proper CSV field escaping for special characters
+    * Robust Markdown table parsing and validation
+
+### Changed
+
+* **Enhanced Prefix/Suffix Commands** - Now offer choice between simple text or advanced patterns with unified pattern engine
+* **Improved Pattern Syntax** - Enhanced pattern processing with robust error handling and graceful fallbacks
+* **Unified Command Architecture** - Both prefix/suffix and "Insert Sequence" commands share same pattern engine for consistency
+* **Improved Truncate Functionality** - Users can now choose whether ellipsis (...) counts within max length or is additional
+* **Cleaner Command Palette** - Removed "Advanced List Converter:" prefix from command titles for better user experience
+* **Merged Duplicate Removal** - Combined regular and enhanced duplicate removal into unified commands
+* **Streamlined Commands** - Removed redundant standalone "Advanced Prefix/Suffix" command (functionality accessible through basic prefix/suffix commands)
+
+### Fixed
+
+* **Test Suite Stability** - Fixed timeout issue in controlCharacters test suite with proper async handling
+* **Pattern Engine Robustness** - Enhanced error handling for empty parameters in pattern syntax (e.g., `{n:}` now works correctly)
+* **Regex Pattern Matching** - Improved pattern parsing to handle optional parameters gracefully
+
+### Technical
+
+* **387 Comprehensive Tests** - All tests passing with enhanced coverage for new sequence generation features
+* **Enhanced Pattern Processing** - New `processEnhancedPattern()` and `formatNumber()` functions in advancedListConverter module
+* **Type Safety** - Full TypeScript implementation with proper error handling and parameter validation
+* **Modular Architecture** - Clean separation of pattern processing logic for maintainability and extensibility
+
 ## Log
+
+## [2.26.0] - 2025-09-24
+
+### Added
+
+* **Complete Advanced List Converter Suite** - Comprehensive data transformation tools
+* **Enhanced Prefix/Suffix Commands** - Unified commands supporting both simple text and advanced patterns
+* **Directional Transpose Commands** - Separate commands for rows→columns and columns→rows conversion
+* **Enhanced Truncate with Ellipsis Options** - User choice for ellipsis counting behavior
+
+### Changed
+
+* **Streamlined Command Experience** - Removed redundant standalone Advanced Prefix/Suffix command
+* **Cleaner Command Palette** - Simplified command titles without "Advanced List Converter:" prefix
+* **Merged Duplicate Commands** - Consolidated duplicate removal with enhanced options into regular commands
+* **Improved User Workflow** - Single commands that offer choice between simple and advanced functionality
+
+* **Unicode Control/Special Character Normalization**
+  * Refined normalization algorithm: now maps Unicode control and special characters to their ASCII equivalents where possible, with fallback to configured replacement string or removal.
+  * Expanded replacement map: includes curly quotes, diverse space characters, dashes, apostrophes, and more.
+  * Defensive coding: all usages of `editor.options` are now guarded to prevent undefined errors in edge cases.
+  * Comprehensive test coverage: updated and expanded tests for normalization and edge cases.
+### Technical
+
+* **347 Comprehensive Tests** - Full test coverage including 6 new CSV/Markdown conversion tests
+* **TypeScript Compliance** - All new interfaces and implementations follow strict typing
+* **Modular Architecture** - Clean separation of concerns with dedicated advancedListConverter module
+* **Performance Optimized** - Efficient algorithms for data transformation and table parsing operations
+* **Robust CSV Parsing** - Handles quoted fields, escaped characters, and irregular data structures
+* **Smart Markdown Table Detection** - Validates table structure and provides clear error messages
+
+## [2.25.0] - 2025-09-24
+
+### Added
+
+* **Crypto Tools** - Comprehensive cryptographic utilities for text processing:
+  * `Generate Hash from Text` - Support for MD5, SHA1, SHA256, SHA224, SHA512, SHA384 hash algorithms
+  * `Generate Bcrypt Hash` - Secure password hashing with configurable salt rounds (1-15)
+  * `Compare Bcrypt Hash` - Verify plain text passwords against bcrypt hashes
+  * `Generate HMAC` - Hash-based Message Authentication Code with SHA256, SHA1, SHA512, MD5 support
+  * `Generate Secure Token` - Cryptographically secure random token generation (1-128 characters)
+  * `Analyze Password Strength` - Comprehensive password security analysis with 100-point scoring system
+
+### Changed
+
+* **Improved Bundle Size** - Replaced crypto-browserify with crypto-js for better web compatibility and smaller bundle size
+* **Enhanced Crypto Performance** - Streamlined cryptographic operations using a single, optimized library
+
+### Removed
+
+* **RIPEMD160 Hash Support** - Removed due to limited usage and compatibility constraints with web environments
+
+## [2.24.1] - 2025-09-23
+
+### Changed
+
+* Optimized extension package size by removing unused assets (text_icon_regular.png, text_icon_reverse.png, text-tool.png)
+* Enhanced webpack configuration for better production builds
+* Updated .vscodeignore to exclude development files and unused assets
+* Package size reduced from ~487KB to ~465KB (4.5% reduction)
+
+## [2.24.0] - 2025-09-23
+
+### Added
+
+* `Slugify String (URL-safe)` - Convert text to URL-friendly slug format (e.g., "Hello World!" → "hello-world")
+* `Obfuscate String` - Simple character shift obfuscation for text
+* `Deobfuscate String` - Reverse obfuscation to restore original text
+* `Generate Numeronym` - Create numeronyms from words (e.g., "internationalization" → "i18n")
+* `Show Text Statistics` - Display detailed statistics about selected text or entire document
+* `Show Text Statistics in New Editor` - Open text statistics in a new editor window
+* `Invert Selection` - Select everything except the currently selected text
+
+### Fixed
+
+* Reviewed and fixed all test suites to ensure comprehensive coverage and reliability
+* Fixed test assertion logic for selection inversion edge cases
+* Enhanced test stability and error handling across all modules
 
 ## [2.22.0] - 2023-11-05
 

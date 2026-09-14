@@ -140,7 +140,9 @@ export function getLinesFromSelection(editor: TextEditor, selection?: Selection)
 
         for (let i = selectionStartLine; i <= selectionEndLine; i++) {
             if (i === selectionStartLine) {
-                if (s.start.character < editor.document.lineAt(selectionStartLine).text.length) {
+                // Always include the first line if there's a selection starting on it
+                // or if it's a multi-line selection
+                if (selectionStartLine < selectionEndLine || s.start.character < editor.document.lineAt(selectionStartLine).text.length) {
                     lines.push(editor?.document.lineAt(i));
                 }
             }
@@ -148,7 +150,9 @@ export function getLinesFromSelection(editor: TextEditor, selection?: Selection)
                 lines.push(editor?.document.lineAt(i));
             }
             else if (i === selectionEndLine) {
-                if (s.end.character > 0) {
+                // Include the last line if there's any selection on it (cursor at position > 0)
+                // or if it's the same line as the start (single line selection)
+                if (s.end.character > 0 || selectionStartLine === selectionEndLine) {
                     lines.push(editor?.document.lineAt(i));
                 }
             }

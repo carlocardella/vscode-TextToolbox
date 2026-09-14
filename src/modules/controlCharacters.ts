@@ -111,7 +111,26 @@ const replacementMap: { [key: string]: string } = {
     "\u200e": "", // zero width space
     "\u2013": "-", // en dash
     "\u2014": "-", // em dash
+    "\u2000": " ",
+    "\u2001": " ",
+    "\u2002": " ",
+    "\u2003": " ",
+    "\u2004": " ",
+    "\u2005": " ",
+    "\u2006": " ",
+    "\u2007": " ",
+    "\u2008": " ",
+    "\u2009": " ",
+    "\u200A": " ",
+    "\u202F": " ",
+    "\u205F": " ",
+    "\u3000": " ",
 };
+
+// NOTE: Instead of special-casing apostrophes only, we now apply the full
+// replacementMap (ASCII normalization) whenever the configured replacement
+// string is the empty string. This provides intuitive behavior: characters
+// with a known ASCII equivalent are normalized; others are removed.
 
 // const regExpText = "[" + chars.join("") + "]";
 const regExpText = chars.join("|");
@@ -175,7 +194,11 @@ export async function replaceControlCharacters(editor?: TextEditor): Promise<voi
             // Replace control characters with the configured replacement string
             newText = text.replace(regexp, (match) => {
                 if (useConfiguredReplacement) {
-                    return String(replacementString || "");
+                    // If replacement string is explicitly empty, attempt ASCII normalization first.
+                    if (replacementString === "") {
+                        return replacementMap[match] ?? "";
+                    }
+                    return String(replacementString);
                 }
                 return replacementMap[match] ?? "";
             });
@@ -199,7 +222,10 @@ export async function replaceControlCharacters(editor?: TextEditor): Promise<voi
                     // Replace control characters with the configured replacement string
                     newText = text.replace(regexp, (match) => {
                         if (useConfiguredReplacement) {
-                            return String(replacementString || "");
+                            if (replacementString === "") {
+                                return replacementMap[match] ?? "";
+                            }
+                            return String(replacementString);
                         }
                         return replacementMap[match] ?? "";
                     });

@@ -2,7 +2,7 @@
   "name": "vscode-texttoolbox",
   "displayName": "Text Toolbox",
   "description": "Collection of tools for text manipulation, filtering, sorting etc...",
-  "version": "2.23.0",
+  "version": "2.29.0",
   "publisher": "carlocardella",
   "author": {
     "name": "Carlo Cardella",
@@ -35,7 +35,6 @@
   ],
   "main": "./dist/extension-node.js",
   "browser": "./dist/extension-web.js",
-  "preview": false,
   "badges": [],
   "icon": "assets/extension_icon.png",
   "repository": {
@@ -145,12 +144,12 @@
       },
       {
         "command": "vscode-texttoolbox.RemoveDuplicateLines",
-        "title": "Remove duplicate lines",
+        "title": "Remove duplicate lines...",
         "category": "Text Toolbox"
       },
       {
         "command": "vscode-texttoolbox.RemoveDuplicateLinesResultInNewEditor",
-        "title": "Remove duplicate lines, result in new Editor",
+        "title": "Remove duplicate lines, result in new Editor...",
         "category": "Text Toolbox"
       },
       {
@@ -194,8 +193,48 @@
         "category": "Text Toolbox"
       },
       {
+        "command": "vscode-texttoolbox.InsertSequence",
+        "title": "Insert sequence...",
+        "category": "Text Toolbox"
+      },
+      {
         "command": "vscode-texttoolbox.RemoveControlCharacters",
         "title": "Replace control characters",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.SlugifyString",
+        "title": "Slugify String (URL-safe)",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.ObfuscateString",
+        "title": "Obfuscate String",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.DeobfuscateString",
+        "title": "Deobfuscate String",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.GenerateNumeronym",
+        "title": "Generate Numeronym (e.g., i18n)",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.ShowTextStatistics",
+        "title": "Show Text Statistics",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.ShowTextStatisticsInNewEditor",
+        "title": "Show Text Statistics in New Editor",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.InvertSelection",
+        "title": "Invert Selection",
         "category": "Text Toolbox"
       },
       {
@@ -236,6 +275,21 @@
       {
         "command": "vscode-texttoolbox.convertToBase64",
         "title": "Encode text to Base64",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.convertToBase64Url",
+        "title": "Encode text to URL-safe Base64",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.convertFromBase64Url",
+        "title": "Decode URL-safe Base64 to text",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.parseQueryStringToJson",
+        "title": "Parse query string to JSON",
         "category": "Text Toolbox"
       },
       {
@@ -437,6 +491,151 @@
         "command": "vscode-texttoolbox.InsertLineSeparator",
         "title": "Insert line separator...",
         "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.GenerateHashFromText",
+        "title": "Generate Hash from Text",
+        "category": "Text Toolbox: Crypto"
+      },
+      {
+        "command": "vscode-texttoolbox.GenerateBcryptHash",
+        "title": "Generate Bcrypt Hash",
+        "category": "Text Toolbox: Crypto"
+      },
+      {
+        "command": "vscode-texttoolbox.CompareBcryptHash",
+        "title": "Compare with Bcrypt Hash",
+        "category": "Text Toolbox: Crypto"
+      },
+      {
+        "command": "vscode-texttoolbox.GenerateHMAC",
+        "title": "Generate HMAC",
+        "category": "Text Toolbox: Crypto"
+      },
+      {
+        "command": "vscode-texttoolbox.GenerateToken",
+        "title": "Generate Secure Token",
+        "category": "Text Toolbox: Crypto"
+      },
+      {
+        "command": "vscode-texttoolbox.AnalyzePasswordStrength",
+        "title": "Analyze Password Strength",
+        "category": "Text Toolbox: Crypto"
+      },
+      {
+        "command": "vscode-texttoolbox.TransposeData",
+        "title": "Transpose Data (Rows ↔ Columns)",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.TransposeDataInNewEditor",
+        "title": "Transpose Data (Rows ↔ Columns), result in new editor",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.TransposeRowsToColumns",
+        "title": "Transpose Data (Rows → Columns)",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.TransposeRowsToColumnsInNewEditor",
+        "title": "Transpose Data (Rows → Columns), result in new editor",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.TransposeColumnsToRows",
+        "title": "Transpose Data (Columns → Rows)",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.TransposeColumnsToRowsInNewEditor",
+        "title": "Transpose Data (Columns → Rows), result in new editor",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.ReverseListOrder",
+        "title": "Reverse List Order",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.ReverseListOrderInNewEditor",
+        "title": "Reverse List Order, result in new editor",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.TruncateLines",
+        "title": "Truncate Lines to Length...",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.CsvToMarkdownTable",
+        "title": "Convert CSV to Markdown Table...",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.PasteAsMarkdownTable",
+        "title": "Paste as Markdown Table",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.MarkdownTableToCsv",
+        "title": "Convert Markdown Table to CSV...",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.JsonToYaml",
+        "title": "Convert JSON to YAML...",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.YamlToJson",
+        "title": "Convert YAML to JSON...",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.JsonToCsv",
+        "title": "Convert JSON to CSV...",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.MarkdownToHtml",
+        "title": "Convert Markdown to HTML...",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.HtmlToMarkdown",
+        "title": "Convert HTML to Markdown...",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.JsonToToml",
+        "title": "Convert JSON to TOML...",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.TomlToJson",
+        "title": "Convert TOML to JSON...",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.XmlToJson",
+        "title": "Convert XML to JSON...",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.JsonToXml",
+        "title": "Convert JSON to XML...",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.YamlToToml",
+        "title": "Convert YAML to TOML...",
+        "category": "Text Toolbox"
+      },
+      {
+        "command": "vscode-texttoolbox.TomlToYaml",
+        "title": "Convert TOML to YAML...",
+        "category": "Text Toolbox"
       }
     ],
     "menus": {
@@ -479,6 +678,11 @@
           "when": "!editorReadonly"
         },
         {
+          "submenu": "tt.stringUtilities",
+          "group": "stringUtilities",
+          "when": "!editorReadonly"
+        },
+        {
           "submenu": "tt.json",
           "group": "json",
           "when": "!editorReadonly"
@@ -500,6 +704,16 @@
         {
           "submenu": "tt.delimiters",
           "group": "delimiters",
+          "when": "!editorReadonly"
+        },
+        {
+          "submenu": "tt.crypto",
+          "group": "crypto",
+          "when": "!editorReadonly"
+        },
+        {
+          "submenu": "tt.advancedListConverter",
+          "group": "advancedListConverter",
           "when": "!editorReadonly"
         },
         {
@@ -630,6 +844,10 @@
         },
         {
           "group": "tt.insert",
+          "command": "vscode-texttoolbox.InsertSequence"
+        },
+        {
+          "group": "tt.insert",
           "command": "vscode-texttoolbox.InsertLoremIpsum"
         },
         {
@@ -680,6 +898,18 @@
         },
         {
           "group": "tt.transform",
+          "command": "vscode-texttoolbox.convertToBase64Url"
+        },
+        {
+          "group": "tt.transform",
+          "command": "vscode-texttoolbox.convertFromBase64Url"
+        },
+        {
+          "group": "tt.transform",
+          "command": "vscode-texttoolbox.parseQueryStringToJson"
+        },
+        {
+          "group": "tt.transform",
           "command": "vscode-texttoolbox.encodeUri"
         },
         {
@@ -717,6 +947,36 @@
         {
           "group": "tt.transform",
           "command": "vscode-texttoolbox.TrimLineOrSelection"
+        }
+      ],
+      "tt.stringUtilities": [
+        {
+          "group": "tt.stringUtilities",
+          "command": "vscode-texttoolbox.SlugifyString"
+        },
+        {
+          "group": "tt.stringUtilities",
+          "command": "vscode-texttoolbox.ObfuscateString"
+        },
+        {
+          "group": "tt.stringUtilities",
+          "command": "vscode-texttoolbox.DeobfuscateString"
+        },
+        {
+          "group": "tt.stringUtilities",
+          "command": "vscode-texttoolbox.GenerateNumeronym"
+        },
+        {
+          "group": "tt.stringUtilities",
+          "command": "vscode-texttoolbox.ShowTextStatistics"
+        },
+        {
+          "group": "tt.stringUtilities",
+          "command": "vscode-texttoolbox.ShowTextStatisticsInNewEditor"
+        },
+        {
+          "group": "tt.stringUtilities",
+          "command": "vscode-texttoolbox.InvertSelection"
         }
       ],
       "tt.filter": [
@@ -816,6 +1076,126 @@
           "group": "tt.delimiters",
           "command": "vscode-texttoolbox.RemoveBrackets"
         }
+      ],
+      "tt.crypto": [
+        {
+          "group": "tt.crypto.hash",
+          "command": "vscode-texttoolbox.GenerateHashFromText"
+        },
+        {
+          "group": "tt.crypto.bcrypt",
+          "command": "vscode-texttoolbox.GenerateBcryptHash"
+        },
+        {
+          "group": "tt.crypto.bcrypt",
+          "command": "vscode-texttoolbox.CompareBcryptHash"
+        },
+        {
+          "group": "tt.crypto.hmac",
+          "command": "vscode-texttoolbox.GenerateHMAC"
+        },
+        {
+          "group": "tt.crypto.token",
+          "command": "vscode-texttoolbox.GenerateToken"
+        },
+        {
+          "group": "tt.crypto.analysis",
+          "command": "vscode-texttoolbox.AnalyzePasswordStrength"
+        }
+      ],
+      "tt.advancedListConverter": [
+        {
+          "group": "tt.advancedListConverter.transpose",
+          "command": "vscode-texttoolbox.TransposeData"
+        },
+        {
+          "group": "tt.advancedListConverter.transpose",
+          "command": "vscode-texttoolbox.TransposeDataInNewEditor"
+        },
+        {
+          "group": "tt.advancedListConverter.transpose",
+          "command": "vscode-texttoolbox.TransposeRowsToColumns"
+        },
+        {
+          "group": "tt.advancedListConverter.transpose",
+          "command": "vscode-texttoolbox.TransposeRowsToColumnsInNewEditor"
+        },
+        {
+          "group": "tt.advancedListConverter.transpose",
+          "command": "vscode-texttoolbox.TransposeColumnsToRows"
+        },
+        {
+          "group": "tt.advancedListConverter.transpose",
+          "command": "vscode-texttoolbox.TransposeColumnsToRowsInNewEditor"
+        },
+        {
+          "group": "tt.advancedListConverter.reverse",
+          "command": "vscode-texttoolbox.ReverseListOrder"
+        },
+        {
+          "group": "tt.advancedListConverter.reverse",
+          "command": "vscode-texttoolbox.ReverseListOrderInNewEditor"
+        },
+        {
+          "group": "tt.advancedListConverter.truncate",
+          "command": "vscode-texttoolbox.TruncateLines"
+        },
+        {
+          "group": "tt.advancedListConverter.convert",
+          "command": "vscode-texttoolbox.CsvToMarkdownTable"
+        },
+        {
+          "group": "tt.advancedListConverter.convert",
+          "command": "vscode-texttoolbox.PasteAsMarkdownTable"
+        },
+        {
+          "group": "tt.advancedListConverter.convert",
+          "command": "vscode-texttoolbox.MarkdownTableToCsv"
+        },
+        {
+          "group": "tt.advancedListConverter.convert",
+          "command": "vscode-texttoolbox.JsonToYaml"
+        },
+        {
+          "group": "tt.advancedListConverter.convert",
+          "command": "vscode-texttoolbox.YamlToJson"
+        },
+        {
+          "group": "tt.advancedListConverter.convert",
+          "command": "vscode-texttoolbox.JsonToCsv"
+        },
+        {
+          "group": "tt.advancedListConverter.convert",
+          "command": "vscode-texttoolbox.MarkdownToHtml"
+        },
+        {
+          "group": "tt.advancedListConverter.convert",
+          "command": "vscode-texttoolbox.HtmlToMarkdown"
+        },
+        {
+          "group": "tt.advancedListConverter.convert",
+          "command": "vscode-texttoolbox.JsonToToml"
+        },
+        {
+          "group": "tt.advancedListConverter.convert",
+          "command": "vscode-texttoolbox.TomlToJson"
+        },
+        {
+          "group": "tt.advancedListConverter.convert",
+          "command": "vscode-texttoolbox.XmlToJson"
+        },
+        {
+          "group": "tt.advancedListConverter.convert",
+          "command": "vscode-texttoolbox.JsonToXml"
+        },
+        {
+          "group": "tt.advancedListConverter.convert",
+          "command": "vscode-texttoolbox.YamlToToml"
+        },
+        {
+          "group": "tt.advancedListConverter.convert",
+          "command": "vscode-texttoolbox.TomlToYaml"
+        }
       ]
     },
     "submenus": [
@@ -840,6 +1220,10 @@
         "label": "Transform"
       },
       {
+        "id": "tt.stringUtilities",
+        "label": "String Utilities"
+      },
+      {
         "id": "tt.json",
         "label": "Json"
       },
@@ -858,6 +1242,14 @@
       {
         "id": "tt.delimiters",
         "label": "Delimiters"
+      },
+      {
+        "id": "tt.crypto",
+        "label": "Crypto Tools"
+      },
+      {
+        "id": "tt.advancedListConverter",
+        "label": "Advanced List Converter"
       }
     ],
     "configuration": [
@@ -1142,21 +1534,29 @@
   },
   "devDependencies": {
     "@types/assert": "^1.5.8",
+    "@types/bcryptjs": "^2.4.6",
     "@types/chance": "^1.1.5",
+    "@types/crypto-js": "^4.2.2",
     "@types/date-and-time": "^0.13.0",
     "@types/dateformat": "^5.0.1",
     "@types/glob": "^8.1.0",
+    "@types/iarna__toml": "^2.0.5",
+    "@types/js-yaml": "^4.0.9",
     "@types/jsonic": "^0.3.2",
     "@types/luxon": "^3.3.3",
+    "@types/markdown-it": "^14.1.2",
     "@types/mocha": "^9.1.1",
     "@types/node": "^20.8.10",
+    "@types/turndown": "^5.0.5",
     "@types/vscode": "^1.63.2",
+    "@types/xml2js": "^0.4.14",
     "@typescript-eslint/eslint-plugin": "^6.9.1",
     "@typescript-eslint/parser": "^6.9.1",
     "@vscode/test-electron": "^2.3.6",
     "@vscode/vsce": "^2.19.0",
     "assert": "^2.1.0",
     "copy-to-clipboard": "^3.3.3",
+    "crypto-browserify": "^3.12.1",
     "eslint": "^8.52.0",
     "glob": "^7.2.3",
     "lorem-ipsum": "^2.0.8",
@@ -1167,6 +1567,7 @@
     "os": "^0.1.2",
     "path-browserify": "^1.0.1",
     "source-map-support": "^0.5.21",
+    "timers-browserify": "^2.0.12",
     "ts-loader": "^9.5.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.2.2",
@@ -1174,15 +1575,21 @@
     "webpack-cli": "^5.1.4"
   },
   "dependencies": {
+    "@iarna/toml": "^2.2.5",
+    "bcryptjs": "^3.0.2",
     "buffer": "^6.0.3",
     "chance": "^1.1.11",
-    "crypto-browserify": "^3.12.0",
+    "crypto-js": "^4.2.0",
+    "js-yaml": "^4.1.0",
     "jsonic": "^1.0.1",
     "jwt-decode": "^3.1.2",
     "lorem-ipsum": "^2.0.8",
     "luxon": "^3.4.3",
+    "markdown-it": "^14.1.0",
     "os-browserify": "^0.3.0",
     "process": "^0.11.10",
-    "stream-browserify": "^3.0.0"
+    "stream-browserify": "^3.0.0",
+    "turndown": "^7.2.1",
+    "xml2js": "^0.6.2"
   }
 }

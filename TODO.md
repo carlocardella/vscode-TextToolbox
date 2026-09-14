@@ -2,89 +2,88 @@
 
 ## Overview
 
-The goal is to extend the current Text Toolbox extension with additional tools and utilities that are available in the it-tools online platform, while maintaining the VS Code-native experience.
+The goal is to extend the current Text Toolbox Advanced Sequence Generation ✅ **COMPLETED v2.27.0**
 
-## 🔐 Crypto Tools Category
+**Status**: ✅ **COMPLETED** - Enhanced pattern engine with unified approach implemented September 2025
+
+### Implementation Summary:
+✅ **Unified Approach Implemented**: Both "Advanced Prefix/Suffix" and "Insert Sequence" commands share the same enhanced pattern engine while maintaining distinct user mental models.ension with additional tools and utilities that are available in the it-tools online platform, while maintaining the VS Code-native experience.
+
+## 🔐 Crypto Tools Category ✅ **COMPLETED v2.25.0**
 
 **Description**: Add cryptographic tools missing from the extension
 
-### Functions to Implement:
-- [ ] **Hash Text Generator**
-  - [ ] MD5 hashing
-  - [ ] SHA1 hashing  
-  - [ ] SHA256 hashing
-  - [ ] SHA224 hashing
-  - [ ] SHA512 hashing
-  - [ ] SHA384 hashing
-  - [ ] SHA3 hashing
-  - [ ] RIPEMD160 hashing
-- [ ] **Bcrypt Hash/Compare**
-  - [ ] Generate bcrypt hash from text
-  - [ ] Compare text with bcrypt hash
-- [ ] **HMAC Generator**
-  - [ ] Generate HMAC with secret key
-  - [ ] Support multiple hash functions
-- [ ] **RSA Key Pair Generator**
+### Functions Implemented:
+  - [x] MD5 hashing
+  - [x] SHA1 hashing  
+  - [x] SHA256 hashing
+  - [x] SHA224 hashing
+  - [x] SHA512 hashing
+  - [x] SHA384 hashing
+  - [ ] SHA3 hashing (not implemented)
+  - [x] ~~RIPEMD160 hashing~~ (removed for web compatibility)
+  - [x] Generate bcrypt hash from text
+  - [x] Compare text with bcrypt hash
+  - [x] Generate HMAC with secret key
+  - [x] Support multiple hash functions (SHA256, SHA1, SHA512, MD5)
   - [ ] Generate RSA private/public key pairs
   - [ ] PEM format output
-- [ ] **Password Strength Analyzer**
-  - [ ] Analyze password strength
-  - [ ] Estimate crack time
-  - [ ] Entropy calculation
-- [ ] **BIP39 Passphrase Generator**
+  - [x] Analyze password strength with 100-point scoring system
+  - [x] Estimate crack time
+  - [x] Entropy calculation
+  - [x] Pattern detection and penalties
+  - [x] Detailed scoring breakdown
   - [ ] Generate BIP39 mnemonic
   - [ ] Convert mnemonic to passphrase
-- [ ] **Advanced Encryption/Decryption**
   - [ ] AES encryption/decryption
   - [ ] TripleDES encryption/decryption
   - [ ] Rabbit encryption/decryption
   - [ ] RC4 encryption/decryption
+  - [x] Cryptographically secure random tokens
+  - [x] Configurable length (1-128 characters)
+  - [x] Hexadecimal and Base64 encoding support
 
-## 🔄 Data Format Converters
+## 🔄 Data Format Converters ✅ **COMPLETED v2.26.0**
 
 **Description**: Add bidirectional converters between various data formats
 
-### Functions to Implement:
-- [ ] **YAML ↔ JSON Converter**
-  - [ ] YAML to JSON conversion
-  - [ ] JSON to YAML conversion
-  - [ ] Validation and error handling
-- [ ] **YAML ↔ TOML Converter**
-  - [ ] YAML to TOML conversion
-  - [ ] TOML to YAML conversion
-- [ ] **JSON ↔ TOML Converter**
-  - [ ] JSON to TOML conversion
-  - [ ] TOML to JSON conversion
-- [ ] **XML ↔ JSON Converter**
-  - [ ] XML to JSON conversion
-  - [ ] JSON to XML conversion
-  - [ ] Handle attributes and namespaces
-- [ ] **Markdown ↔ HTML Converter**
-  - [ ] Markdown to HTML conversion
-  - [ ] HTML to Markdown conversion (basic)
-  - [ ] Support for common markdown extensions
+### Functions Implemented:
+  - [x] JSON to YAML conversion with formatting options
+  - [x] YAML to JSON conversion with indentation control
+  - [x] Comprehensive validation and error handling
+  - [x] Custom options: indentation, line width, sort keys
+  - [x] YAML to TOML conversion with proper data type handling
+  - [x] TOML to YAML conversion with formatting preservation
+  - [x] Cross-format data type preservation
+  - [x] JSON to TOML conversion with structured formatting
+  - [x] TOML to JSON conversion with type preservation
+  - [x] Handle complex nested structures
+  - [x] XML to JSON conversion with attribute handling
+  - [x] JSON to XML conversion with customizable formatting
+  - [x] Support for attributes, namespaces, and CDATA
+  - [x] Configurable attribute prefixes and text nodes
+  - [x] Convert CSV data to formatted Markdown tables
+  - [x] Convert Markdown tables back to CSV format
+  - [x] Support multiple delimiters and header options
+  - [x] Markdown to HTML conversion with markdown-it parser
+  - [x] HTML to Markdown conversion with Turndown
+  - [x] Support for tables, code blocks, and formatting
+  - [x] Configurable conversion options
+  - [x] Convert JSON arrays/objects to CSV format
+  - [x] Customizable delimiters and header handling
+  - [x] Nested object flattening options
 
 ## 🔢 Advanced Base Conversion
 
-**Priority**: Medium  
 **Description**: Extend beyond hex/decimal to support all common number bases
 
 ### Functions to Implement:
-- [ ] **Integer Base Converter**
-  - [ ] Binary (base 2) conversion
-  - [ ] Octal (base 8) conversion
-  - [ ] Decimal (base 10) conversion
-  - [ ] Hexadecimal (base 16) conversion
-  - [ ] Arbitrary base conversion (base 2-36)
   - [ ] Base64 number conversion
-- [ ] **Roman Numeral Converter**
   - [ ] Arabic numbers to Roman numerals
   - [ ] Roman numerals to Arabic numbers
   - [ ] Validation for valid Roman numeral format
-
 ## 📝 Text Encoding Enhancements
 
-**Priority**: Medium  
 **Description**: Add advanced text encoding and conversion features
 
 ### Functions to Implement:
@@ -99,21 +98,155 @@ The goal is to extend the current Text Toolbox extension with additional tools a
   - [ ] Convert text to NATO phonetic alphabet
   - [ ] Support for oral transmission formatting
 
-## 📋 List Processing Tools
+## Advanced Sequence Generation
 
-**Priority**: Medium  
-**Description**: Enhance existing list functionality with advanced operations
+### Enhanced Pattern Engine Features ✅ **COMPLETED**:
+- [x] **Enhanced Number Patterns** - `{n:start:step:format}` syntax
+  - [x] Custom start values: `{n:5}` starts at 5
+  - [x] Custom step increments: `{n:1:2}` for 1,3,5,7,9...
+  - [x] Multiple number formats: `{n:10::hex}`, `{n:10::binary}`, `{n:10::octal}`
+  - [x] Backward compatibility with basic `{n}` pattern
+- [x] **Enhanced Letter Sequences** - Custom start positions
+  - [x] Lowercase with start: `{i:c}` starts at 'c'
+  - [x] Uppercase with start: `{I:Z}` starts at 'Z'
+  - [x] Full alphabet cycling support beyond 26 letters
+- [x] **Enhanced Roman Numerals** - Start value support
+  - [x] Lowercase Roman: `{r:5}` starts at 'v' (5)
+  - [x] Uppercase Roman: `{R:10}` starts at 'X' (10)
+  - [x] Proper Roman numeral generation up to large numbers
+- [x] **Complex Pattern Support** - Multiple patterns in single string
+  - [x] Mixed patterns: `Item {n:1:2} - {i:a} ({R:1})`
+  - [x] Backward compatibility with existing date/time patterns
+- [x] **Robust Error Handling** - Graceful fallbacks for invalid syntax
+  - [x] Invalid parameters default to safe values
+  - [x] Non-numeric parameters handled gracefully
+  - [x] Empty parameters use sensible defaults
 
-### Functions to Implement:
-- [ ] **Advanced List Converter**
-  - [ ] Transpose data (rows ↔ columns)
-  - [ ] Add prefix to each line
-  - [ ] Add suffix to each line
-  - [ ] Reverse list order
-  - [ ] Sort list (multiple criteria)
-  - [ ] Convert to lowercase
-  - [ ] Truncate values to specific length
-  - [ ] Remove duplicates with options
+### Command Implementation ✅ **COMPLETED**:
+- [x] **Advanced Prefix/Suffix** - Enhanced existing commands with pattern choice
+  - [x] User choice: Simple text or advanced patterns
+  - [x] Full pattern engine integration
+  - [x] Maintains existing user workflow
+- [x] **Insert Sequence** - New dedicated sequence generation command
+  - [x] Focused on sequence generation mental model
+  - [x] Same pattern engine as Prefix/Suffix
+  - [x] Direct cursor position insertion
+- [x] **Shared Pattern Engine** - Single implementation for both commands
+  - [x] Consistent behavior across commands
+  - [x] Easier maintenance and testing
+  - [x] Pattern processing in `advancedListConverter.ts`
+
+### Technical Implementation ✅ **COMPLETED**:
+- [x] **Enhanced Pattern Processing** - `processEnhancedPattern()` function
+  - [x] Regex-based pattern parsing: `/\{([nrRiI]):([^:}]*):?([^:}]*):?([^}]*)\}/g`
+  - [x] Flexible parameter handling with defaults
+  - [x] Support for empty parameters with fallbacks
+- [x] **Number Formatting** - `formatNumber()` function
+  - [x] Hex formatting with proper padding
+  - [x] Binary formatting with prefix support
+  - [x] Octal formatting capabilities
+- [x] **Comprehensive Testing** - 20+ test cases
+  - [x] Basic pattern backward compatibility
+  - [x] Enhanced syntax validation
+  - [x] Edge case handling
+  - [x] Integration testing
+  - [x] All 387 tests passing
+
+### Enhanced Features Beyond insertnums:
+- [x] **Unified User Experience** - Two commands, one engine
+- [x] **VS Code Integration** - Native command palette and context menu
+- [x] **Pattern Flexibility** - More intuitive syntax than complex command-line options
+- [x] **Type Safety** - Full TypeScript implementation with proper error handling
+- [x] **Extensible Architecture** - Easy to add new pattern types in future
+
+### Future Enhancements (Not Required for Core Functionality):
+- [ ] **Date Sequences** - Date increments by days/weeks/months/years
+- [ ] **Month Name Sequences** - Month names in different languages
+- [ ] **JavaScript Expressions** - Custom expressions for complex patterns
+- [ ] **Repeat Patterns** - Cycle through sequences (#3 syntax)
+- [ ] **Random Ranges** - Random numbers in specified ranges
+- [ ] **Command History** - Remember previous sequence patterns
+
+## Advanced List Converter ✅ **COMPLETED Phase 1 - September 2025**
+
+**Description**: Enhance existing list functionality with advanced operations that VS Code doesn't provide built-in
+
+**Status**: ✅ **Phase 1 COMPLETE** - 5 core functions implemented with comprehensive testing
+
+### Phase 1: Core Unique Features ✅ **COMPLETED**
+- [x] **Transpose Data (Rows ↔ Columns)** ✅
+  - [x] Convert CSV/TSV rows to columns and vice versa
+  - [x] Support custom delimiters (tab, comma, space, custom)
+  - [x] Handle irregular data gracefully
+  - [x] Essential for data manipulation tasks
+- [x] **Reverse List Order** ✅
+  - [x] Simple line order reversal (not sorting)
+  - [x] Preserve empty lines in position
+  - [x] Different from sort reverse operation
+- [x] **Truncate Lines to Length** ✅
+  - [x] Limit each line to N characters
+  - [x] Optional ellipsis (...) for truncated content
+  - [x] Useful for formatting consistency
+- [x] **Enhanced Remove Duplicates** ✅
+  - [x] Keep first vs last occurrence option
+  - [x] Case sensitive/insensitive toggle
+  - [x] Trim whitespace before comparison option
+  - [x] Extends existing duplicate removal with advanced options
+- [x] **Advanced Prefix/Suffix Operations** ✅
+  - [x] Pattern-based numbering: {n}, {i}, {I}, {a}, {A}
+  - [x] Date/time patterns: {date}, {time}
+  - [x] Line-based patterns: {line}
+  - [x] Conditional formatting based on content
+- [x] **CSV ↔ Markdown Table Converter** ✅ **NEW September 2025**
+  - [x] Convert CSV data to formatted Markdown tables
+  - [x] Convert Markdown tables back to CSV format
+  - [x] **Paste as Markdown Table** - Smart clipboard-to-table converter ✅ **v2.29.0**
+    - [x] Automatic delimiter detection (tab, comma, semicolon, pipe, space)
+    - [x] First row as table headers for optimal formatting
+    - [x] Real-time feedback on detected delimiter and table dimensions
+    - [x] Intelligent parsing with quoted field support
+  - [x] Support multiple delimiters (comma, semicolon, tab, pipe, custom)
+  - [x] Flexible header handling (first row, custom headers, default headers)
+  - [x] Proper CSV field escaping for special characters
+  - [x] Robust Markdown table parsing with validation
+  - [x] Bidirectional conversion workflow
+
+### Phase 2: Advanced Operations (Extended Value)
+- [ ] **Multi-Criteria Sorting**
+  - [ ] Numeric vs alphabetic sorting (1,2,10 vs 1,10,2)
+  - [ ] Sort by length then alphabetically
+  - [ ] Custom comparison functions
+  - [ ] Enhances existing sort functionality
+- [ ] **List Analytics & Statistics**
+  - [ ] Count unique items and duplicates
+  - [ ] Length distribution analysis
+  - [ ] Pattern matching and validation
+  - [ ] Complements existing text statistics
+
+### Technical Implementation ✅ **COMPLETED**:
+- **New Module**: `src/modules/advancedListConverter.ts` ✅ (516 lines)
+- **VS Code Integration**: New submenu "Advanced List Converter" ✅
+- **No Duplication**: Avoids VS Code built-in transforms ✅
+- **Multi-Selection Support**: Works with multiple cursors and selections ✅
+- **Performance**: Optimized for large text processing ✅
+- **Comprehensive Testing**: 31 test cases with full coverage ✅
+
+### Commands Implemented ✅:
+```json
+"vscode-texttoolbox.TransposeData"               ✅
+"vscode-texttoolbox.ReverseListOrder"            ✅
+"vscode-texttoolbox.TruncateLines"               ✅
+"vscode-texttoolbox.EnhancedRemoveDuplicates"    ✅
+"vscode-texttoolbox.AdvancedPrefixSuffix"        ✅
+"vscode-texttoolbox.MultiCriteriaSort"           🚧 Phase 2
+"vscode-texttoolbox.ListAnalytics"               🚧 Phase 2
+```
+
+### Test Coverage ✅:
+- **Total Tests**: 31 test cases across 8 test suites
+- **Edge Cases**: Empty documents, single lines, special characters
+- **Error Handling**: Invalid inputs and boundary conditions
+- **Integration**: VS Code editor integration and user workflows
 
 ## 🌐 Web Development Tools
 
@@ -136,14 +269,9 @@ The goal is to extend the current Text Toolbox extension with additional tools a
 - [ ] **User-Agent Parser**
   - [ ] Parse user-agent strings
   - [ ] Detect browser, engine, OS, CPU, device
-- [ ] **HTTP Status Codes Reference**
-  - [ ] Searchable HTTP status codes list
-  - [ ] Include descriptions and meanings
-  - [ ] Support for WebDAV codes
 
 ## 🔑 JWT and Security Tools
 
-**Priority**: Medium  
 **Description**: Expand JWT functionality and add security utilities
 
 ### Functions to Implement:
@@ -163,32 +291,44 @@ The goal is to extend the current Text Toolbox extension with additional tools a
 
 ## 🔗 String Utilities
 
-**Priority**: Medium  
+**Status**: ✅ COMPLETED  
 **Description**: Add advanced string manipulation and transformation tools
 
-### Functions to Implement:
-- [ ] **String Slugification**
-  - [ ] Make strings URL/filename safe
-  - [ ] Remove special characters
-  - [ ] Convert to lowercase with hyphens
-- [ ] **String Obfuscation**
-  - [ ] Obfuscate sensitive strings
-  - [ ] Make shareable without revealing content
-  - [ ] Reversible obfuscation methods
-- [ ] **Numeronym Generator**
-  - [ ] Generate numeronyms (e.g., i18n for internationalization)
-  - [ ] Calculate character counts between letters
-- [ ] **Enhanced Text Statistics**
-  - [ ] Character count (with/without spaces)
-  - [ ] Word count
-  - [ ] Sentence count
-  - [ ] Paragraph count
-  - [ ] Reading time estimation
-  - [ ] File size in bytes
+### Functions Implemented:
+- [x] **String Slugification**
+  - [x] Make strings URL/filename safe
+  - [x] Remove special characters
+  - [x] Convert to lowercase with hyphens
+  - [x] Support custom separators
+- [x] **String Obfuscation**
+  - [x] Obfuscate sensitive strings
+  - [x] Make shareable without revealing content
+  - [x] Reversible obfuscation methods
+  - [x] Support custom shift values
+- [x] **Numeronym Generator**
+  - [x] Generate numeronyms (e.g., i18n for internationalization)
+  - [x] Calculate character counts between letters
+  - [x] Handle edge cases (short words, whitespace)
+- [x] **Enhanced Text Statistics**
+  - [x] Character count (with/without spaces)
+  - [x] Word count
+  - [x] Sentence count
+  - [x] Paragraph count
+  - [x] Line count
+  - [x] Reading time estimation
+  - [x] File size in bytes (UTF-8)
+  - [x] Display in dialog or new editor
+
+### Implementation Details:
+- ✅ Created `src/modules/stringUtilities.ts` with all functions
+- ✅ Added VS Code commands and menu integration
+- ✅ Created comprehensive test suite `src/test/suite/stringUtilities.test.ts`
+- ✅ Added to extension.ts with proper command registration
+- ✅ Updated package.json with new commands and context menus
+- ✅ Added "String Utilities" submenu to editor context menu
 
 ## 📱 QR Code Generators
 
-**Priority**: Low  
 **Description**: Add QR code generation capabilities
 
 ### Functions to Implement:
@@ -207,9 +347,6 @@ The goal is to extend the current Text Toolbox extension with additional tools a
 **Description**: Add developer-focused utilities and references
 
 ### Functions to Implement:
-- [ ] **Git Cheatsheet**
-  - [ ] Searchable Git commands reference
-  - [ ] Common workflows and examples
 - [ ] **Random Port Generator**
   - [ ] Generate random ports outside known range (0-1023)
   - [ ] Check port availability
@@ -232,7 +369,6 @@ The goal is to extend the current Text Toolbox extension with additional tools a
 
 ## 🌐 Network Tools
 
-**Priority**: Medium  
 **Description**: Add network calculation and analysis tools
 
 ### Functions to Implement:
@@ -256,47 +392,13 @@ The goal is to extend the current Text Toolbox extension with additional tools a
   - [ ] RFC4193 compliance
   - [ ] Local network addressing
 
-## 🧮 Math and Calculation Tools
-
-**Priority**: Medium  
-**Description**: Add mathematical computation and calculation utilities
-
-### Functions to Implement:
-- [ ] **Math Expression Evaluator**
-  - [ ] Calculate mathematical expressions
-  - [ ] Support functions (sqrt, cos, sin, abs, etc.)
-  - [ ] Variable support
-- [ ] **ETA Calculator**
-  - [ ] Estimate time of arrival
-  - [ ] Duration calculations
-  - [ ] Progress tracking
-- [ ] **Percentage Calculator**
-  - [ ] Calculate percentages between values
-  - [ ] Percentage increase/decrease
-  - [ ] Multiple calculation modes
-- [ ] **Temperature Converter**
-  - [ ] Celsius ↔ Fahrenheit ↔ Kelvin
-  - [ ] Rankine, Delisle, Newton conversions
-  - [ ] Réaumur and Rømer support
-
 ## ⏱️ Measurement Tools
 
-**Priority**: Low  
 **Description**: Add time and performance measurement utilities
 
-### Functions to Implement:
-- [ ] **Chronometer/Stopwatch**
-  - [ ] Start/stop/reset functionality
-  - [ ] Lap time recording
-  - [ ] Multiple timer support
-- [ ] **Benchmark Builder**
-  - [ ] Compare execution times
-  - [ ] Performance testing utilities
-  - [ ] Statistical analysis of results
 
 ## ✨ Enhanced Text Tools
 
-**Priority**: Medium  
 **Description**: Add advanced text manipulation and generation tools
 
 ### Functions to Implement:
@@ -320,7 +422,6 @@ The goal is to extend the current Text Toolbox extension with additional tools a
 
 ## ✅ Data Validation Tools
 
-**Priority**: Medium  
 **Description**: Add data validation and normalization utilities
 
 ### Functions to Implement:
@@ -341,7 +442,6 @@ The goal is to extend the current Text Toolbox extension with additional tools a
 
 ## 📄 PDF and File Tools
 
-**Priority**: Low  
 **Description**: Add file handling and verification utilities
 
 ### Functions to Implement:
@@ -356,7 +456,6 @@ The goal is to extend the current Text Toolbox extension with additional tools a
 
 ## 📊 Enhanced JSON Tools
 
-**Priority**: Medium  
 **Description**: Extend current JSON functionality with advanced features
 
 ### Functions to Implement:
@@ -375,7 +474,6 @@ The goal is to extend the current Text Toolbox extension with additional tools a
 
 ## 🎨 Advanced Formatting Tools
 
-**Priority**: Medium  
 **Description**: Add formatting tools for various data formats
 
 ### Functions to Implement:
@@ -394,7 +492,6 @@ The goal is to extend the current Text Toolbox extension with additional tools a
 
 ## 🔐 Additional Encoding Tools
 
-**Priority**: Low  
 **Description**: Add specialized encoding and decoding utilities
 
 ### Functions to Implement:
@@ -402,14 +499,20 @@ The goal is to extend the current Text Toolbox extension with additional tools a
   - [ ] Decode Outlook SafeLink URLs
   - [ ] Extract original URLs
   - [ ] Batch processing support
+- [x] **Enhanced Base64/URL Encoding Tools** ✅ **COMPLETED Phase 1 - September 2025**
+  - [x] URL-safe Base64 encoding/decoding (replaces +/ with -_, removes padding)  
+  - [x] Query string to JSON parser with duplicate key handling
+  - [x] Enhanced error handling and validation
+  - [x] Cross-platform line ending compatibility
+  - [x] Comprehensive test coverage (399 passing tests)
+  - [ ] **Phase 2 Planned**: Bulk operations, URL builder, data URL generation
 - [ ] **Advanced URL Encoding/Decoding**
   - [ ] Comprehensive URL encoding
-  - [ ] Component-specific encoding
+  - [ ] Component-specific encoding  
   - [ ] Multiple encoding standards
 
 ## 💻 Device and System Info
 
-**Priority**: Low  
 **Description**: Add system information utilities
 
 ### Functions to Implement:
@@ -421,7 +524,6 @@ The goal is to extend the current Text Toolbox extension with additional tools a
 
 ## 🌐 HTML Tools
 
-**Priority**: Medium  
 **Description**: Add HTML editing and processing tools
 
 ### Functions to Implement:
@@ -429,22 +531,11 @@ The goal is to extend the current Text Toolbox extension with additional tools a
   - [ ] Comprehensive entity support
   - [ ] Bidirectional conversion
   - [ ] Named and numeric entities
-- [ ] **HTML WYSIWYG Editor** (if feasible)
-  - [ ] Rich text editing interface
-  - [ ] HTML source generation
-  - [ ] Preview functionality
 
 ## 📷 Camera and Media Tools
 
 **Priority**: Very Low  
 **Description**: Add media capture tools (if technically feasible)
-
-### Functions to Implement:
-- [ ] **Camera Recorder** (Feasibility Study Required)
-  - [ ] Investigate VS Code extension capabilities
-  - [ ] Webcam access permissions
-  - [ ] Photo capture functionality
-  - [ ] Video recording (if possible)
 
 ## Implementation Notes
 

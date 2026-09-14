@@ -16,6 +16,10 @@ import * as path from "path";
 import { REGEX_VALIDATE_EMAIL } from "./modules/filterText";
 import * as Indentation from "./modules/indentation";
 import { delimiterTypes } from "./modules/delimiters";
+import * as StringUtilities from "./modules/stringUtilities";
+import * as CryptoTools from "./modules/cryptoTools";
+import * as AdvancedListConverter from "./modules/advancedListConverter";
+import * as DataFormatConverter from "./modules/dataFormatConverter";
 
 export function activate(context: ExtensionContext) {
     console.log("vscode-texttoolbox is active");
@@ -235,13 +239,19 @@ export function activate(context: ExtensionContext) {
         })
     );
     context.subscriptions.push(
-        commands.registerTextEditorCommand("vscode-texttoolbox.RemoveDuplicateLines", () => {
-            FilterText.removeDuplicateLines(false);
+        commands.registerTextEditorCommand("vscode-texttoolbox.RemoveDuplicateLines", async () => {
+            const options = await AdvancedListConverter.askForDuplicateOptions();
+            if (options) {
+                await AdvancedListConverter.enhancedRemoveDuplicates(options, false);
+            }
         })
     );
     context.subscriptions.push(
-        commands.registerTextEditorCommand("vscode-texttoolbox.RemoveDuplicateLinesResultInNewEditor", () => {
-            FilterText.removeDuplicateLines(true);
+        commands.registerTextEditorCommand("vscode-texttoolbox.RemoveDuplicateLinesResultInNewEditor", async () => {
+            const options = await AdvancedListConverter.askForDuplicateOptions();
+            if (options) {
+                await AdvancedListConverter.enhancedRemoveDuplicates(options, true);
+            }
         })
     );
     context.subscriptions.push(
@@ -285,15 +295,15 @@ export function activate(context: ExtensionContext) {
                 // File system path
                 let userPathUri = Uri.file(textBetweenSpaces);
                 await workspace.fs.stat(userPathUri).then(
-                    (stat) => {
+                    (stat: any) => {
                         commands.executeCommand("vscode.open", userPathUri);
                     },
-                    (err) => {
+                    (err: any) => {
                         // if the path does not exist, check if it is a path relative to the open document
                         let folder = path.dirname(editor.document.uri.fsPath);
                         if (folder) {
                             userPathUri = Uri.joinPath(Uri.file(folder), textBetweenSpaces!);
-                            workspace.fs.stat(userPathUri).then((stat) => {
+                            workspace.fs.stat(userPathUri).then((stat: any) => {
                                 commands.executeCommand("vscode.open", userPathUri);
                             });
                         }
@@ -371,6 +381,21 @@ export function activate(context: ExtensionContext) {
     context.subscriptions.push(
         commands.registerTextEditorCommand("vscode-texttoolbox.convertToBase64", () => {
             TextManipulation.convertSelection(TextManipulation.conversionType.toBase64);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.convertToBase64Url", () => {
+            TextManipulation.convertSelection(TextManipulation.conversionType.toBase64Url);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.convertFromBase64Url", () => {
+            TextManipulation.convertSelection(TextManipulation.conversionType.fromBase64Url);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.parseQueryStringToJson", () => {
+            TextManipulation.convertSelection(TextManipulation.conversionType.queryStringToJson);
         })
     );
     context.subscriptions.push(
@@ -604,7 +629,7 @@ export function activate(context: ExtensionContext) {
 
     // events
     window.onDidChangeActiveTextEditor(
-        (editor) => {
+        (editor: any) => {
             if (editor) {
                 ControlCharacters.decorateControlCharacters(editor);
                 if (decorations) {
@@ -616,7 +641,7 @@ export function activate(context: ExtensionContext) {
         context.subscriptions
     );
     workspace.onDidChangeTextDocument(
-        (event) => {
+        (event: any) => {
             let activeEditor = Helpers.getActiveEditor();
             if (activeEditor) {
                 ControlCharacters.decorateControlCharacters(activeEditor);
@@ -626,23 +651,254 @@ export function activate(context: ExtensionContext) {
                 decorations.RefreshHighlights();
             }
 
-            // set context values for indentation commands
-            commands.executeCommand("setContext", "tt.tabSize", activeEditor!.options.tabSize);
-            commands.executeCommand("setContext", "tt.insertSpaces", activeEditor!.options.insertSpaces);
-            commands.executeCommand("setContext", "tt.insertSpaces", activeEditor!.options.insertSpaces);
-
-            // todo: https://github.com/Microsoft/vscode/issues/30066
-            // if (workspace.getConfiguration().get('TextToolbox.removeControlCharactersOnPaste')) {
-            // 	ControlCharacters.removeControlCharacters(getActiveEditor());
-            // }
+            // set context values for indentation commands (guard if no active editor yet)
+            if (activeEditor && activeEditor.options) {
+                commands.executeCommand("setContext", "tt.tabSize", activeEditor.options.tabSize);
+                commands.executeCommand("setContext", "tt.insertSpaces", activeEditor.options.insertSpaces);
+                commands.executeCommand("setContext", "tt.insertSpaces", activeEditor.options.insertSpaces);
+            }
         },
         null,
         context.subscriptions
     );
 
+    // string utilities
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.SlugifyString", () => {
+            StringUtilities.applyStringUtility(StringUtilities.stringUtilityType.slugify);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.ObfuscateString", () => {
+            StringUtilities.applyStringUtility(StringUtilities.stringUtilityType.obfuscate);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.DeobfuscateString", () => {
+            StringUtilities.applyStringUtility(StringUtilities.stringUtilityType.deobfuscate);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.GenerateNumeronym", () => {
+            StringUtilities.applyStringUtility(StringUtilities.stringUtilityType.numeronym);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.ShowTextStatistics", () => {
+            StringUtilities.showTextStatistics();
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.InvertSelection", () => {
+            StringUtilities.invertSelection();
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.ShowTextStatisticsInNewEditor", () => {
+            StringUtilities.showTextStatisticsInNewEditor();
+        })
+    );
+
+    // crypto tools
+    context.subscriptions.push(
+        commands.registerCommand("vscode-texttoolbox.GenerateHashFromText", () => {
+            CryptoTools.generateHashFromText();
+        })
+    );
+    context.subscriptions.push(
+        commands.registerCommand("vscode-texttoolbox.GenerateBcryptHash", () => {
+            CryptoTools.generateBcryptHash();
+        })
+    );
+    context.subscriptions.push(
+        commands.registerCommand("vscode-texttoolbox.CompareBcryptHash", () => {
+            CryptoTools.compareBcryptHash();
+        })
+    );
+    context.subscriptions.push(
+        commands.registerCommand("vscode-texttoolbox.GenerateHMAC", () => {
+            CryptoTools.generateHMAC();
+        })
+    );
+    context.subscriptions.push(
+        commands.registerCommand("vscode-texttoolbox.GenerateToken", () => {
+            CryptoTools.generateToken();
+        })
+    );
+    context.subscriptions.push(
+        commands.registerCommand("vscode-texttoolbox.AnalyzePasswordStrength", () => {
+            CryptoTools.analyzePasswordStrength();
+        })
+    );
+
+    // advanced list converter
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.TransposeData", async () => {
+            const delimiter = await AdvancedListConverter.askForTransposeDelimiter();
+            if (delimiter !== undefined) {
+                await AdvancedListConverter.transposeData(delimiter, false);
+            }
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.TransposeDataInNewEditor", async () => {
+            const delimiter = await AdvancedListConverter.askForTransposeDelimiter();
+            if (delimiter !== undefined) {
+                await AdvancedListConverter.transposeData(delimiter, true);
+            }
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.TransposeRowsToColumns", async () => {
+            await AdvancedListConverter.transposeRowsToColumns(false);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.TransposeRowsToColumnsInNewEditor", async () => {
+            await AdvancedListConverter.transposeRowsToColumns(true);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.TransposeColumnsToRows", async () => {
+            await AdvancedListConverter.transposeColumnsToRows(false);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.TransposeColumnsToRowsInNewEditor", async () => {
+            await AdvancedListConverter.transposeColumnsToRows(true);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.ReverseListOrder", () => {
+            AdvancedListConverter.reverseListOrder(false);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.ReverseListOrderInNewEditor", () => {
+            AdvancedListConverter.reverseListOrder(true);
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.TruncateLines", async () => {
+            const options = await AdvancedListConverter.askForTruncateOptions();
+            if (options) {
+                await AdvancedListConverter.truncateLines(options);
+            }
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.CsvToMarkdownTable", async () => {
+            const options = await AdvancedListConverter.askForCsvToMarkdownOptions();
+            if (options) {
+                await AdvancedListConverter.csvToMarkdownTable(options);
+            }
+        })
+    );
+    context.subscriptions.push(
+        commands.registerCommand("vscode-texttoolbox.PasteAsMarkdownTable", async () => {
+            await AdvancedListConverter.pasteAsMarkdownTable();
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.MarkdownTableToCsv", async () => {
+            const options = await AdvancedListConverter.askForMarkdownToCsvOptions();
+            if (options) {
+                await AdvancedListConverter.markdownTableToCsv(options);
+            }
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.JsonToYaml", async () => {
+            const options = await DataFormatConverter.askForJsonToYamlOptions();
+            if (options) {
+                await DataFormatConverter.jsonToYaml(options);
+            }
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.YamlToJson", async () => {
+            const options = await DataFormatConverter.askForYamlToJsonOptions();
+            if (options) {
+                await DataFormatConverter.yamlToJson(options);
+            }
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.JsonToCsv", async () => {
+            const options = await DataFormatConverter.askForJsonToCsvOptions();
+            if (options) {
+                await DataFormatConverter.jsonToCsv(options);
+            }
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.MarkdownToHtml", async () => {
+            const options = await DataFormatConverter.askForMarkdownToHtmlOptions();
+            if (options) {
+                await DataFormatConverter.markdownToHtml(options);
+            }
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.HtmlToMarkdown", async () => {
+            const options = await DataFormatConverter.askForHtmlToMarkdownOptions();
+            if (options) {
+                await DataFormatConverter.htmlToMarkdown(options);
+            }
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.JsonToToml", async () => {
+            const options = await DataFormatConverter.askForJsonToTomlOptions();
+            if (options) {
+                await DataFormatConverter.jsonToToml(options);
+            }
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.TomlToJson", async () => {
+            const options = await DataFormatConverter.askForTomlToJsonOptions();
+            if (options) {
+                await DataFormatConverter.tomlToJson(options);
+            }
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.XmlToJson", async () => {
+            const options = await DataFormatConverter.askForXmlToJsonOptions();
+            if (options) {
+                await DataFormatConverter.xmlToJson(options);
+            }
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.JsonToXml", async () => {
+            const options = await DataFormatConverter.askForJsonToXmlOptions();
+            if (options) {
+                await DataFormatConverter.jsonToXml(options);
+            }
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.YamlToToml", async () => {
+            const options = await DataFormatConverter.askForYamlToTomlOptions();
+            if (options) {
+                await DataFormatConverter.yamlToToml(options);
+            }
+        })
+    );
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.TomlToYaml", async () => {
+            const options = await DataFormatConverter.askForTomlToYamlOptions();
+            if (options) {
+                await DataFormatConverter.tomlToYaml(options);
+            }
+        })
+    );
+
     // control characters
     context.subscriptions.push(
-        workspace.onDidChangeConfiguration((e) => {
+        workspace.onDidChangeConfiguration((e: any) => {
             if (e.affectsConfiguration("TextToolbox.decorateControlCharacters")) {
                 const editor = Helpers.getActiveEditor();
                 if (editor) {
@@ -654,6 +910,21 @@ export function activate(context: ExtensionContext) {
     context.subscriptions.push(
         commands.registerTextEditorCommand("vscode-texttoolbox.RemoveControlCharacters", () => {
             ControlCharacters.replaceControlCharacters();
+        })
+    );
+    
+    // Advanced sequence generation commands
+    context.subscriptions.push(
+        commands.registerTextEditorCommand("vscode-texttoolbox.InsertSequence", async () => {
+            const pattern = await window.showInputBox({
+                prompt: 'Enter sequence pattern (Enhanced: {n:start:step:format}, {i:start}, {r:start}, etc.)',
+                placeHolder: 'e.g., "{n}", "{n:10:5:03d}", "{i:c}", "{R:5}"',
+                value: '{n}'
+            });
+            
+            if (pattern) {
+                await AdvancedListConverter.advancedPrefixSuffix(pattern, 'prefix', false);
+            }
         })
     );
 

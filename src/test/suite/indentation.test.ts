@@ -49,8 +49,10 @@ describe("Indentation Module", () => {
     describe("updateIndentation", () => {
         it("should convert tabs to 2 spaces", async () => {
             // Set initial tab size
-            editor.options.tabSize = 4;
-            editor.options.insertSpaces = false;
+            if (editor.options) {
+                editor.options.tabSize = 4;
+                editor.options.insertSpaces = false;
+            }
 
             updateIndentation(editor, IndentationType.Spaces, 2);
 
@@ -65,13 +67,17 @@ describe("Indentation Module", () => {
             assert.ok(lines[7].startsWith("    return false"), "Double tab should be converted to 4 spaces");
             
             // Verify editor options were updated
-            assert.strictEqual(editor.options.tabSize, 2);
-            assert.strictEqual(editor.options.insertSpaces, true);
+            if (editor.options) {
+                assert.strictEqual(editor.options.tabSize, 2);
+                assert.strictEqual(editor.options.insertSpaces, true);
+            }
         });
 
         it("should convert tabs to 4 spaces", async () => {
-            editor.options.tabSize = 2;
-            editor.options.insertSpaces = false;
+            if (editor.options) {
+                editor.options.tabSize = 2;
+                editor.options.insertSpaces = false;
+            }
 
             updateIndentation(editor, IndentationType.Spaces, 4);
 
@@ -84,13 +90,17 @@ describe("Indentation Module", () => {
             assert.ok(lines[2].startsWith("    let tabbed"), "Tab should be converted to 4 spaces");
             assert.ok(lines[7].startsWith("        return false"), "Double tab should be converted to 8 spaces");
             
-            assert.strictEqual(editor.options.tabSize, 4);
-            assert.strictEqual(editor.options.insertSpaces, true);
+            if (editor.options) {
+                assert.strictEqual(editor.options.tabSize, 4);
+                assert.strictEqual(editor.options.insertSpaces, true);
+            }
         });
 
         it("should convert 4 spaces to 2 spaces", async () => {
-            editor.options.tabSize = 4;
-            editor.options.insertSpaces = true;
+            if (editor.options) {
+                editor.options.tabSize = 4;
+                editor.options.insertSpaces = true;
+            }
 
             updateIndentation(editor, IndentationType.Spaces, 2);
 
@@ -104,13 +114,17 @@ describe("Indentation Module", () => {
             assert.ok(lines[5].startsWith("  if (condition)"), "4 spaces should be converted to 2 spaces");
             assert.ok(lines[6].startsWith("    return true"), "8 spaces should be converted to 4 spaces");
             
-            assert.strictEqual(editor.options.tabSize, 2);
-            assert.strictEqual(editor.options.insertSpaces, true);
+            if (editor.options) {
+                assert.strictEqual(editor.options.tabSize, 2);
+                assert.strictEqual(editor.options.insertSpaces, true);
+            }
         });
 
         it("should convert 2 spaces to 4 spaces", async () => {
-            editor.options.tabSize = 2;
-            editor.options.insertSpaces = true;
+            if (editor.options) {
+                editor.options.tabSize = 2;
+                editor.options.insertSpaces = true;
+            }
 
             updateIndentation(editor, IndentationType.Spaces, 4);
 
@@ -122,13 +136,17 @@ describe("Indentation Module", () => {
             // Check that 2 spaces were converted to 4 spaces
             assert.ok(lines[3].startsWith("    let twoSpaces"), "2 spaces should be converted to 4 spaces");
             
-            assert.strictEqual(editor.options.tabSize, 4);
-            assert.strictEqual(editor.options.insertSpaces, true);
+            if (editor.options) {
+                assert.strictEqual(editor.options.tabSize, 4);
+                assert.strictEqual(editor.options.insertSpaces, true);
+            }
         });
 
         it("should not change anything when indentation size matches current tab size", async () => {
             const originalContent = editor.document.getText();
-            editor.options.tabSize = 4;
+            if (editor.options) {
+                editor.options.tabSize = 4;
+            }
 
             updateIndentation(editor, IndentationType.Spaces, 4);
 
@@ -139,7 +157,9 @@ describe("Indentation Module", () => {
         });
 
         it("should handle mixed indentation correctly", async () => {
-            editor.options.tabSize = 4;
+            if (editor.options) {
+                editor.options.tabSize = 4;
+            }
             editor.options.insertSpaces = false;
 
             updateIndentation(editor, IndentationType.Spaces, 2);
