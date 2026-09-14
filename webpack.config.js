@@ -24,7 +24,7 @@ const webConfig = /** @type WebpackConfig */ {
             // Webpack 5 no longer polyfills Node.js core modules automatically.
             assert: require.resolve("assert"),
             buffer: require.resolve("buffer"),
-            crypto: require.resolve("crypto-browserify"),
+            crypto: false,
             os: require.resolve("os-browserify/browser"),
             path: require.resolve("path-browserify"),
             process: require.resolve("process/browser"),
