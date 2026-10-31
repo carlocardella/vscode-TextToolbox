@@ -10,7 +10,7 @@
     "typescript.tsc.autoDetect": "off",
     "workbench.colorCustomizations": {
         "activityBar.activeBackground": "#ab307e",
-        "activityBar.activeBorder": "#25320e",
+        "activityBar.activeBorder": "#e7e7e7",
         "activityBar.background": "#ab307e",
         "activityBar.foreground": "#e7e7e7",
         "activityBar.inactiveForeground": "#e7e7e799",
@@ -34,7 +34,9 @@
         "activityBarTop.inactiveForeground": "#e7e7e799",
         "commandCenter.foreground": "#e7e7e7",
         "statusBar.debuggingBackground": "#832561",
-        "statusBar.debuggingForeground": "#e7e7e7"
+        "statusBar.debuggingForeground": "#e7e7e7",
+        "activityBarTop.activeBorder": "#e7e7e7",
+        "statusBar.inactiveBackground": "#832561"
     },
     "peacock.color": "#832561",
     "cSpell.words": ["carlocardella", "darkred", "luxon", "pickone", "submenu", "texttoolbox", "untrusted"],

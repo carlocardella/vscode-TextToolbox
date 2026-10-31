@@ -4,13 +4,14 @@
 		"target": "es2020",
 		"outDir": "out",
 		"lib": [
-			"es2020",
+			"es2022",
 			"dom"
 		],
 		"sourceMap": false,
 		"rootDir": "src",
 		"strict": true,
 		"moduleResolution": "node",
+		"ignoreDeprecations": "6.0",
 		"esModuleInterop": true,
 		"allowSyntheticDefaultImports": true,
 		"forceConsistentCasingInFileNames": true,

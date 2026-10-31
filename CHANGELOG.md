@@ -6,6 +6,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/) 
 
 ## Unreleased
 
+## [2.30.1] - 2026-10-31
+
+### Changed
+
+* Update npm dependencies and apply patched `glob` and `minimatch` releases; the dependency audit reports no vulnerabilities.
+* Migrate ESLint to flat configuration and update test discovery for the current `glob` API.
+
 ## [2.30.0] - 2026-09-13
 
 ### Fixed
